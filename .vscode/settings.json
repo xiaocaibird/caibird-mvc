@@ -1,0 +1,34 @@
+{
+    "files.associations": {
+        "tsconfig.json": "jsonc",
+        "tslint.json": "jsonc"
+    },
+
+    "tslint.ignoreDefinitionFiles": false,
+    "tslint.exclude": ["**/node_modules/**", "**/dist/**", "**/lib/**", "**/bundle/**", "**/.tsc/**", "**/assets/**"],
+    "tslint.jsEnable": true,
+    "tslint.alwaysShowRuleFailuresAsWarnings": false,
+
+    "typescript.tsdk": "node_modules/typescript/lib",
+    "typescript.suggest.autoImports": false,
+    "files.eol": "\n",
+
+    "typescript.preferences.useAliasesForRenames": false,
+    "javascript.preferences.useAliasesForRenames": false,
+
+    "[javascript]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+    "[json]": {
+        "editor.defaultFormatter": "HookyQR.beautify"
+    },
+    "[jsonc]": {
+        "editor.defaultFormatter": "HookyQR.beautify"
+    },
+    "[html]": {
+        "editor.defaultFormatter": "HookyQR.beautify"
+    }
+}

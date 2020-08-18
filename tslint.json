@@ -1,0 +1,9 @@
+{
+    "extends": [
+        "./config/tslint.json"
+    ],
+    "jsRules": true,
+    "rules": {
+        "no-implicit-dependencies": [true, "dev"]
+    }
+}

@@ -1,0 +1,31 @@
+/**
+ * Created by cmZhou
+ * http常用枚举
+ */
+declare namespace eHttp {
+    const enum StatusCode {
+        Ok = 200,
+        TemporarilyMoved = 302,
+        NoLogin = 401,
+        PermissionDenied = 403,
+        NotFound = 404,
+        ServerError = 500
+    }
+
+    const enum MethodType {
+        POST = 'POST',
+        GET = 'GET',
+        PUT = 'PUT',
+        DELETE = 'DELETE'
+    }
+    const enum ContentDispositionType {
+        Inline = 'inline',
+        Attachment = 'attachment'
+    }
+    const enum ContentType {
+        JSON = 'application/json',
+        FORM = 'application/x-www-form-urlencoded',
+        XML = 'application/xml',
+        MULTIPART = 'multipart/form-data'
+    }
+}

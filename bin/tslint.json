@@ -1,0 +1,14 @@
+{
+    /**
+     * Created by cmZhou
+     * 用于js脚本
+     */
+    "extends": [
+        "../tslint.json"
+    ],
+    "jsRules": true,
+    "rules": {
+        "no-magic-numbers": false,
+        "no-require-imports": false
+    }
+}
