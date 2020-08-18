@@ -14,6 +14,7 @@
   "author": "cmZhou",
   "description": "",
   "dependencies": {},
+  "homepage": "https://github.com/xiaocaibird/caibird-mvc",
   "devDependencies": {
     "@types/ali-oss": "^6.0.5",
     "@types/cls-hooked": "^4.3.1",
