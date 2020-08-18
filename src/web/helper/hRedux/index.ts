@@ -12,8 +12,8 @@ import { uStorage } from '../../util/uStorage';
 import defaultActions from './action';
 
 export abstract class HRedux<TActions extends dRedux.BaseActions = {}> {
-    public static readonly createReducer = <K extends keyof dStore.State, TActionsType>
-        (opt: { handlers: dRedux.ReducerHandlers<dRedux.DefaultActions & TActionsType, dStore.State[K]>; defaultState: dStore.State[K] }) => ({
+    public static readonly createReducer = <K extends keyof dStore.State, TActionsType>(
+        opt: { handlers: dRedux.ReducerHandlers<dRedux.DefaultActions & TActionsType, dStore.State[K]>; defaultState: dStore.State[K] }) => ({
             handlers: opt.handlers,
             defaultState: opt.defaultState
         })
