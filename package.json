@@ -1,7 +1,7 @@
 {
   "name": "caibird-mvc",
-  "version": "1.0.0",
-  "private": true,
+  "version": "1.0.1",
+  "private": false,
   "scripts": {
     "install-shelljs": "npm i shelljs@latest --save-dev",
     "init-project": "npm i rimraf -g && rimraf node_modules && npm run install-shelljs && node bin/initProject && npm i",
