@@ -54,7 +54,7 @@
     "react-dom": "^16.13.1",
     "react-jss": "^10.4.0",
     "redux": "^4.0.5",
-    "sequelize": "^4.44.0",
+    "sequelize": "^4.44.4",
     "shelljs": "^0.8.4",
     "tslib": "^2.0.1",
     "tslint": "^6.1.3",
