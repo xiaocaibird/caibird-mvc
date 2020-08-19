@@ -225,8 +225,8 @@
         "no-var-keyword": true,
         //不能return void。【编译时检查】(太严格了)
         "no-void-expression": false,
-        //能用三目表达式实现赋值时，就不要用if else
-        "prefer-conditional-expression": [true, "check-else-if"],
+        //能用三目表达式实现赋值时，就不要用if else (没必要)
+        "prefer-conditional-expression": false,
         //不允许使用Object.assign(),要用扩展运算符
         "prefer-object-spread": true,
         //必需传radix(当前的项目和环境不需要传)
