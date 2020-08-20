@@ -475,8 +475,8 @@
         "jsx-space-before-trailing-slash": true,
         //用" "代替&nbsp;(没必要)
         "jsx-whitespace-literal": false,
-        //多行jsx必需用括号括起来
-        "jsx-wrap-multiline": true,
+        //多行jsx必需用括号括起来(没必要)
+        "jsx-wrap-multiline": false,
         //禁止不必要的fragment
         "react-no-unnecessary-fragment": true,
         //#endregion
