@@ -4,21 +4,21 @@
  */
 declare namespace dSetting {
     type Config = {
-        version: string;
-        publicDbWriteUserName: string;
-        publicDbWritePassword: string;
-        publicDbHost: string;
-        publicDbPort: string;
+    };
+
+    type Secret = {
+        tracingAnalysisEndpoint?: string;
+        publicDbWriteUserName?: string;
+        publicDbWritePassword?: string;
+        publicDbHost?: string;
+        publicDbPort?: string;
         publicRedisHost?: string;
         publicRedisPass?: string;
         publicRedisPort?: string;
     };
 
-    type Secret = {
-        tracingAnalysisEndpoint: string;
-    };
-
     interface CustomConfig {
+        version?: string;
         reportPathWhiteList?: string;
         reportPathIgnoreList?: string;
 
