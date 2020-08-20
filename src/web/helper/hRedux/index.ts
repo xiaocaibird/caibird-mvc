@@ -39,7 +39,7 @@ export abstract class HRedux<TActions extends dRedux.BaseActions = {}> {
         return this.Store.getState();
     }
 
-    protected readonly storeCreater = (initState?: Redux.DeepPartial<dStore.State>) => {
+    protected readonly storeCreater = (initState?: Redux.PreloadedState<dStore.State>) => {
         const reducers = Object.keys(this.options.reducers).reduce<any>((obj, item) => {
             // tslint:disable-next-line: no-unsafe-any
             obj[item] = this.getReducer((this.options.reducers as any)[item]);
