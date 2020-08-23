@@ -6,9 +6,9 @@ declare namespace dReact {
     type State = never;
     type Props = { children?: React.ReactNode };
 
-    type GetClassKey<T extends import('react-jss').PropInjector<any, any>> = T extends import('react-jss').PropInjector<import('react-jss').WithSheet<infer C, any>, any> ? C extends string ? C : string : never;
-
-    type GetClassProps<T extends import('react-jss').PropInjector<any, any>> = import('react-jss').StyledComponentProps<GetClassKey<T>>;
+    type GetJssProps<T extends import('react-jss').Styles> = {
+        classes?: Partial<Record<keyof T, string>>;
+    };
 
     type GetProps<TComponent extends React.Component | React.ComponentType<any> | React.FunctionComponent<any>> =
         TComponent extends React.Component<infer Props> ? Props :
