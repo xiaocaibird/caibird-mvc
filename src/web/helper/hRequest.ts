@@ -46,11 +46,11 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
                             try {
                                 this.testError(url, req);
                             } catch (e) {
+                                const error = e as InstanceType<typeof cError.ApiFetchFail>;
                                 if (noHandle) {
                                     return {
                                         code: eFetch.JsonErrorCode.CommonFail,
-                                        // tslint:disable-next-line: no-unsafe-any
-                                        msg: e.options.msg
+                                        msg: error.options.msg
                                     };
                                 }
 
@@ -70,29 +70,29 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
                         const getResult = async (): Promise<any> => {
                             try {
                                 return this.getResult(url, req, opt);
-                            } catch (err) {
+                            } catch (e) {
                                 if (onCustomRetry) {
                                     nowRetryTimes++;
                                     if (await onCustomRetry({
-                                        error: err,
+                                        error: e,
                                         nowRetryTimes
                                     })) {
                                         return getResult();
                                     }
 
-                                    throw err;
+                                    throw e;
                                 }
 
                                 if (nowRetryTimes >= maxRetryTimes) {
-                                    throw err;
+                                    throw e;
                                 }
 
-                                if (uObject.checkInstance(err, cError.VersionMismatch)) {
-                                    throw err;
+                                if (uObject.checkInstance(e, cError.VersionMismatch)) {
+                                    throw e;
                                 }
 
-                                if (uObject.checkInstance(err, cError.LoginError)) {
-                                    throw err;
+                                if (uObject.checkInstance(e, cError.LoginError)) {
+                                    throw e;
                                 }
 
                                 nowRetryTimes++;
@@ -178,8 +178,8 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
         try {
             rsp = await this.apiFetch<dFetch.SuccessJsonBody<T> | dFetch.ErrorJsonBody | null>(type, url, req, opt);
             apiInfo.rsp = rsp;
-        } catch (err) {
-            const error = err as dp.Obj;
+        } catch (e) {
+            const error = e as dp.Obj;
             if (!(!this.onGetResultError ? true : await this.onGetResultError(error, opt, apiInfo))) throw new cError.Noop();
 
             throw new cError.ApiFetchFail(
@@ -273,8 +273,8 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
         try {
             rsp = await this.apiFetch<dFetch.SuccessJsonBody<T> | dFetch.ErrorJsonBody>(type, url, req, opt);
             apiInfo.rsp = rsp;
-        } catch (err) {
-            const error = err as dp.Obj;
+        } catch (e) {
+            const error = e as dp.Obj;
             this.onGetNoHandleResultError && await this.onGetNoHandleResultError(error, opt, apiInfo);
 
             const msg = error && (error.msg || error.message) || defaultMsg;

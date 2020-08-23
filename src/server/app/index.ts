@@ -154,8 +154,11 @@ export default class App<TRules extends object, TState extends object, TCustom e
         };
     }
 
-    private readonly initFilter = <T extends dMvc.FilterController<TRules, TState, TCustom>>
-        (controller: T, filter: dMvc.Filter<TRules, TState, TCustom>, actionDes?: dMvc.ActionPropertyDescriptor<TRules, TState, TCustom>, order = filter.defaultOrder || 0) => {
+    private readonly initFilter = <T extends dMvc.FilterController<TRules, TState, TCustom>>(
+        controller: T,
+        filter: dMvc.Filter<TRules, TState, TCustom>,
+        actionDes?: dMvc.ActionPropertyDescriptor<TRules, TState, TCustom>,
+        order = filter.defaultOrder || 0) => {
         let target;
         let isController = false;
         if (uFunction.check<dMvc.InitController<TRules, TState, TCustom>>(controller)) {
@@ -436,7 +439,7 @@ export default class App<TRules extends object, TState extends object, TCustom e
                     always: true
                 });
             } else {
-                const err: Error = (error || new Error());
+                const err = (error || new Error()) as Error;
 
                 responseHelper.status(eHttp.StatusCode.ServerError, err.message);
                 reportHelper.unknownError({
@@ -446,7 +449,7 @@ export default class App<TRules extends object, TState extends object, TCustom e
                 });
             }
         } catch (e) {
-            const err = e as Error;
+            const err = (e || new Error()) as Error;
             responseHelper.status(eHttp.StatusCode.ServerError, err.message);
             reportHelper.unknownError({
                 key: key + '_error',
@@ -491,8 +494,8 @@ export default class App<TRules extends object, TState extends object, TCustom e
                 } else {
                     throw new cError.Status({ msg: '请使用https访问', status: eHttp.StatusCode.NotFound }, { key: 'https_only' });
                 }
-            } catch (error) {
-                const err = error as Error;
+            } catch (e) {
+                const err = (e || new Error()) as Error;
                 onRequestError && await onRequestError(err, ctx, this);
                 !(disableAllDefaultErrorHandler || disableDefaultRequestErrorHandler) && this.defaultOnRequestError(err);
             } finally {

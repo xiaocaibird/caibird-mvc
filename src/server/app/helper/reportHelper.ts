@@ -123,7 +123,7 @@ class ReportHelper {
             }
             return undefined;
         } catch (e) {
-            const error = e as Error;
+            const error = (e || new Error()) as Error;
             return {
                 message: error.message,
                 _type_: 'Error',

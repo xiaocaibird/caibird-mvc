@@ -78,11 +78,11 @@ export abstract class HAsync<TCustomRunOpt extends object = {}> {
             const data = await promise;
             handleStatus(onExecuteSuccess);
             return data;
-        } catch (error) {
-            if (!uObject.checkInstance(error, cError.Noop)) {
+        } catch (e) {
+            if (!uObject.checkInstance(e, cError.Noop)) {
                 handleStatus(onExecuteFail);
             }
-            throw error;
+            throw e;
         } finally {
             const status = handleStatus(onExecuteEnd, true);
             this.onRunEnd && await this.onRunEnd(status, task, opt);
