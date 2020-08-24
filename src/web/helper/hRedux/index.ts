@@ -26,6 +26,7 @@ export abstract class HRedux<TActions extends dRedux.BaseActions = {}> {
         this.action = { ...options.actions, ...defaultActions };
     }
     protected store?: Redux.Store<dStore.State>;
+    protected defaultState: Partial<dStore.State> = {};
 
     public readonly action: dRedux.TransformActions<dRedux.DefaultActions & TActions>;
 
@@ -43,6 +44,10 @@ export abstract class HRedux<TActions extends dRedux.BaseActions = {}> {
         const reducers = Object.keys(this.options.reducers).reduce<any>((obj, item) => {
             // tslint:disable-next-line: no-unsafe-any
             obj[item] = this.getReducer((this.options.reducers as any)[item]);
+
+            // tslint:disable-next-line: no-unsafe-any
+            (this.defaultState as any)[item] = (this.options.reducers as any)[item].defaultState;
+
             return obj;
         }, {});
         // tslint:disable-next-line: no-unsafe-any
@@ -110,9 +115,22 @@ export abstract class HRedux<TActions extends dRedux.BaseActions = {}> {
         const lastUnLoadInfoStr = uStorage.getValue(this.options.storageKey);
         if (lastUnLoadInfoStr) {
             const lastUnLoadInfo = uObject.jsonParse<StorageStateInfo>(lastUnLoadInfoStr);
-            if (lastUnLoadInfo && lastUnLoadInfo.lastUnloadTime && lastUnLoadInfo.state && !this.checkRefreshState(lastUnLoadInfo.lastUnloadTime, stateExpireHours)) {
-                if (!onBefore || await onBefore(lastUnLoadInfo)) {
-                    this.dispatch((this.action.recover as any)(lastUnLoadInfo.state));
+
+            if (lastUnLoadInfo && lastUnLoadInfo.state) {
+                Object.keys(this.defaultState).forEach(key => {
+                    lastUnLoadInfo.state = {
+                        ...lastUnLoadInfo.state,
+                        [key]: {
+                            ...(this.defaultState as any)[key],
+                            ...(lastUnLoadInfo.state as any)[key]
+                        }
+                    };
+                });
+
+                if (lastUnLoadInfo.lastUnloadTime && !this.checkRefreshState(lastUnLoadInfo.lastUnloadTime, stateExpireHours)) {
+                    if (!onBefore || await onBefore(lastUnLoadInfo)) {
+                        this.dispatch((this.action.recover as any)(lastUnLoadInfo.state));
+                    }
                 }
             }
         }
