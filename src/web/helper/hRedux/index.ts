@@ -15,7 +15,7 @@ export abstract class HRedux<TActions extends dRedux.BaseActions = {}> {
     public static readonly createReducer = <K extends keyof dStore.State, TActionsType>(
         opt: { handlers: dRedux.ReducerHandlers<dRedux.DefaultActions & TActionsType, dStore.State[K]>; defaultState: dStore.State[K] }) => ({
             handlers: opt.handlers,
-            defaultState: opt.defaultState
+            defaultState: cloneDeep(opt.defaultState)
         })
 
     constructor(protected readonly options: {
@@ -26,7 +26,7 @@ export abstract class HRedux<TActions extends dRedux.BaseActions = {}> {
         this.action = { ...options.actions, ...defaultActions };
     }
     protected store?: Redux.Store<dStore.State>;
-    protected defaultState: Partial<dStore.State> = {};
+    protected defaultStoreState: Partial<dStore.State> = {};
 
     public readonly action: dRedux.TransformActions<dRedux.DefaultActions & TActions>;
 
@@ -46,7 +46,7 @@ export abstract class HRedux<TActions extends dRedux.BaseActions = {}> {
             obj[item] = this.getReducer((this.options.reducers as any)[item]);
 
             // tslint:disable-next-line: no-unsafe-any
-            (this.defaultState as any)[item] = (this.options.reducers as any)[item].defaultState;
+            (this.defaultStoreState as any)[item] = (this.options.reducers as any)[item].defaultState;
 
             return obj;
         }, {});
@@ -117,11 +117,13 @@ export abstract class HRedux<TActions extends dRedux.BaseActions = {}> {
             const lastUnLoadInfo = uObject.jsonParse<StorageStateInfo>(lastUnLoadInfoStr);
 
             if (lastUnLoadInfo && lastUnLoadInfo.state) {
-                Object.keys(this.defaultState).forEach(key => {
+                const defaultStoreState = cloneDeep(this.defaultStoreState);
+
+                Object.keys(defaultStoreState).forEach(key => {
                     lastUnLoadInfo.state = {
                         ...lastUnLoadInfo.state,
                         [key]: {
-                            ...(this.defaultState as any)[key],
+                            ...(defaultStoreState as any)[key],
                             ...(lastUnLoadInfo.state as any)[key]
                         }
                     };
