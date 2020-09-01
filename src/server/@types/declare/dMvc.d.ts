@@ -10,7 +10,7 @@ declare global {
         type BaseCtxState = { fetchId?: string };
 
         interface BaseCtxCustom<TState> extends BaseKoa.Context {
-            state: TState & BaseCtxState;
+            state: TState & BaseCtxState & BaseKoa.DefaultState;
         }
 
         type CtxState<TState> = TState & BaseCtxState;
