@@ -327,7 +327,7 @@
         //指定文件必需有某个文件头(暂时不需要加)
         "file-header": [
             true,
-            "@Creater .+\n \\* @Desc .+(\n \\* @Detail.{0,})?\n $"
+            "@Creater .+\n \\* @Desc .+(\n \\* @Detail(( |\n)(((?!\\* @).)|\n)+)?)?\n $"
         ],
         //文件名一致(暂时不需要)
         "file-name-casing": false,
