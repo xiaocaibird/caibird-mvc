@@ -7,7 +7,7 @@ declare namespace dReact {
     type Props = { children?: React.ReactNode };
 
     type GetJssProps<T extends import('react-jss').Styles> = {
-        classes: Record<keyof T, string>;
+        classes?: Partial<Record<keyof T, string>>;
     };
 
     type GetProps<TComponent extends React.Component | React.ComponentType<any> | React.FunctionComponent<any>> =
