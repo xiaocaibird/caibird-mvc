@@ -1,6 +1,6 @@
 /**
- * Created by cmZhou
- * public html工具
+ * @Creater cmZhou
+ * @Desc public html工具
  */
 import htmlCode from 'html-entities';
 

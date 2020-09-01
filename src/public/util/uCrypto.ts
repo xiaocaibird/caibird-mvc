@@ -1,6 +1,6 @@
 /**
- * Created by cmZhou
- * public 加密工具
+ * @Creater cmZhou
+ * @Desc public 加密工具
  */
 import crypto from 'crypto';
 

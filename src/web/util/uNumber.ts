@@ -1,6 +1,6 @@
 /**
- * Created by cmZhou
- * number工具
+ * @Creater cmZhou
+ * @Desc number工具
  */
 import base from '../../public/util/uNumber';
 

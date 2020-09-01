@@ -1,6 +1,6 @@
 /**
- * Created by cmZhou
- * storage 工具
+ * @Creater cmZhou
+ * @Desc storage 工具
  */
 import { uObject } from './uObject';
 namespace _uStorage {

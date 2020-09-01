@@ -1,7 +1,7 @@
 {
     /**
-     * Created by cmZhou
-     * version 3.9.7
+     * @Creater cmZhou
+     * @version 3.9.7
      */
     "compileOnSave": false,
     //compilerOptions总共94个配置

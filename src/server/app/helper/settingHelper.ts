@@ -1,6 +1,6 @@
 /**
- * Created by cmZhou
- * app settingHelper
+ * @Creater cmZhou
+ * @Desc app settingHelper
  */
 import fs from 'fs';
 import path from 'path';

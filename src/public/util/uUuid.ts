@@ -1,6 +1,6 @@
 /**
- * Created by cmZhou
- * uuid util
+ * @Creater cmZhou
+ * @Desc uuid util
  */
 import { v4 } from 'uuid';
 

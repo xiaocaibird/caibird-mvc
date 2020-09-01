@@ -1,6 +1,6 @@
 /**
- * Created by cmZhou
- * 常用key
+ * @Creater cmZhou
+ * @Desc 常用key
  */
 import base from '../../public/constant/cKey';
 

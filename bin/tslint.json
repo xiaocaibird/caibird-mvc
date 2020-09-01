@@ -1,7 +1,7 @@
 {
     /**
-     * Created by cmZhou
-     * 用于js脚本
+     * @Creater cmZhou
+     * @Desc 用于js脚本
      */
     "extends": [
         "../tslint.json"

@@ -1,6 +1,6 @@
 /**
- * Created by cmZhou
- * file工具
+ * @Creater cmZhou
+ * @Desc file工具
  */
 import fs from 'fs';
 import type Koa from 'koa';

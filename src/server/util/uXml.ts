@@ -1,6 +1,6 @@
 /**
- * Created by cmZhou
- * xml工具
+ * @Creater cmZhou
+ * @Desc xml工具
  */
 import base from '../../public/util/uXml';
 

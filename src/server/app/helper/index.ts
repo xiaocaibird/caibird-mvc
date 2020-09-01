@@ -1,6 +1,6 @@
 /**
- * Created by cmZhou
- * app helper 入口
+ * @Creater cmZhou
+ * @Desc app helper 入口
  */
 export { settingHelper } from './settingHelper';
 export { contextHelper } from './contextHelper';

@@ -1,6 +1,6 @@
 /**
- * Created by cmZhou
- * redux action
+ * @Creater cmZhou
+ * @Desc redux action
  */
 
 export default {

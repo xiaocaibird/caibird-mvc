@@ -1,6 +1,6 @@
 /**
- * Created by cmZhou
- * 把输入的依赖更新到最新版本
+ * @Creater cmZhou
+ * @Desc 把输入的依赖更新到最新版本
  */
 const {
     exec

@@ -1,6 +1,6 @@
 /**
- * Created by cmZhou
- * public tree工具
+ * @Creater cmZhou
+ * @Desc public tree工具
  */
 import uObject from './uObject';
 

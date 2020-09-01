@@ -1,6 +1,6 @@
 /**
- * Created by cmZhou
- * 日志常用枚举
+ * @Creater cmZhou
+ * @Desc 日志常用枚举
  */
 declare namespace eReport {
     const enum LogType {

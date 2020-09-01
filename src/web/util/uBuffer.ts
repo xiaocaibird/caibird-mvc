@@ -1,6 +1,6 @@
 /**
- * Created by cmZhou
- * buffer 工具
+ * @Creater cmZhou
+ * @Desc buffer 工具
  */
 import { uObject } from './uObject';
 namespace _uBuffer {

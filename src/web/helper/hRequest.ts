@@ -1,6 +1,6 @@
 /**
- * Created by cmZhou
- * request helper
+ * @Creater cmZhou
+ * @Desc request helper
  */
 import cError from '../constant/cError';
 import cKey from '../constant/cKey';

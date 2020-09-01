@@ -1,6 +1,6 @@
 /**
- * Created by cmZhou
- * request 常用类型
+ * @Creater cmZhou
+ * @Desc request 常用类型
  */
 declare namespace dRequest {
     type Options<TNoHandle extends boolean | undefined = undefined, TFormRequest extends boolean | undefined = undefined, TCustom extends object = {}> = {

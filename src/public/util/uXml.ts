@@ -1,6 +1,6 @@
 /**
- * Created by cmZhou
- * xml util
+ * @Creater cmZhou
+ * @Desc xml util
  */
 import { OptionsV2, parseString } from 'xml2js';
 

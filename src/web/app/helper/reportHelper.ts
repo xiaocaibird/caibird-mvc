@@ -1,6 +1,6 @@
 /**
- * Created by cmZhou
- * web app reportHelper
+ * @Creater cmZhou
+ * @Desc web app reportHelper
  */
 import { uObject } from '../../util/uObject';
 class ReportHelper {

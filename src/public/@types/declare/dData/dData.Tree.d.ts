@@ -1,6 +1,6 @@
 /**
- * Created by cmZhou
- * 数据结构类型 Tree
+ * @Creater cmZhou
+ * @Desc 数据结构类型 Tree
  */
 declare namespace dData {
     namespace Tree {

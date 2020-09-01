@@ -1,6 +1,6 @@
 /**
- * Created by cmZhou
- * db 常用类型
+ * @Creater cmZhou
+ * @Desc db 常用类型
  */
 declare namespace dDb {
     type Config = {

@@ -1,6 +1,6 @@
 /**
- * Created by cmZhou
- * 常用消息
+ * @Creater cmZhou
+ * @Desc 常用消息
  */
 namespace _cMessage {
     export const jsonError: { [K in eFetch.JsonErrorCode]?: string; } = {

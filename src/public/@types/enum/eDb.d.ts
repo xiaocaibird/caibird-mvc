@@ -1,6 +1,6 @@
 /**
- * Created by cmZhou
- * db常用枚举
+ * @Creater cmZhou
+ * @Desc db常用枚举
  */
 declare namespace eDb {
     const enum OrderType {

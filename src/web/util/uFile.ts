@@ -1,6 +1,6 @@
 /**
- * Created by cmZhou
- * file 工具
+ * @Creater cmZhou
+ * @Desc file 工具
  */
 import { uObject } from './uObject';
 namespace _uFile {

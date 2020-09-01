@@ -1,6 +1,6 @@
 /**
- * Created by cmZhou
- * 通信常用类型
+ * @Creater cmZhou
+ * @Desc 通信常用类型
  */
 declare namespace dFetch {
     type BaseControllers = dp.Obj<Function>;

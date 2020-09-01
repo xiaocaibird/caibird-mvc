@@ -1,6 +1,6 @@
 /**
- * Created by cmZhou
- * 安装一些工程必备的依赖
+ * @Creater cmZhou
+ * @Desc 安装一些工程必备的依赖
  */
 const {
     exec,

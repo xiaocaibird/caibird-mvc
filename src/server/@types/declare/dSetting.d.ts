@@ -1,6 +1,6 @@
 /**
- * Created by cmZhou
- * setting 常用类型
+ * @Creater cmZhou
+ * @Desc setting 常用类型
  */
 declare namespace dSetting {
     type Config = {

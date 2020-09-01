@@ -1,6 +1,6 @@
 /**
- * Created by cmZhou
- * public string工具
+ * @Creater cmZhou
+ * @Desc public string工具
  */
 namespace _uString {
     export const check = (obj: unknown): obj is string => typeof obj === 'string';

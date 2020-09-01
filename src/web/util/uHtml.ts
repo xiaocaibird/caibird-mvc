@@ -1,6 +1,6 @@
 /**
- * Created by cmZhou
- * html工具
+ * @Creater cmZhou
+ * @Desc html工具
  */
 import base from '../../public/util/uHtml';
 

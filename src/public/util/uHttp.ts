@@ -1,6 +1,6 @@
 /**
- * Created by cmZhou
- * public http工具
+ * @Creater cmZhou
+ * @Desc public http工具
  */
 import uString from './uString';
 

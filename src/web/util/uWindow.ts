@@ -1,6 +1,6 @@
 /**
- * Created by cmZhou
- * window 工具
+ * @Creater cmZhou
+ * @Desc window 工具
  */
 namespace _uWindow {
     const agents = new Array('Android', 'iPhone', 'SymbianOS', 'Windows Phone');

@@ -1,6 +1,6 @@
 /**
- * Created by cmZhou
- * db helper
+ * @Creater cmZhou
+ * @Desc db helper
  */
 import moment from 'moment';
 import Sequelize from 'sequelize';

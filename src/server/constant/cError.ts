@@ -1,6 +1,6 @@
 /**
- * Created by cmZhou
- * 常用异常类
+ * @Creater cmZhou
+ * @Desc 常用异常类
  */
 import { uObject } from '../util/uObject';
 

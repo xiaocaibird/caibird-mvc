@@ -1,6 +1,6 @@
 /**
- * Created by cmZhou
- * file 常用枚举
+ * @Creater cmZhou
+ * @Desc file 常用枚举
  */
 declare namespace eFile {
     const enum FileReaderResultCode {

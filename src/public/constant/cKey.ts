@@ -1,6 +1,6 @@
 /**
- * Created by cmZhou
- * public常用key
+ * @Creater cmZhou
+ * @Desc public常用key
  */
 namespace _cKey {
     export const cookie = {

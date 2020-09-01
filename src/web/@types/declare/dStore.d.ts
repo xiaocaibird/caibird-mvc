@@ -1,6 +1,6 @@
 /**
- * Created by cmZhou
- * store 常用类型
+ * @Creater cmZhou
+ * @Desc store 常用类型
  */
 declare namespace dStore {
     interface State {

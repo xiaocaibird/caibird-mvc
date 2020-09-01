@@ -1,6 +1,6 @@
 /**
- * Created by cmZhou
- * 初始化工程
+ * @Creater cmZhou
+ * @Desc 初始化工程
  */
 require('./helper/initProjectHelper')({
     globalList: []

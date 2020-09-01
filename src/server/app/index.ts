@@ -1,6 +1,6 @@
 /**
- * Created by cmZhou
- * server app
+ * @Creater cmZhou
+ * @Desc server app
  */
 import http from 'http';
 import jaegerClient from 'jaeger-client';

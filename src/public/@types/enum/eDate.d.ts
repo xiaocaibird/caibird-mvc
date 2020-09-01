@@ -1,6 +1,6 @@
 /**
- * Created by cmZhou
- * date常用枚举
+ * @Creater cmZhou
+ * @Desc date常用枚举
  */
 declare namespace eDate {
     const enum Format {

@@ -1,6 +1,6 @@
 /**
- * Created by cmZhou
- * 通信常用枚举
+ * @Creater cmZhou
+ * @Desc 通信常用枚举
  */
 declare namespace eFetch {
     const enum JsonSuccessCode {

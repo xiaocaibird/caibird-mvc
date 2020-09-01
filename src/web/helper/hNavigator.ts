@@ -1,6 +1,6 @@
 /**
- * Created by cmZhou
- * navigator helper
+ * @Creater cmZhou
+ * @Desc navigator helper
  */
 import RouterHistory, { createHashHistory } from 'history';
 

@@ -1,6 +1,6 @@
 /**
- * Created by cmZhou
- * async helper
+ * @Creater cmZhou
+ * @Desc async helper
  */
 import { cError } from '../constant/cError';
 import { uFunction } from '../util/uFunction';

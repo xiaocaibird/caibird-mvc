@@ -1,6 +1,6 @@
 /**
- * Created by cmZhou
- * redux helper
+ * @Creater cmZhou
+ * @Desc redux helper
  */
 import { cloneDeep } from 'lodash';
 import moment from 'moment';

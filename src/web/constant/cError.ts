@@ -1,6 +1,6 @@
 /**
- * Created by cmZhou
- * 常用异常类
+ * @Creater cmZhou
+ * @Desc 常用异常类
  */
 let onAppError: undefined | ((err: Error) => dp.PromiseOrSelf<void>);
 

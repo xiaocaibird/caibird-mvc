@@ -1,6 +1,6 @@
 /**
- * Created by cmZhou
- * public number工具
+ * @Creater cmZhou
+ * @Desc public number工具
  */
 namespace _uNumber {
     export const check = (num: unknown): num is number => typeof num === 'number';

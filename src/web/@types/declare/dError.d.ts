@@ -1,6 +1,6 @@
 /**
- * Created by cmZhou
- * error 常用类型
+ * @Creater cmZhou
+ * @Desc error 常用类型
  */
 declare namespace dError {
     type Options = {

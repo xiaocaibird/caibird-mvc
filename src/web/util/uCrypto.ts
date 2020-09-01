@@ -1,6 +1,6 @@
 /**
- * Created by cmZhou
- * crypto util
+ * @Creater cmZhou
+ * @Desc crypto util
  */
 import base from '../../public/util/uCrypto';
 

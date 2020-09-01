@@ -1,6 +1,6 @@
 /**
- * Created by cmZhou
- * task工具
+ * @Creater cmZhou
+ * @Desc task工具
  */
 import base from '../../public/util/uTask';
 

@@ -1,6 +1,6 @@
 /**
- * Created by cmZhou
- * public array工具
+ * @Creater cmZhou
+ * @Desc public array工具
  */
 namespace _uArray {
     export const check = <T extends any[] = any[]>(obj: unknown): obj is T => obj instanceof Array;

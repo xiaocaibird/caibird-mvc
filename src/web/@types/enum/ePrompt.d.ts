@@ -1,6 +1,6 @@
 /**
- * Created by cmZhou
- * prompt 常用枚举
+ * @Creater cmZhou
+ * @Desc prompt 常用枚举
  */
 declare namespace ePrompt {
     const enum Type {

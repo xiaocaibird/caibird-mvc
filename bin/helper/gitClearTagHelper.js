@@ -1,6 +1,6 @@
 /**
- * Created by cmZhou
- * 清理git tag
+ * @Creater cmZhou
+ * @Desc 清理git tag
  */
 const {
     readline,

@@ -1,6 +1,6 @@
 /**
- * Created by cmZhou
- * 公共的常用类型
+ * @Creater cmZhou
+ * @Desc 公共的常用类型
  */
 declare global {
     namespace dp {

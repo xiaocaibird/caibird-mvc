@@ -1,6 +1,6 @@
 /**
- * Created by cmZhou
- * public 函数工具
+ * @Creater cmZhou
+ * @Desc public 函数工具
  */
 namespace _uFunction {
     export const NOOP = () => { };

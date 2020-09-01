@@ -1,6 +1,6 @@
 /**
- * Created by cmZhou
- * async 常用枚举
+ * @Creater cmZhou
+ * @Desc async 常用枚举
  */
 declare namespace eAsync {
     const enum Action {

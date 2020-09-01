@@ -1,6 +1,6 @@
 /**
- * Created by cmZhou
- * cookie 工具
+ * @Creater cmZhou
+ * @Desc cookie 工具
  */
 namespace _uCookie {
     export const setValue = (name: string, value: string, days?: number | 'keep') => {

@@ -1,6 +1,6 @@
 /**
- * Created by cmZhou
- * 数据结构类型
+ * @Creater cmZhou
+ * @Desc 数据结构类型
  */
 declare namespace dData {
 }

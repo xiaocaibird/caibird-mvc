@@ -1,6 +1,6 @@
 /**
- * Created by cmZhou
- * app responseHelper
+ * @Creater cmZhou
+ * @Desc app responseHelper
  */
 import koaSend from 'koa-send';
 

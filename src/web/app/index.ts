@@ -1,6 +1,6 @@
 /**
- * Created by cmZhou
- * web app
+ * @Creater cmZhou
+ * @Desc web app
  */
 import { setOnAppError } from '../constant/cError';
 

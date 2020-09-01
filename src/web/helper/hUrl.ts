@@ -1,6 +1,6 @@
 /**
- * Created by cmZhou
- * url helper
+ * @Creater cmZhou
+ * @Desc url helper
  */
 export abstract class HUrl {
     constructor(protected readonly options: {

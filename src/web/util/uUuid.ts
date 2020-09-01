@@ -1,6 +1,6 @@
 /**
- * Created by cmZhou
- * uuid工具
+ * @Creater cmZhou
+ * @Desc uuid工具
  */
 import base from '../../public/util/uUuid';
 
