@@ -9,10 +9,10 @@ export default {
             type: 'reset'
         } as const;
     },
-    recover(newValue: dStore.State) {
+    recover(payload: dStore.State) {
         return {
             type: 'recover',
-            newValue
+            payload
         } as const;
     }
 };

@@ -68,10 +68,10 @@ export abstract class HRedux<TActions extends dRedux.BaseActions = {}> {
     }
 
     protected readonly getReducer = <T>({ defaultState, handlers }: { defaultState: T; handlers: dp.Obj<Function | undefined> }) =>
-        (state = cloneDeep(defaultState), actionResult: { type: string; newValue: any }) => {
+        (state = cloneDeep(defaultState), actionResult: { type: string; payload: any }) => {
             const handler = handlers[actionResult.type];
             if (handler) {
-                return handler(state, actionResult.newValue);
+                return handler(state, actionResult.payload);
             }
             return state;
         }
