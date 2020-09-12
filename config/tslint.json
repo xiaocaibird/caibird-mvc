@@ -180,7 +180,7 @@
         "no-restricted-globals": [true],
         //禁止不必要的return await
         "no-return-await": true,
-        //不允许有覆盖变量申明的情况，如function(a) { let a;  }
+        //不允许有覆盖变量申明的情况，如(a) => { let a;  }
         "no-shadowed-variable": [
             true,
             {

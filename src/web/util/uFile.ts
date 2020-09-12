@@ -7,14 +7,14 @@ namespace _uFile {
     const readFile = async <TData extends FileReader['result']>(file: File, type: eFile.FileReaderResultDateType) =>
         new Promise<dFile.FileReaderResult<TData>>((resolve, reject) => {
             const fr = new FileReader();
-            fr.onload = function () {
+            fr.onload = () => {
                 resolve({
                     code: eFile.FileReaderResultCode.Success,
                     data: fr.result as TData,
                     fileReader: fr
                 });
             };
-            fr.onerror = function (error) {
+            fr.onerror = error => {
                 reject({
                     code: eFile.FileReaderResultCode.Fail,
                     fileReader: fr,
