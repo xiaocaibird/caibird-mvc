@@ -15,7 +15,7 @@ const {
 } = require('../util');
 
 const upload = async ({ ossConfig }) => {
-    const ossDir = 'jsbundle';
+    const ossDir = ossConfig.dir;
 
     const dirPath = path.join(process.cwd(), 'assets/bundle');
     const files = fs.readdirSync(dirPath);
@@ -25,7 +25,10 @@ const upload = async ({ ossConfig }) => {
     await Promise.all(files.map(async file => {
         if (file.endsWith('.js')) {
             const client = new OSS({
-                ...ossConfig
+                region: ossConfig.region,
+                bucket: ossConfig.bucket,
+                accessKeyId: ossConfig.accessKeyId,
+                accessKeySecret: ossConfig.accessKeySecret
             });
 
             printf(`正在上传${file}...`);
