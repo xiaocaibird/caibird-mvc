@@ -1,6 +1,6 @@
 {
   "name": "caibird-mvc",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "private": false,
   "scripts": {
     "install-shelljs": "npm i shelljs@latest --save-dev",

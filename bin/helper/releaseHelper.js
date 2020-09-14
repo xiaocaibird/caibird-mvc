@@ -97,12 +97,12 @@ module.exports = async opt => {
         printf('执行过程中请不要在该工程上做其它操作！', ColorsEnum.RED);
         printf('执行结束后（无论成功还是失败）请留意是否切回原来的工作分支，若没有请手动切回，不要在发布分支上做任何操作！', ColorsEnum.RED);
 
-        const getTime = (fullYear = false) => {
+        const getTime = () => {
             const nowDate = new Date();
             const year = nowDate.getFullYear().toString();
             const month = nowDate.getMonth() + 1;
 
-            return `${fullYear ? year : year.slice(2)}${month < 10 ? `0${month}` : month}`;
+            return `${year}${month < 10 ? `0${month}` : month}`;
         };
 
         const time = getTime();
@@ -143,7 +143,7 @@ module.exports = async opt => {
             return;
         }
 
-        const fullVersion = `${getTime(true)}-${num}-${version}`;
+        const fullVersion = `${getTime()}-${num}-${version}`;
 
         const tag = `${tagBase}-v${version}`;
 
