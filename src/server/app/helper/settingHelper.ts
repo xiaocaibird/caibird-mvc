@@ -17,26 +17,39 @@ class SettingHelper {
 
     private readonly CUSTOM_SECRET_NAME = 'secret/custom';
 
-    public readonly getValue = <T extends object = object>(key: keyof T, filename: string, dft?: string): string => {
+    public readonly getValue = <T extends dSetting.Config | dSetting.CustomConfig | dSetting.Secret | dSetting.CustomSecret, TKey extends keyof T>(
+        key: TKey, filename: string, dft?: T[TKey]
+    ): dp.DeepPartial<T[TKey]> | undefined => {
         try {
             if (process.env.IS_LOCAL_TEST) {
                 const relativePath = path.relative(__dirname, path.join(process.cwd(), `/dist/server/_dev/setting/${filename}`)).replace(/\\/g, '/');
-                const obj = (require(relativePath) as { default: dp.Obj<string> }).default;
-                return (obj[key] || dft || '').toString();
+                const obj = (require(relativePath) as { default: T }).default;
+                return (obj[key] || dft) as dp.DeepPartial<T[TKey]>;
             }
-            return fs.readFileSync(`/etc/my-setting/${filename}/${key}`, 'utf-8');
+            const jsonStr = fs.readFileSync(`/etc/my-setting/${filename}/${key}`, 'utf-8');
+
+            try {
+                const obj = JSON.parse(jsonStr);
+                if (obj && typeof obj === 'object') {
+                    return obj as dp.DeepPartial<T[TKey]>;
+                }
+
+                return jsonStr as any;
+            } catch {
+                return jsonStr as any;
+            }
         } catch {
-            return dft || '';
+            return dft as dp.DeepPartial<T[TKey]>;
         }
     }
 
-    public readonly getConfig = (key: keyof dSetting.Config, dft?: string) => this.getValue(key, this.GLOBAL_CONFIG_NAME, dft);
+    public readonly getGlobalConfig = <TKey extends keyof dSetting.Config>(key: TKey, dft?: dSetting.Config[TKey]) => this.getValue<dSetting.Config, TKey>(key, this.GLOBAL_CONFIG_NAME, dft);
 
-    public readonly getSecret = (key: keyof dSetting.Secret, dft?: string) => this.getValue(key, this.GLOBAL_SECRET_NAME, dft);
+    public readonly getGlobalSecret = <TKey extends keyof dSetting.Secret>(key: TKey, dft?: dSetting.Secret[TKey]) => this.getValue<dSetting.Secret, TKey>(key, this.GLOBAL_SECRET_NAME, dft);
 
-    public readonly getCustomConfig = (key: keyof dSetting.CustomConfig, dft?: string) => this.getValue(key, this.CUSTOM_CONFIG_NAME, dft);
+    public readonly getCustomConfig = <TKey extends keyof dSetting.CustomConfig>(key: TKey, dft?: dSetting.CustomConfig[TKey]) => this.getValue<dSetting.CustomConfig, TKey>(key, this.CUSTOM_CONFIG_NAME, dft);
 
-    public readonly getCustomSecret = (key: keyof dSetting.CustomSecret, dft?: string) => this.getValue(key, this.CUSTOM_SECRET_NAME, dft);
+    public readonly getCustomSecret = <TKey extends keyof dSetting.CustomSecret>(key: TKey, dft?: dSetting.CustomSecret[TKey]) => this.getValue<dSetting.CustomSecret, TKey>(key, this.CUSTOM_SECRET_NAME, dft);
 }
 
 export const settingHelper = SettingHelper.instance;

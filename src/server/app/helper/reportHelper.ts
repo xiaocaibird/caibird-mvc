@@ -254,28 +254,28 @@ class ReportHelper {
             if (opt.always) {
                 isWriteLog = true;
             } else if (ctx && ctx.path != null) {
-                const getList = (list: string[], str: string) => {
-                    const settingList = uArray.jsonParseOrEmpty<string[]>(str);
-                    return [...list, ...settingList].map(item => item == null ? '' : item.toString().trim().toLowerCase());
-                };
+                const getList = (list: string[], settingList: string[] = []) =>
+                    [...list, ...settingList].map(item => item == null ? '' : item.toString().trim().toLowerCase());
 
                 const path = ctx.path.toString().trim().toLowerCase();
 
+                const reportConfig = settingHelper.getCustomConfig('reportConfig') || {};
+
                 if (alwaysLog) {
                     if (opt.type === eReport.LogType.DbLog) {
-                        const dbWhiteList = getList(dbLogPathWhiteListWhenAlways, settingHelper.getCustomConfig('reportDbLogPathWhiteListWhenAlways'));
+                        const dbWhiteList = getList(dbLogPathWhiteListWhenAlways, reportConfig.dbLogPathWhiteListWhenAlways);
                         isWriteLog = dbWhiteList.includes(path) ? true : false;
                     } else {
-                        const ignoreList = getList(pathIgnoreList, settingHelper.getCustomConfig('reportPathIgnoreList'));
+                        const ignoreList = getList(pathIgnoreList, reportConfig.pathIgnoreList);
                         isWriteLog = ignoreList.includes(path) ? false : true;
                     }
                 } else {
-                    const whiteList = getList(pathWhiteList, settingHelper.getCustomConfig('reportPathWhiteList'));
+                    const whiteList = getList(pathWhiteList, reportConfig.pathWhiteList);
                     isWriteLog = whiteList.includes(path) ? true : false;
                 }
 
                 if (!isWriteLog) {
-                    const ctxKeys = getList(whiteListCtxKeys, settingHelper.getCustomConfig('reportWhiteListCtxKeys'));
+                    const ctxKeys = getList(whiteListCtxKeys, reportConfig.whiteListCtxKeys);
 
                     const values: string[] = [];
 
@@ -285,7 +285,7 @@ class ReportHelper {
                         } catch { }
                     });
 
-                    const ctxValues = getList(whiteListCtxValues, settingHelper.getCustomConfig('reportWhiteListCtxValues'));
+                    const ctxValues = getList(whiteListCtxValues, reportConfig.whiteListCtxValues);
 
                     for (const value of values) {
                         if (ctxValues.includes(value)) {

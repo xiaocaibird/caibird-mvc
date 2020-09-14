@@ -3,35 +3,47 @@
  * @Desc setting 常用类型
  */
 declare namespace dSetting {
-    type Config = {
-    };
+    type CheckType<T extends dp.Obj<object | string | undefined>> = T;
 
-    type Secret = {
+    type Config = CheckType<{
+    }>;
+
+    type Secret = CheckType<{
         tracingAnalysisEndpoint?: string;
 
-        publicDbUserName?: string;
-        publicDbPassword?: string;
-        publicDbHost?: string;
-        publicDbPort?: string;
+        publicDbConfig?: {
+            userName: string;
+            password: string;
+            host: string;
+            port: number;
+        };
+        publicRedisConfig?: {
+            host: string;
+            password: string;
+            port: number;
+        };
 
-        publicRedisHost?: string;
-        publicRedisPass?: string;
-        publicRedisPort?: string;
+        publicOssConfig?: {
+            accessKeyId: string;
+            accessKeySecret: string;
+        };
+    }>;
 
-        publicOssKeyId?: string;
-        publicOssKeySecret?: string;
-    };
+    type CheckInterface<T extends object | string | undefined> = T;
 
+    type CheckCustomConfig = CheckInterface<CustomConfig[keyof CustomConfig]>;
     interface CustomConfig {
         version?: string;
-        reportPathWhiteList?: string;
-        reportPathIgnoreList?: string;
 
-        reportDbLogPathWhiteListWhenAlways?: string;
-
-        reportWhiteListCtxKeys?: string;
-        reportWhiteListCtxValues?: string;
+        reportConfig?: {
+            pathWhiteList?: string[];
+            pathIgnoreList?: string[];
+            dbLogPathWhiteListWhenAlways?: string[];
+            whiteListCtxKeys?: string[];
+            whiteListCtxValues?: string[];
+        };
     }
 
+    type CheckCustomSecret = CheckInterface<CustomSecret[keyof CustomSecret]>;
     interface CustomSecret { }
 }
