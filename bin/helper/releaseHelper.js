@@ -15,13 +15,6 @@ const {
 } = require('../util');
 
 const upload = async ({ ossConfig }) => {
-    const secret = require(
-        path.relative(__dirname,
-            path.join(process.cwd(), '/dist/server/_dev/setting/secret/custom'))).default;
-
-    const accessKeyId = secret.ossPublicWriteKeyId;
-    const accessKeySecret = secret.ossPublicWriteKeySecret;
-
     const ossDir = 'jsbundle';
 
     const dirPath = path.join(process.cwd(), 'assets/bundle');
@@ -32,8 +25,6 @@ const upload = async ({ ossConfig }) => {
     await Promise.all(files.map(async file => {
         if (file.endsWith('.js')) {
             const client = new OSS({
-                accessKeyId,
-                accessKeySecret,
                 ...ossConfig
             });
 
@@ -52,11 +43,12 @@ const upload = async ({ ossConfig }) => {
 
 module.exports = async opt => {
     const { baseCommitId } = opt;
+    const isDev = process.argv.includes('--dev');
     const isTest = process.argv.includes('--test');
     const isExp = process.argv.includes('--exp');
-    const isPro = !isTest && !isExp;
+    const isPro = !isDev && !isTest && !isExp;
 
-    const confirmRelease = await readline(`确认发布${isTest ? '【测试】环境' : isExp ? '【体验】环境' : '【正式】环境'}？确认请输入"Y":`);
+    const confirmRelease = await readline(`确认发布${isDev ? '【开发】环境' : isTest ? '【测试】环境' : isExp ? '【体验】环境' : '【正式】环境'}？确认请输入"Y":`);
 
     if (confirmRelease !== 'Y') {
         printf('退出发布!', ColorsEnum.RED);
@@ -67,12 +59,12 @@ module.exports = async opt => {
     const nowBranch = exec('git symbolic-ref --short -q HEAD', false);
 
     const releaseBranch = 'release-build';
-    const baseBranch = isTest ? 'test' : isExp ? 'exp' : 'master';
+    const baseBranch = isDev ? 'dev' : isTest ? 'test' : isExp ? 'exp' : 'master';
 
     let otherBranch = '';
     let isTagMode = false;
 
-    if (isTest || isExp) {
+    if (isDev || isTest || isExp) {
         const mode = await readline('发布模式，输入1或2(1代表基于【基础分支】发布，2代表发布【指定tag】)：');
 
         isTagMode = mode === '2';
@@ -124,7 +116,7 @@ module.exports = async opt => {
 
         const tagAttribute = await readline('请输入tag特征值，通常用于服务构建时做特殊处理，不需要可【回车】跳过:');
 
-        const tagEnv = `${isTest ? 'test' : isExp ? 'exp' : 'production'}${tagAttribute ? `#${tagAttribute}` : ''}`;
+        const tagEnv = `${isDev ? 'dev' : isTest ? 'test' : isExp ? 'exp' : 'production'}${tagAttribute ? `#${tagAttribute}` : ''}`;
         const tagBase = `${time}V${num}-${tagEnv}`;
         const buildTag = `build-${tagEnv}`;
 
@@ -173,7 +165,7 @@ module.exports = async opt => {
         const result1 = execAndGetDetails(`${isTagMode ? '' : `git merge ${baseBranch} ${otherBranch} -m 合并生成${tag} &&`}
           git cherry-pick ${baseCommitId} &&
           npm i &&
-          cross-env TAG_NAME=${tag} npm run build${isTest ? ':test' : isExp ? ':exp' : ''}`);
+          cross-env TAG_NAME=${tag} npm run build${isDev ? ':dev' : isTest ? ':test' : isExp ? ':exp' : ''}`);
 
         if (!(result1.code === 0 || result1.code === 128 || result1.code === 127)) {
             printf(`发布失败！！！ exit code: ${result1.code}`, ColorsEnum.RED);
@@ -181,7 +173,7 @@ module.exports = async opt => {
             return;
         }
 
-        if (!isTest) {
+        if (!isDev && !isTest) {
             await upload({ ossConfig: opt.ossConfig });
         }
 
