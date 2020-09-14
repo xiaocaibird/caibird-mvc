@@ -241,11 +241,14 @@ class ReportHelper {
     }
 
     public readonly log = (opt: dReport.LogOptions, ctx = contextHelper.getOrNull()) => {
-        if (process.env.IS_LOCAL_TEST) {
+        if (this.options.useConsoleLog) {
+            console.log(opt);
+        } else if (process.env.IS_LOCAL_TEST) {
             if (opt.type && (opt.type.includes('error') || opt.type.includes('Error'))) {
                 console.log(opt);
             }
         }
+
         try {
             const { alwaysLog, pathIgnoreList = [], pathWhiteList = [], whiteListCtxKeys = [], whiteListCtxValues = [], dbLogPathWhiteListWhenAlways = [] } = this.options;
 

@@ -18,6 +18,8 @@ declare namespace dReport {
 
         whiteListCtxKeys?: string[];
         whiteListCtxValues?: string[];
+
+        useConsoleLog?: boolean;
     };
 
     type LogOptions = {
