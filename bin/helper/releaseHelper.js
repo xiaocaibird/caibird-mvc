@@ -16,6 +16,7 @@ const {
 
 const upload = async ({ ossConfig }) => {
     const ossDir = ossConfig.dir;
+    const ossOptions = ossConfig.getOssOptions && await ossConfig.getOssOptions();
 
     const dirPath = path.join(process.cwd(), 'assets/bundle');
     const files = fs.readdirSync(dirPath);
@@ -28,7 +29,8 @@ const upload = async ({ ossConfig }) => {
                 region: ossConfig.region,
                 bucket: ossConfig.bucket,
                 accessKeyId: ossConfig.accessKeyId,
-                accessKeySecret: ossConfig.accessKeySecret
+                accessKeySecret: ossConfig.accessKeySecret,
+                ...ossOptions
             });
 
             printf(`正在上传${file}...`);
