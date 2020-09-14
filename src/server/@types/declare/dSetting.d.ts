@@ -8,13 +8,18 @@ declare namespace dSetting {
 
     type Secret = {
         tracingAnalysisEndpoint?: string;
-        publicDbWriteUserName?: string;
-        publicDbWritePassword?: string;
+
+        publicDbUserName?: string;
+        publicDbPassword?: string;
         publicDbHost?: string;
         publicDbPort?: string;
+
         publicRedisHost?: string;
         publicRedisPass?: string;
         publicRedisPort?: string;
+
+        publicOssKeyId?: string;
+        publicOssKeySecret?: string;
     };
 
     interface CustomConfig {
