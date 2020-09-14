@@ -5,10 +5,10 @@
 declare namespace dSetting {
     type CheckType<T extends dp.Obj<object | string | undefined>> = T;
 
-    type Config = CheckType<{
+    type GlobalConfig = CheckType<{
     }>;
 
-    type Secret = CheckType<{
+    type GlobalSecret = CheckType<{
         tracingAnalysisEndpoint?: string;
 
         publicDbConfig?: {
