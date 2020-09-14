@@ -81,6 +81,7 @@ declare global {
             IS_EXP_PRODUCTION: any;
 
             IS_TEST: any;
+            IS_DEV_TEST: any;
             IS_LOCAL_TEST: any;
         }
     }
