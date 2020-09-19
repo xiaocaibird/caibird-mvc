@@ -23,7 +23,9 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
         errorProbability?: number;
     }) { }
 
-    protected readonly VERSION_UPDATE_TASK_ID = Symbol('VERSION_UPDATE_TASK_ID');
+    private readonly onVersionMismatch = uTask.debounce(() => {
+        throw new cError.VersionMismatch({ msg: '版本不匹配！' });
+    }, this.options.versionCheckInterval);
 
     protected abstract readonly onFetchSuccess?: (ajax: XMLHttpRequest, opt: dRequest.Options & Partial<TCustomOpt>, details: dRequest.ApiInfo) => dp.PromiseOrSelf<void>;
     protected abstract readonly onGetResultError?: (error: object | null, opt: dRequest.Options & Partial<TCustomOpt>, details: dRequest.ApiInfo) => dp.PromiseOrSelf<boolean>;
@@ -160,7 +162,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
     }
 
     protected readonly getResult = async <T>(url: string, req?: dp.Obj | null, opt: dRequest.Options & Partial<TCustomOpt> = {}): Promise<T> => {
-        const { disableVersionCheck, versionCheckInterval, defaultErrorPrompt, defaultErrorPromptStyle } = this.options;
+        const { disableVersionCheck, defaultErrorPrompt, defaultErrorPromptStyle } = this.options;
         const { type = eHttp.MethodType.POST, noReportError, errorPrompt, errorPromptStyle } = opt;
 
         const nowShowPrompt = errorPrompt == null ? defaultErrorPrompt : errorPrompt;
@@ -226,9 +228,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
         }
 
         if (!disableVersionCheck && rsp.version && rsp.version !== process.env.APP_VERSION) {
-            uTask.timedTask(this.VERSION_UPDATE_TASK_ID, () => {
-                throw new cError.VersionMismatch({ msg: '版本不匹配！' });
-            }, versionCheckInterval);
+            this.onVersionMismatch();
         }
 
         const code = rsp.code;

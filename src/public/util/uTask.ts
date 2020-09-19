@@ -4,15 +4,15 @@
  */
 
 namespace _uTask {
-    const timedTaskLastTime: { [K: string]: number } = {};
-
-    export const timedTask = (id: symbol, task: Function, timeout = 60000) => {
-        const lastTime = timedTaskLastTime[id as any];
-        const now = Date.now();
-        if (!lastTime || now - lastTime > timeout) {
-            timedTaskLastTime[id as any] = now;
-            task();
-        }
+    export const debounce = <T extends dp.Func>(task: T, wait = 60000) => {
+        let previous = 0;
+        return (...p: dp.GetFuncParams<T>) => {
+            const now = Date.now();
+            if (now - previous > wait) {
+                task(...p);
+                previous = now;
+            }
+        };
     };
 
     export const sleep = (delay = 100) => new Promise<undefined>(resolve => {
@@ -32,6 +32,18 @@ namespace _uTask {
             }
         }
         throw error;
+    };
+
+    export const throttle = <T extends dp.Func>(task: T, timeout = 300) => {
+        let timer: NodeJS.Timeout;
+        return (...p: dp.GetFuncParams<T>) => {
+            if (timer != null) {
+                clearTimeout(timer);
+            }
+            timer = setTimeout(() => {
+                task(...p);
+            }, timeout) as any;
+        };
     };
 }
 
