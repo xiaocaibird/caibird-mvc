@@ -3,32 +3,26 @@
  * @Desc redux helper
  */
 import { cloneDeep } from 'lodash';
-import moment from 'moment';
 import Redux, { combineReducers, createStore } from 'redux';
 
-import { uObject } from '../../util/uObject';
-import { uStorage } from '../../util/uStorage';
-
-import defaultActions from './action';
-
-export abstract class HRedux<TActions extends dRedux.BaseActions = {}> {
-    public static readonly createReducer = <K extends keyof dStore.State, TActionsType>(
-        opt: { handlers: dRedux.ReducerHandlers<dRedux.DefaultActions & TActionsType, dStore.State[K]>; defaultState: dStore.State[K] }) => ({
+export abstract class HRedux<TState extends object, TActions extends dRedux.BaseActions = {}> {
+    public static readonly createReducer = <TStatePart, TActionsType>(
+        opt: { handlers: dRedux.ReducerHandlers<TActionsType, TStatePart>; defaultState: TStatePart }) => ({
             handlers: opt.handlers,
             defaultState: cloneDeep(opt.defaultState)
         })
 
     constructor(protected readonly options: {
         actions: dRedux.TransformActions<TActions>;
-        reducers: dRedux.Reducers<dRedux.DefaultActions & TActions>;
+        reducers: dRedux.Reducers<TActions, TState>;
         storageKey: string;
     }) {
-        this.action = { ...options.actions, ...defaultActions };
+        this.action = { ...options.actions };
     }
-    protected store?: Redux.Store<dStore.State>;
-    protected defaultStoreState: Partial<dStore.State> = {};
+    protected store?: Redux.Store<TState>;
+    protected defaultStoreState: Partial<TState> = {};
 
-    public readonly action: dRedux.TransformActions<dRedux.DefaultActions & TActions>;
+    public readonly action: dRedux.TransformActions<TActions>;
 
     public get Store() {
         if (!this.store) {
@@ -40,7 +34,7 @@ export abstract class HRedux<TActions extends dRedux.BaseActions = {}> {
         return this.Store.getState();
     }
 
-    protected readonly storeCreater = (initState?: Redux.PreloadedState<dStore.State>) => {
+    protected readonly storeCreater = (initState?: Redux.PreloadedState<TState>) => {
         const reducers = Object.keys(this.options.reducers).reduce<any>((obj, item) => {
             // tslint:disable-next-line: no-unsafe-any
             obj[item] = this.getReducer((this.options.reducers as any)[item]);
@@ -51,7 +45,7 @@ export abstract class HRedux<TActions extends dRedux.BaseActions = {}> {
             return obj;
         }, {});
         // tslint:disable-next-line: no-unsafe-any
-        const Reducer = combineReducers<dStore.State>(reducers);
+        const Reducer = combineReducers<TState>(reducers);
 
         const params: [typeof Reducer, typeof initState] = [Reducer] as any;
 
@@ -76,70 +70,7 @@ export abstract class HRedux<TActions extends dRedux.BaseActions = {}> {
             return state;
         }
 
-    protected readonly checkRefreshState = (lastUnloadTime: number, minHour = 240) => {
-        const lastUnloadDate = moment(new Date(lastUnloadTime));
-        const nowDate = moment(new Date());
-
-        if (nowDate.add(-minHour, 'h').isAfter(lastUnloadDate)) return true;
-        return false;
-    }
-
-    public readonly dispatch = <T extends dRedux.ActionResult<dRedux.DefaultActions & TActions>[keyof dRedux.ActionResult<dRedux.DefaultActions & TActions>]>(actionResult: T) => {
+    public readonly dispatch = <T extends dRedux.ActionResult<TActions>[keyof dRedux.ActionResult<TActions>]>(actionResult: T) => {
         this.Store.dispatch(actionResult);
     }
-
-    public readonly record = () => {
-        uStorage.setValue(this.options.storageKey,
-            JSON.stringify(
-                {
-                    lastUnloadTime: Date.now(),
-                    state: this.State
-                }
-            )
-        );
-    }
-
-    public readonly reset = () => {
-        uStorage.remove(this.options.storageKey);
-        this.dispatch((this.action.reset as any)());
-    }
-
-    public readonly recover = async (opt: {
-        stateExpireHours?: number;
-        onBefore?(stateInfo: StorageStateInfo): dp.PromiseOrSelf<boolean>;
-    } = {}) => {
-        const { onBefore, stateExpireHours = eDate.DayCount.OneYear * eDate.Per.HourPerDay } = opt;
-        window.onunload = () => {
-            this.record();
-        };
-        const lastUnLoadInfoStr = uStorage.getValue(this.options.storageKey);
-        if (lastUnLoadInfoStr) {
-            const lastUnLoadInfo = uObject.jsonParse<StorageStateInfo>(lastUnLoadInfoStr);
-
-            if (lastUnLoadInfo && lastUnLoadInfo.state) {
-                const defaultStoreState = cloneDeep(this.defaultStoreState);
-
-                Object.keys(defaultStoreState).forEach(key => {
-                    lastUnLoadInfo.state = {
-                        ...lastUnLoadInfo.state,
-                        [key]: {
-                            ...(defaultStoreState as any)[key],
-                            ...(lastUnLoadInfo.state as any)[key]
-                        }
-                    };
-                });
-
-                if (lastUnLoadInfo.lastUnloadTime && !this.checkRefreshState(lastUnLoadInfo.lastUnloadTime, stateExpireHours)) {
-                    if (!onBefore || await onBefore(lastUnLoadInfo)) {
-                        this.dispatch((this.action.recover as any)(lastUnLoadInfo.state));
-                    }
-                }
-            }
-        }
-    }
 }
-
-type StorageStateInfo = {
-    state: dStore.State;
-    lastUnloadTime: number;
-};

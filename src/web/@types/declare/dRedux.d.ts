@@ -6,8 +6,6 @@ declare global {
     namespace dRedux {
         type BaseActions = dp.Obj<dp.Func>;
 
-        type DefaultActions = typeof import('../../helper/hRedux/action').default;
-
         type TransformActions<TActions extends BaseActions> = {
             [K in keyof TActions]:
             TActions[K] extends (payload?: infer Value) => any ?
@@ -22,23 +20,19 @@ declare global {
             { type: K }
         };
 
-        type Reducers<TActions> = {
-            [K in keyof dStore.State]: {
-                defaultState: dStore.State[K];
-                handlers: ReducerHandlers<TActions, dStore.State[K]>;
+        type Reducers<TActions, TState extends object> = {
+            [K in keyof TState]: {
+                defaultState: TState[K];
+                handlers: ReducerHandlers<TActions, TState[K]>;
             }
         };
-        type ReducerHandlers<TActions, S extends dStore.State[keyof dStore.State]> = {
-            [K in keyof TActions]?: ReducerHandler<TActions, S, K>;
+        type ReducerHandlers<TActions, TStatePart> = {
+            [K in keyof TActions]?: ReducerHandler<TActions, TStatePart, K>;
         };
     }
 }
 
 //#region 私有类型
-type CorrectDefaultActions = dRedux.TransformActions<dRedux.DefaultActions>;
-type CheckCorrectDefaultActions<T extends CorrectDefaultActions> = T;
-type IsCorrectDefaultActions = CheckCorrectDefaultActions<dRedux.DefaultActions>;
-
 type ActionReturn<TActions extends dRedux.BaseActions> = {
     [K in keyof TActions]: ReturnType<TActions[K]>;
 };
