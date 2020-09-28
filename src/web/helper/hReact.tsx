@@ -10,34 +10,28 @@ export abstract class HReact<TRootContext> {
     }) { }
     public readonly rootContext = createContext(this.options.defaultContext);
 
-    public readonly withAsync = <T extends object>(importComponent?: dp.PromiseFunc<any[], { default: React.ComponentType<T> }>) => {
+    public readonly withAsync = <T extends React.ComponentType<any>>(importComponent?: dp.PromiseFunc<any[], { default: T }>, displayName?: string) => {
         const createHocDisplayName = this.createHocDisplayName;
 
-        const With = class extends React.Component<T, { Component: null | React.ComponentType<T> }> {
-            private static _displayName = 'withAsync';
-            public static get displayName() {
-                return With._displayName;
-            }
+        const With = class extends React.Component<dReact.GetProps<T>, { Component?: T }> {
+            public static displayName = displayName || createHocDisplayName('withAsync');
 
-            constructor(props: T) {
+            constructor(props: dReact.GetProps<T>) {
                 super(props);
 
                 this.state = {
-                    Component: null
                 };
             }
 
             public render() {
                 const { Component } = this.state;
 
-                return Component ? <Component {...this.props} /> : null;
+                return Component ? <Component {...this.props as any} /> : null;
             }
 
             public async componentDidMount() {
                 if (importComponent) {
                     const { default: Component } = await importComponent();
-
-                    With._displayName = createHocDisplayName('withAsync', Component);
 
                     this.setState({
                         Component
@@ -53,6 +47,6 @@ export abstract class HReact<TRootContext> {
         (props: TProps) => props.visible ? <Component {...props} /> : null
     )
 
-    public readonly createHocDisplayName = (hocName: string, WrappedComponent: React.ComponentType<any>) =>
-        `${hocName}(${WrappedComponent.displayName || WrappedComponent.name || 'Component'})`
+    public readonly createHocDisplayName = (hocName: string, WrappedComponent?: React.ComponentType<any>) =>
+        `${hocName}(${WrappedComponent && (WrappedComponent.displayName || WrappedComponent.name) || 'Component'})`
 }
