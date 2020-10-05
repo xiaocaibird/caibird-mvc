@@ -12,7 +12,7 @@ export abstract class HReact<TRootContext> {
     }) { }
     public readonly rootContext = createContext(this.options.defaultContext);
 
-    public readonly withAsync = <T extends React.ComponentType<any>>(importComponent?: dp.PromiseFunc<any[], { default: T }>, displayName?: string) => {
+    public readonly withAsync = <T extends React.ComponentType<any>>(importComponent: dp.PromiseFunc<any[], { default: T }>, displayName?: string) => {
         const createHocDisplayName = this.createHocDisplayName;
 
         const With = class extends React.PureComponent<dReact.GetProps<T> & { onAsyncInnerDidMount?(): void }, { Component?: T; isClassComponent?: boolean }> {
