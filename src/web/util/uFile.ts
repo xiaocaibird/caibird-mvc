@@ -79,7 +79,7 @@ namespace _uFile {
             }
 
             const image = new Image();
-            const src = uObject.checkInstance(img, Blob) ? window.URL.createObjectURL(img) : img;
+            const src = uObject.checkInstance(img, Blob) ? URL.createObjectURL(img) : img;
 
             image.src = src;
 

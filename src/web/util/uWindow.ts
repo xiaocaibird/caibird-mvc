@@ -44,17 +44,17 @@ namespace _uWindow {
     };
     export const getScreenWidth = (type: 'avail' = 'avail') => {
         if (type === 'avail') {
-            return window.screen.availWidth;
+            return screen.availWidth;
         }
 
-        return window.screen.width;
+        return screen.width;
     };
     export const getScreenHeight = (type: 'avail' = 'avail') => {
         if (type === 'avail') {
-            return window.screen.availHeight;
+            return screen.availHeight;
         }
 
-        return window.screen.height;
+        return screen.height;
     };
 }
 

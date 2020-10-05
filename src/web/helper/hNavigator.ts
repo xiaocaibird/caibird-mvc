@@ -61,7 +61,7 @@ export abstract class HNavigator {
     }
 
     public readonly reload = () => {
-        window.location.reload();
+        location.reload();
     }
 
     public readonly openUrl = (url: string, target: '_top' | '_blank' | '_self' | '_parent' = '_top') => {

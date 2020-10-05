@@ -5,27 +5,27 @@
 import { uObject } from './uObject';
 namespace _uStorage {
     export const clear = () => {
-        if (window.localStorage) {
-            window.localStorage.clear();
+        if (localStorage) {
+            localStorage.clear();
         }
     };
 
     export const getValue = (key: string) => {
-        if (window.localStorage) {
-            return window.localStorage.getItem(key);
+        if (localStorage) {
+            return localStorage.getItem(key);
         }
         return undefined;
     };
 
     export const setValue = (key: string, value: string) => {
-        if (window.localStorage) {
-            window.localStorage.setItem(key, value);
+        if (localStorage) {
+            localStorage.setItem(key, value);
         }
     };
 
     export const remove = (key: string) => {
-        if (window.localStorage) {
-            window.localStorage.removeItem(key);
+        if (localStorage) {
+            localStorage.removeItem(key);
         }
     };
 
