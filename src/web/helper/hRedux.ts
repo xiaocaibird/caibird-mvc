@@ -19,10 +19,6 @@ export abstract class HRedux<TState extends object, TActions extends dRedux.Base
     }) {
         this.action = { ...options.actions };
     }
-    protected store?: Redux.Store<TState>;
-    protected defaultStoreState: Partial<TState> = {};
-
-    public readonly action: dRedux.TransformActions<TActions>;
 
     public get Store() {
         if (!this.store) {
@@ -33,8 +29,17 @@ export abstract class HRedux<TState extends object, TActions extends dRedux.Base
     public get State() {
         return this.Store.getState();
     }
+    public get lastState() {
+        return this._lastState;
+    }
 
-    protected readonly storeCreater = (initState?: Redux.PreloadedState<TState>) => {
+    protected store?: Redux.Store<TState>;
+    protected defaultStoreState: Partial<TState> = {};
+    protected _lastState = this.Store.getState();
+
+    public readonly action: dRedux.TransformActions<TActions>;
+
+    protected storeCreater(initState?: Redux.PreloadedState<TState>) {
         const reducers = Object.keys(this.options.reducers).reduce<any>((obj, item) => {
             // tslint:disable-next-line: no-unsafe-any
             obj[item] = this.getReducer((this.options.reducers as any)[item]);
@@ -61,14 +66,15 @@ export abstract class HRedux<TState extends object, TActions extends dRedux.Base
         return createStore(...params);
     }
 
-    protected readonly getReducer = <T>({ defaultState, handlers }: { defaultState: T; handlers: dp.Obj<Function | undefined> }) =>
-        (state = cloneDeep(defaultState), actionResult: { type: string; payload: any }) => {
+    protected getReducer<T>({ defaultState, handlers }: { defaultState: T; handlers: dp.Obj<Function | undefined> }) {
+        return (state = cloneDeep(defaultState), actionResult: { type: string; payload: any }) => {
             const handler = handlers[actionResult.type];
             if (handler) {
                 return handler(state, actionResult.payload);
             }
             return state;
-        }
+        };
+    }
 
     public readonly dispatch = <T extends dRedux.ActionResult<TActions>[keyof dRedux.ActionResult<TActions>]>(actionResult: T) => {
         this.Store.dispatch(actionResult);
