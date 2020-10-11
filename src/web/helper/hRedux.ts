@@ -78,5 +78,6 @@ export abstract class HRedux<TState extends object, TActions extends dRedux.Base
 
     public readonly dispatch = <T extends dRedux.ActionResult<TActions>[keyof dRedux.ActionResult<TActions>]>(actionResult: T) => {
         this.Store.dispatch(actionResult);
+        this._lastState = this.Store.getState();
     }
 }
