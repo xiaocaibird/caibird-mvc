@@ -1,35 +1,35 @@
 /**
  * @Creater cmZhou
- * @Desc storage 工具
+ * @Desc sessionStorage 工具
  */
 import { uObject } from './uObject';
-namespace _uStorage {
+namespace _uSessionStorage {
     export const clear = () => {
-        if (localStorage) {
-            localStorage.clear();
+        if (sessionStorage) {
+            sessionStorage.clear();
         }
     };
 
     export const getValue = (key: string) => {
-        if (localStorage) {
-            return localStorage.getItem(key);
+        if (sessionStorage) {
+            return sessionStorage.getItem(key);
         }
         return undefined;
     };
 
     export const setValue = (key: string, value: string) => {
-        if (localStorage) {
-            localStorage.setItem(key, value);
+        if (sessionStorage) {
+            sessionStorage.setItem(key, value);
         }
     };
 
     export const remove = (key: string) => {
-        if (localStorage) {
-            localStorage.removeItem(key);
+        if (sessionStorage) {
+            sessionStorage.removeItem(key);
         }
     };
 
-    const objectKey = '__caibird-mvc_custom_storage_obj___';
+    const objectKey = '__caibird-mvc_custom_session_storage_obj___';
 
     export const getObjectValue = <T>(key: string) => {
         const objStr = getValue(objectKey);
@@ -53,5 +53,5 @@ namespace _uStorage {
     };
 }
 
-export const uStorage: dp.DeepReadonly<typeof _uStorage> = _uStorage;
-export default uStorage;
+export const uSessionStorage: dp.DeepReadonly<typeof _uSessionStorage> = _uSessionStorage;
+export default uSessionStorage;
