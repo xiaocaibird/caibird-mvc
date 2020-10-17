@@ -149,7 +149,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
 
             req[jsonpCallbackParamName] = funcName;
             try {
-                script.src = `${url}?${uHttp.paramsToQuery(req)}`;
+                script.src = uHttp.urlAddQuery(url, req);
 
                 (window as any)[funcName] = (data: any) => {
                     clear();
@@ -408,7 +408,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
             };
 
             if (uString.equalIgnoreCase(type, eHttp.MethodType.GET)) {
-                ajax.open(type, `${url}?${uHttp.paramsToQuery(sendData)}`, true);
+                ajax.open(type, uHttp.urlAddQuery(url, sendData), true);
                 Object.keys(headers).forEach(k => {
                     ajax.setRequestHeader(k, headers[k]);
                 });
