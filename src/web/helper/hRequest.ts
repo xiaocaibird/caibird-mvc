@@ -8,6 +8,7 @@ import { uHttp } from '../util/uHttp';
 import { uObject } from '../util/uObject';
 import { uString } from '../util/uString';
 import { uTask } from '../util/uTask';
+import { uUuid } from '../util/uUuid';
 
 export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCustomOpt extends {}> {
     constructor(protected readonly options: {
@@ -27,7 +28,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
         throw new cError.VersionMismatch({ msg: '版本不匹配！' });
     }, this.options.versionCheckInterval);
 
-    protected abstract readonly onFetchSuccess?: (ajax: XMLHttpRequest, opt: dRequest.Options & Partial<TCustomOpt>, details: dRequest.ApiInfo) => dp.PromiseOrSelf<void>;
+    protected abstract readonly onFetchSuccess?: (opt: dRequest.Options & Partial<TCustomOpt>, details: dRequest.ApiInfo, ajax?: XMLHttpRequest) => dp.PromiseOrSelf<void>;
     protected abstract readonly onGetResultError?: (error: object | null, opt: dRequest.Options & Partial<TCustomOpt>, details: dRequest.ApiInfo) => dp.PromiseOrSelf<boolean>;
     protected abstract readonly preGetNoHandleResult?: (rsp: dFetch.SuccessJsonBody<any> | dFetch.ErrorJsonBody | null, opt: dRequest.DetailsOptions & Partial<TCustomOpt>, details: dRequest.ApiInfo) => dp.PromiseOrSelf<void>;
     protected abstract readonly onGetNoHandleResultError?: (error: any, opt: dRequest.DetailsOptions & Partial<TCustomOpt>, details: dRequest.ApiInfo) => dp.PromiseOrSelf<void>;
@@ -37,7 +38,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
             new Proxy({}, {
                 get: (_controller, actionName) =>
                     (req?: dp.Obj, opt: dRequest.Options & Partial<TCustomOpt> = {}) => {
-                        const { isFormRequest, noHandle, retryTimes, onCustomRetry } = opt;
+                        const { isFormFetch, noHandle, retryTimes, onCustomRetry } = opt;
 
                         const maxRetryTimes = (retryTimes == null ? this.options.defaultRetryTimes : retryTimes) || 0;
                         let nowRetryTimes = 0;
@@ -60,8 +61,8 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
                             }
                         }
 
-                        if (isFormRequest) {
-                            this.formRequest(url, req);
+                        if (isFormFetch) {
+                            this.formFetch(url, req);
                             return null;
                         }
 
@@ -135,7 +136,40 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
         }
     }
 
-    protected readonly formRequest = (url: string, req?: dp.Obj, opt: dRequest.Options = {}) => {
+    protected readonly jsonpFetch = <T>(url: string, req: dp.Obj, opt: dRequest.Options = {}) => {
+        const { timeout, jsonpCallbackParamName = 'callback', jsonpCallbackFuncName } = opt;
+
+        return new Promise<T>((resolve, reject) => {
+            const script = document.createElement('script');
+            const funcName = jsonpCallbackFuncName || `_jsonpcb_${Date.now()}_${uUuid.get()}_`;
+            const clear = () => {
+                script.remove();
+                delete (window as any)[funcName];
+            };
+
+            req[jsonpCallbackParamName] = funcName;
+            try {
+                script.src = `${url}?${uHttp.paramsToQuery(req)}`;
+
+                (window as any)[funcName] = (data: any) => {
+                    clear();
+                    resolve(data as T);
+                };
+
+                setTimeout(() => {
+                    clear();
+                    reject({ msg: '请求超时！' });
+                }, timeout);
+
+                document.body.append(script);
+            } catch (e) {
+                clear();
+                throw e;
+            }
+        });
+    }
+
+    protected readonly formFetch = (url: string, req?: dp.Obj, opt: dRequest.Options = {}) => {
         const { formRequestKey = cKey.query.FORM_REQUEST } = this.options;
         const { type = eHttp.MethodType.POST } = opt;
 
@@ -312,17 +346,23 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
     }
 
     protected readonly apiFetch = async <T>(type: eHttp.MethodType, url: string, req?: dp.Obj | FormData | null, opt: dRequest.Options & Partial<TCustomOpt> = {}) => {
-        const ajax = await this.fetch(type, url, req, opt);
+        let data;
+        let ajax;
 
-        const data = uObject.jsonParse<T>(ajax.responseText);
+        if (opt.isJsonpFetch) {
+            data = await this.jsonpFetch<T>(url, req || {}, opt);
+        } else {
+            ajax = await this.fetch(type, url, req, opt);
 
-        this.onFetchSuccess && await this.onFetchSuccess(ajax, opt, { url, req, rsp: data });
+            data = uObject.jsonParse<T>(ajax.responseText);
+        }
+        this.onFetchSuccess && await this.onFetchSuccess(opt, { url, req, rsp: data }, ajax);
 
         if (data) {
             return data;
         }
         throw {
-            response: {
+            response: ajax && {
                 responseText: encodeURIComponent(ajax.responseText),
                 status: ajax.status,
                 statusText: encodeURIComponent(ajax.statusText)

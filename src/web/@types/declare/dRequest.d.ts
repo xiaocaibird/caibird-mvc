@@ -3,12 +3,15 @@
  * @Desc request 常用类型
  */
 declare namespace dRequest {
-    type Options<TNoHandle extends boolean | undefined = undefined, TFormRequest extends boolean | undefined = undefined, TCustom extends object = {}> = {
+    type Options<TNoHandle extends boolean | undefined = undefined, TFormFetch extends boolean | undefined = undefined, TCustom extends object = {}> = {
         noHandle?: TNoHandle;
         timeout?: number;
         contentType?: string;
         withCredentials?: boolean;
-        isFormRequest?: TFormRequest;
+        isFormFetch?: TFormFetch;
+        isJsonpFetch?: boolean;
+        jsonpCallbackParamName?: string;
+        jsonpCallbackFuncName?: string;
         type?: eHttp.MethodType;
         noReportError?: boolean;
         errorPrompt?: ePrompt.Type;
@@ -21,8 +24,8 @@ declare namespace dRequest {
         }): dp.PromiseOrSelf<boolean>;
     } & Partial<TCustom>;
 
-    type DetailsOptions<TNoHandle extends boolean | undefined = undefined, TFormRequest extends boolean | undefined = undefined, TCustom extends object = {}> =
-        Options<TNoHandle, TFormRequest, TCustom> & {
+    type DetailsOptions<TNoHandle extends boolean | undefined = undefined, TFormFetch extends boolean | undefined = undefined, TCustom extends object = {}> =
+        Options<TNoHandle, TFormFetch, TCustom> & {
             checkLoginWhenNoHandle?: boolean;
         };
 
@@ -34,12 +37,12 @@ declare namespace dRequest {
     type BaseApi<TControllers extends dFetch.BaseControllers, TCustom extends object> = {
         readonly [C in keyof dFetch.BaseApi<TControllers>]: {
             readonly [A in keyof dFetch.BaseApi<TControllers>[C]]: GetReq<dFetch.BaseApi<TControllers>[C][A]> extends never ?
-            <TNoHandle extends boolean | undefined = undefined, TFormRequest extends boolean | undefined = undefined>
-                (req?: null, opt?: TNoHandle extends true ? DetailsOptions<TNoHandle, TFormRequest, TCustom> : Options<TNoHandle, TFormRequest, TCustom>) =>
-                Promise<TFormRequest extends true ? never : TNoHandle extends true ? Details<GetRsp<dFetch.BaseApi<TControllers>[C][A]>> : GetRsp<dFetch.BaseApi<TControllers>[C][A]>> :
-            <TNoHandle extends boolean | undefined = undefined, TFormRequest extends boolean | undefined = undefined>
-                (req: GetReq<dFetch.BaseApi<TControllers>[C][A]>, opt?: TNoHandle extends true ? DetailsOptions<TNoHandle, TFormRequest, TCustom> : Options<TNoHandle, TFormRequest, TCustom>) =>
-                Promise<TFormRequest extends true ? never : TNoHandle extends true ? Details<GetRsp<dFetch.BaseApi<TControllers>[C][A]>> : GetRsp<dFetch.BaseApi<TControllers>[C][A]>>
+            <TNoHandle extends boolean | undefined = undefined, TFormFetch extends boolean | undefined = undefined>
+                (req?: null, opt?: TNoHandle extends true ? DetailsOptions<TNoHandle, TFormFetch, TCustom> : Options<TNoHandle, TFormFetch, TCustom>) =>
+                Promise<TFormFetch extends true ? never : TNoHandle extends true ? Details<GetRsp<dFetch.BaseApi<TControllers>[C][A]>> : GetRsp<dFetch.BaseApi<TControllers>[C][A]>> :
+            <TNoHandle extends boolean | undefined = undefined, TFormFetch extends boolean | undefined = undefined>
+                (req: GetReq<dFetch.BaseApi<TControllers>[C][A]>, opt?: TNoHandle extends true ? DetailsOptions<TNoHandle, TFormFetch, TCustom> : Options<TNoHandle, TFormFetch, TCustom>) =>
+                Promise<TFormFetch extends true ? never : TNoHandle extends true ? Details<GetRsp<dFetch.BaseApi<TControllers>[C][A]>> : GetRsp<dFetch.BaseApi<TControllers>[C][A]>>
         }
     };
 
