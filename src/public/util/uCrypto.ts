@@ -2,7 +2,7 @@
  * @Creater cmZhou
  * @Desc public 加密工具
  */
-import crypto from 'crypto';
+import crypto, { HashOptions } from 'crypto';
 
 namespace _uCrypto {
     let defaultConfig = {
@@ -10,8 +10,12 @@ namespace _uCrypto {
         iv: 'caibird-mvc_default_iv1'
     };
 
-    export const syncHash = (data: Data, algorithm: string, partSize = 100000) => {
-        const hash = crypto.createHash(algorithm);
+    const defaultPartSize = 100000;
+    export const syncHash = (data: Data, algorithm: string, opt: {
+        partSize?: number;
+    } & HashOptions = {}) => {
+        const { partSize = defaultPartSize } = opt;
+        const hash = crypto.createHash(algorithm, opt);
         const total = Math.ceil(data.length / partSize);
         for (let i = 0; i < total; i++) {
             const part = data.slice(i * partSize,
