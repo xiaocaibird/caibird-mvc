@@ -137,7 +137,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
     }
 
     protected readonly jsonpFetch = <T>(url: string, req: dp.Obj, opt: dRequest.Options = {}) => {
-        const { timeout, jsonpCallbackParamName = 'callback', jsonpCallbackFuncName } = opt;
+        const { timeout = this.options.timeout == null ? eDate.Timespan.RequestTimeout : this.options.timeout, jsonpCallbackParamName = 'callback', jsonpCallbackFuncName } = opt;
 
         return new Promise<T>((resolve, reject) => {
             const script = document.createElement('script');
