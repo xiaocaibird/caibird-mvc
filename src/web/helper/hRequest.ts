@@ -37,77 +37,79 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
         get: (_target, controllerName) =>
             new Proxy({}, {
                 get: (_controller, actionName) =>
-                    (req?: dp.Obj, opt: dRequest.Options & Partial<TCustomOpt> = {}) => {
-                        const { isFormFetch, noHandle, retryTimes, onCustomRetry } = opt;
-
-                        const maxRetryTimes = (retryTimes == null ? this.options.defaultRetryTimes : retryTimes) || 0;
-                        let nowRetryTimes = 0;
-
-                        const url = `/${controllerName.toString()}/${actionName.toString()}`;
-
-                        if (this.options.openRandomErrorTest) {
-                            try {
-                                this.testError(url, req);
-                            } catch (e) {
-                                const error = e as InstanceType<typeof cError.ApiFetchFail>;
-                                if (noHandle) {
-                                    return {
-                                        code: eFetch.JsonErrorCode.CommonFail,
-                                        msg: error.options.msg
-                                    };
-                                }
-
-                                throw e;
-                            }
-                        }
-
-                        if (isFormFetch) {
-                            this.formFetch(url, req);
-                            return null;
-                        }
-
-                        if (noHandle) {
-                            return this.getNoHandleResult(url, req, opt);
-                        }
-
-                        const getResult = async (): Promise<any> => {
-                            try {
-                                return this.getResult(url, req, opt);
-                            } catch (e) {
-                                if (onCustomRetry) {
-                                    nowRetryTimes++;
-                                    if (await onCustomRetry({
-                                        error: e,
-                                        nowRetryTimes
-                                    })) {
-                                        return getResult();
-                                    }
-
-                                    throw e;
-                                }
-
-                                if (nowRetryTimes >= maxRetryTimes) {
-                                    throw e;
-                                }
-
-                                if (uObject.checkInstance(e, cError.VersionMismatch)) {
-                                    throw e;
-                                }
-
-                                if (uObject.checkInstance(e, cError.LoginError)) {
-                                    throw e;
-                                }
-
-                                nowRetryTimes++;
-
-                                return getResult();
-                            }
-                        };
-
-                        return getResult();
-                    }
+                    (req?: dp.Obj, opt: dRequest.Options & Partial<TCustomOpt> = {}) => this.handleApi(controllerName.toString(), actionName.toString(), req, opt)
             })
     }) as dRequest.BaseApi<TControllers, TCustomOpt>;
+
+    private readonly handleApi = (controllerName: string, actionName: string, req?: dp.Obj, opt: dRequest.Options & Partial<TCustomOpt> = {}) => {
+        const { isFormFetch, noHandle, retryTimes, onCustomRetry } = opt;
+
+        const maxRetryTimes = (retryTimes == null ? this.options.defaultRetryTimes : retryTimes) || 0;
+        let nowRetryTimes = 0;
+
+        const url = `/${controllerName}/${actionName}`;
+
+        if (this.options.openRandomErrorTest) {
+            try {
+                this.testError(url, req);
+            } catch (e) {
+                const error = e as InstanceType<typeof cError.ApiFetchFail>;
+                if (noHandle) {
+                    return {
+                        code: eFetch.JsonErrorCode.CommonFail,
+                        msg: error.options.msg
+                    };
+                }
+
+                throw e;
+            }
+        }
+
+        if (isFormFetch) {
+            this.formFetch(url, req);
+            return null;
+        }
+
+        if (noHandle) {
+            return this.getNoHandleResult(url, req, opt);
+        }
+
+        const getResult = async (): Promise<any> => {
+            try {
+                return this.getResult(url, req, opt);
+            } catch (e) {
+                if (onCustomRetry) {
+                    nowRetryTimes++;
+                    if (await onCustomRetry({
+                        error: e,
+                        nowRetryTimes
+                    })) {
+                        return getResult();
+                    }
+
+                    throw e;
+                }
+
+                if (nowRetryTimes >= maxRetryTimes) {
+                    throw e;
+                }
+
+                if (uObject.checkInstance(e, cError.VersionMismatch)) {
+                    throw e;
+                }
+
+                if (uObject.checkInstance(e, cError.LoginError)) {
+                    throw e;
+                }
+
+                nowRetryTimes++;
+
+                return getResult();
+            }
+        };
+
+        return getResult();
+    }
 
     private readonly testError = (url: string, req: any) => {
         const defaultProbability = 0.2;
