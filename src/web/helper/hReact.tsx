@@ -16,18 +16,31 @@ export abstract class HReact<TRootContext> {
         const createHocDisplayName = this.createHocDisplayName;
 
         const With = class extends React.PureComponent<dReact.GetProps<T> & { onAsyncInnerDidMount?(): void }, { Component?: T; isClassComponent?: boolean }> {
+            private static inner?: T;
+
             public static displayName = displayName || createHocDisplayName('withAsync');
 
             constructor(props: dReact.GetProps<T>) {
                 super(props);
 
                 this.state = {
+                    Component: With.inner,
+                    isClassComponent: uFunction.checkExtendsClass(With.inner, React.Component)
                 };
             }
 
             private isCallOnInnerDidMount = false;
 
             public readonly innerRef = createRef<React.ReactInstance>();
+
+            private readonly onAsyncInnerDidMount = () => {
+                const { onAsyncInnerDidMount } = this.props;
+                const { Component } = this.state;
+                if (Component && !this.isCallOnInnerDidMount) {
+                    onAsyncInnerDidMount && onAsyncInnerDidMount();
+                    this.isCallOnInnerDidMount = true;
+                }
+            }
 
             public render() {
                 const { Component, isClassComponent } = this.state;
@@ -38,8 +51,10 @@ export abstract class HReact<TRootContext> {
             }
 
             public async componentDidMount() {
-                if (importComponent) {
-                    const { default: Component } = await importComponent();
+                this.onAsyncInnerDidMount();
+                if (!With.inner) {
+                    const Component = (await importComponent()).default;
+                    With.inner = Component;
 
                     const isClassComponent = uFunction.checkExtendsClass(Component, React.Component);
 
@@ -51,12 +66,7 @@ export abstract class HReact<TRootContext> {
             }
 
             public componentDidUpdate() {
-                const { onAsyncInnerDidMount } = this.props;
-                const { Component } = this.state;
-                if (Component && !this.isCallOnInnerDidMount) {
-                    onAsyncInnerDidMount && onAsyncInnerDidMount();
-                    this.isCallOnInnerDidMount = true;
-                }
+                this.onAsyncInnerDidMount();
             }
         };
 
