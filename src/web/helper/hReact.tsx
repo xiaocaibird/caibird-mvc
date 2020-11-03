@@ -51,7 +51,7 @@ export abstract class HReact<TRootContext> {
             }
 
             public async componentDidMount() {
-                this.onAsyncInnerDidMount();
+                setTimeout(this.onAsyncInnerDidMount, 0); // TODO 如果不用setTimeout，findDOMNode会找不到dom
                 if (!With.inner) {
                     const Component = (await importComponent()).default;
                     With.inner = Component;
