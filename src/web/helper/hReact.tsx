@@ -15,7 +15,7 @@ export abstract class HReact<TRootContext> {
     public readonly withAsync = <T extends React.ComponentType<any>>(importComponent: dp.PromiseFunc<any[], { default: T }>, displayName?: string) => {
         const createHocDisplayName = this.createHocDisplayName;
 
-        const With = class extends React.PureComponent<dReact.GetProps<T> & { onAsyncInnerDidMount?(): void }, { Component?: T; isClassComponent?: boolean }> {
+        const With = class extends React.PureComponent<dReact.GetProps<T> & { onAsyncInnerDidMount?(opt: { innerRef: React.RefObject<React.ReactInstance> }): void }, { Component?: T; isClassComponent?: boolean }> {
             private static inner?: T;
 
             public static displayName = displayName || createHocDisplayName('withAsync');
@@ -37,7 +37,9 @@ export abstract class HReact<TRootContext> {
                 const { onAsyncInnerDidMount } = this.props;
                 const { Component } = this.state;
                 if (Component && !this.isCallOnInnerDidMount) {
-                    onAsyncInnerDidMount && onAsyncInnerDidMount();
+                    onAsyncInnerDidMount && onAsyncInnerDidMount({
+                        innerRef: this.innerRef
+                    });
                     this.isCallOnInnerDidMount = true;
                 }
             }
@@ -51,7 +53,7 @@ export abstract class HReact<TRootContext> {
             }
 
             public async componentDidMount() {
-                setTimeout(this.onAsyncInnerDidMount, 0); // TODO 如果不用setTimeout，findDOMNode会找不到dom
+                this.onAsyncInnerDidMount();
                 if (!With.inner) {
                     const Component = (await importComponent()).default;
                     With.inner = Component;
