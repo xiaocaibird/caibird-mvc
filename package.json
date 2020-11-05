@@ -1,6 +1,6 @@
 {
   "name": "caibird-mvc",
-  "version": "1.4.6",
+  "version": "1.4.7",
   "private": false,
   "scripts": {
     "install-shelljs": "npm i shelljs@latest --save-dev",
@@ -37,7 +37,9 @@
     "@types/xml2js": "^0.4.5",
     "ali-oss": "^6.10.0",
     "axios": "^0.20.0",
+    "bowser": "^2.11.0",
     "cls-hooked": "^4.2.2",
+    "compare-versions": "^3.6.0",
     "history": "^4.10.1",
     "html-entities": "^1.3.1",
     "jaeger-client": "^3.18.1",
