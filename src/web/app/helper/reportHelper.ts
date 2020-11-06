@@ -14,6 +14,7 @@ class ReportHelper {
     public readonly log = (opt: dReport.LogOptions) => {
         try {
             const { details, error, source } = opt;
+            const err = error as Error | undefined;
             this.writeLog(uObject.getSafeJsonObj({
                 ...opt,
                 details: details && {
@@ -22,10 +23,10 @@ class ReportHelper {
                     stack: details.stack,
                     ...details
                 },
-                error: error && {
-                    name: error.name,
-                    message: error.message,
-                    stack: error.stack,
+                error: err && {
+                    name: err.name,
+                    message: err.message,
+                    stack: err.stack,
                     ...error
                 },
                 source: source && {
