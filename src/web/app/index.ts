@@ -2,7 +2,7 @@
  * @Creater cmZhou
  * @Desc web app
  */
-import { setOnAppError } from '../constant/cError';
+import { setOnAppError, setShouldCompatibleHandler } from '../constant/cError';
 
 import reportHelper from './helper/reportHelper';
 
@@ -20,8 +20,9 @@ export default class App {
     }
 
     private readonly initError = () => {
-        const { onAppError } = this.options;
+        const { onAppError, shouldCompatibleAppErrorHandler } = this.options;
         onAppError && setOnAppError(onAppError);
+        shouldCompatibleAppErrorHandler && setShouldCompatibleHandler(shouldCompatibleAppErrorHandler);
     }
 
     public readonly start = async (opt: StartOpt) => {
@@ -40,7 +41,8 @@ export default class App {
 type Options = {
     allowOpenInIframe?: boolean;
     writeLog?: typeof reportHelper['writeLog'];
-    onAppError?(err: Error): any;
+    onAppError?(err: unknown): any;
+    shouldCompatibleAppErrorHandler?(): boolean;
     preRender?(app: App): dp.PromiseOrSelf<void>;
     postRender?(app: App): dp.PromiseOrSelf<void>;
 };

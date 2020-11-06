@@ -2,8 +2,8 @@
  * @Creater cmZhou
  * @Desc 常用异常类
  */
-let onAppError: undefined | ((err: Error) => dp.PromiseOrSelf<void>);
-export const setOnAppError = (fn: (err: Error) => dp.PromiseOrSelf<void>) => onAppError = fn;
+let onAppError: undefined | ((err: unknown) => dp.PromiseOrSelf<void>);
+export const setOnAppError = (fn: (err: unknown) => dp.PromiseOrSelf<void>) => onAppError = fn;
 
 window.addEventListener('error', evt => {
     try {
@@ -41,14 +41,14 @@ window.addEventListener('error', evt => {
 
 window.addEventListener('unhandledrejection', evt => {
     try {
-        evt.promise.catch(err => onAppError && onAppError(err as Error));
+        onAppError && onAppError(evt.reason);
     } catch (e) {
         console.error('onunhandledrejection fail', e);
     }
 });
 
-let shouldCompatible: undefined | (() => boolean);
-export const setShouldCompatible = (fn: () => boolean) => shouldCompatible = fn;
+let shouldCompatibleHandler: undefined | (() => boolean);
+export const setShouldCompatibleHandler = (fn: () => boolean) => shouldCompatibleHandler = fn;
 
 namespace _cError {
     export class CommonError extends Error {
@@ -59,7 +59,7 @@ namespace _cError {
         ) {
             super();
 
-            if (shouldCompatible && shouldCompatible()) {
+            if (shouldCompatibleHandler && shouldCompatibleHandler()) {
                 this.message = JSON.stringify(this);
             }
         }
