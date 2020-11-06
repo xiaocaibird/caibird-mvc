@@ -3,7 +3,6 @@
  * @Desc 常用异常类
  */
 let onAppError: undefined | ((err: Error) => dp.PromiseOrSelf<void>);
-
 export const setOnAppError = (fn: (err: Error) => dp.PromiseOrSelf<void>) => onAppError = fn;
 
 window.addEventListener('error', evt => {
@@ -48,6 +47,9 @@ window.addEventListener('unhandledrejection', evt => {
     }
 });
 
+let shouldCompatible: undefined | (() => boolean);
+export const setShouldCompatible = (fn: () => boolean) => shouldCompatible = fn;
+
 namespace _cError {
     export class CommonError extends Error {
         constructor(
@@ -56,7 +58,10 @@ namespace _cError {
             public readonly name = CommonError.name
         ) {
             super();
-            this.message = JSON.stringify(this);
+
+            if (shouldCompatible && shouldCompatible()) {
+                this.message = JSON.stringify(this);
+            }
         }
     }
 

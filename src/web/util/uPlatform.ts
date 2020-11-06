@@ -2,25 +2,12 @@
  * @Creater cmZhou
  * @Desc platform 工具
  */
-import Bowser from 'bowser';
 import compareVersions, { CompareOperator } from 'compare-versions';
 
+import { cPlatform } from '../constant/cPlatform';
+
 namespace _uPlatform {
-    const bowser = Bowser.getParser(navigator.userAgent);
-
-    export const OS_NAME = bowser.getOSName();
-    const OS_NAME_LC = OS_NAME.toLowerCase();
-
-    export const OS_VERSION = bowser.getOSVersion();
-
-    export const isIOS = OS_NAME_LC === ePlatform.OsName.IOS.toLowerCase();
-    export const isAndroid = OS_NAME_LC === ePlatform.OsName.Android.toLowerCase();
-    export const isMobile = isIOS || isAndroid;
-
-    export const isWindows = OS_NAME_LC === ePlatform.OsName.Windows.toLowerCase();
-    export const isMacOS = OS_NAME_LC === ePlatform.OsName.MacOS.toLowerCase();
-    export const isLinux = OS_NAME_LC === ePlatform.OsName.Linux.toLowerCase();
-    export const isPC = isWindows || isMacOS || isLinux;
+    const OS_NAME_LC = cPlatform.OS_NAME.toLowerCase();
 
     export const checkOS = (OSName: ePlatform.OsName) => OS_NAME_LC === OSName.toLowerCase();
 
@@ -47,7 +34,7 @@ namespace _uPlatform {
             version = str.slice(1);
         }
 
-        const OSVersion = OS_VERSION.replace('NT ', '');
+        const OSVersion = cPlatform.OS_VERSION.replace('NT ', '');
 
         return compareVersions.compare(OSVersion, version, compare as CompareOperator);
     };
