@@ -3,20 +3,19 @@
  * @Desc web app reportHelper
  */
 import { uObject } from '../../util/uObject';
-
-let writeLog: (opt: dReport.LogOptions) => void = () => { };
-
-export const setWriteLog = (func: (opt: dReport.LogOptions) => void) => writeLog = func;
-
 class ReportHelper {
     public static readonly instance: ReportHelper = new ReportHelper();
     private constructor() { }
+
+    private writeLog: (opt: dReport.LogOptions) => void = () => { };
+
+    public readonly setWriteLog = (func: (opt: dReport.LogOptions) => void) => this.writeLog = func;
 
     public readonly log = (opt: dReport.LogOptions) => {
         try {
             const { details, error, source } = opt;
             const err = error as Error | undefined;
-            writeLog(uObject.getSafeJsonObj({
+            this.writeLog(uObject.getSafeJsonObj({
                 ...opt,
                 details: details && {
                     name: details.name,
