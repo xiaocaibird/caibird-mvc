@@ -2,6 +2,11 @@
  * @Creater cmZhou
  * @Desc 常用异常类
  */
+type ErrJson = {
+    args: any[];
+    stack?: string;
+};
+
 let onAppError: undefined | ((err: unknown) => dp.PromiseOrSelf<void>);
 export const setOnAppError = (fn: (err: unknown) => dp.PromiseOrSelf<void>) => onAppError = fn;
 
@@ -16,11 +21,12 @@ window.addEventListener('error', evt => {
                 errName = evt.message.slice(0, index).trim() as keyof typeof cError;
                 const jsonStr = evt.message.slice(index + 1);
 
-                const errJson = JSON.parse(jsonStr);
+                const errJson = JSON.parse(jsonStr) as ErrJson;
                 const ErrClass = cError[errName];
 
-                error = new (ErrClass as any)() as Error;
-                Object.assign(error, errJson);
+                error = new (ErrClass as any)(...errJson.args) as Error;
+                error.stack = errJson.stack || `${evt.filename} | lineno: ${evt.lineno} | colno: ${evt.colno}`;
+                error.message = '';
             } catch {
                 try {
                     // tslint:disable-next-line: no-unsafe-any
@@ -51,6 +57,15 @@ let shouldCompatibleHandler: undefined | (() => boolean);
 export const setShouldCompatibleHandler = (fn: () => boolean) => shouldCompatibleHandler = fn;
 
 namespace _cError {
+    const compatible = (instance: Error, args: any[]) => {
+        if (shouldCompatibleHandler && shouldCompatibleHandler()) {
+            instance.message = JSON.stringify({
+                args,
+                stack: instance.stack
+            });
+        }
+    };
+
     export class CommonError extends Error {
         constructor(
             public readonly options: dError.Options,
@@ -58,10 +73,7 @@ namespace _cError {
             public readonly name = CommonError.name
         ) {
             super();
-
-            if (shouldCompatibleHandler && shouldCompatibleHandler()) {
-                this.message = JSON.stringify(this);
-            }
+            compatible(this, [...arguments]);
         }
     }
 
@@ -75,6 +87,7 @@ namespace _cError {
             public readonly logOptions: dReport.ErrorLogOptions | false = false
         ) {
             super(options, logOptions, ApiFetchFail.name);
+            compatible(this, [...arguments]);
         }
     }
 
@@ -87,6 +100,7 @@ namespace _cError {
             public readonly logOptions: dReport.ErrorLogOptions | false = false
         ) {
             super(options, logOptions, ApiJsonResultEmpty.name);
+            compatible(this, [...arguments]);
         }
     }
 
@@ -100,6 +114,7 @@ namespace _cError {
             public readonly logOptions: dReport.ErrorLogOptions | false = false
         ) {
             super(options, logOptions, ApiJsonResultError.name);
+            compatible(this, [...arguments]);
         }
     }
 
@@ -113,6 +128,7 @@ namespace _cError {
             public readonly logOptions: dReport.ErrorLogOptions | false = false
         ) {
             super(options, logOptions, LoginError.name);
+            compatible(this, [...arguments]);
         }
     }
 
@@ -122,13 +138,14 @@ namespace _cError {
             public readonly logOptions: dReport.ErrorLogOptions | false = false
         ) {
             super(options, logOptions, VersionMismatch.name);
+            compatible(this, [...arguments]);
         }
     }
 
     export class Noop extends Error {
         constructor(public msg?: string) {
             super();
-            this.message = JSON.stringify(this);
+            compatible(this, [...arguments]);
         }
         public readonly name = Noop.name;
     }
