@@ -4,7 +4,7 @@
  */
 import { setIsCompatibleHandler, setOnAppError } from '../constant/cError';
 
-import reportHelper from './helper/reportHelper';
+import reportHelper, { setWriteLog } from './helper/reportHelper';
 
 export default class App {
     public static readonly staticHelpers = {
@@ -16,7 +16,7 @@ export default class App {
     constructor(public readonly options: Options) {
         const { writeLog } = options;
         this.initError();
-        writeLog && reportHelper.setWriteLog(writeLog);
+        writeLog && setWriteLog(writeLog);
     }
 
     private readonly initError = () => {
@@ -41,7 +41,7 @@ export default class App {
 type Options = {
     allowOpenInIframe?: boolean;
     isCompatibleAppErrorHandler?: boolean;
-    writeLog?: typeof reportHelper['writeLog'];
+    writeLog?: dp.GetFuncParams<typeof setWriteLog>[0];
     onAppError?(err: unknown): any;
     preRender?(app: App): dp.PromiseOrSelf<void>;
     postRender?(app: App): dp.PromiseOrSelf<void>;
