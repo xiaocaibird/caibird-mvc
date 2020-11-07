@@ -39,6 +39,11 @@ window.addEventListener('error', evt => {
                 error.name = errName || 'Error';
             }
         }
+        if (isCompatibleHandler) {
+            if (error instanceof cError.BassError) {
+                error.message = '';
+            }
+        }
         onAppError && onAppError(error);
     } catch (e) {
         console.error('onerror fail', e);
@@ -72,7 +77,7 @@ namespace _cError {
         }
     };
 
-    export class BassError extends Error {}
+    export class BassError extends Error { }
 
     export class CommonError extends BassError {
         constructor(
