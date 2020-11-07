@@ -47,18 +47,24 @@ window.addEventListener('error', evt => {
 
 window.addEventListener('unhandledrejection', evt => {
     try {
-        onAppError && onAppError(evt.reason);
+        const error = evt.reason;
+        if (isCompatibleHandler) {
+            if (error instanceof cError.BassError) {
+                error.message = '';
+            }
+        }
+        onAppError && onAppError(error);
     } catch (e) {
         console.error('onunhandledrejection fail', e);
     }
 });
 
-let shouldCompatibleHandler: undefined | (() => boolean);
-export const setShouldCompatibleHandler = (fn: () => boolean) => shouldCompatibleHandler = fn;
+let isCompatibleHandler = false;
+export const setIsCompatibleHandler = (isCompatible: boolean) => isCompatibleHandler = isCompatible;
 
 namespace _cError {
     const compatible = (instance: Error, args: any[]) => {
-        if (shouldCompatibleHandler && shouldCompatibleHandler()) {
+        if (isCompatibleHandler) {
             instance.message = JSON.stringify({
                 args,
                 stack: instance.stack
@@ -66,7 +72,9 @@ namespace _cError {
         }
     };
 
-    export class CommonError extends Error {
+    export class BassError extends Error {}
+
+    export class CommonError extends BassError {
         constructor(
             public readonly options: dError.Options,
             public readonly logOptions: dReport.ErrorLogOptions | false = false,
@@ -142,7 +150,7 @@ namespace _cError {
         }
     }
 
-    export class Noop extends Error {
+    export class Noop extends BassError {
         constructor(public msg?: string) {
             super();
             compatible(this, [...arguments]);
