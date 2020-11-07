@@ -47,7 +47,7 @@ window.addEventListener('error', evt => {
         onAppError && onAppError(error);
     } catch (e) {
         console.error('onerror fail:', e);
-        console.error('onerror evt:', evt);
+        console.log('onerror evt:', evt);
     }
 });
 
@@ -62,7 +62,7 @@ window.addEventListener('unhandledrejection', evt => {
         onAppError && onAppError(error);
     } catch (e) {
         console.error('onunhandledrejection fail:', e);
-        console.error('onunhandledrejection evt:', evt);
+        console.log('onunhandledrejection evt:', evt);
     }
 });
 
