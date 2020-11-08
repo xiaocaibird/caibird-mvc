@@ -5,6 +5,7 @@
 type ErrJson = {
     args: any[];
     stack?: string;
+    message?: string;
 };
 
 let onAppError: undefined | ((err: unknown) => dp.PromiseOrSelf<void>);
@@ -13,6 +14,7 @@ export const setOnAppError = (fn: (err: unknown) => dp.PromiseOrSelf<void>) => o
 window.addEventListener('error', evt => {
     try {
         let error = evt.error as Error | undefined;
+        let errJson;
         if (!error) {
             let errName: keyof typeof cError | '' = '';
             try {
@@ -21,12 +23,12 @@ window.addEventListener('error', evt => {
                 errName = evt.message.slice(0, index).trim() as keyof typeof cError;
                 const jsonStr = evt.message.slice(index + 1);
 
-                const errJson = JSON.parse(jsonStr) as ErrJson;
+                errJson = JSON.parse(jsonStr) as ErrJson;
                 const ErrClass = cError[errName];
 
                 error = new (ErrClass as any)(...errJson.args) as Error;
                 error.stack = errJson.stack || `${evt.filename} | lineno: ${evt.lineno} | colno: ${evt.colno}`;
-                error.message = '';
+                error.message = errJson.message || '';
             } catch {
                 try {
                     // tslint:disable-next-line: no-unsafe-any
@@ -41,7 +43,7 @@ window.addEventListener('error', evt => {
         }
         if (isCompatibleHandler) {
             if (error instanceof cError.BassError) {
-                error.message = '';
+                error.message = errJson?.message || '';
             }
         }
         onAppError && onAppError(error);
