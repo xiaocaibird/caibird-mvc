@@ -20,7 +20,6 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
         defaultErrorPrompt?: ePrompt.Type;
         defaultErrorPromptStyle?: ePrompt.StyleType;
         defaultRetryTimes?: number;
-        openRandomErrorTest?: boolean;
         errorProbability?: number;
     }) { }
 
@@ -42,28 +41,12 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
     }) as dRequest.BaseApi<TControllers, TCustomOpt>;
 
     private readonly handleApi = (controllerName: string, actionName: string, req?: dp.Obj, opt: dRequest.Options & Partial<TCustomOpt> = {}) => {
-        const { isFormFetch, noHandle, retryTimes, onCustomRetry } = opt;
+        const { isFormFetch, noHandle, retryTimes, shouldRetry } = opt;
 
         const maxRetryTimes = (retryTimes == null ? this.options.defaultRetryTimes : retryTimes) || 0;
         let nowRetryTimes = 0;
 
         const url = `/${controllerName}/${actionName}`;
-
-        if (this.options.openRandomErrorTest) {
-            try {
-                this.testError(url, req);
-            } catch (e) {
-                const error = e as InstanceType<typeof cError.ApiFetchFail>;
-                if (noHandle) {
-                    return {
-                        code: eFetch.JsonErrorCode.CommonFail,
-                        msg: error.options.msg
-                    };
-                }
-
-                throw e;
-            }
-        }
 
         if (isFormFetch) {
             this.formFetch(url, req);
@@ -78,9 +61,9 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
             try {
                 return this.getResult(url, req, opt);
             } catch (e) {
-                if (onCustomRetry) {
+                if (shouldRetry) {
                     nowRetryTimes++;
-                    if (await onCustomRetry({
+                    if (await shouldRetry({
                         error: e,
                         nowRetryTimes
                     })) {
@@ -109,33 +92,6 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
         };
 
         return getResult();
-    }
-
-    private readonly testError = (url: string, req: any) => {
-        const defaultProbability = 0.2;
-        const { errorProbability = defaultProbability } = this.options;
-
-        const msg = '【前端】随机测试错误，请检查你的异常处理好不好使。';
-
-        if (process.env.IS_TEST && Math.random() < errorProbability) {
-            throw new cError.ApiFetchFail(
-                {
-                    error: null,
-                    apiInfo: {
-                        url,
-                        req,
-                        rsp: {
-                            code: eFetch.JsonErrorCode.CommonFail,
-                            msg
-                        }
-                    }
-                },
-                {
-                    showPrompt: ePrompt.Type.Toast,
-                    promptStyleType: ePrompt.StyleType.Error,
-                    msg
-                }, false);
-        }
     }
 
     protected readonly jsonpFetch = <T>(url: string, req: dp.Obj, opt: dRequest.Options = {}) => {
