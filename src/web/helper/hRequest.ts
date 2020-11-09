@@ -90,32 +90,6 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
         });
     }
 
-    protected readonly formFetch = (url: string, req?: dp.Obj, opt: dRequest.Options = {}) => {
-        const { formRequestKey = cKey.query.FORM_REQUEST } = this.options;
-        const { type = eHttp.MethodType.POST } = opt;
-
-        const iframe = document.createElement('iframe');
-        iframe.setAttribute('style', 'display:none;');
-
-        const form = document.createElement('form');
-        form.method = type;
-        form.action = url;
-
-        const input = document.createElement('input');
-        input.name = formRequestKey;
-        input.value = req && JSON.stringify(req) || '';
-
-        document.body.appendChild(iframe);
-        form.appendChild(input);
-        iframe.appendChild(form);
-
-        form.submit();
-
-        input.remove();
-        form.remove();
-        iframe.remove();
-    }
-
     protected readonly getResult = async <T>(url: string, req?: dp.Obj | null, opt: dRequest.Options & Partial<TCustomOpt> = {}): Promise<T> => {
         const { disableVersionCheck, defaultErrorPrompt, defaultErrorPromptStyle } = this.options;
         const { type = eHttp.MethodType.POST, noReportError, errorPrompt, errorPromptStyle } = opt;
@@ -380,5 +354,31 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
         });
 
         return p;
+    }
+
+    public readonly formFetch = (url: string, req?: dp.Obj, opt: dRequest.Options = {}) => {
+        const { formRequestKey = cKey.query.FORM_REQUEST } = this.options;
+        const { type = eHttp.MethodType.POST } = opt;
+
+        const iframe = document.createElement('iframe');
+        iframe.setAttribute('style', 'display:none;');
+
+        const form = document.createElement('form');
+        form.method = type;
+        form.action = url;
+
+        const input = document.createElement('input');
+        input.name = formRequestKey;
+        input.value = req && JSON.stringify(req) || '';
+
+        document.body.appendChild(iframe);
+        form.appendChild(input);
+        iframe.appendChild(form);
+
+        form.submit();
+
+        input.remove();
+        form.remove();
+        iframe.remove();
     }
 }
