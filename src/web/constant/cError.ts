@@ -3,6 +3,7 @@
  * @Desc 常用异常类
  */
 type ErrJson = {
+    _compatible_key_: string;
     args: any[];
     stack?: string;
     message?: string;
@@ -11,57 +12,81 @@ type ErrJson = {
 let onAppError: undefined | ((err: unknown) => dp.PromiseOrSelf<void>);
 export const setOnAppError = (fn: (err: unknown) => dp.PromiseOrSelf<void>) => onAppError = fn;
 
-window.addEventListener('error', evt => {
+const getErrInfo = (message: string) => {
+    let name;
+    let json;
+    try {
+        const index = message.indexOf(':');
+
+        name = message.slice(0, index).trim() as keyof typeof cError;
+
+        const jsonStr = message.slice(index + 1);
+        json = JSON.parse(jsonStr) as ErrJson;
+
+        if (json._compatible_key_ !== errorCompatible) json = undefined;
+    } catch {
+    }
+
+    return {
+        name,
+        json
+    };
+};
+
+window.addEventListener('error', async evt => {
     try {
         let error = evt.error as Error | undefined;
-        let errJson;
-        if (!error) {
-            let errName: keyof typeof cError | '' = '';
-            try {
-                const index = evt.message.indexOf(':');
-
-                errName = evt.message.slice(0, index).trim() as keyof typeof cError;
-                const jsonStr = evt.message.slice(index + 1);
-
-                errJson = JSON.parse(jsonStr) as ErrJson;
-                const ErrClass = cError[errName];
-
-                error = new (ErrClass as any)(...errJson.args) as Error;
-                error.stack = errJson.stack || `${evt.filename} | lineno: ${evt.lineno} | colno: ${evt.colno}`;
-                error.message = errJson.message || '';
-            } catch {
+        try {
+            let errJson;
+            if (!error) {
+                let errName;
                 try {
-                    // tslint:disable-next-line: no-unsafe-any
-                    error = new (window as any)[errName]() as Error;
+                    const errInfo = getErrInfo(evt.message);
+
+                    errName = errInfo.name as keyof typeof cError;
+                    errJson = errInfo.json as ErrJson;
+
+                    const ErrClass = cError[errName];
+
+                    error = new (ErrClass as any)(...errJson.args) as Error;
+                    error.stack = errJson.stack || `${evt.filename} | lineno: ${evt.lineno} | colno: ${evt.colno}`;
+                    error.message = errJson.message || '';
                 } catch {
-                    error = new Error();
+                    try {
+                        // tslint:disable-next-line: no-unsafe-any
+                        error = new (window as any)[errName || '']() as Error;
+                    } catch {
+                        error = new Error();
+                    }
+                    error.message = evt.message;
+                    error.stack = `${evt.filename} | lineno: ${evt.lineno} | colno: ${evt.colno}`;
+                    error.name = errName || 'Error';
                 }
-                error.message = evt.message;
-                error.stack = `${evt.filename} | lineno: ${evt.lineno} | colno: ${evt.colno}`;
-                error.name = errName || 'Error';
             }
-        }
-        if (isCompatibleHandler) {
-            if (error instanceof cError.BassError) {
-                error.message = errJson?.message || '';
+            if (isCompatibleHandler) {
+                if (error instanceof cError.BassError) {
+                    error.message = errJson?.message || '';
+                }
             }
-        }
-        onAppError && onAppError(error);
+        } catch { }
+        onAppError && await onAppError(error);
     } catch (e) {
         console.error('onerror fail:', e);
         console.log('onerror evt:', evt);
     }
 });
 
-window.addEventListener('unhandledrejection', evt => {
+window.addEventListener('unhandledrejection', async evt => {
     try {
         const error = evt.reason;
-        if (isCompatibleHandler) {
-            if (error instanceof cError.BassError) {
-                error.message = '';
+        try {
+            if (isCompatibleHandler) {
+                if (error instanceof cError.BassError) {
+                    error.message = getErrInfo(error.message).json?.message || '';
+                }
             }
-        }
-        onAppError && onAppError(error);
+        } catch { }
+        onAppError && await onAppError(error);
     } catch (e) {
         console.error('onunhandledrejection fail:', e);
         console.log('onunhandledrejection evt:', evt);
@@ -71,14 +96,21 @@ window.addEventListener('unhandledrejection', evt => {
 let isCompatibleHandler = false;
 export const setIsCompatibleHandler = (isCompatible: boolean) => isCompatibleHandler = isCompatible;
 
+const errorCompatible = '_error__compatible___';
+
 namespace _cError {
     const compatible = (instance: Error, args: any[]) => {
-        if (isCompatibleHandler) {
-            instance.message = JSON.stringify({
-                args,
-                stack: instance.stack
-            });
-        }
+        try {
+            if (isCompatibleHandler) {
+                const obj: ErrJson = {
+                    _compatible_key_: errorCompatible,
+                    args,
+                    stack: instance.stack,
+                    message: instance.message
+                };
+                instance.message = JSON.stringify(obj);
+            }
+        } catch { }
     };
 
     export class BassError extends Error { }
