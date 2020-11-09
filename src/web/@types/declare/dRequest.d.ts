@@ -18,7 +18,7 @@ declare namespace dRequest {
         errorPromptStyle?: ePrompt.StyleType;
         retryTimes?: number;
         headers?: dp.Obj<string>;
-        shouldRetry?(opt: {
+        onCustomRetry?(opt: {
             error: any;
             nowRetryTimes: number;
         }): dp.PromiseOrSelf<boolean>;
