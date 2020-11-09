@@ -294,11 +294,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
             return data;
         }
         throw {
-            response: ajax && {
-                responseText: encodeURIComponent(ajax.responseText),
-                status: ajax.status,
-                statusText: encodeURIComponent(ajax.statusText)
-            },
+            ajax,
             request: {
                 type,
                 url,
