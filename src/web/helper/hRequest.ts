@@ -20,7 +20,6 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
         defaultErrorPrompt?: ePrompt.Type;
         defaultErrorPromptStyle?: ePrompt.StyleType;
         defaultRetryTimes?: number;
-        openRandomErrorTest?: boolean;
         errorProbability?: number;
     }) { }
 
@@ -42,28 +41,9 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
     }) as dRequest.BaseApi<TControllers, TCustomOpt>;
 
     private readonly handleApi = (controllerName: string, actionName: string, req?: dp.Obj, opt: dRequest.Options & Partial<TCustomOpt> = {}) => {
-        const { isFormFetch, noHandle, retryTimes, onCustomRetry } = opt;
-
-        const maxRetryTimes = (retryTimes == null ? this.options.defaultRetryTimes : retryTimes) || 0;
-        let nowRetryTimes = 0;
+        const { isFormFetch, noHandle } = opt;
 
         const url = `/${controllerName}/${actionName}`;
-
-        if (this.options.openRandomErrorTest) {
-            try {
-                this.testError(url, req);
-            } catch (e) {
-                const error = e as InstanceType<typeof cError.ApiFetchFail>;
-                if (noHandle) {
-                    return {
-                        code: eFetch.JsonErrorCode.CommonFail,
-                        msg: error.options.msg
-                    };
-                }
-
-                throw e;
-            }
-        }
 
         if (isFormFetch) {
             this.formFetch(url, req);
@@ -74,68 +54,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
             return this.getNoHandleResult(url, req, opt);
         }
 
-        const getResult = async (): Promise<any> => {
-            try {
-                return this.getResult(url, req, opt);
-            } catch (e) {
-                if (onCustomRetry) {
-                    nowRetryTimes++;
-                    if (await onCustomRetry({
-                        error: e,
-                        nowRetryTimes
-                    })) {
-                        return getResult();
-                    }
-
-                    throw e;
-                }
-
-                if (nowRetryTimes >= maxRetryTimes) {
-                    throw e;
-                }
-
-                if (uObject.checkInstance(e, cError.VersionMismatch)) {
-                    throw e;
-                }
-
-                if (uObject.checkInstance(e, cError.LoginError)) {
-                    throw e;
-                }
-
-                nowRetryTimes++;
-
-                return getResult();
-            }
-        };
-
-        return getResult();
-    }
-
-    private readonly testError = (url: string, req: any) => {
-        const defaultProbability = 0.2;
-        const { errorProbability = defaultProbability } = this.options;
-
-        const msg = '【前端】随机测试错误，请检查你的异常处理好不好使。';
-
-        if (process.env.IS_TEST && Math.random() < errorProbability) {
-            throw new cError.ApiFetchFail(
-                {
-                    error: null,
-                    apiInfo: {
-                        url,
-                        req,
-                        rsp: {
-                            code: eFetch.JsonErrorCode.CommonFail,
-                            msg
-                        }
-                    }
-                },
-                {
-                    showPrompt: ePrompt.Type.Toast,
-                    promptStyleType: ePrompt.StyleType.Error,
-                    msg
-                }, false);
-        }
+        return this.getResult(url, req, opt);
     }
 
     protected readonly jsonpFetch = <T>(url: string, req: dp.Obj, opt: dRequest.Options = {}) => {
@@ -348,35 +267,61 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
     }
 
     protected readonly apiFetch = async <T>(type: eHttp.MethodType, url: string, req?: dp.Obj | FormData | null, opt: dRequest.Options & Partial<TCustomOpt> = {}) => {
-        let data;
-        let ajax;
+        const { retryTimes, shouldRetry } = opt;
+        const maxRetryTimes = (retryTimes == null ? this.options.defaultRetryTimes : retryTimes) || 0;
+        let nowRetryTimes = 0;
 
-        if (opt.isJsonpFetch) {
-            data = await this.jsonpFetch<T>(url, req || {}, opt);
-        } else {
-            ajax = await this.fetch(type, url, req, opt);
+        const handler = async (): Promise<T> => {
+            try {
+                let data;
+                let ajax;
 
-            data = uObject.jsonParse<T>(ajax.responseText);
-        }
-        this.onFetchSuccess && await this.onFetchSuccess(opt, { url, req, rsp: data }, ajax);
+                if (opt.isJsonpFetch) {
+                    data = await this.jsonpFetch<T>(url, req || {}, opt);
+                } else {
+                    ajax = await this.fetch(type, url, req, opt);
 
-        if (data) {
-            return data;
-        }
-        throw {
-            response: ajax && {
-                responseText: encodeURIComponent(ajax.responseText),
-                status: ajax.status,
-                statusText: encodeURIComponent(ajax.statusText)
-            },
-            request: {
-                type,
-                url,
-                req,
-                opt
-            },
-            msg: '网络异常！请稍后再试'
+                    data = uObject.jsonParse<T>(ajax.responseText);
+                }
+                this.onFetchSuccess && await this.onFetchSuccess(opt, { url, req, rsp: data }, ajax);
+
+                if (data) {
+                    return data;
+                }
+                throw {
+                    ajax,
+                    request: {
+                        type,
+                        url,
+                        opt,
+                        reqData: req
+                    },
+                    msg: '网络异常！请稍后再试'
+                };
+            } catch (e) {
+                if (shouldRetry) {
+                    nowRetryTimes++;
+                    if (await shouldRetry({
+                        error: e,
+                        nowRetryTimes
+                    })) {
+                        return handler();
+                    }
+
+                    throw e;
+                }
+
+                if (nowRetryTimes >= maxRetryTimes) {
+                    throw e;
+                }
+
+                nowRetryTimes++;
+
+                return handler();
+            }
         };
+
+        return handler();
     }
 
     public readonly getLocalUrl = (url: string) => (this.options.prefix || '') + url;
