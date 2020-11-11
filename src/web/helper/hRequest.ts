@@ -144,7 +144,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
 
         let rsp: dFetch.SuccessJsonBody<T> | dFetch.ErrorJsonBody | null;
         try {
-            rsp = await this.apiFetch<dFetch.SuccessJsonBody<T> | dFetch.ErrorJsonBody | null>(type, url, req, opt);
+            rsp = await this.fetchJson<dFetch.SuccessJsonBody<T> | dFetch.ErrorJsonBody | null>(type, url, req, opt);
             apiInfo.rsp = rsp;
         } catch (e) {
             const error = e as dp.Obj;
@@ -237,7 +237,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
 
         let rsp: dFetch.SuccessJsonBody<T> | dFetch.ErrorJsonBody;
         try {
-            rsp = await this.apiFetch<dFetch.SuccessJsonBody<T> | dFetch.ErrorJsonBody>(type, url, req, opt);
+            rsp = await this.fetchJson<dFetch.SuccessJsonBody<T> | dFetch.ErrorJsonBody>(type, url, req, opt);
             apiInfo.rsp = rsp;
         } catch (e) {
             const error = e as dp.Obj;
@@ -277,7 +277,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
         };
     }
 
-    protected readonly apiFetch = async <T>(type: eHttp.MethodType, url: string, req?: dp.Obj | FormData | null, opt: dRequest.Options & Partial<TCustomOpt> = {}) => {
+    public readonly fetchJson = async <T>(type: eHttp.MethodType, url: string, req?: dp.Obj | FormData | null, opt: dRequest.Options & Partial<TCustomOpt> = {}) => {
         let data;
         let ajax;
 
@@ -354,7 +354,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
                     if (contentType === eHttp.ContentType.JSON) {
                         ajax.send(JSON.stringify(sendData));
                     } else if (contentType === eHttp.ContentType.FORM) {
-                        ajax.send(uHttp.paramsToQuery(sendData));
+                        ajax.send(uHttp.stringifyQuery(sendData));
                     }
                 }
             }

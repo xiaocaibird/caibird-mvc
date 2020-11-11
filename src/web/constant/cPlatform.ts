@@ -2,15 +2,16 @@
  * @Creater cmZhou
  * @Desc platform 常量
  */
-import Bowser from 'bowser';
+import platform from 'platform';
 
 namespace _cPlatform {
-    const bowser = Bowser.getParser(navigator.userAgent);
+    export const MODEL = platform.product || '';
+    export const MANUFACTURER = platform.manufacturer || '';
 
-    export const OS_NAME = bowser.getOSName();
+    export const OS_NAME = platform.os?.family || '';
     const OS_NAME_LC = OS_NAME.toLowerCase();
 
-    export const OS_VERSION = bowser.getOSVersion();
+    export const OS_VERSION = platform.os?.version || '';
 
     export const isIOS = OS_NAME_LC === ePlatform.OsName.IOS.toLowerCase();
     export const isAndroid = OS_NAME_LC === ePlatform.OsName.Android.toLowerCase();

@@ -5,9 +5,21 @@
 import uString from './uString';
 
 namespace _uHttp {
-    export const urlAddQuery = (url: string, params?: string | dp.Obj | null) => {
+    export const urlAddQuery = (
+        url: string,
+        params?: string | dp.Obj | null,
+        opt: {
+            isClear?: boolean;
+            isSort?: boolean;
+            sortFn?(a: string, b: string): number;
+        } = {}) => {
         if (!params) return url;
-        const query = (uString.check(params) ? params : paramsToQuery(params)).trim();
+
+        const { isClear, isSort } = opt;
+
+        const query = (uString.check(params) ?
+            (isClear || isSort ? stringifyQuery(parseUrl(params), opt) : params) :
+            stringifyQuery(params, opt)).trim();
         if (url.includes('?')) {
             if (!url.endsWith('?') && !query.startsWith('&')) {
                 return `${url}&${query}`;
@@ -22,10 +34,12 @@ namespace _uHttp {
         if (!url) return result;
         try {
             (!url.includes('?') ? `?${url.trim()}` : url.trim()).split('?')[1].split('&').forEach(item => {
-                const list = item.split('=');
-                if (list[0]) {
-                    result[list[0]] = list[1] && decodeURIComponent(list[1]);
-                }
+                try {
+                    const list = item.split('=');
+                    if (list[0]) {
+                        result[list[0]] = list[1] && decodeURIComponent(list[1]);
+                    }
+                } catch { }
             }
             );
         } catch {
@@ -33,21 +47,36 @@ namespace _uHttp {
         return result;
     };
 
-    export const paramsToQuery = (obj: dp.AllowNon<dp.Obj<dp.UrlParams>>) => {
-        if (!obj) return '';
-        return Object.keys(obj).map(item => {
-            let value = '';
-            try {
-                const param = obj[item];
-                if (param == null) {
+    export const stringifyQuery = (
+        obj: dp.AllowNon<dp.Obj<dp.UrlParams>>,
+        opt: {
+            isSort?: boolean;
+            sortFn?(a: string, b: string): number;
+        } = {}) => {
+        try {
+            if (!obj) return '';
+            const { isSort, sortFn } = opt;
+
+            let list = Object.keys(obj);
+
+            if (isSort) {
+                list = list.sort(sortFn);
+            }
+
+            return list.map(item => {
+                try {
+                    const value = obj[item];
+                    if (value == null) {
+                        return '';
+                    }
+                    return `${item}=${encodeURIComponent(value.toString())}`;
+                } catch {
                     return '';
                 }
-                value = param.toString();
-            } catch {
-            }
-            return `${item}=${encodeURIComponent(value)}`;
+            }).filter(item => !!item).join('&');
+        } catch {
+            return '';
         }
-        ).filter(item => !!item).join('&');
     };
 
     export const createFormData = (obj: dp.Obj<string | Blob>) => {
