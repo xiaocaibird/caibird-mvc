@@ -24,7 +24,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
     }) { }
 
     private readonly onVersionMismatch = uTask.debounce(() => {
-        throw new cError.VersionMismatch({ msg: '版本不匹配！' });
+        throw new cError.VersionMismatch({ msg: '版本不匹配！', key: 'versionMismatch' });
     }, this.options.versionCheckInterval);
 
     protected abstract readonly onFetchSuccess?: (opt: dRequest.Options & Partial<TCustomOpt>, details: dRequest.ApiInfo, ajax?: XMLHttpRequest) => dp.PromiseOrSelf<void>;
@@ -140,7 +140,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
             req,
             rsp: undefined
         };
-        const key = 'web_hRequest_api_getResult_';
+        const key = 'hRequest_getResult_';
 
         let rsp: dFetch.SuccessJsonBody<T> | dFetch.ErrorJsonBody | null;
         try {
@@ -156,6 +156,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
                     apiInfo
                 },
                 {
+                    key: `${key}fetch_fail`,
                     showPrompt: nowShowPrompt,
                     promptStyleType: nowPromptStyleType,
                     msg: (error && (error.msg || error.message) || defaultMsg) as string
@@ -181,6 +182,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
                     apiInfo
                 },
                 {
+                    key: `${key}rsp_empty`,
                     showPrompt: nowShowPrompt,
                     promptStyleType: nowPromptStyleType,
                     msg: defaultMsg
@@ -210,6 +212,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
                     apiInfo
                 },
                 {
+                    key: `${key}login_error`,
                     msg: rsp.msg || '请登录！'
                 });
         }
@@ -220,6 +223,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
                 apiInfo
             },
             {
+                key: `${key}api_error`,
                 showPrompt: nowShowPrompt,
                 promptStyleType: nowPromptStyleType,
                 msg: rsp.msg
@@ -234,6 +238,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
             req,
             rsp: null
         };
+        const key = 'hRequest_getNoHandleResult_';
 
         let rsp: dFetch.SuccessJsonBody<T> | dFetch.ErrorJsonBody;
         try {
@@ -266,6 +271,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
                         apiInfo
                     },
                     {
+                        key: `${key}login_error`,
                         msg: rsp.msg || '请登录！'
                     });
             }

@@ -4,6 +4,7 @@
  */
 declare namespace dError {
     type Options = {
+        key: string;
         msg?: string;
         showPrompt?: ePrompt.Type | false;
         promptStyleType?: ePrompt.StyleType;
