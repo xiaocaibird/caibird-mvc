@@ -135,7 +135,7 @@ namespace _cError {
             public readonly options: dError.Options,
             public readonly logOptions: dReport.ErrorLogOptions | false = false
         ) {
-            super(options, logOptions, ApiFetchFail.name);
+            super(options, logOptions, ReactError.name);
             compatible(this, [...arguments]);
         }
     }
