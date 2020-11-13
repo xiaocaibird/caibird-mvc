@@ -126,6 +126,20 @@ namespace _cError {
         }
     }
 
+    export class ReactError extends CommonError {
+        constructor(
+            public readonly details: {
+                error: Error;
+                errorInfo: React.ErrorInfo;
+            },
+            public readonly options: dError.Options,
+            public readonly logOptions: dReport.ErrorLogOptions | false = false
+        ) {
+            super(options, logOptions, ApiFetchFail.name);
+            compatible(this, [...arguments]);
+        }
+    }
+
     export class ApiFetchFail extends CommonError {
         constructor(
             public readonly details: {
