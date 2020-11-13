@@ -6,7 +6,8 @@ declare namespace dRequest {
     type Options<TNoHandle extends boolean | undefined = undefined, TFormFetch extends boolean | undefined = undefined, TCustom extends object = {}> = {
         noHandle?: TNoHandle;
         timeout?: number;
-        contentType?: string;
+        contentType?: string | null;
+        requestedWith?: string | null;
         withCredentials?: boolean;
         isFormFetch?: TFormFetch;
         isJsonpFetch?: boolean;

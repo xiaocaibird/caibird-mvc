@@ -28,4 +28,7 @@ declare namespace eHttp {
         XML = 'application/xml',
         MULTIPART = 'multipart/form-data'
     }
+    const enum RequestedWith {
+        XMLHttpRequest = 'XMLHttpRequest'
+    }
 }

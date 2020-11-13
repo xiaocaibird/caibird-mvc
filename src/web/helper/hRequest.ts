@@ -277,12 +277,13 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
         };
     }
 
-    public readonly fetchJson = async <T>(type: eHttp.MethodType, url: string, req?: dp.Obj | FormData | null, opt: dRequest.Options & Partial<TCustomOpt> = {}) => {
+    public readonly fetchJson = async <T>(type: eHttp.MethodType, url: string, req?: string | dp.Obj | FormData | null, opt: dRequest.Options & Partial<TCustomOpt> = {}) => {
         let data;
         let ajax;
 
         if (opt.isJsonpFetch) {
-            data = await this.jsonpFetch<T>(url, req || {}, opt);
+            const reqObj = uString.check(req) ? uHttp.parseUrl(req) : req;
+            data = await this.jsonpFetch<T>(url, reqObj || {}, opt);
         } else {
             ajax = await this.fetch(type, url, req, opt);
 
@@ -307,7 +308,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
 
     public readonly getLocalUrl = (url: string) => (this.options.prefix || '') + url;
 
-    public readonly fetch = (type: eHttp.MethodType, oriUrl: string, req?: dp.Obj | FormData | null, opt: dRequest.Options = {}) => {
+    public readonly fetch = (type: eHttp.MethodType, oriUrl: string, req?: string | dp.Obj | FormData | null, opt: dRequest.Options = {}) => {
         let url = oriUrl.trim();
         if (!url.startsWith('http://') && !url.startsWith('https://')) {
             url = this.getLocalUrl(url);
@@ -315,7 +316,8 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
 
         const sendData = req || {};
         const p = new Promise<XMLHttpRequest>((resolve, reject) => {
-            const { timeout = this.options.timeout == null ? eDate.Timespan.RequestTimeout : this.options.timeout, contentType = eHttp.ContentType.JSON, headers = {}, withCredentials } = opt;
+            const { timeout = this.options.timeout == null ? eDate.Timespan.RequestTimeout : this.options.timeout,
+                contentType, headers = {}, withCredentials, requestedWith = eHttp.RequestedWith.XMLHttpRequest } = opt;
             const ajax = new XMLHttpRequest();
             ajax.responseType = 'text';
             if (withCredentials !== undefined) {
@@ -338,23 +340,27 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
             if (uString.equalIgnoreCase(type, eHttp.MethodType.GET)) {
                 ajax.open(type, uHttp.urlAddQuery(url, sendData), true);
                 Object.keys(headers).forEach(k => {
-                    ajax.setRequestHeader(k, headers[k]);
+                    if (headers[k] != null) ajax.setRequestHeader(k, headers[k]);
                 });
                 ajax.send(undefined);
             } else {
                 ajax.open(type, url, true);
-                ajax.setRequestHeader('x-requested-with', 'XMLHttpRequest');
+                if (requestedWith != null) ajax.setRequestHeader('x-requested-with', requestedWith);
                 Object.keys(headers).forEach(k => {
-                    ajax.setRequestHeader(k, headers[k]);
+                    if (headers[k] != null) ajax.setRequestHeader(k, headers[k]);
                 });
                 if (typeof FormData !== 'undefined' && uObject.checkInstance(sendData, FormData)) {
+                    if (contentType === undefined) ajax.setRequestHeader('Content-Type', eHttp.ContentType.MULTIPART);
                     ajax.send(sendData);
                 } else {
-                    ajax.setRequestHeader('Content-Type', contentType);
-                    if (contentType === eHttp.ContentType.JSON) {
+                    if (contentType === eHttp.ContentType.JSON || contentType === undefined) {
+                        if (contentType === undefined) ajax.setRequestHeader('Content-Type', eHttp.ContentType.JSON);
+
                         ajax.send(JSON.stringify(sendData));
                     } else if (contentType === eHttp.ContentType.FORM) {
-                        ajax.send(uHttp.stringifyQuery(sendData));
+                        ajax.send(uString.check(sendData) ? sendData : uHttp.stringifyQuery(sendData));
+                    } else {
+                        ajax.send(JSON.stringify(sendData));
                     }
                 }
             }
