@@ -10,7 +10,7 @@ declare namespace eFetch {
         //#region 通用
         CommonFail = 10, // 失败
         ParameterError = 20, // 参数异常
-        AjaxError = 30, // ajax执行异常
+        FetchError = 30, // fetch执行异常
         WebLogicError = 40, // 前端逻辑异常，通常需要刷新页面
         Timeout = 50, // 超时
         Maintenancing = 60, // 系统维护中

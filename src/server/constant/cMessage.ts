@@ -6,7 +6,7 @@ namespace _cMessage {
     export const jsonError: { [K in eFetch.JsonErrorCode]?: string; } = {
         [eFetch.JsonErrorCode.CommonFail]: '请求失败！请稍后再试！',
         [eFetch.JsonErrorCode.ParameterError]: '参数错误！请核对参数！',
-        [eFetch.JsonErrorCode.AjaxError]: '请求失败！请稍后再试！',
+        [eFetch.JsonErrorCode.FetchError]: '请求失败！请稍后再试！',
         [eFetch.JsonErrorCode.WebLogicError]: '页面过期！请刷新',
         [eFetch.JsonErrorCode.Timeout]: '请求超时！',
         [eFetch.JsonErrorCode.Maintenancing]: '系统维护中！请稍后再试！',

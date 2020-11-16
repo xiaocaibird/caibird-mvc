@@ -27,7 +27,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
         throw new cError.VersionMismatch({ msg: '版本不匹配！', key: 'versionMismatch' });
     }, this.options.versionCheckInterval);
 
-    protected abstract readonly onFetchSuccess?: (opt: dRequest.Options & Partial<TCustomOpt>, details: dRequest.ApiInfo, ajax?: XMLHttpRequest) => dp.PromiseOrSelf<void>;
+    protected abstract readonly onFetchSuccess?: (opt: dRequest.Options & Partial<TCustomOpt>, details: dRequest.ApiInfo, xhr?: XMLHttpRequest) => dp.PromiseOrSelf<void>;
     protected abstract readonly onGetResultError?: (error: object | null, opt: dRequest.Options & Partial<TCustomOpt>, details: dRequest.ApiInfo) => dp.PromiseOrSelf<boolean>;
     protected abstract readonly preGetNoHandleResult?: (rsp: dFetch.SuccessJsonBody<any> | dFetch.ErrorJsonBody | null, opt: dRequest.DetailsOptions & Partial<TCustomOpt>, details: dRequest.ApiInfo) => dp.PromiseOrSelf<void>;
     protected abstract readonly onGetNoHandleResultError?: (error: any, opt: dRequest.DetailsOptions & Partial<TCustomOpt>, details: dRequest.ApiInfo) => dp.PromiseOrSelf<void>;
@@ -250,7 +250,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
 
             const msg = error && (error.msg || error.message) || defaultMsg;
             return {
-                code: eFetch.JsonErrorCode.AjaxError,
+                code: eFetch.JsonErrorCode.FetchError,
                 msg
             };
         }
@@ -285,23 +285,28 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
 
     public readonly fetchJson = async <T>(type: eHttp.MethodType, url: string, req?: string | dp.Obj | FormData | null, opt: dRequest.Options & Partial<TCustomOpt> = {}) => {
         let data;
-        let ajax;
+        let xhr;
 
         if (opt.isJsonpFetch) {
             const reqObj = uString.check(req) ? uHttp.parseUrl(req) : req;
             data = await this.jsonpFetch<T>(url, reqObj || {}, opt);
         } else {
-            ajax = await this.fetch(type, url, req, opt);
+            xhr = await this.fetch(type, url, req, opt);
 
-            data = uObject.jsonParse<T>(ajax.responseText);
+            data = uObject.jsonParse<T>(xhr.responseText);
         }
-        this.onFetchSuccess && await this.onFetchSuccess(opt, { url, req, rsp: data }, ajax);
+        this.onFetchSuccess && await this.onFetchSuccess(opt, { url, req, rsp: data }, xhr);
 
         if (data) {
             return data;
         }
         throw {
-            ajax,
+            xhr,
+            response: xhr && {
+                responseText: xhr.responseText,
+                status: xhr.status,
+                statusText: xhr.statusText
+            },
             request: {
                 type,
                 url,
@@ -324,49 +329,49 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
         const p = new Promise<XMLHttpRequest>((resolve, reject) => {
             const { timeout = this.options.timeout == null ? eDate.Timespan.RequestTimeout : this.options.timeout,
                 contentType, headers = {}, withCredentials, requestedWith = eHttp.RequestedWith.XMLHttpRequest } = opt;
-            const ajax = new XMLHttpRequest();
-            ajax.responseType = 'text';
+            const xhr = new XMLHttpRequest();
+            xhr.responseType = 'text';
             if (withCredentials !== undefined) {
-                ajax.withCredentials = withCredentials;
+                xhr.withCredentials = withCredentials;
             }
 
             setTimeout(() => {
                 reject({ msg: '请求超时！' });
-                ajax.abort();
+                xhr.abort();
             }, timeout);
 
             const readyState = 4;
-            ajax.onreadystatechange = () => {
-                if (ajax.readyState !== readyState) {
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState !== readyState) {
                     return;
                 }
-                resolve(ajax);
+                resolve(xhr);
             };
 
             if (uString.equalIgnoreCase(type, eHttp.MethodType.GET)) {
-                ajax.open(type, uHttp.urlAddQuery(url, sendData), true);
+                xhr.open(type, uHttp.urlAddQuery(url, sendData), true);
                 Object.keys(headers).forEach(k => {
-                    if (headers[k] != null) ajax.setRequestHeader(k, headers[k]);
+                    if (headers[k] != null) xhr.setRequestHeader(k, headers[k]);
                 });
-                ajax.send(undefined);
+                xhr.send(undefined);
             } else {
-                ajax.open(type, url, true);
-                if (requestedWith != null) ajax.setRequestHeader('x-requested-with', requestedWith);
+                xhr.open(type, url, true);
+                if (requestedWith != null) xhr.setRequestHeader('x-requested-with', requestedWith);
                 Object.keys(headers).forEach(k => {
-                    if (headers[k] != null) ajax.setRequestHeader(k, headers[k]);
+                    if (headers[k] != null) xhr.setRequestHeader(k, headers[k]);
                 });
                 if (typeof FormData !== 'undefined' && uObject.checkInstance(sendData, FormData)) {
-                    if (contentType === undefined) ajax.setRequestHeader('Content-Type', eHttp.ContentType.MULTIPART);
-                    ajax.send(sendData);
+                    if (contentType === undefined) xhr.setRequestHeader('Content-Type', eHttp.ContentType.MULTIPART);
+                    xhr.send(sendData);
                 } else {
                     if (contentType === eHttp.ContentType.JSON || contentType === undefined) {
-                        if (contentType === undefined) ajax.setRequestHeader('Content-Type', eHttp.ContentType.JSON);
+                        if (contentType === undefined) xhr.setRequestHeader('Content-Type', eHttp.ContentType.JSON);
 
-                        ajax.send(JSON.stringify(sendData));
+                        xhr.send(JSON.stringify(sendData));
                     } else if (contentType === eHttp.ContentType.FORM) {
-                        ajax.send(uString.check(sendData) ? sendData : uHttp.stringifyQuery(sendData));
+                        xhr.send(uString.check(sendData) ? sendData : uHttp.stringifyQuery(sendData));
                     } else {
-                        ajax.send(JSON.stringify(sendData));
+                        xhr.send(JSON.stringify(sendData));
                     }
                 }
             }
