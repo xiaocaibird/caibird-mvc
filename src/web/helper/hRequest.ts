@@ -8,7 +8,6 @@ import { uHttp } from '../util/uHttp';
 import { uObject } from '../util/uObject';
 import { uString } from '../util/uString';
 import { uTask } from '../util/uTask';
-import { uUuid } from '../util/uUuid';
 
 export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCustomOpt extends {}> {
     constructor(protected readonly options: {
@@ -22,6 +21,8 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
         defaultRetryTimes?: number;
         errorProbability?: number;
     }) { }
+
+    private jsonpIndex = 0;
 
     private readonly onVersionMismatch = uTask.debounce(() => {
         throw new cError.VersionMismatch({ msg: '版本不匹配！', key: 'versionMismatch' });
@@ -99,7 +100,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
 
         return new Promise<T>((resolve, reject) => {
             const script = document.createElement('script');
-            const funcName = jsonpCallbackFuncName || `_jsonpcb_${Date.now()}_${uUuid.get()}_`;
+            const funcName = jsonpCallbackFuncName || `_caibird_jsonpcb${this.jsonpIndex++}_`;
             const clear = () => {
                 script.remove();
                 delete (window as any)[funcName];
