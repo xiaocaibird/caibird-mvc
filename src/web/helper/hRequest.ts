@@ -357,19 +357,19 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
                 xhr.send(undefined);
             } else {
                 xhr.open(type, url, true);
-                if (requestedWith != null) xhr.setRequestHeader('x-requested-with', requestedWith);
                 Object.keys(headers).forEach(k => {
                     if (headers[k] != null) xhr.setRequestHeader(k, headers[k]);
                 });
+                if (requestedWith !== null) xhr.setRequestHeader('x-requested-with', requestedWith);
                 if (typeof FormData !== 'undefined' && uObject.checkInstance(sendData, FormData)) {
-                    if (contentType === undefined) xhr.setRequestHeader('Content-Type', eHttp.ContentType.MULTIPART);
+                    if (contentType !== null) xhr.setRequestHeader('Content-Type', contentType ?? eHttp.ContentType.MULTIPART);
                     xhr.send(sendData);
                 } else {
                     if (contentType === eHttp.ContentType.JSON || contentType === undefined) {
-                        if (contentType === undefined) xhr.setRequestHeader('Content-Type', eHttp.ContentType.JSON);
-
+                        xhr.setRequestHeader('Content-Type', eHttp.ContentType.JSON);
                         xhr.send(JSON.stringify(sendData));
                     } else if (contentType === eHttp.ContentType.FORM) {
+                        xhr.setRequestHeader('Content-Type', eHttp.ContentType.FORM);
                         xhr.send(uString.check(sendData) ? sendData : uHttp.stringifyQuery(sendData));
                     } else {
                         xhr.send(JSON.stringify(sendData));

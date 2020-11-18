@@ -23,6 +23,7 @@ declare namespace eHttp {
         Attachment = 'attachment'
     }
     const enum ContentType {
+        TEXT = 'text/plain;charset=utf-8',
         JSON = 'application/json',
         FORM = 'application/x-www-form-urlencoded',
         XML = 'application/xml',
