@@ -260,11 +260,7 @@ export default class App<TRules extends object, TState extends object, TCustom e
                 }
             }
 
-            controller.filterRules = {
-                ...setClass.filterRules,
-                ...AController.filterRules,
-                ...controller.filterRules
-            };
+            Object.assign(controller.filterRules, setClass.filterRules, AController.filterRules, controller.filterRules);
 
             const controllerName = controller.name;
             const key = this.getControllerName(controllerName);

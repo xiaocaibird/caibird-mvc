@@ -95,6 +95,7 @@
         "noImplicitReturns": true, //不是函数的所有返回路径都有返回值时报错。
         "noImplicitThis": true, //当this表达式的值为any类型的时候，生成一个错误。
         "noStrictGenericChecks": false, //禁用在函数类型里对泛型签名进行严格检查。
+        "noUncheckedIndexedAccess": false, // 开启后会强制所有索引类型为可空类型
         "noUnusedLocals": true, //若有未使用的局部变量则抛错。
         "noUnusedParameters": true, //若有未使用的参数则抛错。
         "strict": true, //启用所有严格类型检查选项。启用 --strict相当于启用 --noImplicitAny, --noImplicitThis, --alwaysStrict， --strictNullChecks和 --strictFunctionTypes和--strictPropertyInitialization。
