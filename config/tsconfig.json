@@ -9,7 +9,7 @@
         //#region 基本配置
         "charset": "utf8",
         "disableSizeLimit": false, //禁用对工程中非TS文件的大小的限制。
-        "jsx": "react", //jsx类型。
+        "jsx": "react-jsx", //jsx类型。
         "module": "commonjs", //模块系统。
         "moduleResolution": "node", //模块解析规范。
         //"rootDir": "src", //设置编译的根目录。所有待编译的文件都要在这个目录下。
