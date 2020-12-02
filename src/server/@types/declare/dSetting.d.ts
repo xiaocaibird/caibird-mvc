@@ -12,7 +12,7 @@ declare namespace dSetting {
         tracingAnalysisEndpoint?: string;
 
         publicDbConfig?: {
-            userName: string;
+            username: string;
             password: string;
             host: string;
             port: number;
