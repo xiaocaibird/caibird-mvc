@@ -6,18 +6,18 @@ import crypto, { HashOptions } from 'crypto';
 
 export namespace uCrypto {
     const defaultPartSize = 100000;
-    export const syncHash = (data: string | Buffer, algorithm: string, opt: {
+    export const hash = (data: string | Buffer, algorithm: string, opt: {
         partSize?: number;
     } & HashOptions = {}) => {
         const { partSize = defaultPartSize } = opt;
-        const hash = crypto.createHash(algorithm, opt);
+        const h = crypto.createHash(algorithm, opt);
         const total = Math.ceil(data.length / partSize);
         for (let i = 0; i < total; i++) {
             const part = data.slice(i * partSize,
                 i === total - 1 ? Math.min((i + 1) * partSize, data.length) : (i + 1) * partSize);
-            hash.update(part);
+            h.update(part);
         }
-        return hash.digest('hex');
+        return h.digest('hex');
     };
 
     const strEncrypt = (str: string, key: string, iv: crypto.BinaryLike) => {

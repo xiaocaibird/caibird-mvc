@@ -3,7 +3,7 @@
  * @Desc task util
  */
 
-namespace _uTask {
+export namespace uTask {
     export const debounce = <T extends dp.Func>(task: T, wait = 60000) => {
         let previous = 0;
         return (...p: dp.GetFuncParams<T>) => {
@@ -19,33 +19,29 @@ namespace _uTask {
         setTimeout(resolve, delay);
     });
 
-    export const trySeveralTimes = async <T extends dp.Func>(task: T, maxTimes = 20, delay?: number) => {
-        let error;
-        for (let i = 1; i <= maxTimes; i++) {
+    export const retry = async <T extends dp.Func>(task: T, opt: {
+        maxRunTimes?: number;
+        delay?: number;
+        shouldRetry?(params: { error: any; nowRunTimes: number }): dp.PromiseOrSelf<boolean>;
+    } = {}) => {
+        const { maxRunTimes = 5, delay, shouldRetry } = opt;
+        const errors = [];
+        for (let i = 1; i <= maxRunTimes; i++) {
             try {
                 return task() as ReturnType<T>;
             } catch (e) {
-                error = e;
-                if (delay != null) {
-                    await sleep(delay);
+                if (!shouldRetry || await shouldRetry({ error: e, nowRunTimes: i })) {
+                    errors.push(e);
+                    if (delay != null) {
+                        await sleep(delay);
+                    }
+                } else {
+                    break;
                 }
             }
         }
-        throw error;
-    };
-
-    export const throttle = <T extends dp.Func>(task: T, timeout = 300) => {
-        let timer: NodeJS.Timeout;
-        return (...p: dp.GetFuncParams<T>) => {
-            if (timer != null) {
-                clearTimeout(timer);
-            }
-            timer = setTimeout(() => {
-                task(...p);
-            }, timeout) as any;
-        };
+        throw errors;
     };
 }
 
-export const uTask: dp.DeepReadonly<typeof _uTask> = _uTask;
 export default uTask;
