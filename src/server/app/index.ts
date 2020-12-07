@@ -550,7 +550,7 @@ export default class App<TRules extends object, TState extends object, TCustom e
             const body = ctx.request.body as dp.Obj;
 
             if (body[formRequestKey]) {
-                formParams = uObject.jsonParse(body[formRequestKey] as string);
+                formParams = uObject.parseJson(body[formRequestKey] as string);
             }
 
             const rsp = await Action.bind(controllerObj)({ ...ctx.query, ...body, ...formParams });

@@ -2,7 +2,7 @@
  * @Creater cmZhou
  * @Desc public string工具
  */
-namespace _uString {
+export namespace uString {
     export const check = (obj: unknown): obj is string => typeof obj === 'string';
 
     export const equalIgnoreCase = (a: string, b: string) => a.toLowerCase() === b.toLowerCase();
@@ -37,5 +37,4 @@ namespace _uString {
     };
 }
 
-export const uString: dp.DeepReadonly<typeof _uString> = _uString;
 export default uString;

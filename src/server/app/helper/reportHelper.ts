@@ -64,7 +64,7 @@ class ReportHelper {
                 }
 
                 if (info.length <= maxLength) {
-                    const obj = uObject.jsonParse(info);
+                    const obj = uObject.parseJson(info);
                     if (obj) return obj;
                 }
 
@@ -78,7 +78,7 @@ class ReportHelper {
                         _msg_: '【contentSizeIsTooBig】'
                     };
                 }
-                return uObject.jsonParse(json);
+                return uObject.parseJson(json);
             } else if (uObject.check(info) && info) {
                 const obj = info as dp.Obj<string | number | dp.Obj | undefined>;
 
@@ -111,7 +111,7 @@ class ReportHelper {
                     };
                 } else {
                     result = {
-                        ...uObject.jsonParse(json),
+                        ...uObject.parseJson(json),
                         ...result
                     };
                 }

@@ -4,7 +4,7 @@
  */
 import stringify from 'json-stringify-safe';
 
-namespace _uObject {
+export namespace uObject {
     export const check = (obj: unknown): obj is object => typeof obj === 'object';
 
     export const checkInstance = <I, T extends dp.Class>(obj: I, type: T): obj is InstanceType<T> => obj instanceof type;
@@ -26,7 +26,7 @@ namespace _uObject {
         return obj;
     };
 
-    export const jsonParse = <T>(str: dp.AllowNon<string>) => {
+    export const parseJson = <T>(str: dp.AllowNon<string>) => {
         if (!str) return null;
         try {
             return JSON.parse(str) as T;
@@ -37,8 +37,7 @@ namespace _uObject {
 
     export const safeStringify = stringify;
 
-    export const getSafeJsonObj = <T extends object>(obj: T) => jsonParse(safeStringify(obj)) as T;
+    export const getSafeJsonObj = <T extends object>(obj: T) => parseJson(safeStringify(obj)) as T;
 }
 
-export const uObject: dp.DeepReadonly<typeof _uObject> = _uObject;
 export default uObject;

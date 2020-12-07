@@ -294,7 +294,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
         } else {
             xhr = await this.fetch(type, url, req, opt);
 
-            data = uObject.jsonParse<T>(xhr.responseText);
+            data = uObject.parseJson<T>(xhr.responseText);
         }
         this.onFetchSuccess && await this.onFetchSuccess(opt, { url, req, rsp: data }, xhr);
 
