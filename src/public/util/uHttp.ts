@@ -4,7 +4,7 @@
  */
 import uString from './uString';
 
-namespace _uHttp {
+export namespace uHttp {
     export const urlAddQuery = (
         url: string,
         params?: string | dp.Obj | null,
@@ -40,8 +40,7 @@ namespace _uHttp {
                         result[list[0]] = list[1] && decodeURIComponent(list[1]);
                     }
                 } catch { }
-            }
-            );
+            });
         } catch {
         }
         return result;
@@ -86,5 +85,4 @@ namespace _uHttp {
     };
 }
 
-export const uHttp: dp.DeepReadonly<typeof _uHttp> = _uHttp;
 export default uHttp;

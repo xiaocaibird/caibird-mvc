@@ -2,8 +2,8 @@
  * @Creater cmZhou
  * @Desc public 函数工具
  */
-namespace _uFunction {
-    export const NOOP = () => { };
+export namespace uFunction {
+    export const noop = () => { };
 
     export const check = <T extends Function = Function>(fn: unknown): fn is T => typeof fn === 'function';
 
@@ -11,5 +11,4 @@ namespace _uFunction {
         sonClass ? !!(fatherClass.prototype as { isPrototypeOf: Function }).isPrototypeOf(sonClass.prototype) : false;
 }
 
-export const uFunction: dp.DeepReadonly<typeof _uFunction> = _uFunction;
 export default uFunction;
