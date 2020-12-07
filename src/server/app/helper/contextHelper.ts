@@ -47,7 +47,7 @@ class ContextHelper {
         setTimeout(() => {
             this.zone.set(this.CTX_KEY, undefined);
             this.zone.set(this.TAMP_KEY, undefined);
-        }, eDate.MillisecondCount.OneSecond);
+        }, eDate.MsCount.OneSec);
     }
 
     public readonly disableDefaultTimestamp = () => this.defaultTimestamp = false;

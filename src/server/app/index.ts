@@ -475,7 +475,7 @@ export default class App<TRules extends object, TState extends object, TCustom e
                 const UUID = ctx.cookies.get(cKey.cookie.UUID);
                 if (!UUID) {
                     const newUuid = uUuid.get();
-                    ctx.cookies.set(cKey.cookie.UUID, newUuid, { expires: new Date(Date.now() + eDate.MillisecondCount.Chiliad), signed: false, httpOnly: false });
+                    ctx.cookies.set(cKey.cookie.UUID, newUuid, { expires: new Date(Date.now() + eDate.MsCount.Chiliad), signed: false, httpOnly: false });
                     span && span.log({ event: 'uuid', value: newUuid });
                 } else {
                     span && span.log({ event: 'uuid', value: UUID });

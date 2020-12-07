@@ -29,7 +29,7 @@ namespace _uFile {
                         fileReader: fr
                     });
                 }
-            }, eDate.Timespan.PromiseTimeout * eNumber.Common.Ten);
+            }, eDate.MsTimespan.PromiseTimeout * eNumber.Common.Ten);
 
             if (type === eFile.FileReaderResultDateType.Binary) {
                 fr.readAsBinaryString(file);
@@ -96,7 +96,7 @@ namespace _uFile {
                 image.onerror = () => {
                     resolve(imageInfo);
                 };
-                setTimeout(() => { resolve(imageInfo); }, eDate.Timespan.PromiseTimeout);
+                setTimeout(() => { resolve(imageInfo); }, eDate.MsTimespan.PromiseTimeout);
             }
         });
     };

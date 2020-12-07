@@ -9,7 +9,7 @@ namespace _uCookie {
         let exp: Date | null = null;
         if (days != null) {
             exp = new Date();
-            exp.setTime(exp.getTime() + (days === 'keep' ? keepDays : days) * eDate.MillisecondCount.OneDay);
+            exp.setTime(exp.getTime() + (days === 'keep' ? keepDays : days) * eDate.MsCount.OneDay);
         }
 
         document.cookie = `${name}=${encodeURIComponent(value)}${exp == null ? '' : (';expires=' + exp.toUTCString())}`;

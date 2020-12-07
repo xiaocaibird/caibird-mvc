@@ -118,7 +118,7 @@
         "noEmitHelpers": false, //不在输出文件中生成用户自定义的帮助函数代码，如 __extends。importHelpers为true的话该选项无效。
         "noImplicitUseStrict": false, //模块输出中不包含 "use strict"指令。
         "preserveConstEnums": false, //保留 const enum声明。
-        "reactNamespace": "React", //当目标为生成 "react" JSX时，指定 createElement和 __spread的调用对象
+        // "reactNamespace": "React", //当目标为生成 "react" JSX时，指定 createElement和 __spread的调用对象
         "removeComments": true, //刪除所有注释
         //#endregion
 

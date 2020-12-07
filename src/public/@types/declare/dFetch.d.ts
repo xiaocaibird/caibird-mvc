@@ -5,9 +5,9 @@
 declare namespace dFetch {
     type BaseControllers = dp.Obj<Function>;
 
-    type BaseApi<TControllers extends BaseControllers> = {
+    type StandardApi<TControllers extends BaseControllers> = {
         [C in keyof TControllers]: {
-            [A in keyof TControllers[C]['prototype']]: ApiData<
+            [A in keyof TControllers[C]['prototype']]: ApiInfo<
                 TControllers[C]['prototype'][A] extends () => any ? never :
                 TControllers[C]['prototype'][A] extends (req: object) => any ?
                 TControllers[C]['prototype'][A] extends (req: dMvc.ActionReq<infer Req>) => any ? Req extends object ? Req : never : never : never,
@@ -18,7 +18,7 @@ declare namespace dFetch {
 
     type RealApi<TControllers extends BaseControllers> = {
         [C in keyof TControllers]: {
-            [A in keyof TControllers[C]['prototype']]: ApiData<
+            [A in keyof TControllers[C]['prototype']]: ApiInfo<
                 TControllers[C]['prototype'][A] extends () => any ? never :
                 TControllers[C]['prototype'][A] extends (req: dMvc.ActionReq<infer Req>) => any ? Req :
                 TControllers[C]['prototype'][A] extends (req: infer Req) => any ? Req : never,
@@ -47,7 +47,7 @@ declare namespace dFetch {
 
     interface ExtendJsonBody { }
 
-    type ApiData<TReq, TRsp> = {
+    type ApiInfo<TReq, TRsp> = {
         req: TReq;
         rsp: TRsp;
     };

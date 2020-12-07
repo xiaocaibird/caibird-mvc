@@ -16,7 +16,8 @@ declare namespace eHttp {
         POST = 'POST',
         GET = 'GET',
         PUT = 'PUT',
-        DELETE = 'DELETE'
+        DELETE = 'DELETE',
+        OPTION = 'OPTION'
     }
     const enum ContentDispositionType {
         Inline = 'inline',

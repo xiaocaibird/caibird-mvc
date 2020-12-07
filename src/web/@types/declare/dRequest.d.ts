@@ -30,20 +30,20 @@ declare namespace dRequest {
             checkLoginWhenNoHandle?: boolean;
         };
 
-    type GetReq<T> = T extends dFetch.ApiData<any, any> ? T['req'] : never;
-    type GetRsp<T> = T extends dFetch.ApiData<any, any> ? T['rsp'] : never;
+    type GetReq<T> = T extends dFetch.ApiInfo<any, any> ? T['req'] : never;
+    type GetRsp<T> = T extends dFetch.ApiInfo<any, any> ? T['rsp'] : never;
 
     type Details<T> = dFetch.SuccessJsonBody<T> | dFetch.ErrorJsonBody;
 
     type BaseApi<TControllers extends dFetch.BaseControllers, TCustom extends object> = {
-        readonly [C in keyof dFetch.BaseApi<TControllers>]: {
-            readonly [A in keyof dFetch.BaseApi<TControllers>[C]]: GetReq<dFetch.BaseApi<TControllers>[C][A]> extends never ?
+        readonly [C in keyof dFetch.StandardApi<TControllers>]: {
+            readonly [A in keyof dFetch.StandardApi<TControllers>[C]]: GetReq<dFetch.StandardApi<TControllers>[C][A]> extends never ?
             <TNoHandle extends boolean | undefined = undefined, TFormFetch extends boolean | undefined = undefined>
                 (req?: null, opt?: TNoHandle extends true ? DetailsOptions<TNoHandle, TFormFetch, TCustom> : Options<TNoHandle, TFormFetch, TCustom>) =>
-                Promise<TFormFetch extends true ? never : TNoHandle extends true ? Details<GetRsp<dFetch.BaseApi<TControllers>[C][A]>> : GetRsp<dFetch.BaseApi<TControllers>[C][A]>> :
+                Promise<TFormFetch extends true ? never : TNoHandle extends true ? Details<GetRsp<dFetch.StandardApi<TControllers>[C][A]>> : GetRsp<dFetch.StandardApi<TControllers>[C][A]>> :
             <TNoHandle extends boolean | undefined = undefined, TFormFetch extends boolean | undefined = undefined>
-                (req: GetReq<dFetch.BaseApi<TControllers>[C][A]>, opt?: TNoHandle extends true ? DetailsOptions<TNoHandle, TFormFetch, TCustom> : Options<TNoHandle, TFormFetch, TCustom>) =>
-                Promise<TFormFetch extends true ? never : TNoHandle extends true ? Details<GetRsp<dFetch.BaseApi<TControllers>[C][A]>> : GetRsp<dFetch.BaseApi<TControllers>[C][A]>>
+                (req: GetReq<dFetch.StandardApi<TControllers>[C][A]>, opt?: TNoHandle extends true ? DetailsOptions<TNoHandle, TFormFetch, TCustom> : Options<TNoHandle, TFormFetch, TCustom>) =>
+                Promise<TFormFetch extends true ? never : TNoHandle extends true ? Details<GetRsp<dFetch.StandardApi<TControllers>[C][A]>> : GetRsp<dFetch.StandardApi<TControllers>[C][A]>>
         }
     };
 
