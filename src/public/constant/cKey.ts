@@ -8,9 +8,7 @@ namespace _cKey {
     };
 
     export const query = {
-        FORM_REQUEST: '_caibird-mvc_form_request_',
-        VIDEO_POSTER: '_caibird-mvc_video_poster_',
-        ASSET_NAME: '_caibird-mvc_asset_name_'
+        FORM_REQUEST: 'caibird-mvc_form_request'
     };
 }
 

@@ -4,14 +4,9 @@
  */
 import crypto, { HashOptions } from 'crypto';
 
-namespace _uCrypto {
-    let defaultConfig = {
-        key: 'caibird-mvc_default_key',
-        iv: 'caibird-mvc_default_iv1'
-    };
-
+export namespace uCrypto {
     const defaultPartSize = 100000;
-    export const syncHash = (data: Data, algorithm: string, opt: {
+    export const syncHash = (data: string | Buffer, algorithm: string, opt: {
         partSize?: number;
     } & HashOptions = {}) => {
         const { partSize = defaultPartSize } = opt;
@@ -25,26 +20,24 @@ namespace _uCrypto {
         return hash.digest('hex');
     };
 
-    export const setDefaultCryptConfig = (cfg: typeof defaultConfig) => defaultConfig = { ...cfg };
-
-    export const strEncrypt = (data: string, key = defaultConfig.key, iv: crypto.BinaryLike = defaultConfig.iv) => {
+    const strEncrypt = (str: string, key: string, iv: crypto.BinaryLike) => {
         const cipher = crypto.createCipheriv('aes-128-cbc', key, iv);
-        let crypted = cipher.update(data, 'utf8', 'hex');
+        let crypted = cipher.update(str, 'utf8', 'hex');
         crypted += cipher.final('hex');
         return crypted;
     };
 
-    export const strDecrypt = (encrypted: string, key = defaultConfig.key, iv: crypto.BinaryLike = defaultConfig.iv) => {
+    const strDecrypt = (encrypted: string, key: string, iv: crypto.BinaryLike) => {
         const decipher = crypto.createDecipheriv('aes-128-cbc', key, iv);
         let decrypted = decipher.update(encrypted, 'hex', 'utf8');
         decrypted += decipher.final('utf8');
         return decrypted;
     };
+
+    export const stringCrypt = (key = 'caibird-mvc_default_key', iv: crypto.BinaryLike = 'caibird-mvc_default_iv1') => ({
+        encrypt: (str: string) => strEncrypt(str, key, iv),
+        decrypt: (encrypted: string) => strDecrypt(encrypted, key, iv)
+    });
 }
 
-//#region 私有类型
-type Data = string | Buffer;
-//#endregion
-
-export const uCrypto: dp.DeepReadonly<typeof _uCrypto> = _uCrypto;
 export default uCrypto;
