@@ -4,7 +4,7 @@
  */
 import { v1, v4, v5 } from 'uuid';
 
-namespace _uUuid {
+export namespace uUuid {
     type HandleOpt = {
         keepSeparator?: boolean;
     };
@@ -26,5 +26,4 @@ namespace _uUuid {
     export const getByNamespace = (keepSeparator = false, ...params: dp.GetFuncParams<typeof v5>) => handleUuid(v5(...params), { keepSeparator });
 }
 
-export const uUuid: dp.DeepReadonly<typeof _uUuid> = _uUuid;
 export default uUuid;

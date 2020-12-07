@@ -4,7 +4,7 @@
  */
 import uObject from './uObject';
 
-namespace _uTree {
+export namespace uTree {
     export const create = <TBase extends dData.Tree.Base, TId extends dData.Tree.Id>(list: TBase[], pid?: TId | null) =>
         list.filter(value => (pid == null && value.pid == null) || pid === value.pid).map(value => {
             const item = { ...value } as TBase & { children?: TBase[] };
@@ -51,5 +51,4 @@ namespace _uTree {
     export const getPath = <TBase extends dData.Tree.Base, TId extends dData.Tree.Id>(id: TId, treeList: dData.Tree.Item<TBase>[]) => _getPath(id, flatten(treeList), []);
 }
 
-export const uTree: dp.DeepReadonly<typeof _uTree> = _uTree;
 export default uTree;

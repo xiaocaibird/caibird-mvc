@@ -4,7 +4,7 @@
  */
 import { OptionsV2, parseString } from 'xml2js';
 
-namespace _uXml {
+export namespace uXml {
     export class XmlError extends Error {}
 
     export const createXmlStr = (params: dp.Obj<string>) => {
@@ -37,5 +37,4 @@ namespace _uXml {
     });
 }
 
-export const uXml: dp.DeepReadonly<typeof _uXml> = _uXml;
 export default uXml;
