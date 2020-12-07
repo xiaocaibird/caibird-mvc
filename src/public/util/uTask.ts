@@ -4,17 +4,6 @@
  */
 
 export namespace uTask {
-    export const debounce = <T extends dp.Func>(task: T, wait = 60000) => {
-        let previous = 0;
-        return (...p: dp.GetFuncParams<T>) => {
-            const now = Date.now();
-            if (now - previous > wait) {
-                task(...p);
-                previous = now;
-            }
-        };
-    };
-
     export const sleep = (delay = 100) => new Promise<undefined>(resolve => {
         setTimeout(resolve, delay);
     });

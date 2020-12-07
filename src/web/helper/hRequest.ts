@@ -2,12 +2,13 @@
  * @Creater cmZhou
  * @Desc request helper
  */
+import { throttle } from 'lodash';
+
 import cError from '../constant/cError';
 import cKey from '../constant/cKey';
 import { uHttp } from '../util/uHttp';
 import { uObject } from '../util/uObject';
 import { uString } from '../util/uString';
-import { uTask } from '../util/uTask';
 
 export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCustomOpt extends {}> {
     constructor(protected readonly options: {
@@ -24,7 +25,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
 
     private jsonpIndex = 0;
 
-    private readonly onVersionMismatch = uTask.debounce(() => {
+    private readonly onVersionMismatch = throttle(() => {
         throw new cError.VersionMismatch({ msg: '版本不匹配！', key: 'versionMismatch' });
     }, this.options.versionCheckInterval);
 
