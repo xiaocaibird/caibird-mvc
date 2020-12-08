@@ -1,6 +1,6 @@
 {
   "name": "caibird-mvc",
-  "version": "1.6.6",
+  "version": "2.0.0",
   "private": false,
   "scripts": {
     "install-shelljs": "npm i shelljs@latest --save-dev",
@@ -23,7 +23,6 @@
     "@types/koa": "^2.11.6",
     "@types/koa-router": "^7.4.1",
     "@types/koa-send": "^4.1.2",
-    "@types/koa-views": "^2.0.4",
     "@types/koa-webpack": "^6.0.0",
     "@types/lodash": "^4.14.165",
     "@types/node": "^14.14.10",
@@ -35,7 +34,7 @@
     "@types/uuid": "^8.3.0",
     "@types/webpack-hot-middleware": "^2.25.3",
     "@types/xml2js": "^0.4.7",
-    "ali-oss": "^6.11.2",
+    "ali-oss": "^6.12.0",
     "axios": "^0.21.0",
     "cls-hooked": "^4.2.2",
     "compare-versions": "^3.6.0",
@@ -47,7 +46,7 @@
     "koa-body": "^4.2.0",
     "koa-router": "^10.0.0",
     "koa-send": "^5.0.1",
-    "koa-views": "^6.3.1",
+    "koa-views": "^7.0.0",
     "koa-webpack": "^6.0.0",
     "lodash": "^4.17.20",
     "log4js": "^6.3.0",

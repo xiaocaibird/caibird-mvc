@@ -4,7 +4,7 @@
  */
 import http from 'http';
 import jaegerClient from 'jaeger-client';
-import Koa from 'koa';
+import Koa, { Middleware } from 'koa';
 import koaBody from 'koa-body';
 import KoaRouter from 'koa-router';
 import type KoaSend from 'koa-send';
@@ -617,7 +617,7 @@ export default class App<TRules extends object, TState extends object, TCustom e
         this.koa.use(this.entryMiddleware);
         if (renderConfig) {
             responseHelper.setInitRender();
-            this.koa.use(koaViews(renderConfig.dir, renderConfig.opt));
+            this.koa.use(koaViews(renderConfig.dir, renderConfig.opt) as Middleware);
         }
         onPreUseKoaBody && await onPreUseKoaBody(this.koa, this);
         this.koa.use(koaBody({ strict: false, ...bodyOptions }));
