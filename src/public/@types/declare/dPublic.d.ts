@@ -93,3 +93,7 @@ declare namespace dp {
         IS_LOCAL_TEST: any;
     }
 }
+
+interface Window {
+    __REDUX_DEVTOOLS_EXTENSION__?(): import('redux').StoreEnhancer;
+}

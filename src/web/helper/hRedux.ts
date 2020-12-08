@@ -40,30 +40,17 @@ export abstract class HRedux<TState extends object, TActions extends dRedux.Base
     public readonly action: dRedux.TransformActions<TActions>;
 
     protected storeCreater(initState?: Redux.PreloadedState<TState>) {
-        const reducers = Object.keys(this.options.reducers).reduce<any>((obj, item) => {
-            // tslint:disable-next-line: no-unsafe-any
-            obj[item] = this.getReducer((this.options.reducers as any)[item]);
+        const reducers = Object.keys(this.options.reducers).reduce<Redux.ReducersMapObject<any, { type: string; payload: any }>>((obj, item) => {
+            const k = item as keyof TState;
+            obj[k] = this.getReducer(this.options.reducers[k]);
 
-            // tslint:disable-next-line: no-unsafe-any
-            (this.defaultStoreState as any)[item] = (this.options.reducers as any)[item].defaultState;
+            this.defaultStoreState[k] = this.options.reducers[k].defaultState;
 
             return obj;
         }, {});
-        // tslint:disable-next-line: no-unsafe-any
         const Reducer = combineReducers<TState>(reducers);
 
-        const params: [typeof Reducer, typeof initState] = [Reducer] as any;
-
-        if (initState) {
-            params.push(initState);
-        }
-
-        if (process.env.IS_LOCAL_TEST) {
-            // tslint:disable-next-line: no-unsafe-any
-            params.push((window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__());
-        }
-
-        return createStore(...params);
+        return createStore(Reducer, initState, process.env.IS_LOCAL_TEST && window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : undefined);
     }
 
     protected getReducer<T>({ defaultState, handlers }: { defaultState: T; handlers: dp.Obj<Function | undefined> }) {
