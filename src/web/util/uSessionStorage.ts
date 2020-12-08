@@ -3,7 +3,7 @@
  * @Desc sessionStorage 工具
  */
 import { uObject } from './uObject';
-namespace _uSessionStorage {
+export namespace uSessionStorage {
     export const clear = () => {
         if (sessionStorage) {
             sessionStorage.clear();
@@ -53,5 +53,4 @@ namespace _uSessionStorage {
     };
 }
 
-export const uSessionStorage: dp.DeepReadonly<typeof _uSessionStorage> = _uSessionStorage;
 export default uSessionStorage;

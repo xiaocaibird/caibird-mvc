@@ -37,7 +37,7 @@ namespace _uHtml {
     export const checkBrNode = (node: Node | null) => !!node && node.nodeName === 'BR';
 }
 
-export const uHtml: dp.DeepReadonly<typeof base & typeof _uHtml> = {
+export const uHtml = {
     ...base,
     ..._uHtml
 };

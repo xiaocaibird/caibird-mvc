@@ -6,7 +6,7 @@ import compareVersions, { CompareOperator } from 'compare-versions';
 
 import { cPlatform } from '../constant/cPlatform';
 
-namespace _uPlatform {
+export namespace uPlatform {
     const OS_NAME_LC = cPlatform.OS_NAME.toLowerCase();
 
     export const checkOS = (OSName: ePlatform.OsName) => OS_NAME_LC === OSName.toLowerCase();
@@ -40,5 +40,4 @@ namespace _uPlatform {
     };
 }
 
-export const uPlatform: dp.DeepReadonly<typeof _uPlatform> = _uPlatform;
 export default uPlatform;

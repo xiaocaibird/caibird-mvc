@@ -3,7 +3,7 @@
  * @Desc storage 工具
  */
 import { uObject } from './uObject';
-namespace _uStorage {
+export namespace uStorage {
     export const clear = () => {
         if (localStorage) {
             localStorage.clear();
@@ -53,5 +53,4 @@ namespace _uStorage {
     };
 }
 
-export const uStorage: dp.DeepReadonly<typeof _uStorage> = _uStorage;
 export default uStorage;

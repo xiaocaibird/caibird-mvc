@@ -4,8 +4,5 @@
  */
 import base from '../../public/util/uArray';
 
-// namespace _uArray {}
-// export const uArray = { ...base, ..._uArray };
-
 export const uArray = base;
 export default uArray;

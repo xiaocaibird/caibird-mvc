@@ -3,7 +3,8 @@
  * @Desc file 工具
  */
 import { uObject } from './uObject';
-namespace _uFile {
+
+export namespace uFile {
     const readFile = async <TData extends FileReader['result']>(file: File, type: eFile.FileReaderResultDateType) =>
         new Promise<dFile.FileReaderResult<TData>>((resolve, reject) => {
             const fr = new FileReader();
@@ -117,5 +118,4 @@ namespace _uFile {
     };
 }
 
-export const uFile: dp.DeepReadonly<typeof _uFile> = _uFile;
 export default uFile;

@@ -2,7 +2,8 @@
  * @Creater cmZhou
  * @Desc cookie 工具
  */
-namespace _uCookie {
+
+export namespace uCookie {
     export const setValue = (name: string, value: string, days?: number | 'keep') => {
         const keepDays = 300000;
 
@@ -33,5 +34,4 @@ namespace _uCookie {
     };
 }
 
-export const uCookie: dp.DeepReadonly<typeof _uCookie> = _uCookie;
 export default uCookie;
