@@ -47,7 +47,7 @@ declare namespace dRequest {
         }
     };
 
-    type ApiInfo = {
+    type FetchInfo = {
         url: string;
         req?: any;
         rsp?: any;

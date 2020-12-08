@@ -29,10 +29,10 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
         throw new cError.VersionMismatch({ msg: '版本不匹配！', key: 'versionMismatch' });
     }, this.options.versionCheckInterval);
 
-    protected abstract readonly onFetchSuccess?: (opt: dRequest.Options & Partial<TCustomOpt>, details: dRequest.ApiInfo, xhr?: XMLHttpRequest) => dp.PromiseOrSelf<void>;
-    protected abstract readonly onGetResultError?: (error: object | null, opt: dRequest.Options & Partial<TCustomOpt>, details: dRequest.ApiInfo) => dp.PromiseOrSelf<boolean>;
-    protected abstract readonly preGetNoHandleResult?: (rsp: dFetch.SuccessJsonBody<any> | dFetch.ErrorJsonBody | null, opt: dRequest.DetailsOptions & Partial<TCustomOpt>, details: dRequest.ApiInfo) => dp.PromiseOrSelf<void>;
-    protected abstract readonly onGetNoHandleResultError?: (error: any, opt: dRequest.DetailsOptions & Partial<TCustomOpt>, details: dRequest.ApiInfo) => dp.PromiseOrSelf<void>;
+    protected abstract readonly onFetchSuccess?: (opt: dRequest.Options & Partial<TCustomOpt>, details: dRequest.FetchInfo, xhr?: XMLHttpRequest) => dp.PromiseOrSelf<void>;
+    protected abstract readonly onGetResultError?: (error: object | null, opt: dRequest.Options & Partial<TCustomOpt>, details: dRequest.FetchInfo) => dp.PromiseOrSelf<boolean>;
+    protected abstract readonly preGetNoHandleResult?: (rsp: dFetch.SuccessJsonBody<any> | dFetch.ErrorJsonBody | null, opt: dRequest.DetailsOptions & Partial<TCustomOpt>, details: dRequest.FetchInfo) => dp.PromiseOrSelf<void>;
+    protected abstract readonly onGetNoHandleResultError?: (error: any, opt: dRequest.DetailsOptions & Partial<TCustomOpt>, details: dRequest.FetchInfo) => dp.PromiseOrSelf<void>;
 
     public readonly api = new Proxy<any>({}, {
         get: (_target, controllerName) =>
@@ -137,7 +137,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
         const nowPromptStyleType = errorPromptStyle == null ? defaultErrorPromptStyle : errorPromptStyle;
 
         const defaultMsg = '通信异常！请稍后再试！';
-        const apiInfo: dRequest.ApiInfo = {
+        const apiInfo: dRequest.FetchInfo = {
             url,
             req,
             rsp: undefined
@@ -235,7 +235,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
         const { type = eHttp.MethodType.POST, checkLoginWhenNoHandle } = opt;
 
         const defaultMsg = '通信异常！请稍后再试！';
-        const apiInfo: dRequest.ApiInfo = {
+        const apiInfo: dRequest.FetchInfo = {
             url,
             req,
             rsp: null

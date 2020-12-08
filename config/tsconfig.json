@@ -1,10 +1,10 @@
 {
     /**
      * @Creater cmZhou
-     * @version 3.9.7
+     * @version 4.1.2
      */
     "compileOnSave": false,
-    //compilerOptions总共94个配置
+    //compilerOptions总共95个配置
     "compilerOptions": {
         //#region 基本配置
         "charset": "utf8",
