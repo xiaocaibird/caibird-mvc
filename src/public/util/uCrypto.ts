@@ -20,24 +20,40 @@ export namespace uCrypto {
         return h.digest('hex');
     };
 
-    const strEncrypt = (str: string, key: string, iv: crypto.BinaryLike) => {
-        const cipher = crypto.createCipheriv('aes-128-cbc', key, iv);
-        let crypted = cipher.update(str, 'utf8', 'hex');
-        crypted += cipher.final('hex');
-        return crypted;
+    // 加密
+    const strCipher = (data: string, k: crypto.CipherKey, iv: crypto.BinaryLike | null,
+        alg: string, input_encoding: crypto.Utf8AsciiBinaryEncoding, output_encoding: crypto.HexBase64BinaryEncoding, options?: import('stream').TransformOptions) => {
+        const cip = crypto.createCipheriv(alg, k, iv, options);
+        let encrypted = cip.update(data, input_encoding, output_encoding);
+        encrypted += cip.final(output_encoding);
+        return encrypted;
     };
 
-    const strDecrypt = (encrypted: string, key: string, iv: crypto.BinaryLike) => {
-        const decipher = crypto.createDecipheriv('aes-128-cbc', key, iv);
-        let decrypted = decipher.update(encrypted, 'hex', 'utf8');
-        decrypted += decipher.final('utf8');
+    // 解密
+    const strDecipher = (encrypted: string, k: crypto.CipherKey, iv: crypto.BinaryLike | null,
+        alg: string, input_encoding: crypto.HexBase64BinaryEncoding, output_encoding: crypto.Utf8AsciiBinaryEncoding, options?: import('stream').TransformOptions) => {
+        const decip = crypto.createDecipheriv(alg, k, iv, options);
+        let decrypted = decip.update(encrypted, input_encoding, output_encoding);
+        decrypted += decip.final(output_encoding);
         return decrypted;
     };
 
-    export const stringCrypt = (key = 'caibird-mvc_default_key', iv: crypto.BinaryLike = 'caibird-mvc_default_iv1') => ({
-        encrypt: (str: string) => strEncrypt(str, key, iv),
-        decrypt: (encrypted: string) => strDecrypt(encrypted, key, iv)
-    });
+    export const getStringCipher = (key: crypto.CipherKey = 'caibird-mvc_default_key', iv: crypto.BinaryLike = 'caibird-mvc_default_iv1', params: {
+        algorithm?: string;
+        encryptInputEncoding?: crypto.Utf8AsciiBinaryEncoding;
+        encryptOutputEncoding?: crypto.HexBase64BinaryEncoding;
+        options?: import('stream').TransformOptions;
+    } = {}) => {
+        const {
+            algorithm = 'aes-128-cbc',
+            encryptInputEncoding = 'utf8',
+            encryptOutputEncoding = 'hex'
+        } = params;
+        return {
+            encrypt: (data: string) => strCipher(data, key, iv, algorithm, encryptInputEncoding, encryptOutputEncoding),
+            decrypt: (encrypted: string) => strDecipher(encrypted, key, iv, algorithm, encryptOutputEncoding, encryptInputEncoding)
+        };
+    };
 }
 
 export default uCrypto;

@@ -5,7 +5,7 @@
 import fs from 'fs';
 import type Koa from 'koa';
 
-namespace _uFile {
+export namespace uFile {
     export const checkGzip = (path: string, ctx: Koa.Context) => {
         if (!ctx.acceptsEncodings('gzip')) {
             return false;
@@ -30,5 +30,4 @@ namespace _uFile {
     };
 }
 
-export const uFile: dp.DeepReadonly<typeof _uFile> = _uFile;
 export default uFile;
