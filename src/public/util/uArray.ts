@@ -3,14 +3,15 @@
  * @Desc public array工具
  */
 export namespace uArray {
-    export const check = <T extends any[] = any[]>(obj: unknown): obj is T => obj instanceof Array;
+    export const check = <T extends any>(obj: unknown): obj is T[] => obj instanceof Array;
 
-    export const jsonParse = <T extends any[]>(str: string): T => {
+    export const jsonParse = <T extends any>(str: string): T[] => {
+        const dft: T[] = [];
         try {
             const arr = JSON.parse(str);
-            return check<T>(arr) ? arr : [] as any;
+            return check<T>(arr) ? arr : dft;
         } catch {
-            return [] as any;
+            return dft;
         }
     };
 
