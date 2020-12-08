@@ -10,15 +10,16 @@ export namespace uObject {
     export const checkInstance = <I, T extends dp.Class>(obj: I, type: T): obj is InstanceType<T> => obj instanceof type;
 
     export const removeUndefinedProp = <T extends object>(value: T) => {
-        const reslut: Partial<T> = {};
-        for (const key in value) {
-            const k: keyof T = key;
-            if (value[k] !== undefined) {
-                reslut[k] = value[k];
+        const result = {
+            ...value
+        };
+        for (const k in result) {
+            if (result[k] === undefined) {
+                delete result[k];
             }
         }
 
-        return reslut as T;
+        return result;
     };
 
     export const deleteKey = <T extends object>(obj: T, key: keyof T) => {
@@ -37,7 +38,7 @@ export namespace uObject {
 
     export const safeStringify = stringify;
 
-    export const getSafeJsonObj = <T extends object>(obj: T) => parseJson(safeStringify(obj)) as T;
+    export const getSafeJsonObj = <T extends object>(obj: T) => parseJson<T>(safeStringify(obj));
 }
 
 export default uObject;
