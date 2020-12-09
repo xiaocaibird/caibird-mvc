@@ -65,7 +65,7 @@ export default class App<TRules extends object, TState extends object, TCustom e
                         const method = ctx.method.toUpperCase();
                         const allowMethod = target.filterRules.httpMethod;
                         if (uArray.check(allowMethod)) {
-                            if (!allowMethod.includes(method as eHttp.MethodType)) throw new cError.Status(eHttp.StatusCode.NotFound);
+                            if (!allowMethod.map(item => item.toUpperCase()).includes(method)) throw new cError.Status(eHttp.StatusCode.NotFound);
                         } else if (method !== allowMethod) {
                             throw new cError.Status(eHttp.StatusCode.NotFound);
                         }
@@ -269,8 +269,8 @@ export default class App<TRules extends object, TState extends object, TCustom e
                 throw new Error(`${controllerName}: 存在相同名称的controller。注：controller名不区分大小写。`);
             }
 
-            controller.actions = {};
-            const actions = controller.actions;
+            controller.__actions__ = {};
+            const actions = controller.__actions__;
 
             for (const action of Object.getOwnPropertyNames(controller.prototype)) {
                 if (action === 'constructor') continue;
@@ -287,6 +287,8 @@ export default class App<TRules extends object, TState extends object, TCustom e
                 actions[actionKey] = actionFunc as dMvc.Action<TRules, TState, TCustom>;
             }
 
+            // tslint:disable-next-line: no-unsafe-any
+            controller.__instance__ = new (controller as any)();
             this.apiMap[key] = controller as dMvc.Controller<TRules, TState, TCustom>;
         }
     }
@@ -527,9 +529,10 @@ export default class App<TRules extends object, TState extends object, TCustom e
                 return;
             }
 
-            const controllerObj = new Controller(ctx);
+            const controllerObj = Controller.__instance__;
+            controllerObj.ctx = ctx;
             const actionName = this.getActionName(action);
-            const Action: dMvc.Action<TRules, TState, TCustom> | undefined = Controller.actions[actionName];
+            const Action: dMvc.Action<TRules, TState, TCustom> | undefined = Controller.__actions__[actionName];
 
             if (!Action) {
                 await next();

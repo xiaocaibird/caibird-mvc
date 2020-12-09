@@ -38,7 +38,7 @@ export namespace uObject {
 
     export const safeStringify = stringify;
 
-    export const getSafeJsonObj = <T extends object>(obj: T) => parseJson<T>(safeStringify(obj));
+    export const getSafeJsonObj = <T extends object>(obj: T) => parseJson<T>(safeStringify(obj)) as T;
 }
 
 export default uObject;

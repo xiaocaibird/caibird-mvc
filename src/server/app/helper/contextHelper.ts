@@ -16,6 +16,8 @@ class ContextHelper {
 
     private defaultTimestamp = true;
 
+    private clearTimeout = eDate.MsCount.OneSec;
+
     private readonly zone = createNamespace(this.ZONE_NAME);
 
     public readonly run = async <TState, TCustom>(ctx: dMvc.Ctx<TState, TCustom>, fn: () => dp.PromiseOrSelf<void>) =>
@@ -47,10 +49,12 @@ class ContextHelper {
         setTimeout(() => {
             this.zone.set(this.CTX_KEY, undefined);
             this.zone.set(this.TAMP_KEY, undefined);
-        }, eDate.MsCount.OneSec);
+        }, this.clearTimeout);
     }
 
     public readonly disableDefaultTimestamp = () => this.defaultTimestamp = false;
+
+    public readonly setClearTimeout = (time: number) => this.clearTimeout = time;
 
     public readonly addTamp = (key: string) => {
         if (!this.defaultTimestamp) return;
