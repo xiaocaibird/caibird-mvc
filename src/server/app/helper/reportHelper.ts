@@ -53,7 +53,7 @@ class ReportHelper {
 
     private options: dReport.InitOptions = {};
 
-    private readonly handleInfo = (info: any, maxLength = 500, isError = false) => {
+    private readonly handleInfo = (info: unknown, maxLength = 500, isError = false) => {
         try {
             if (uString.check(info)) {
                 if (info.length > 50000) {

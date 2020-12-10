@@ -32,8 +32,8 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
 
     protected abstract readonly onFetchSuccess?: (opt: dRequest.Options & Partial<TCustomOpt>, details: dRequest.FetchInfo, xhr?: XMLHttpRequest) => dp.PromiseOrSelf<void>;
     protected abstract readonly onGetResultError?: (error: object | null, opt: dRequest.Options & Partial<TCustomOpt>, details: dRequest.FetchInfo) => dp.PromiseOrSelf<boolean>;
-    protected abstract readonly preGetNoHandleResult?: (rsp: dFetch.SuccessJsonBody<any> | dFetch.ErrorJsonBody | null, opt: dRequest.DetailsOptions & Partial<TCustomOpt>, details: dRequest.FetchInfo) => dp.PromiseOrSelf<void>;
-    protected abstract readonly onGetNoHandleResultError?: (error: any, opt: dRequest.DetailsOptions & Partial<TCustomOpt>, details: dRequest.FetchInfo) => dp.PromiseOrSelf<void>;
+    protected abstract readonly preGetNoHandleResult?: (rsp: dFetch.SuccessJsonBody<unknown> | dFetch.ErrorJsonBody | null, opt: dRequest.DetailsOptions & Partial<TCustomOpt>, details: dRequest.FetchInfo) => dp.PromiseOrSelf<void>;
+    protected abstract readonly onGetNoHandleResultError?: (error: unknown, opt: dRequest.DetailsOptions & Partial<TCustomOpt>, details: dRequest.FetchInfo) => dp.PromiseOrSelf<void>;
 
     public readonly api = new Proxy<any>({}, {
         get: (_target, controllerName) =>
@@ -60,7 +60,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
             return this.getNoHandleResult(url, req, opt);
         }
 
-        const getResult = async (): Promise<any> => {
+        const getResult = async (): Promise<unknown> => {
             try {
                 return this.getResult(url, req, opt);
             } catch (e) {
@@ -112,9 +112,9 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
             try {
                 script.src = uHttp.urlAddQuery(url, req);
 
-                (window as any)[funcName] = (data: any) => {
+                (window as any)[funcName] = (data: T) => {
                     clear();
-                    resolve(data as T);
+                    resolve(data);
                 };
 
                 setTimeout(() => {

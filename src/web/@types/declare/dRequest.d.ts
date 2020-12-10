@@ -20,7 +20,7 @@ declare namespace dRequest {
         retryTimes?: number;
         headers?: dp.Obj<string>;
         shouldRetry?(opt: {
-            error: any;
+            error: unknown;
             nowRetryTimes: number;
         }): dp.PromiseOrSelf<boolean>;
     } & Partial<TCustom>;
@@ -49,7 +49,7 @@ declare namespace dRequest {
 
     type FetchInfo = {
         url: string;
-        req?: any;
-        rsp?: any;
+        req?: unknown;
+        rsp?: unknown;
     };
 }

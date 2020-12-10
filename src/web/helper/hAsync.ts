@@ -9,7 +9,7 @@ import { uObject } from '../util/uObject';
 export abstract class HAsync<TCustomRunOpt extends object = {}> {
     protected readonly map: dp.Obj<dp.Obj<{
         status: eAsync.Status;
-        task: Promise<any>;
+        task: Promise<unknown>;
     } | undefined>> = {};
 
     protected abstract readonly onRunBegin?: (...p: dp.GetFuncParams<HAsync<TCustomRunOpt>['run']>) => dp.PromiseOrSelf<void>;
@@ -20,8 +20,10 @@ export abstract class HAsync<TCustomRunOpt extends object = {}> {
     };
 
     protected readonly getNowState = (promiseKey: symbol, key?: symbol) => {
-        if (key) {
-            const obj = this.map[key as any][promiseKey as any];
+        const strKey: string = key as any;
+        const strPromiseKey: string = promiseKey as any;
+        if (strKey) {
+            const obj = this.map[strKey][strPromiseKey];
             if (obj) {
                 if (obj.status === eAsync.Status.Running) {
                     return eAsync.Status.Running;
@@ -34,7 +36,7 @@ export abstract class HAsync<TCustomRunOpt extends object = {}> {
         return eAsync.Status.Running;
     }
 
-    public readonly run = async <T = void>(task: Promise<T> | dp.PromiseFunc<any[], T>, opt: Options & Partial<TCustomRunOpt> = {}) => {
+    public readonly run = async <T = void>(task: Promise<T> | dp.PromiseFunc<unknown[], T>, opt: Options & Partial<TCustomRunOpt> = {}) => {
         const { action = eAsync.Action.Break, key, onExecuteSuccess, onExecuteFail, onExecuteEnd } = opt;
         const promiseKey = Symbol();
 
@@ -53,12 +55,16 @@ export abstract class HAsync<TCustomRunOpt extends object = {}> {
 
         const promise = uFunction.check(task) ? task() : task;
 
-        if (key) {
-            if (!this.map[key as any]) {
-                this.map[key as any] = {};
+        const strKey: string = key as any;
+        const strPromiseKey: string = promiseKey as any;
+
+        if (strKey) {
+            if (!this.map[strKey]) {
+                this.map[strKey] = {};
             }
-            Object.getOwnPropertySymbols(this.map[key as any]).forEach(item => {
-                const promiseInfo = this.map[key as any][item as any];
+            Object.getOwnPropertySymbols(this.map[strKey]).forEach(item => {
+                const strItem: string = item as any;
+                const promiseInfo = this.map[strKey][strItem];
                 if (promiseInfo) {
                     if (action === eAsync.Action.Break) {
                         promiseInfo.status = eAsync.Status.BeBreaked;
@@ -67,7 +73,7 @@ export abstract class HAsync<TCustomRunOpt extends object = {}> {
                     }
                 }
             });
-            this.map[key as any][promiseKey as any] = {
+            this.map[strKey][strPromiseKey] = {
                 status: eAsync.Status.Running,
                 task: promise
             };
@@ -86,8 +92,8 @@ export abstract class HAsync<TCustomRunOpt extends object = {}> {
         } finally {
             const status = handleStatus(onExecuteEnd, true);
             this.onRunEnd && await this.onRunEnd(status, task, opt);
-            if (key) {
-                this.map[key as any][promiseKey as any] = undefined;
+            if (strKey) {
+                this.map[strKey][strPromiseKey] = undefined;
             }
         }
     }

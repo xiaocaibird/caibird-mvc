@@ -4,7 +4,7 @@
  */
 type ErrJson = {
     _compatible_key_: string;
-    args: any[];
+    args: unknown[];
     stack?: string;
     message?: string;
 };
@@ -99,7 +99,7 @@ export const setIsCompatibleHandler = (isCompatible: boolean) => isCompatibleHan
 const errorCompatible = '_error__compatible___';
 
 namespace _cError {
-    const compatible = (instance: Error, args: any[]) => {
+    const compatible = (instance: Error, args: unknown[]) => {
         try {
             if (isCompatibleHandler) {
                 const obj: ErrJson = {
@@ -143,7 +143,7 @@ namespace _cError {
     export class ApiFetchFail extends CommonError {
         constructor(
             public readonly details: {
-                error: any;
+                error: unknown;
                 apiInfo: dRequest.FetchInfo;
             },
             public readonly options: dError.Options,

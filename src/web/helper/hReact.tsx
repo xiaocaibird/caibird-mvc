@@ -12,7 +12,7 @@ export abstract class HReact<TRootContext> {
     }) { }
     public readonly rootContext = createContext(this.options.defaultContext);
 
-    public readonly withAsync = <T extends React.ComponentType<any>>(importComponent: dp.PromiseFunc<any[], { default: T }>, displayName?: string) => {
+    public readonly withAsync = <T extends React.ComponentType<any>>(importComponent: dp.PromiseFunc<unknown[], T>, displayName?: string) => {
         const createHocDisplayName = this.createHocDisplayName;
 
         const With = class extends React.PureComponent<dReact.GetProps<T> & { onAsyncInnerDidMount?(opt: { innerRef: React.RefObject<React.ReactInstance> }): void }, { Component?: T; isClassComponent?: boolean }> {
@@ -55,7 +55,7 @@ export abstract class HReact<TRootContext> {
             public async componentDidMount() {
                 this.onAsyncInnerDidMount();
                 if (!With.inner) {
-                    const Component = (await importComponent()).default;
+                    const Component = (await importComponent());
                     With.inner = Component;
 
                     const isClassComponent = uFunction.checkExtendsClass(Component, React.Component);
@@ -79,6 +79,6 @@ export abstract class HReact<TRootContext> {
         (props: TProps) => props.visible ? <Component {...props} /> : null
     )
 
-    public readonly createHocDisplayName = (hocName: string, WrappedComponent?: React.ComponentType<any>) =>
+    public readonly createHocDisplayName = (hocName: string, WrappedComponent?: React.ComponentType<unknown>) =>
         `${hocName}(${WrappedComponent && (WrappedComponent.displayName || WrappedComponent.name) || 'Component'})`
 }

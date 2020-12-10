@@ -548,7 +548,7 @@ export default class App<TRules extends object, TState extends object, TCustom e
 
             contextHelper.addTamp(`${controllerName}_${actionName}_begin`);
 
-            let formParams: any = null;
+            let formParams: dp.Obj | null = null;
 
             const body = ctx.request.body as dp.Obj;
 
@@ -702,10 +702,10 @@ type Options<TRules extends object, TState extends object, TCustom extends objec
 
     onRequestBegin?(ctx: dMvc.Ctx<TState, TCustom>, next: dp.PromiseFunc, app: App<TRules, TState, TCustom, TControllerDefaultConfig>): dp.PromiseOrSelf<void>;
     onRequestEnd?(ctx: dMvc.Ctx<TState, TCustom>, next: dp.PromiseFunc, app: App<TRules, TState, TCustom, TControllerDefaultConfig>): dp.PromiseOrSelf<void>;
-    onRequestError?(error: any, ctx: dMvc.Ctx<TState, TCustom>, app: App<TRules, TState, TCustom, TControllerDefaultConfig>): dp.PromiseOrSelf<void>;
+    onRequestError?(error: unknown, ctx: dMvc.Ctx<TState, TCustom>, app: App<TRules, TState, TCustom, TControllerDefaultConfig>): dp.PromiseOrSelf<void>;
 
-    onAppError?(error: any, ctx: dMvc.Ctx<TState, TCustom> | null, app: App<TRules, TState, TCustom, TControllerDefaultConfig>): void;
-    unhandledRejection?(error: any, promise: Promise<any>, app: App<TRules, TState, TCustom, TControllerDefaultConfig>): void;
+    onAppError?(error: unknown, ctx: dMvc.Ctx<TState, TCustom> | null, app: App<TRules, TState, TCustom, TControllerDefaultConfig>): void;
+    unhandledRejection?(error: unknown, promise: Promise<unknown>, app: App<TRules, TState, TCustom, TControllerDefaultConfig>): void;
     uncaughtException?(error: Error, app: App<TRules, TState, TCustom, TControllerDefaultConfig>): void;
 } & (TControllerDefaultConfig extends undefined ? { controllerDefaultConfig?: undefined } : { controllerDefaultConfig: TControllerDefaultConfig });
 

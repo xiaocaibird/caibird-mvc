@@ -41,7 +41,7 @@ export namespace uSessionStorage {
         }
     };
 
-    export const setObjectValue = (key: string, value: any) => {
+    export const setObjectValue = (key: string, value: unknown) => {
         const objStr = getValue(objectKey);
         let obj: dp.Obj = {};
         try {

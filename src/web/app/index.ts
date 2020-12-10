@@ -42,7 +42,7 @@ type Options = {
     allowOpenInIframe?: boolean;
     isCompatibleAppErrorHandler?: boolean;
     writeLog?: dp.GetFuncParams<typeof setWriteLog>[0];
-    onAppError?(err: unknown): any;
+    onAppError?(err: unknown): dp.PromiseOrSelf<void>;
     preRender?(app: App): dp.PromiseOrSelf<void>;
     postRender?(app: App): dp.PromiseOrSelf<void>;
 };

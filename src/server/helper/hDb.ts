@@ -22,7 +22,7 @@ export abstract class HDb {
             deletedAt: false,
             updatedAt: false
         },
-        logging: (...p: any[]) => {
+        logging: (...p: unknown[]) => {
             const details = (p.length === 1 ? p[0] : p) as dp.Obj;
             reportHelper.dbLog({ key: 'sequelize_logging', msg: 'Sequelize logging', details });
         }

@@ -40,7 +40,7 @@ export abstract class HRedux<TState extends object, TActions extends dRedux.Base
     public readonly action: dRedux.TransformActions<TActions>;
 
     protected storeCreater(initState?: Redux.PreloadedState<TState>) {
-        const reducers = Object.keys(this.options.reducers).reduce<Redux.ReducersMapObject<any, { type: string; payload: any }>>((obj, item) => {
+        const reducers = Object.keys(this.options.reducers).reduce<Redux.ReducersMapObject<any, { type: string; payload: unknown }>>((obj, item) => {
             const k = item as keyof TState;
             obj[k] = this.getReducer(this.options.reducers[k]);
 
@@ -54,7 +54,7 @@ export abstract class HRedux<TState extends object, TActions extends dRedux.Base
     }
 
     protected getReducer<T>({ defaultState, handlers }: { defaultState: T; handlers: dp.Obj<Function | undefined> }) {
-        return (state = cloneDeep(defaultState), actionResult: { type: string; payload: any }) => {
+        return (state = cloneDeep(defaultState), actionResult: { type: string; payload: unknown }) => {
             const handler = handlers[actionResult.type];
             if (handler) {
                 return handler(state, actionResult.payload);
