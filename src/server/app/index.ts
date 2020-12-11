@@ -146,7 +146,7 @@ export default class App<TRules extends object, TState extends object, TCustom e
 
         return class baseController {
             constructor(
-                public readonly ctx: dMvc.Ctx<TState, TCustom>
+                protected readonly ctx: dMvc.Ctx<TState, TCustom>
             ) { }
 
             protected readonly defaultConfig = defaultConfig;
@@ -260,7 +260,8 @@ export default class App<TRules extends object, TState extends object, TCustom e
                 }
             }
 
-            Object.assign(controller.filterRules, setClass.filterRules, AController.filterRules, controller.filterRules);
+            // tslint:disable-next-line: prefer-object-spread
+            controller.filterRules = Object.assign({}, setClass.filterRules, AController.filterRules, controller.filterRules);
 
             const controllerName = controller.name;
             const key = this.getControllerName(controllerName);
@@ -287,8 +288,6 @@ export default class App<TRules extends object, TState extends object, TCustom e
                 actions[actionKey] = actionFunc as dMvc.Action<TRules, TState, TCustom>;
             }
 
-            // tslint:disable-next-line: no-unsafe-any
-            controller.__instance__ = new (controller as any)();
             this.apiMap[key] = controller as dMvc.Controller<TRules, TState, TCustom>;
         }
     }
@@ -529,8 +528,7 @@ export default class App<TRules extends object, TState extends object, TCustom e
                 return;
             }
 
-            const controllerObj = Controller.__instance__;
-            controllerObj.ctx = ctx;
+            const controllerObj = new Controller(ctx);
             const actionName = this.getActionName(action);
             const Action: dMvc.Action<TRules, TState, TCustom> | undefined = Controller.__actions__[actionName];
 

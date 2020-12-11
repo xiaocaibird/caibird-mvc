@@ -25,10 +25,9 @@ declare global {
 
         type ActionReq<T extends object> = Partial<T>;
 
-        type BaseController<TState, TCustom> = new (ctx: Ctx<TState, TCustom>) => { ctx: Ctx<TState, TCustom> };
+        type BaseController<TState, TCustom> = new (ctx: Ctx<TState, TCustom>) => object;
 
         type ControllerProps<TRules, TState, TCustom> = {
-            __instance__: InstanceType<BaseController<TState, TCustom>>;
             __actions__: dp.Obj<Action<TRules, TState, TCustom>>;
         };
 

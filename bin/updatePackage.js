@@ -6,6 +6,6 @@ const updatePackageHelper = require('./helper/updatePackageHelper');
 
 updatePackageHelper({
     packageJson: require('../package.json'),
-    depLockList: ['history'],
-    devDepLockList: ['sequelize', 'webpack', 'webpack-cli', '@types/history']
+    depLockList: [],
+    devDepLockList: ['sequelize', 'webpack', 'webpack-cli', 'history', '@types/history']
 });
