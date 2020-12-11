@@ -146,7 +146,7 @@ export default class App<TRules extends object, TState extends object, TCustom e
 
         return class baseController {
             constructor(
-                protected readonly ctx: dMvc.Ctx<TState, TCustom>
+                public readonly ctx: dMvc.Ctx<TState, TCustom>
             ) { }
 
             protected readonly defaultConfig = defaultConfig;

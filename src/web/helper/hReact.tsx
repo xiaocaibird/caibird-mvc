@@ -79,6 +79,6 @@ export abstract class HReact<TRootContext> {
         (props: TProps) => props.visible ? <Component {...props} /> : null
     )
 
-    public readonly createHocDisplayName = (hocName: string, WrappedComponent?: React.ComponentType<unknown>) =>
+    public readonly createHocDisplayName = (hocName: string, WrappedComponent?: React.ComponentType<any>) =>
         `${hocName}(${WrappedComponent && (WrappedComponent.displayName || WrappedComponent.name) || 'Component'})`
 }

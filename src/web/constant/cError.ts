@@ -144,7 +144,7 @@ namespace _cError {
         constructor(
             public readonly details: {
                 error: unknown;
-                apiInfo: dRequest.FetchInfo;
+                info: dRequest.FetchInfo;
             },
             public readonly options: dError.Options,
             public readonly logOptions: dReport.ErrorLogOptions | false = false
@@ -157,7 +157,7 @@ namespace _cError {
     export class ApiJsonResultEmpty extends CommonError {
         constructor(
             public readonly details: {
-                apiInfo: dRequest.FetchInfo;
+                info: dRequest.FetchInfo;
             },
             public readonly options: dError.Options,
             public readonly logOptions: dReport.ErrorLogOptions | false = false
@@ -171,7 +171,7 @@ namespace _cError {
         constructor(
             public readonly details: {
                 rsp: dFetch.JsonBody;
-                apiInfo: dRequest.FetchInfo;
+                info: dRequest.FetchInfo;
             },
             public readonly options: dError.Options,
             public readonly logOptions: dReport.ErrorLogOptions | false = false
@@ -185,7 +185,7 @@ namespace _cError {
         constructor(
             public readonly details: {
                 rsp: dFetch.JsonBody;
-                apiInfo: dRequest.FetchInfo;
+                info: dRequest.FetchInfo;
             },
             public readonly options: dError.Options,
             public readonly logOptions: dReport.ErrorLogOptions | false = false

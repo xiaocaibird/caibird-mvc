@@ -41,7 +41,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
                 get: (_controller, actionName) =>
                     (req?: dp.Obj, opt: dRequest.Options & Partial<TCustomOpt> = {}) => this.handleApi(controllerName.toString(), actionName.toString(), req, opt)
             })
-    }) as dRequest.BaseApi<TControllers, TCustomOpt>;
+    }) as dRequest.Api<TControllers, TCustomOpt>;
 
     private readonly handleApi = (controllerName: string, actionName: string, req?: dp.Obj, opt: dRequest.Options & Partial<TCustomOpt> = {}) => {
         const { isFormFetch, noHandle, retryTimes, shouldRetry } = opt;
@@ -138,7 +138,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
         const nowPromptStyleType = errorPromptStyle == null ? defaultErrorPromptStyle : errorPromptStyle;
 
         const defaultMsg = '通信异常！请稍后再试！';
-        const apiInfo: dRequest.FetchInfo = {
+        const info: dRequest.FetchInfo = {
             url,
             req,
             rsp: undefined
@@ -148,15 +148,15 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
         let rsp: dFetch.SuccessJsonBody<T> | dFetch.ErrorJsonBody | null;
         try {
             rsp = await this.fetchJson<dFetch.SuccessJsonBody<T> | dFetch.ErrorJsonBody | null>(type, url, req, opt);
-            apiInfo.rsp = rsp;
+            info.rsp = rsp;
         } catch (e) {
             const error = e as dp.Obj;
-            if (!(!this.onGetResultError ? true : await this.onGetResultError(error, opt, apiInfo))) throw new cError.Noop();
+            if (!(!this.onGetResultError ? true : await this.onGetResultError(error, opt, info))) throw new cError.Noop();
 
             throw new cError.ApiFetchFail(
                 {
                     error,
-                    apiInfo
+                    info
                 },
                 {
                     key: `${key}fetch_fail`,
@@ -167,7 +167,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
                 noReportError === true ? false : {
                     key: `${key}fetch_fail`,
                     type: eReport.LogType.WebTopError,
-                    details: apiInfo,
+                    details: info,
                     error,
                     always: true,
                     attribute: true
@@ -177,12 +177,12 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
         if (rsp && rsp.data !== undefined && rsp.code === eFetch.JsonSuccessCode.Success) {
             return rsp.data;
         }
-        if (!(!this.onGetResultError ? true : await this.onGetResultError(null, opt, apiInfo))) throw new cError.Noop();
+        if (!(!this.onGetResultError ? true : await this.onGetResultError(null, opt, info))) throw new cError.Noop();
 
         if (!rsp) {
             throw new cError.ApiJsonResultEmpty(
                 {
-                    apiInfo
+                    info
                 },
                 {
                     key: `${key}rsp_empty`,
@@ -192,7 +192,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
                 }, noReportError === true ? false : {
                     key: `${key}rsp_empty`,
                     type: eReport.LogType.WebTopError,
-                    details: apiInfo,
+                    details: info,
                     always: true,
                     attribute: true
                 });
@@ -212,7 +212,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
             throw new cError.LoginError(
                 {
                     rsp,
-                    apiInfo
+                    info
                 },
                 {
                     key: `${key}login_error`,
@@ -223,7 +223,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
         throw new cError.ApiJsonResultError(
             {
                 rsp,
-                apiInfo
+                info
             },
             {
                 key: `${key}api_error`,
@@ -236,7 +236,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
         const { type = eHttp.MethodType.POST, checkLoginWhenNoHandle } = opt;
 
         const defaultMsg = '通信异常！请稍后再试！';
-        const apiInfo: dRequest.FetchInfo = {
+        const info: dRequest.FetchInfo = {
             url,
             req,
             rsp: null
@@ -246,10 +246,10 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
         let rsp: dFetch.SuccessJsonBody<T> | dFetch.ErrorJsonBody;
         try {
             rsp = await this.fetchJson<dFetch.SuccessJsonBody<T> | dFetch.ErrorJsonBody>(type, url, req, opt);
-            apiInfo.rsp = rsp;
+            info.rsp = rsp;
         } catch (e) {
             const error = e as dp.Obj;
-            this.onGetNoHandleResultError && await this.onGetNoHandleResultError(error, opt, apiInfo);
+            this.onGetNoHandleResultError && await this.onGetNoHandleResultError(error, opt, info);
 
             const msg = error && (error.msg || error.message) || defaultMsg;
             return {
@@ -260,7 +260,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
 
         const code = rsp.code;
 
-        this.preGetNoHandleResult && await this.preGetNoHandleResult(rsp, opt, apiInfo);
+        this.preGetNoHandleResult && await this.preGetNoHandleResult(rsp, opt, info);
 
         if (checkLoginWhenNoHandle) {
             if (code === eFetch.JsonErrorCode.NoLogin ||
@@ -271,7 +271,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
                 throw new cError.LoginError(
                     {
                         rsp,
-                        apiInfo
+                        info
                     },
                     {
                         key: `${key}login_error`,

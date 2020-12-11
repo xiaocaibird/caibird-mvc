@@ -35,7 +35,7 @@ declare namespace dRequest {
 
     type Details<T> = dFetch.SuccessJsonBody<T> | dFetch.ErrorJsonBody;
 
-    type BaseApi<TControllers extends dFetch.BaseControllers, TCustom extends object> = {
+    type Api<TControllers extends dFetch.BaseControllers, TCustom extends object> = {
         readonly [C in keyof dFetch.StandardApi<TControllers>]: {
             readonly [A in keyof dFetch.StandardApi<TControllers>[C]]: GetReq<dFetch.StandardApi<TControllers>[C][A]> extends never ?
             <TNoHandle extends boolean | undefined = undefined, TFormFetch extends boolean | undefined = undefined>

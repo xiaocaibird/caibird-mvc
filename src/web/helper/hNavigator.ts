@@ -19,7 +19,7 @@ export abstract class HNavigator {
     protected readonly HOME_PATH: string;
     protected readonly LOGIN_PATH: string;
 
-    protected readonly checkPathChange = (route: RouterHistory.To) => {
+    protected readonly checkPathChange = (route: RouterHistory.LocationDescriptor) => {
         const path = (uObject.check(route) ? route.pathname : route) || '';
         if (uString.equalIgnoreCase(path, location.hash.slice(1))) {
             return false;
@@ -27,16 +27,16 @@ export abstract class HNavigator {
         return true;
     }
 
-    public readonly push = (route: RouterHistory.To) => {
+    public readonly push = (route: RouterHistory.LocationDescriptor) => {
         this.checkPathChange(route) && this.navigator.push(uObject.check(route) ? route : { pathname: route });
     }
 
-    public readonly replace = (route: RouterHistory.To) => {
+    public readonly replace = (route: RouterHistory.LocationDescriptor) => {
         this.checkPathChange(route) && this.navigator.replace(uObject.check(route) ? route : { pathname: route });
     }
 
     public readonly back = () => {
-        this.navigator.back();
+        this.navigator.goBack();
     }
 
     public readonly goHome = (isReplace = true) => {
