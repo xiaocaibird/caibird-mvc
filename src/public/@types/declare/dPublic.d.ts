@@ -41,6 +41,8 @@ declare namespace dp {
 
     type StrictKeys<T extends Record<K, any> & { [p in Exclude<keyof T, K>]: never }, K extends string> = T;
 
+    type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+
     type DeepReadonly<T> =
         T extends Function ? T :
         T extends Map<infer K, infer V> ? ReadonlyMap<K, DeepReadonly<V>> :
