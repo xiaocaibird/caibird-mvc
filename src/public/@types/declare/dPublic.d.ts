@@ -43,6 +43,8 @@ declare namespace dp {
 
     type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
+    type ObjectPartial<T> = T extends any[] ? T: Partial<T>;
+
     type DeepReadonly<T> =
         T extends Function ? T :
         T extends Map<infer K, infer V> ? ReadonlyMap<K, DeepReadonly<V>> :
