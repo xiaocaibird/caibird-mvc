@@ -7,7 +7,7 @@ import { createNamespace } from 'cls-hooked';
 import { cError } from '../../constant/cError';
 
 class ContextHelper {
-    public static readonly instance: ContextHelper = new ContextHelper();
+    public static readonly instance = new ContextHelper();
     private constructor() { }
 
     private readonly ZONE_NAME = 'context';

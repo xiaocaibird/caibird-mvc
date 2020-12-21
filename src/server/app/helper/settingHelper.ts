@@ -6,7 +6,7 @@ import fs from 'fs';
 import path from 'path';
 
 class SettingHelper {
-    public static readonly instance: SettingHelper = new SettingHelper();
+    public static readonly instance = new SettingHelper();
     private constructor() { }
 
     private readonly GLOBAL_CONFIG_NAME = 'config/global';

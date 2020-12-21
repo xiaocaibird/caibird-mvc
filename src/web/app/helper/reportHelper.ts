@@ -9,7 +9,7 @@ let writeLog: (opt: dReport.LogOptions) => void = () => { };
 export const setWriteLog = (func: (opt: dReport.LogOptions) => void) => writeLog = func;
 
 class ReportHelper {
-    public static readonly instance: ReportHelper = new ReportHelper();
+    public static readonly instance = new ReportHelper();
     private constructor() { }
 
     public readonly log = (opt: dReport.LogOptions) => {

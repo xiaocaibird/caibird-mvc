@@ -10,7 +10,7 @@ import { cMessage } from '../../constant/cMessage';
 import { contextHelper, reportHelper, settingHelper } from '.';
 
 class ResponseHelper {
-    public static readonly instance: ResponseHelper = new ResponseHelper();
+    public static readonly instance = new ResponseHelper();
     private constructor() { }
 
     private isInitRender = false;

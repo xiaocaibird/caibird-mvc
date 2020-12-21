@@ -39,7 +39,7 @@ const logTypeNameMap: {
 };
 
 class ReportHelper {
-    public static readonly instance: ReportHelper = new ReportHelper();
+    public static readonly instance = new ReportHelper();
     private constructor() { }
 
     private readonly logs = new Proxy<any>({}, {
