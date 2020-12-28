@@ -104,12 +104,20 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
             const script = document.createElement('script');
             const funcName = jsonpCallbackFuncName || `_caibird_jsonpcb_${this.uuid}_${this.jsonpIndex++}_`;
             const clear = () => {
-                script.remove();
-                delete (window as any)[funcName];
+                try {
+                    script.remove();
+                    delete (window as any)[funcName];
+                    clearTimeout(timeoutId);
+                } catch { }
             };
+            const timeoutId = setTimeout(() => {
+                clear();
+                reject({ msg: '请求超时！' });
+            }, timeout);
 
-            req[jsonpCallbackParamName] = funcName;
             try {
+                req[jsonpCallbackParamName] = funcName;
+
                 script.src = uHttp.urlAddQuery(url, req);
 
                 (window as any)[funcName] = (data: T) => {
@@ -117,15 +125,10 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
                     resolve(data);
                 };
 
-                setTimeout(() => {
-                    clear();
-                    reject({ msg: '请求超时！' });
-                }, timeout);
-
                 document.body.append(script);
             } catch (e) {
                 clear();
-                throw e;
+                reject(e);
             }
         });
     }
@@ -338,7 +341,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
                 xhr.withCredentials = withCredentials;
             }
 
-            setTimeout(() => {
+            const timeoutId = setTimeout(() => {
                 reject({ msg: '请求超时！' });
                 xhr.abort();
             }, timeout);
@@ -349,6 +352,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
                     return;
                 }
                 resolve(xhr);
+                clearTimeout(timeoutId);
             };
 
             if (uString.equalIgnoreCase(type, eHttp.MethodType.GET)) {

@@ -14,6 +14,7 @@ export namespace uFile {
                     data: fr.result as TData,
                     fileReader: fr
                 });
+                clearTimeout(timeout);
             };
             fr.onerror = error => {
                 reject({
@@ -21,15 +22,14 @@ export namespace uFile {
                     fileReader: fr,
                     error
                 });
+                clearTimeout(timeout);
             };
-            setTimeout(() => {
-                if (fr.readyState !== fr.DONE) {
-                    fr.abort();
-                    reject({
-                        code: eFile.FileReaderResultCode.Timeout,
-                        fileReader: fr
-                    });
-                }
+            const timeout = setTimeout(() => {
+                reject({
+                    code: eFile.FileReaderResultCode.Timeout,
+                    fileReader: fr
+                });
+                fr.abort();
             }, eDate.MsTimespan.PromiseTimeout * eNumber.Common.Ten);
 
             if (type === eFile.FileReaderResultDateType.Binary) {
