@@ -2,6 +2,8 @@
  * @Creater cmZhou
  * @Desc file 工具
  */
+import { cError } from '../constant/cError';
+
 import { uObject } from './uObject';
 
 export namespace uFile {
@@ -51,10 +53,16 @@ export namespace uFile {
                 txt = JSON.stringify(txt);
             }
             resolve(txt);
+            clearTimeout(timeout);
         };
-        reader.onerror = (e: ProgressEvent) => {
+        reader.onerror = e => {
             reject(e);
+            clearTimeout(timeout);
         };
+        const timeout = setTimeout(() => {
+            reject(new cError.CommonError({ key: 'readFileAsText_timeout', msg: 'readFileAsText timeout' }));
+            reader.abort();
+        }, eDate.MsTimespan.PromiseTimeout * eNumber.Common.Ten);
     });
 
     export const getBinaryString = async (file: File) =>
