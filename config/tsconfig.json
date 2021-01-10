@@ -41,7 +41,7 @@
             "my-front-constant": ["front/constant"],
             "my-front-helper": ["front/helper"],
             "my-front-util": ["front/util"],
-            "my-front-web-component": ["front/app/web/page/@component"],
+            "my-front-web-component": ["front/platform/web/page/@component"],
 
             //#region 以下配置用于webpack
             //"my-public-constant/*": ["public/constant/*"],
@@ -52,7 +52,7 @@
             //"my-front-constant/*": ["front/constant/*"],
             //"my-front-helper/*": ["front/helper/*"],
             //"my-front-util/*": ["front/util/*"],
-            //"my-front-web-component/*": [""front/app/web/page/@component/*"]
+            //"my-front-web-component/*": [""front/platform/web/page/@component/*"]
             //#endregion
 
         }, //模块名到基于baseUrl的路径映射的列表。
