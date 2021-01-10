@@ -2,7 +2,7 @@
  * @Creater cmZhou
  * @Desc web app
  */
-import { setIsCompatibleHandler, setOnAppError } from '../constant/cError';
+import { setIsCompatibleHandler, setOnAppError } from '../../constant/cError';
 
 import reportHelper, { setWriteLog } from './helper/reportHelper';
 
