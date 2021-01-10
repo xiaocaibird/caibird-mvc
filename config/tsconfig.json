@@ -38,10 +38,10 @@
             "my-server-helper": ["server/helper"],
             "my-server-util": ["server/util"],
 
-            "my-web-constant": ["web/constant"],
-            "my-web-helper": ["web/helper"],
-            "my-web-util": ["web/util"],
-            "my-web-component": ["web/react/component"],
+            "my-front-constant": ["front/constant"],
+            "my-front-helper": ["front/helper"],
+            "my-front-util": ["front/util"],
+            "my-front-web-component": ["front/app/web/page/@component"],
 
             //#region 以下配置用于webpack
             //"my-public-constant/*": ["public/constant/*"],
@@ -49,10 +49,10 @@
             //"my-server-constant/*": ["server/constant/*"],
             //"my-server-helper/*": ["server/helper/*"],
             //"my-server-util/*": ["server/util/*"],
-            //"my-web-constant/*": ["web/constant/*"],
-            //"my-web-helper/*": ["web/helper/*"],
-            //"my-web-util/*": ["web/util/*"],
-            //"my-web-component/*": ["web/react/component/*"]
+            //"my-front-constant/*": ["front/constant/*"],
+            //"my-front-helper/*": ["front/helper/*"],
+            //"my-front-util/*": ["front/util/*"],
+            //"my-front-web-component/*": [""front/app/web/page/@component/*"]
             //#endregion
 
         }, //模块名到基于baseUrl的路径映射的列表。
