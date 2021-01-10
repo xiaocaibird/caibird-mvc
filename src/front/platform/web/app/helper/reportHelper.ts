@@ -2,7 +2,7 @@
  * @Creater cmZhou
  * @Desc web app reportHelper
  */
-import { uObject } from '../../../util/uObject';
+import { uObject } from '../../../../util/uObject';
 
 let writeLog: (opt: dReport.LogOptions) => void = () => { };
 
