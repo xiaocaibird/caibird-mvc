@@ -2,7 +2,7 @@
  * @Creater cmZhou
  * @Desc html工具
  */
-import base from '../../public/util/uHtml';
+import base from '../../../../public/util/uHtml';
 
 namespace _uHtml {
     export const getTextWidth = (text: string, opt?: {
