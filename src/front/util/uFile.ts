@@ -7,12 +7,12 @@ import { cError } from '../constant/cError';
 import { uObject } from './uObject';
 
 export namespace uFile {
-    const readFile = async <TData extends FileReader['result']>(file: File, type: eFile.FileReaderResultDateType) =>
-        new Promise<dFile.FileReaderResult<TData>>((resolve, reject) => {
+    const readFile = async <TData extends FileReader['result']>(file: File, type: eFile.F.FileReaderResultDateType) =>
+        new Promise<dFile.F.FileReaderResult<TData>>((resolve, reject) => {
             const fr = new FileReader();
             fr.onload = () => {
                 resolve({
-                    code: eFile.FileReaderResultCode.Success,
+                    code: eFile.F.FileReaderResultCode.Success,
                     data: fr.result as TData,
                     fileReader: fr
                 });
@@ -20,7 +20,7 @@ export namespace uFile {
             };
             fr.onerror = error => {
                 reject({
-                    code: eFile.FileReaderResultCode.Fail,
+                    code: eFile.F.FileReaderResultCode.Fail,
                     fileReader: fr,
                     error
                 });
@@ -28,17 +28,17 @@ export namespace uFile {
             };
             const timeout = setTimeout(() => {
                 reject({
-                    code: eFile.FileReaderResultCode.Timeout,
+                    code: eFile.F.FileReaderResultCode.Timeout,
                     fileReader: fr
                 });
                 fr.abort();
             }, eDate.MsTimespan.PromiseTimeout * eNumber.Common.Ten);
 
-            if (type === eFile.FileReaderResultDateType.Binary) {
+            if (type === eFile.F.FileReaderResultDateType.Binary) {
                 fr.readAsBinaryString(file);
-            } else if (type === eFile.FileReaderResultDateType.ArrayBuffer) {
+            } else if (type === eFile.F.FileReaderResultDateType.ArrayBuffer) {
                 fr.readAsArrayBuffer(file);
-            } else if (type === eFile.FileReaderResultDateType.DataUrl) {
+            } else if (type === eFile.F.FileReaderResultDateType.DataUrl) {
                 fr.readAsDataURL(file);
             }
         });
@@ -66,13 +66,13 @@ export namespace uFile {
     });
 
     export const getBinaryString = async (file: File) =>
-        readFile<string>(file, eFile.FileReaderResultDateType.Binary);
+        readFile<string>(file, eFile.F.FileReaderResultDateType.Binary);
 
     export const getArrayBuffer = async (file: File) =>
-        readFile<ArrayBuffer>(file, eFile.FileReaderResultDateType.ArrayBuffer);
+        readFile<ArrayBuffer>(file, eFile.F.FileReaderResultDateType.ArrayBuffer);
 
     export const getDataUrl = async (file: File) =>
-        readFile<string>(file, eFile.FileReaderResultDateType.DataUrl);
+        readFile<string>(file, eFile.F.FileReaderResultDateType.DataUrl);
 
     export const getImgSize = async (img: string | File) => {
         type ImgInfo = { width: number; height: number };

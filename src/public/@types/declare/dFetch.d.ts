@@ -10,8 +10,8 @@ declare namespace dFetch {
             [A in keyof TControllers[C]['prototype']]: ApiInfo<
                 TControllers[C]['prototype'][A] extends () => any ? never :
                 TControllers[C]['prototype'][A] extends (req: object) => any ?
-                TControllers[C]['prototype'][A] extends (req: dMvc.ActionReq<infer Req>) => any ? Req extends object ? Req : never : never : never,
-                TControllers[C]['prototype'][A] extends ((...p: any[]) => Promise<infer Rsp>) ? Rsp extends dMvc.JsonActionReturn<infer R> ? R : never : never
+                TControllers[C]['prototype'][A] extends (req: dMvc.S.ActionReq<infer Req>) => any ? Req extends object ? Req : never : never : never,
+                TControllers[C]['prototype'][A] extends ((...p: any[]) => Promise<infer Rsp>) ? Rsp extends dMvc.S.JsonActionReturn<infer R> ? R : never : never
             >;
         };
     };
@@ -20,10 +20,10 @@ declare namespace dFetch {
         [C in keyof TControllers]: {
             [A in keyof TControllers[C]['prototype']]: ApiInfo<
                 TControllers[C]['prototype'][A] extends () => any ? never :
-                TControllers[C]['prototype'][A] extends (req: dMvc.ActionReq<infer Req>) => any ? Req :
+                TControllers[C]['prototype'][A] extends (req: dMvc.S.ActionReq<infer Req>) => any ? Req :
                 TControllers[C]['prototype'][A] extends (req: infer Req) => any ? Req : never,
-                TControllers[C]['prototype'][A] extends (...p: any[]) => Promise<infer Rsp> ? Rsp extends dMvc.JsonActionReturn<infer R> ? R :
-                Rsp extends dMvc.ActionReturn<any> ? never : Rsp :
+                TControllers[C]['prototype'][A] extends (...p: any[]) => Promise<infer Rsp> ? Rsp extends dMvc.S.JsonActionReturn<infer R> ? R :
+                Rsp extends dMvc.S.ActionReturn<any> ? never : Rsp :
                 TControllers[C]['prototype'][A] extends (...p: any[]) => infer Rsp ? Rsp : never
             >;
         };

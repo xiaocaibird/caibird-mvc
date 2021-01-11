@@ -17,7 +17,7 @@ class SettingHelper {
 
     private readonly CUSTOM_SECRET_NAME = 'secret/custom';
 
-    public readonly getValue = <T extends dSetting.GlobalConfig | dSetting.CustomConfig | dSetting.GlobalSecret | dSetting.CustomSecret, TKey extends keyof T>(
+    public readonly getValue = <T extends dSetting.S.GlobalConfig | dSetting.S.CustomConfig | dSetting.S.GlobalSecret | dSetting.S.CustomSecret, TKey extends keyof T>(
         key: TKey, filename: string, dft?: T[TKey]
     ): dp.DeepPartial<T[TKey]> | undefined => {
         try {
@@ -43,13 +43,13 @@ class SettingHelper {
         }
     }
 
-    public readonly getGlobalConfig = <TKey extends keyof dSetting.GlobalConfig>(key: TKey, dft?: dSetting.GlobalConfig[TKey]) => this.getValue<dSetting.GlobalConfig, TKey>(key, this.GLOBAL_CONFIG_NAME, dft);
+    public readonly getGlobalConfig = <TKey extends keyof dSetting.S.GlobalConfig>(key: TKey, dft?: dSetting.S.GlobalConfig[TKey]) => this.getValue<dSetting.S.GlobalConfig, TKey>(key, this.GLOBAL_CONFIG_NAME, dft);
 
-    public readonly getGlobalSecret = <TKey extends keyof dSetting.GlobalSecret>(key: TKey, dft?: dSetting.GlobalSecret[TKey]) => this.getValue<dSetting.GlobalSecret, TKey>(key, this.GLOBAL_SECRET_NAME, dft);
+    public readonly getGlobalSecret = <TKey extends keyof dSetting.S.GlobalSecret>(key: TKey, dft?: dSetting.S.GlobalSecret[TKey]) => this.getValue<dSetting.S.GlobalSecret, TKey>(key, this.GLOBAL_SECRET_NAME, dft);
 
-    public readonly getCustomConfig = <TKey extends keyof dSetting.CustomConfig>(key: TKey, dft?: dSetting.CustomConfig[TKey]) => this.getValue<dSetting.CustomConfig, TKey>(key, this.CUSTOM_CONFIG_NAME, dft);
+    public readonly getCustomConfig = <TKey extends keyof dSetting.S.CustomConfig>(key: TKey, dft?: dSetting.S.CustomConfig[TKey]) => this.getValue<dSetting.S.CustomConfig, TKey>(key, this.CUSTOM_CONFIG_NAME, dft);
 
-    public readonly getCustomSecret = <TKey extends keyof dSetting.CustomSecret>(key: TKey, dft?: dSetting.CustomSecret[TKey]) => this.getValue<dSetting.CustomSecret, TKey>(key, this.CUSTOM_SECRET_NAME, dft);
+    public readonly getCustomSecret = <TKey extends keyof dSetting.S.CustomSecret>(key: TKey, dft?: dSetting.S.CustomSecret[TKey]) => this.getValue<dSetting.S.CustomSecret, TKey>(key, this.CUSTOM_SECRET_NAME, dft);
 }
 
 export const settingHelper = SettingHelper.instance;

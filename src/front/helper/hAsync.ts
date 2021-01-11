@@ -8,12 +8,12 @@ import { uObject } from '../util/uObject';
 
 export abstract class HAsync<TCustomRunOpt extends object = {}> {
     protected readonly map: dp.Obj<dp.Obj<{
-        status: eAsync.Status;
+        status: eAsync.F.Status;
         task: Promise<unknown>;
     } | undefined>> = {};
 
     protected abstract readonly onRunBegin?: (...p: dp.GetFuncParams<HAsync<TCustomRunOpt>['run']>) => dp.PromiseOrSelf<void>;
-    protected abstract readonly onRunEnd?: (status: eAsync.Status, ...p: dp.GetFuncParams<HAsync<TCustomRunOpt>['run']>) => dp.PromiseOrSelf<void>;
+    protected abstract readonly onRunEnd?: (status: eAsync.F.Status, ...p: dp.GetFuncParams<HAsync<TCustomRunOpt>['run']>) => dp.PromiseOrSelf<void>;
 
     public readonly keys = {
         GLOBAL_UNIQUE: Symbol('GLOBAL_UNIQUE')
@@ -25,29 +25,29 @@ export abstract class HAsync<TCustomRunOpt extends object = {}> {
         if (strKey) {
             const obj = this.map[strKey][strPromiseKey];
             if (obj) {
-                if (obj.status === eAsync.Status.Running) {
-                    return eAsync.Status.Running;
-                } else if (obj.status === eAsync.Status.BeHided) {
-                    return eAsync.Status.BeHided;
+                if (obj.status === eAsync.F.Status.Running) {
+                    return eAsync.F.Status.Running;
+                } else if (obj.status === eAsync.F.Status.BeHided) {
+                    return eAsync.F.Status.BeHided;
                 }
             }
-            return eAsync.Status.BeBreaked;
+            return eAsync.F.Status.BeBreaked;
         }
-        return eAsync.Status.Running;
+        return eAsync.F.Status.Running;
     }
 
     public readonly run = async <T = void>(task: Promise<T> | dp.PromiseFunc<unknown[], T>, opt: Options & Partial<TCustomRunOpt> = {}) => {
-        const { action = eAsync.Action.Break, key, onExecuteSuccess, onExecuteFail, onExecuteEnd } = opt;
+        const { action = eAsync.F.Action.Break, key, onExecuteSuccess, onExecuteFail, onExecuteEnd } = opt;
         const promiseKey = Symbol();
 
         const handleStatus = (callback?: Callback, noThrow = false) => {
             const status = this.getNowState(promiseKey, key);
 
-            if (status === eAsync.Status.BeBreaked) {
+            if (status === eAsync.F.Status.BeBreaked) {
                 if (noThrow) return status;
                 throw new cError.Noop(`break ${key && key.toString()} promise`);
             }
-            if (status === eAsync.Status.Running) {
+            if (status === eAsync.F.Status.Running) {
                 callback && callback(status);
             }
             return status;
@@ -66,15 +66,15 @@ export abstract class HAsync<TCustomRunOpt extends object = {}> {
                 const strItem: string = item as any;
                 const promiseInfo = this.map[strKey][strItem];
                 if (promiseInfo) {
-                    if (action === eAsync.Action.Break) {
-                        promiseInfo.status = eAsync.Status.BeBreaked;
-                    } else if (action === eAsync.Action.Hide) {
-                        promiseInfo.status = eAsync.Status.BeHided;
+                    if (action === eAsync.F.Action.Break) {
+                        promiseInfo.status = eAsync.F.Status.BeBreaked;
+                    } else if (action === eAsync.F.Action.Hide) {
+                        promiseInfo.status = eAsync.F.Status.BeHided;
                     }
                 }
             });
             this.map[strKey][strPromiseKey] = {
-                status: eAsync.Status.Running,
+                status: eAsync.F.Status.Running,
                 task: promise
             };
         }
@@ -100,7 +100,7 @@ export abstract class HAsync<TCustomRunOpt extends object = {}> {
 }
 
 //#region 私有类型
-type Callback = (status: eAsync.Status) => void;
+type Callback = (status: eAsync.F.Status) => void;
 
 type Options = {
     onExecuteSuccess?: Callback;
@@ -108,6 +108,6 @@ type Options = {
     onExecuteEnd?: Callback;
 
     key?: symbol;
-    action?: eAsync.Action;
+    action?: eAsync.F.Action;
 };
 //#endregion

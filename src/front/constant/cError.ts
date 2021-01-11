@@ -117,7 +117,7 @@ namespace _cError {
 
     export class CommonError extends BassError {
         constructor(
-            public readonly options: dError.Options,
+            public readonly options: dError.F.Options,
             public readonly logOptions: dReport.ErrorLogOptions | false = false,
             public readonly name = CommonError.name
         ) {
@@ -132,7 +132,7 @@ namespace _cError {
                 error: Error;
                 errorInfo: React.ErrorInfo;
             },
-            public readonly options: dError.Options,
+            public readonly options: dError.F.Options,
             public readonly logOptions: dReport.ErrorLogOptions | false = false
         ) {
             super(options, logOptions, ReactError.name);
@@ -144,9 +144,9 @@ namespace _cError {
         constructor(
             public readonly details: {
                 error: unknown;
-                info: dRequest.FetchInfo;
+                info: dRequest.F.WEB.FetchInfo;
             },
-            public readonly options: dError.Options,
+            public readonly options: dError.F.Options,
             public readonly logOptions: dReport.ErrorLogOptions | false = false
         ) {
             super(options, logOptions, ApiFetchFail.name);
@@ -157,9 +157,9 @@ namespace _cError {
     export class ApiJsonResultEmpty extends CommonError {
         constructor(
             public readonly details: {
-                info: dRequest.FetchInfo;
+                info: dRequest.F.WEB.FetchInfo;
             },
-            public readonly options: dError.Options,
+            public readonly options: dError.F.Options,
             public readonly logOptions: dReport.ErrorLogOptions | false = false
         ) {
             super(options, logOptions, ApiJsonResultEmpty.name);
@@ -171,9 +171,9 @@ namespace _cError {
         constructor(
             public readonly details: {
                 rsp: dFetch.JsonBody;
-                info: dRequest.FetchInfo;
+                info: dRequest.F.WEB.FetchInfo;
             },
-            public readonly options: dError.Options,
+            public readonly options: dError.F.Options,
             public readonly logOptions: dReport.ErrorLogOptions | false = false
         ) {
             super(options, logOptions, ApiJsonResultError.name);
@@ -185,9 +185,9 @@ namespace _cError {
         constructor(
             public readonly details: {
                 rsp: dFetch.JsonBody;
-                info: dRequest.FetchInfo;
+                info: dRequest.F.WEB.FetchInfo;
             },
-            public readonly options: dError.Options,
+            public readonly options: dError.F.Options,
             public readonly logOptions: dReport.ErrorLogOptions | false = false
         ) {
             super(options, logOptions, LoginError.name);
@@ -197,7 +197,7 @@ namespace _cError {
 
     export class VersionMismatch extends CommonError {
         constructor(
-            public readonly options: dError.Options,
+            public readonly options: dError.F.Options,
             public readonly logOptions: dReport.ErrorLogOptions | false = false
         ) {
             super(options, logOptions, VersionMismatch.name);

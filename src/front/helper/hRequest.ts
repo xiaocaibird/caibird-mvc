@@ -17,8 +17,8 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
         disableVersionCheck?: boolean;
         versionCheckInterval?: number;
         timeout?: number;
-        defaultErrorPrompt?: ePrompt.Type;
-        defaultErrorPromptStyle?: ePrompt.StyleType;
+        defaultErrorPrompt?: ePrompt.F.Type;
+        defaultErrorPromptStyle?: ePrompt.F.StyleType;
         defaultRetryTimes?: number;
         errorProbability?: number;
     }) { }
@@ -30,20 +30,20 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
         throw new cError.VersionMismatch({ msg: '版本不匹配！', key: 'versionMismatch' });
     }, this.options.versionCheckInterval);
 
-    protected abstract readonly onFetchSuccess?: (opt: dRequest.Options & Partial<TCustomOpt>, details: dRequest.FetchInfo, xhr?: XMLHttpRequest) => dp.PromiseOrSelf<void>;
-    protected abstract readonly onGetResultError?: (error: object | null, opt: dRequest.Options & Partial<TCustomOpt>, details: dRequest.FetchInfo) => dp.PromiseOrSelf<boolean>;
-    protected abstract readonly preGetNoHandleResult?: (rsp: dFetch.SuccessJsonBody<unknown> | dFetch.ErrorJsonBody | null, opt: dRequest.DetailsOptions & Partial<TCustomOpt>, details: dRequest.FetchInfo) => dp.PromiseOrSelf<void>;
-    protected abstract readonly onGetNoHandleResultError?: (error: unknown, opt: dRequest.DetailsOptions & Partial<TCustomOpt>, details: dRequest.FetchInfo) => dp.PromiseOrSelf<void>;
+    protected abstract readonly onFetchSuccess?: (opt: dRequest.F.WEB.Options & Partial<TCustomOpt>, details: dRequest.F.WEB.FetchInfo, xhr?: XMLHttpRequest) => dp.PromiseOrSelf<void>;
+    protected abstract readonly onGetResultError?: (error: object | null, opt: dRequest.F.WEB.Options & Partial<TCustomOpt>, details: dRequest.F.WEB.FetchInfo) => dp.PromiseOrSelf<boolean>;
+    protected abstract readonly preGetNoHandleResult?: (rsp: dFetch.SuccessJsonBody<unknown> | dFetch.ErrorJsonBody | null, opt: dRequest.F.WEB.DetailsOptions & Partial<TCustomOpt>, details: dRequest.F.WEB.FetchInfo) => dp.PromiseOrSelf<void>;
+    protected abstract readonly onGetNoHandleResultError?: (error: unknown, opt: dRequest.F.WEB.DetailsOptions & Partial<TCustomOpt>, details: dRequest.F.WEB.FetchInfo) => dp.PromiseOrSelf<void>;
 
     public readonly api = new Proxy<any>({}, {
         get: (_target, controllerName) =>
             new Proxy({}, {
                 get: (_controller, actionName) =>
-                    (req?: dp.Obj, opt: dRequest.Options & Partial<TCustomOpt> = {}) => this.handleApi(controllerName.toString(), actionName.toString(), req, opt)
+                    (req?: dp.Obj, opt: dRequest.F.WEB.Options & Partial<TCustomOpt> = {}) => this.handleApi(controllerName.toString(), actionName.toString(), req, opt)
             })
-    }) as dRequest.Api<TControllers, TCustomOpt>;
+    }) as dRequest.F.WEB.Api<TControllers, TCustomOpt>;
 
-    private readonly handleApi = (controllerName: string, actionName: string, req?: dp.Obj, opt: dRequest.Options & Partial<TCustomOpt> = {}) => {
+    private readonly handleApi = (controllerName: string, actionName: string, req?: dp.Obj, opt: dRequest.F.WEB.Options & Partial<TCustomOpt> = {}) => {
         const { isFormFetch, noHandle, retryTimes, shouldRetry } = opt;
 
         const maxRetryTimes = (retryTimes == null ? this.options.defaultRetryTimes : retryTimes) || 0;
@@ -97,7 +97,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
         return getResult();
     }
 
-    protected readonly jsonpFetch = <T>(url: string, req: dp.Obj, opt: dRequest.Options = {}) => {
+    protected readonly jsonpFetch = <T>(url: string, req: dp.Obj, opt: dRequest.F.WEB.Options = {}) => {
         const { timeout = this.options.timeout == null ? eDate.MsTimespan.RequestTimeout : this.options.timeout, jsonpCallbackParamName = 'callback', jsonpCallbackFuncName } = opt;
 
         return new Promise<T>((resolve, reject) => {
@@ -133,7 +133,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
         });
     }
 
-    protected readonly getResult = async <T>(url: string, req?: dp.Obj | null, opt: dRequest.Options & Partial<TCustomOpt> = {}): Promise<T> => {
+    protected readonly getResult = async <T>(url: string, req?: dp.Obj | null, opt: dRequest.F.WEB.Options & Partial<TCustomOpt> = {}): Promise<T> => {
         const { disableVersionCheck, defaultErrorPrompt, defaultErrorPromptStyle } = this.options;
         const { type = eHttp.MethodType.POST, noReportError, errorPrompt, errorPromptStyle } = opt;
 
@@ -141,7 +141,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
         const nowPromptStyleType = errorPromptStyle == null ? defaultErrorPromptStyle : errorPromptStyle;
 
         const defaultMsg = '通信异常！请稍后再试！';
-        const info: dRequest.FetchInfo = {
+        const info: dRequest.F.WEB.FetchInfo = {
             url,
             req,
             rsp: undefined
@@ -235,11 +235,11 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
                 msg: rsp.msg
             });
     }
-    protected readonly getNoHandleResult = async <T>(url: string, req?: dp.Obj | null, opt: dRequest.DetailsOptions & Partial<TCustomOpt> = {}) => {
+    protected readonly getNoHandleResult = async <T>(url: string, req?: dp.Obj | null, opt: dRequest.F.WEB.DetailsOptions & Partial<TCustomOpt> = {}) => {
         const { type = eHttp.MethodType.POST, checkLoginWhenNoHandle } = opt;
 
         const defaultMsg = '通信异常！请稍后再试！';
-        const info: dRequest.FetchInfo = {
+        const info: dRequest.F.WEB.FetchInfo = {
             url,
             req,
             rsp: null
@@ -289,7 +289,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
         };
     }
 
-    public readonly fetchJson = async <T>(type: eHttp.MethodType, url: string, req?: string | dp.Obj | FormData | null, opt: dRequest.Options & Partial<TCustomOpt> = {}) => {
+    public readonly fetchJson = async <T>(type: eHttp.MethodType, url: string, req?: string | dp.Obj | FormData | null, opt: dRequest.F.WEB.Options & Partial<TCustomOpt> = {}) => {
         let data;
         let xhr;
 
@@ -325,7 +325,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
 
     public readonly getLocalUrl = (url: string) => (this.options.prefix || '') + url;
 
-    public readonly fetch = (type: eHttp.MethodType, oriUrl: string, req?: string | dp.Obj | FormData | null, opt: dRequest.Options = {}) => {
+    public readonly fetch = (type: eHttp.MethodType, oriUrl: string, req?: string | dp.Obj | FormData | null, opt: dRequest.F.WEB.Options = {}) => {
         let url = oriUrl.trim();
         if (!url.startsWith('http://') && !url.startsWith('https://')) {
             url = this.getLocalUrl(url);
@@ -387,7 +387,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
         return p;
     }
 
-    public readonly formFetch = (url: string, req?: dp.Obj, opt: dRequest.Options = {}) => {
+    public readonly formFetch = (url: string, req?: dp.Obj, opt: dRequest.F.WEB.Options = {}) => {
         const { formRequestKey = cKey.query.FORM_REQUEST } = this.options;
         const { type = eHttp.MethodType.POST } = opt;
 

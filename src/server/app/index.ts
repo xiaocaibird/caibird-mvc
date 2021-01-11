@@ -75,11 +75,11 @@ export default class App<TRules extends object, TState extends object, TCustom e
         )
     } as const;
 
-    public readonly koa = new Koa<dMvc.CtxState<TState>, dMvc.CtxCustom<TState, TCustom>>();
+    public readonly koa = new Koa<dMvc.S.CtxState<TState>, dMvc.S.CtxCustom<TState, TCustom>>();
 
     public readonly server = http.createServer(this.koa.callback());
 
-    public readonly apiMap: dp.Obj<dMvc.Controller<TRules, TState, TCustom>> = {};
+    public readonly apiMap: dp.Obj<dMvc.S.Controller<TRules, TState, TCustom>> = {};
 
     public readonly helpers = {
         mvc: {
@@ -100,7 +100,7 @@ export default class App<TRules extends object, TState extends object, TCustom e
         const defaultConfig = this.options.controllerDefaultConfig as TControllerDefaultConfig;
 
         const View = {
-            Json: <TData extends object | null = null, TOther extends Omit<dFetch.JsonBody, 'code' | 'version'> | undefined = undefined>(data: TData = (null as any), other?: TOther): dMvc.JsonActionReturn<TData> => ({
+            Json: <TData extends object | null = null, TOther extends Omit<dFetch.JsonBody, 'code' | 'version'> | undefined = undefined>(data: TData = (null as any), other?: TOther): dMvc.S.JsonActionReturn<TData> => ({
                 type: 'json',
                 result: {
                     code: eFetch.JsonSuccessCode.Success,
@@ -108,14 +108,14 @@ export default class App<TRules extends object, TState extends object, TCustom e
                     ...other
                 }
             }),
-            File: (path: string, opt?: KoaSend.SendOptions): dMvc.FileActionReturn => ({
+            File: (path: string, opt?: KoaSend.SendOptions): dMvc.S.FileActionReturn => ({
                 type: 'file',
                 result: {
                     path,
                     opt
                 }
             }),
-            Buffer: (buffer: Buffer, fileName: string, opt?: { type: eHttp.ContentDispositionType }): dMvc.BufferActionReturn => ({
+            Buffer: (buffer: Buffer, fileName: string, opt?: { type: eHttp.ContentDispositionType }): dMvc.S.BufferActionReturn => ({
                 type: 'buffer',
                 result: {
                     buffer,
@@ -123,20 +123,20 @@ export default class App<TRules extends object, TState extends object, TCustom e
                     opt
                 }
             }),
-            Redirect: (url: string): dMvc.RedirectActionReturn => ({
+            Redirect: (url: string): dMvc.S.RedirectActionReturn => ({
                 type: 'redirect',
                 result: {
                     url
                 }
             }),
-            Render: <T extends object | undefined = undefined>(view: string, params?: T): dMvc.RenderActionReturn<T> => ({
+            Render: <T extends object | undefined = undefined>(view: string, params?: T): dMvc.S.RenderActionReturn<T> => ({
                 type: 'render',
                 result: {
                     view,
                     params
                 }
             }),
-            Xml: (xmlStr: string): dMvc.XmlActionReturn => ({
+            Xml: (xmlStr: string): dMvc.S.XmlActionReturn => ({
                 type: 'xml',
                 result: {
                     xmlStr
@@ -146,7 +146,7 @@ export default class App<TRules extends object, TState extends object, TCustom e
 
         return class baseController {
             constructor(
-                protected readonly ctx: dMvc.Ctx<TState, TCustom>
+                protected readonly ctx: dMvc.S.Ctx<TState, TCustom>
             ) { }
 
             protected readonly defaultConfig = defaultConfig;
@@ -154,14 +154,14 @@ export default class App<TRules extends object, TState extends object, TCustom e
         };
     }
 
-    private readonly initFilter = <T extends dMvc.FilterController<TRules, TState, TCustom>>(
+    private readonly initFilter = <T extends dMvc.S.FilterController<TRules, TState, TCustom>>(
         controller: T,
-        filter: dMvc.Filter<TRules, TState, TCustom>,
-        actionDes?: dMvc.ActionPropertyDescriptor<TRules, TState, TCustom>,
+        filter: dMvc.S.Filter<TRules, TState, TCustom>,
+        actionDes?: dMvc.S.ActionPropertyDescriptor<TRules, TState, TCustom>,
         order = filter.defaultOrder || 0) => {
         let target;
         let isController = false;
-        if (uFunction.check<dMvc.InitController<TRules, TState, TCustom>>(controller)) {
+        if (uFunction.check<dMvc.S.InitController<TRules, TState, TCustom>>(controller)) {
             target = controller;
             isController = true;
         } else {
@@ -175,7 +175,7 @@ export default class App<TRules extends object, TState extends object, TCustom e
             actionDes.writable = false;
         }
 
-        const ACtrl = Object.getPrototypeOf(target) as Function & Partial<dMvc.CommonProps<TRules, TState, TCustom>>;
+        const ACtrl = Object.getPrototypeOf(target) as Function & Partial<dMvc.S.CommonProps<TRules, TState, TCustom>>;
 
         if (isController && Function.prototype !== ACtrl && target.filterInfo === ACtrl.filterInfo || !target.filterInfo) {
             target.filterInfo = {};
@@ -202,26 +202,26 @@ export default class App<TRules extends object, TState extends object, TCustom e
         target.filterList.push(filter);
         target.filterOrderList[order].push(filter);
 
-        return target as T extends Function ? dMvc.CommonProps<TRules, TState, TCustom> & dMvc.ControllerProps<TRules, TState, TCustom> &
-            dMvc.BaseController<TState, TCustom> : dMvc.CommonProps<TRules, TState, TCustom> & dMvc.BaseAction;
+        return target as T extends Function ? dMvc.S.CommonProps<TRules, TState, TCustom> & dMvc.S.ControllerProps<TRules, TState, TCustom> &
+            dMvc.S.BaseController<TState, TCustom> : dMvc.S.CommonProps<TRules, TState, TCustom> & dMvc.S.BaseAction;
     }
 
     private readonly initController = async (startOpt: StartOpt<TRules, TState, TCustom>) => {
         const { controllers, defaultFilters = [] } = startOpt;
 
-        const baseController: dp.Class & Partial<dMvc.CommonProps<TRules, TState, TCustom>> = this.baseController;
+        const baseController: dp.Class & Partial<dMvc.S.CommonProps<TRules, TState, TCustom>> = this.baseController;
 
-        const setClass: dp.Class & Partial<dMvc.CommonProps<TRules, TState, TCustom>> = class SetClass { };
+        const setClass: dp.Class & Partial<dMvc.S.CommonProps<TRules, TState, TCustom>> = class SetClass { };
         defaultFilters.forEach(filter => filter(setClass));
 
         for (const target of Object.values(controllers)) {
-            const controller = target as dMvc.InitController<TRules, TState, TCustom>;
+            const controller = target as dMvc.S.InitController<TRules, TState, TCustom>;
 
             if (!uFunction.checkExtendsClass(controller, baseController)) {
                 throw new Error(`${(controller as any).name} controller 没有继承 baseController！`);
             }
 
-            const AController = Object.getPrototypeOf(target) as dp.Class & Partial<dMvc.CommonProps<TRules, TState, TCustom>>;
+            const AController = Object.getPrototypeOf(target) as dp.Class & Partial<dMvc.S.CommonProps<TRules, TState, TCustom>>;
 
             if (!controller.filterList) {
                 controller.filterList = [];
@@ -280,19 +280,19 @@ export default class App<TRules extends object, TState extends object, TCustom e
                     throw new Error(`${controllerName}下有相同名称的action。注：action名不区分大小写。`);
                 }
 
-                const actionFunc = (controller.prototype as dp.Obj<dMvc.InitAction<TRules, TState, TCustom>>)[action];
+                const actionFunc = (controller.prototype as dp.Obj<dMvc.S.InitAction<TRules, TState, TCustom>>)[action];
                 if (!actionFunc.filterRules) actionFunc.filterRules = {};
                 if (!actionFunc.filterOrderList) actionFunc.filterOrderList = {};
                 if (!actionFunc.filterList) actionFunc.filterList = [];
                 if (!actionFunc.filterInfo) actionFunc.filterInfo = {};
-                actions[actionKey] = actionFunc as dMvc.Action<TRules, TState, TCustom>;
+                actions[actionKey] = actionFunc as dMvc.S.Action<TRules, TState, TCustom>;
             }
 
-            this.apiMap[key] = controller as dMvc.Controller<TRules, TState, TCustom>;
+            this.apiMap[key] = controller as dMvc.S.Controller<TRules, TState, TCustom>;
         }
     }
 
-    private readonly onCheckRules = async (controller: dMvc.Controller<TRules, TState, TCustom>, action: dMvc.Action<TRules, TState, TCustom>) => {
+    private readonly onCheckRules = async (controller: dMvc.S.Controller<TRules, TState, TCustom>, action: dMvc.S.Action<TRules, TState, TCustom>) => {
         const controllerFilterOrderList = controller.filterOrderList;
         const actionFilterOrderList = action.filterOrderList;
         const actionFilterList = action.filterList;
@@ -322,13 +322,13 @@ export default class App<TRules extends object, TState extends object, TCustom e
         }
     }
 
-    private readonly onExecute = async (target: dMvc.Action<TRules, TState, TCustom> | dMvc.Controller<TRules, TState, TCustom>, executeType: eMvc.FilterExecuteType) => {
+    private readonly onExecute = async (target: dMvc.S.Action<TRules, TState, TCustom> | dMvc.S.Controller<TRules, TState, TCustom>, executeType: eMvc.S.FilterExecuteType) => {
         const filterOrderList = target.filterOrderList;
         const orderKeys = orderBy(Object.keys(filterOrderList)).reverse();
         for (const key of orderKeys) {
             const filters = filterOrderList[key] || [];
             for (const filter of filters) {
-                if (executeType === eMvc.FilterExecuteType.Pre) {
+                if (executeType === eMvc.S.FilterExecuteType.Pre) {
                     filter.preExecute && await filter.preExecute(target, contextHelper.get());
                 } else {
                     filter.postExecute && await filter.postExecute(target, contextHelper.get());
@@ -373,7 +373,7 @@ export default class App<TRules extends object, TState extends object, TCustom e
             }
         });
 
-        this.koa.on('error', (err: Error, ctx: dMvc.Ctx<TState, TCustom>) => {
+        this.koa.on('error', (err: Error, ctx: dMvc.S.Ctx<TState, TCustom>) => {
             try {
                 if (!(disableAllDefaultErrorHandler || disableDefaultAppErrorHandler)) {
                     contextHelper.run(ctx, () => {
@@ -457,7 +457,7 @@ export default class App<TRules extends object, TState extends object, TCustom e
         }
     }
 
-    private readonly entryMiddleware: dMvc.Middleware<TState, TCustom> = (ctx, next) => {
+    private readonly entryMiddleware: dMvc.S.Middleware<TState, TCustom> = (ctx, next) => {
         const { disableDefalutLog, onRequestBegin, onRequestEnd, onRequestError, disableAllDefaultErrorHandler, disableDefaultRequestErrorHandler, tracingPathIgnore = [] } = this.options;
 
         ctx.state.fetchId = uUuid.get();
@@ -503,7 +503,7 @@ export default class App<TRules extends object, TState extends object, TCustom e
         });
     }
 
-    private readonly lastMiddleware: dMvc.Middleware<TState, TCustom> = async () => {
+    private readonly lastMiddleware: dMvc.S.Middleware<TState, TCustom> = async () => {
         throw new cError.Status(eHttp.StatusCode.NotFound);
     }
 
@@ -514,7 +514,7 @@ export default class App<TRules extends object, TState extends object, TCustom e
             defaultAction = 'index',
             formRequestKey = cKey.query.FORM_REQUEST
         } = this.options;
-        const router = new KoaRouter<dMvc.CtxState<TState>, dMvc.CtxCustom<TState, TCustom>>({
+        const router = new KoaRouter<dMvc.S.CtxState<TState>, dMvc.S.CtxCustom<TState, TCustom>>({
             prefix
         });
         router.all('/:controller?/:action?/:value*', async (ctx, next) => {
@@ -530,7 +530,7 @@ export default class App<TRules extends object, TState extends object, TCustom e
 
             const controllerObj = new Controller(ctx);
             const actionName = this.getActionName(action);
-            const Action: dMvc.Action<TRules, TState, TCustom> | undefined = Controller.__actions__[actionName];
+            const Action: dMvc.S.Action<TRules, TState, TCustom> | undefined = Controller.__actions__[actionName];
 
             if (!Action) {
                 await next();
@@ -541,8 +541,8 @@ export default class App<TRules extends object, TState extends object, TCustom e
             await this.onCheckRules(Controller, Action);
             contextHelper.addTamp('checkRules_end');
 
-            await this.onExecute(Controller, eMvc.FilterExecuteType.Pre);
-            await this.onExecute(Action, eMvc.FilterExecuteType.Pre);
+            await this.onExecute(Controller, eMvc.S.FilterExecuteType.Pre);
+            await this.onExecute(Action, eMvc.S.FilterExecuteType.Pre);
 
             contextHelper.addTamp(`${controllerName}_${actionName}_begin`);
 
@@ -557,17 +557,17 @@ export default class App<TRules extends object, TState extends object, TCustom e
             const rsp = await Action.bind(controllerObj)({ ...ctx.query, ...body, ...formParams });
 
             const actionReturn = rsp as null | undefined |
-                dMvc.JsonActionReturn<any> |
-                dMvc.FileActionReturn |
-                dMvc.RedirectActionReturn |
-                dMvc.RenderActionReturn<any> |
-                dMvc.BufferActionReturn |
-                dMvc.XmlActionReturn;
+                dMvc.S.JsonActionReturn<any> |
+                dMvc.S.FileActionReturn |
+                dMvc.S.RedirectActionReturn |
+                dMvc.S.RenderActionReturn<any> |
+                dMvc.S.BufferActionReturn |
+                dMvc.S.XmlActionReturn;
 
             contextHelper.addTamp(`${controllerName}_${actionName}_end`);
 
-            await this.onExecute(Action, eMvc.FilterExecuteType.Post);
-            await this.onExecute(Controller, eMvc.FilterExecuteType.Post);
+            await this.onExecute(Action, eMvc.S.FilterExecuteType.Post);
+            await this.onExecute(Controller, eMvc.S.FilterExecuteType.Post);
 
             if (actionReturn == null) {
                 throw new cError.Status(
@@ -633,10 +633,10 @@ export default class App<TRules extends object, TState extends object, TCustom e
 
     private filterCreater<TOption = undefined>(
         name: string,
-        handler: (target: Function & dMvc.CommonProps<TRules, TState, TCustom>, option?: TOption) => void,
-        props?: Omit<dMvc.FilterProps<TRules, TState, TCustom>, 'filterName'>
+        handler: (target: Function & dMvc.S.CommonProps<TRules, TState, TCustom>, option?: TOption) => void,
+        props?: Omit<dMvc.S.FilterProps<TRules, TState, TCustom>, 'filterName'>
     ) {
-        const filter = (option?: TOption, order = 0): dMvc.Decorator<TRules, TState, TCustom> =>
+        const filter = (option?: TOption, order = 0): dMvc.S.Decorator<TRules, TState, TCustom> =>
             (controller, _action, actionDes) => {
                 handler(this.initFilter(controller, filter, actionDes, order), option);
             };
@@ -690,24 +690,24 @@ type Options<TRules extends object, TState extends object, TCustom extends objec
         opt?: dp.GetFuncParams<typeof koaViews>[1];
     };
 
-    onPreUseKoaBody?(koa: dMvc.Koa<TState, TCustom>, app: App<TRules, TState, TCustom, TControllerDefaultConfig>): dp.PromiseOrSelf<void>;
-    onPreUseMvc?(koa: dMvc.Koa<TState, TCustom>, app: App<TRules, TState, TCustom, TControllerDefaultConfig>): dp.PromiseOrSelf<void>;
-    onPostUseMvc?(koa: dMvc.Koa<TState, TCustom>, app: App<TRules, TState, TCustom, TControllerDefaultConfig>): dp.PromiseOrSelf<void>;
+    onPreUseKoaBody?(koa: dMvc.S.Koa<TState, TCustom>, app: App<TRules, TState, TCustom, TControllerDefaultConfig>): dp.PromiseOrSelf<void>;
+    onPreUseMvc?(koa: dMvc.S.Koa<TState, TCustom>, app: App<TRules, TState, TCustom, TControllerDefaultConfig>): dp.PromiseOrSelf<void>;
+    onPostUseMvc?(koa: dMvc.S.Koa<TState, TCustom>, app: App<TRules, TState, TCustom, TControllerDefaultConfig>): dp.PromiseOrSelf<void>;
 
     onPreInit?(app: App<TRules, TState, TCustom, TControllerDefaultConfig>): dp.PromiseOrSelf<void>;
     onPostInit?(app: App<TRules, TState, TCustom, TControllerDefaultConfig>): dp.PromiseOrSelf<void>;
     onEnd?(app: App<TRules, TState, TCustom, TControllerDefaultConfig>): dp.PromiseOrSelf<void>;
 
-    onRequestBegin?(ctx: dMvc.Ctx<TState, TCustom>, next: dp.PromiseFunc, app: App<TRules, TState, TCustom, TControllerDefaultConfig>): dp.PromiseOrSelf<void>;
-    onRequestEnd?(ctx: dMvc.Ctx<TState, TCustom>, next: dp.PromiseFunc, app: App<TRules, TState, TCustom, TControllerDefaultConfig>): dp.PromiseOrSelf<void>;
-    onRequestError?(error: unknown, ctx: dMvc.Ctx<TState, TCustom>, app: App<TRules, TState, TCustom, TControllerDefaultConfig>): dp.PromiseOrSelf<void>;
+    onRequestBegin?(ctx: dMvc.S.Ctx<TState, TCustom>, next: dp.PromiseFunc, app: App<TRules, TState, TCustom, TControllerDefaultConfig>): dp.PromiseOrSelf<void>;
+    onRequestEnd?(ctx: dMvc.S.Ctx<TState, TCustom>, next: dp.PromiseFunc, app: App<TRules, TState, TCustom, TControllerDefaultConfig>): dp.PromiseOrSelf<void>;
+    onRequestError?(error: unknown, ctx: dMvc.S.Ctx<TState, TCustom>, app: App<TRules, TState, TCustom, TControllerDefaultConfig>): dp.PromiseOrSelf<void>;
 
-    onAppError?(error: unknown, ctx: dMvc.Ctx<TState, TCustom> | null, app: App<TRules, TState, TCustom, TControllerDefaultConfig>): void;
+    onAppError?(error: unknown, ctx: dMvc.S.Ctx<TState, TCustom> | null, app: App<TRules, TState, TCustom, TControllerDefaultConfig>): void;
     unhandledRejection?(error: unknown, promise: Promise<unknown>, app: App<TRules, TState, TCustom, TControllerDefaultConfig>): void;
     uncaughtException?(error: Error, app: App<TRules, TState, TCustom, TControllerDefaultConfig>): void;
 } & (TControllerDefaultConfig extends undefined ? { controllerDefaultConfig?: undefined } : { controllerDefaultConfig: TControllerDefaultConfig });
 
 type StartOpt<TRules, TState, TCustom> = {
     controllers: dp.Obj<dp.Class>;
-    defaultFilters?: dMvc.Decorator<TRules, TState, TCustom>[];
+    defaultFilters?: dMvc.S.Decorator<TRules, TState, TCustom>[];
 };
