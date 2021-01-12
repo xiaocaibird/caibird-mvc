@@ -8,7 +8,7 @@ import { uObject } from '../util/uObject';
 import { uString } from '../util/uString';
 
 export abstract class HNavigator {
-    constructor(protected readonly options: {
+    protected constructor(protected readonly options: {
         homePath?: string;
         loginPath?: string;
     } = {}) {

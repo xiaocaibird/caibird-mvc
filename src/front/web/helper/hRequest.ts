@@ -11,7 +11,7 @@ import { uObject } from '../util/uObject';
 import { uString } from '../util/uString';
 import { uUuid } from '../util/uUuid';
 export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCustomOpt extends {}> {
-    constructor(protected readonly options: {
+    protected constructor(protected readonly options: {
         prefix?: string;
         formRequestKey?: string;
         disableVersionCheck?: boolean;

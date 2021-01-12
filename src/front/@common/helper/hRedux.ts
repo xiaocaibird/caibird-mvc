@@ -12,7 +12,7 @@ export abstract class HRedux<TState extends object, TActions extends dRedux.F.Ba
             defaultState: cloneDeep(opt.defaultState)
         })
 
-    constructor(protected readonly options: {
+    protected constructor(protected readonly options: {
         actions: dRedux.F.TransformActions<TActions>;
         reducers: dRedux.F.Reducers<TActions, TState>;
         storageKey: string;

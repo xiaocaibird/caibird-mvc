@@ -7,7 +7,7 @@ import React, { createContext, createRef, memo } from 'react';
 import { uFunction } from '../util/uFunction';
 
 export abstract class HReact<TRootContext> {
-    constructor(protected readonly options: {
+    protected constructor(protected readonly options: {
         defaultContext: TRootContext;
     }) { }
     public readonly rootContext = createContext(this.options.defaultContext);

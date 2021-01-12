@@ -7,6 +7,7 @@ import { uFunction } from '../util/uFunction';
 import { uObject } from '../util/uObject';
 
 export abstract class HAsync<TCustomRunOpt extends object = {}> {
+    protected constructor() {}
     protected readonly map: dp.Obj<dp.Obj<{
         status: eAsync.F.Status;
         task: Promise<unknown>;
