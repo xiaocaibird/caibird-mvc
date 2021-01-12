@@ -1,6 +1,6 @@
 {
     "extends": [
-        "./config/tslint.json"
+        "./configs/tslint.json"
     ],
     "jsRules": true,
     "rules": {

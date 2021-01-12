@@ -12,16 +12,16 @@ import koaViews from 'koa-views';
 import { orderBy } from 'lodash';
 import Sequelize from 'sequelize';
 
-import { cError } from '../constant/cError';
-import { cKey } from '../constant/cKey';
-import { uArray } from '../util/uArray';
-import { uFunction } from '../util/uFunction';
-import { uNumber } from '../util/uNumber';
-import { uObject } from '../util/uObject';
-import { uString } from '../util/uString';
-import { uUuid } from '../util/uUuid';
+import { cError } from '../consts/cError';
+import { cKey } from '../consts/cKey';
+import { uArray } from '../utils/uArray';
+import { uFunction } from '../utils/uFunction';
+import { uNumber } from '../utils/uNumber';
+import { uObject } from '../utils/uObject';
+import { uString } from '../utils/uString';
+import { uUuid } from '../utils/uUuid';
 
-import { contextHelper, reportHelper, responseHelper, settingHelper } from './helper';
+import { contextHelper, reportHelper, responseHelper, settingHelper } from './helpers';
 
 export default class App<TRules extends object, TState extends object, TCustom extends object, TControllerDefaultConfig extends object | undefined> {
     public static readonly staticHelpers = {

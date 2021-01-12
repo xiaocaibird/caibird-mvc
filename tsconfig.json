@@ -8,5 +8,5 @@
     "include": [
         "src/"
     ],
-    "extends": "./config/tsconfig.json"
+    "extends": "./configs/tsconfig.json"
 }

@@ -2,9 +2,9 @@
  * @Creater cmZhou
  * @Desc web app
  */
-import { setIsCompatibleHandler, setOnAppError } from '../constant/cError';
+import { setIsCompatibleHandler, setOnAppError } from '../consts/cError';
 
-import reportHelper, { setWriteLog } from './helper/reportHelper';
+import reportHelper, { setWriteLog } from './helpers/reportHelper';
 
 export default class App {
     public static readonly staticHelpers = {
