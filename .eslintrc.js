@@ -14,11 +14,13 @@ Happy linting! 💖
 module.exports = {
     // tslint:disable quotemark object-literal-key-quotes
     "env": {
-        'browser': true,
+        "browser": true,
         "es6": true,
         "node": true
     },
     "extends": [
+        "plugin:@typescript-eslint/all",
+        "plugin:react/recommended",
         "prettier",
         "prettier/@typescript-eslint"
     ],
@@ -28,8 +30,8 @@ module.exports = {
         "sourceType": "module"
     },
     "plugins": [
-        "eslint-plugin-import",
         "eslint-plugin-prefer-arrow",
+        "eslint-plugin-import",
         "eslint-plugin-no-null",
         "eslint-plugin-unicorn",
         "eslint-plugin-jsdoc",
@@ -175,12 +177,7 @@ module.exports = {
         "id-match": "off",
         "import/no-default-export": "off",
         "import/no-deprecated": "warn",
-        "import/no-extraneous-dependencies": [
-            "error",
-            {
-                "devDependencies": false
-            }
-        ],
+        "import/no-extraneous-dependencies": "error",
         "import/no-internal-modules": "error",
         "import/no-unassigned-import": "error",
         "import/order": "error",

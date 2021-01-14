@@ -3,6 +3,8 @@
     - The typescript-eslint now bans @ts-<directive> comments from being used
   * no-magic-numbers:
     - JSX syntax will no longer be ignored.
+  * no-invalid-this:
+    - Functions in methods will no longer be ignored.
   * @typescript-eslint/no-shadow:
     - ESLint does not support selectively disabling shadowed declaration checks depending on the type of declaration, so all kinds of declarations are checked.
   * @typescript-eslint/no-unused-expressions:
@@ -22,8 +24,6 @@
     - Leading or trailing underscores (_) on identifiers will now be forbidden.
   * react/jsx-no-bind:
     - ESLint rule 'jsx-no-bind' also checks for arrow functions
-  * no-invalid-this:
-    - Functions in methods will no longer be ignored.
 
 Error: multiple output react/jsx-no-bind ESLint rule options were generated, but tslint-to-eslint-config doesn't have "merger" logic to deal with this.
 Please file an issue at https://github.com/typescript-eslint/tslint-to-eslint-config/issues/new?template=missing_merger.md. Thanks!
