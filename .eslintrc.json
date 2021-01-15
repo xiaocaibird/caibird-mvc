@@ -1,0 +1,16 @@
+{
+    "root": true,
+    "parserOptions": {},
+    "parser": "",
+    "env": {},
+    "globals": {},
+    "plugins": [],
+    // "processor": "",
+    "overrides": [],
+    "extends": [],
+    "rules": {},
+    "ignorePatterns": [],
+    "settings": {},
+    "noInlineConfig": false,
+    "reportUnusedDisableDirectives": true
+}
