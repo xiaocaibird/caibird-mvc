@@ -1,14 +1,45 @@
 {
+    /**
+     * @Creater cmZhou
+     * @version 7.17.0
+     */
     "root": true,
-    "parserOptions": {},
-    "parser": "",
-    "env": {},
+    "env": {
+        "browser": true,
+        "es2021": true,
+        "node": true
+    },
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaVersion": 2021,
+        "project": "tsconfig.json",
+        "sourceType": "module",
+        // "jsxPragma": "React",
+        // "jsxFragmentName": null,
+        // "lib": ["dom", "esnext"],
+        // "tsconfigRootDir": null,
+        // "projectFolderIgnoreList": [],
+        // "extraFileExtensions": null,
+        "warnOnUnsupportedTypeScriptVersion": true,
+        "createDefaultProgram": false,
+        "ecmaFeatures": {
+            // "jsx": true,
+            "globalReturn": false
+        }
+    },
+    "plugins": [
+        "eslint-plugin-react",
+        "@typescript-eslint"
+    ],
+    "extends": [
+        "eslint:all",
+        "plugin:@typescript-eslint/all",
+        "plugin:react/all"
+    ],
     "globals": {},
-    "plugins": [],
+    "rules": {},
     // "processor": "",
     "overrides": [],
-    "extends": [],
-    "rules": {},
     "ignorePatterns": [],
     "settings": {},
     "noInlineConfig": false,
