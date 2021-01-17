@@ -11,6 +11,10 @@ https://github.com/typescript-eslint/tslint-to-eslint-config/blob/master/docs/FA
 
 Happy linting! 💖
 */
+
+console.log();
+if (1) {}
+
 module.exports = {
     env: {
         browser: true,
