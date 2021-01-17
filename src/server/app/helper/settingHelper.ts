@@ -9,6 +9,8 @@ class SettingHelper {
     public static readonly instance = new SettingHelper();
     private constructor() { }
 
+    private projectName = '';
+
     private readonly GLOBAL_CONFIG_NAME = 'config/global';
 
     private readonly GLOBAL_SECRET_NAME = 'secret/global';
@@ -17,12 +19,14 @@ class SettingHelper {
 
     private readonly CUSTOM_SECRET_NAME = 'secret/custom';
 
+    public readonly setProjectName = (name: string) => this.projectName = name;
+
     public readonly getValue = <T extends dSetting.GlobalConfig | dSetting.CustomConfig | dSetting.GlobalSecret | dSetting.CustomSecret, TKey extends keyof T>(
         key: TKey, filename: string, dft?: T[TKey]
     ): dp.DeepPartial<T[TKey]> | undefined => {
         try {
             if (process.env.IS_LOCAL_TEST) {
-                const relativePath = path.relative(__dirname, path.join(process.cwd(), `/dist/server/_dev/setting/${filename}`)).replace(/\\/g, '/');
+                const relativePath = path.relative(__dirname, path.join(process.cwd(), `/dist/${this.projectName}/server/_dev/setting/${filename}`)).replace(/\\/g, '/');
                 const obj = (require(relativePath) as { default: T }).default;
                 return (obj[key] || dft) as dp.DeepPartial<T[TKey]>;
             }
