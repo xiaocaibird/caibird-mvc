@@ -5,10 +5,10 @@
 const shelljs = require('shelljs');
 
 process.on('unhandledRejection', err => {
-    process.exit();
+    process.exit(1);
 });
 process.on('uncaughtException', err => {
-    process.exit();
+    process.exit(1);
 });
 
 const exec = (cmd, printfInfo = true) => shelljs.exec(cmd.replace(/\n/g, ' '), {

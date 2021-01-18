@@ -57,7 +57,7 @@ module.exports = async opt => {
 
     if (confirmRelease !== 'Y') {
         printf('退出发布!', ColorsEnum.RED);
-        process.exit();
+        process.exit(1);
         return;
     }
 
@@ -80,7 +80,7 @@ module.exports = async opt => {
             otherBranch = await readline('请输入要发布的指定tag:');
             if (!otherBranch) {
                 printf('tag名不能为空!', ColorsEnum.RED);
-                process.exit();
+                process.exit(1);
                 return;
             }
         } else {
@@ -112,7 +112,7 @@ module.exports = async opt => {
         if (num !== '1' && num !== '2') {
             printf('迭代编号输入错误', ColorsEnum.RED);
             exec(`git checkout ${nowBranch}`);
-            process.exit();
+            process.exit(1);
 
             return;
         }
@@ -138,7 +138,7 @@ module.exports = async opt => {
         if (!version) {
             printf('tag版本号不能为空！', ColorsEnum.RED);
             exec(`git checkout ${nowBranch}`);
-            process.exit();
+            process.exit(1);
 
             return;
         }
@@ -159,7 +159,7 @@ module.exports = async opt => {
             const res = execAndGetDetails(`git checkout ${otherBranch}`);
             if (res.code !== 0) {
                 printf(res.stderr, ColorsEnum.RED);
-                process.exit();
+                process.exit(1);
                 return;
             }
         }
@@ -174,7 +174,7 @@ module.exports = async opt => {
 
         if (!(result1.code === 0 || result1.code === 128 || result1.code === 127)) {
             printf(`发布失败！！！ exit code: ${result1.code}`, ColorsEnum.RED);
-            process.exit();
+            process.exit(1);
             return;
         }
 
@@ -214,6 +214,6 @@ module.exports = async opt => {
         console.error(e);
     } finally {
         exec(`git checkout ${nowBranch}`);
-        process.exit();
+        process.exit(1);
     }
 };
