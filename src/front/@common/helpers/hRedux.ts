@@ -5,16 +5,16 @@
 import { cloneDeep } from 'lodash';
 import Redux, { combineReducers, createStore } from 'redux';
 
-export abstract class HRedux<TState extends object, TActions extends dRedux.F.BaseActions = {}> {
+export abstract class HRedux<TState extends object, TActions extends dRedux.BaseActions = {}> {
     public static readonly createReducer = <TStatePart, TActionsType>(
-        opt: { handlers: dRedux.F.ReducerHandlers<TActionsType, TStatePart>; defaultState: TStatePart }) => ({
+        opt: { handlers: dRedux.ReducerHandlers<TActionsType, TStatePart>; defaultState: TStatePart }) => ({
             handlers: opt.handlers,
             defaultState: cloneDeep(opt.defaultState)
         })
 
     protected constructor(protected readonly options: {
-        actions: dRedux.F.TransformActions<TActions>;
-        reducers: dRedux.F.Reducers<TActions, TState>;
+        actions: dRedux.TransformActions<TActions>;
+        reducers: dRedux.Reducers<TActions, TState>;
         storageKey: string;
     }) {
         this.action = { ...options.actions };
@@ -37,7 +37,7 @@ export abstract class HRedux<TState extends object, TActions extends dRedux.F.Ba
     protected defaultStoreState: Partial<TState> = {};
     protected _lastState = this.Store.getState();
 
-    public readonly action: dRedux.F.TransformActions<TActions>;
+    public readonly action: dRedux.TransformActions<TActions>;
 
     protected storeCreater(initState?: Redux.PreloadedState<TState>) {
         const reducers = Object.keys(this.options.reducers).reduce<Redux.ReducersMapObject<any, { type: string; payload: unknown }>>((obj, item) => {
@@ -63,7 +63,7 @@ export abstract class HRedux<TState extends object, TActions extends dRedux.F.Ba
         };
     }
 
-    public readonly dispatch = <T extends dRedux.F.ActionResult<TActions>[keyof dRedux.F.ActionResult<TActions>]>(actionResult: T) => {
+    public readonly dispatch = <T extends dRedux.ActionResult<TActions>[keyof dRedux.ActionResult<TActions>]>(actionResult: T) => {
         this.Store.dispatch(actionResult);
         this._lastState = this.Store.getState();
     }
