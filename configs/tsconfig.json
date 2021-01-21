@@ -32,29 +32,6 @@
         //#region 映射
         //"baseUrl": ".", //非相对模块的基础路径，和paths配合使用。
         "paths": {
-            "caibird-mvc/*": ["../node_modules/caibird-mvc/src/*"],
-
-            "my-server-constant": ["server/constant"],
-            "my-server-helper": ["server/helper"],
-            "my-server-util": ["server/util"],
-
-            "my-front-constant": ["front/constant"],
-            "my-front-helper": ["front/helper"],
-            "my-front-util": ["front/util"],
-            "my-front-web-component": ["front/platform/web/page/@component"],
-
-            //#region 以下配置用于webpack
-            //"my-public-constant/*": ["public/constant/*"],
-            //"my-public-util/*": ["public/util/*"],
-            //"my-server-constant/*": ["server/constant/*"],
-            //"my-server-helper/*": ["server/helper/*"],
-            //"my-server-util/*": ["server/util/*"],
-            //"my-front-constant/*": ["front/constant/*"],
-            //"my-front-helper/*": ["front/helper/*"],
-            //"my-front-util/*": ["front/util/*"],
-            //"my-front-web-component/*": [""front/platform/web/page/@component/*"]
-            //#endregion
-
         }, //模块名到基于baseUrl的路径映射的列表。
         //"rootDirs": [], //根（root）文件夹列表，表示运行时组合工程结构的内容。
         //#endregion

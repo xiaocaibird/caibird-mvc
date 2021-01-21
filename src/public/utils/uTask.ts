@@ -14,7 +14,7 @@ export namespace uTask {
         shouldRetry?(params: { error: unknown; nowRunTimes: number }): dp.PromiseOrSelf<boolean>;
     } = {}) => {
         const { maxRunTimes = 5, delay, shouldRetry } = opt;
-        const errors = [];
+        const errors: any[] = [];
         for (let i = 1; i <= maxRunTimes; i++) {
             try {
                 return task() as ReturnType<T>;
