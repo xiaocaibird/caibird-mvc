@@ -12,11 +12,19 @@ process.on('uncaughtException', err => {
 });
 
 const exec = (cmd, printfInfo = true) => shelljs.exec(cmd.replace(/\n/g, ' '), {
-    silent: !printfInfo
+    silent: !printfInfo,
+    env: {
+        ...process.env,
+        FORCE_COLOR: true
+    }
 }).stdout;
 
 const execAndGetDetails = (cmd, printfInfo = true) => shelljs.exec(cmd.replace(/\n/g, ' '), {
-    silent: !printfInfo
+    silent: !printfInfo,
+    env: {
+        ...process.env,
+        FORCE_COLOR: true
+    }
 });
 
 const _colorsInfo = {
