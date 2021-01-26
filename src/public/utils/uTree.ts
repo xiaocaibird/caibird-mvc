@@ -5,15 +5,18 @@
 import uObject from './uObject';
 
 export namespace uTree {
-    export const create = <TBase extends dData.Tree.Base, TId extends dData.Tree.Id>(list: TBase[], pid?: TId | null) =>
-        list.filter(value => (pid == null && value.pid == null) || pid === value.pid).map(value => {
-            const item = { ...value } as TBase & { children?: TBase[] };
-            const children = create(list, value.id);
+    export const create = <PidObj extends dData.Tree.Base, KeyObj extends dData.Tree.Base, Base extends KeyObj & PidObj>(list: Base[], pidObj: { pidKey: keyof PidObj; pid: dData.Tree.Id | null } = { pidKey: 'pid', pid: null }) => {
+        const { pidKey, pid } = pidObj;
+        return list.filter(value => (pid == null && value[pidKey] == null) || pid === value[pidKey]).map(value => {
+            console.log('value[pidKey]',value[pidKey]);
+            const item = { ...value } as Base & { children?: Base[] };
+            const children = create(list, { pidKey, pid: value.id });
             if (children.length) {
                 item.children = children;
             }
             return item;
         });
+    };
 
     type FlattenOption<TKeepChildren extends boolean | undefined> = { keepChildren?: TKeepChildren };
     const _flatten = <TBase extends dData.Tree.Base, TKeepChildren extends boolean | undefined>(
