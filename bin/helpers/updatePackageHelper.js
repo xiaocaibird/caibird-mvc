@@ -3,7 +3,7 @@
  * @Desc 把输入的依赖更新到最新版本
  */
 const {
-    exec
+    execStdout
 } = require('../utils');
 
 const getVersionCode = versionStr => versionStr.trim().indexOf('^') === 0 ? versionStr.slice(1) : versionStr;
@@ -25,7 +25,7 @@ const update = ({
     let latestStr = packList.length ? `${packList.join('@latest ')}@latest` : '';
     let lockStr = lockList.map(item => dependencies[item] ? `${item}@${getVersionCode(dependencies[item])}` : '').filter(item => !!item).join(' ');
 
-    packList.length && exec(`npm i --save ${latestStr} ${lockStr}`);
+    packList.length && execStdout(`npm i --save ${latestStr} ${lockStr}`);
 
     lockList = devDepLockList || [];
     // 更新devDependencies
@@ -35,7 +35,7 @@ const update = ({
     latestStr = packList.length ? `${packList.join('@latest ')}@latest` : '';
     lockStr = lockList.map(item => devDependencies[item] ? `${item}@${getVersionCode(devDependencies[item])}` : '').filter(item => !!item).join(' ');
 
-    packList.length && exec(`npm i --save-dev ${latestStr} ${lockStr}`);
+    packList.length && execStdout(`npm i --save-dev ${latestStr} ${lockStr}`);
 };
 
 module.exports = update;

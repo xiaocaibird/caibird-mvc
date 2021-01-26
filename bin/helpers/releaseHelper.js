@@ -10,8 +10,8 @@ const {
     printf,
     ColorsEnum,
     readline,
-    exec,
-    execAndGetDetails
+    execStdout,
+    exec
 } = require('../utils');
 
 const upload = async ({ ossConfig }) => {
@@ -74,7 +74,7 @@ module.exports = async opt => {
         return;
     }
 
-    const nowBranch = exec('git symbolic-ref --short -q HEAD', false);
+    const nowBranch = execStdout('git symbolic-ref --short -q HEAD', false);
 
     const releaseBranch = `release-build-${projectName}`;
     const baseBranch = isDev ? 'dev' : isTest ? 'test' : isExp ? 'exp' : 'master';
@@ -124,13 +124,13 @@ module.exports = async opt => {
 
         if (num !== '1' && num !== '2') {
             printf('迭代编号输入错误', ColorsEnum.RED);
-            exec(`git checkout ${nowBranch}`);
+            execStdout(`git checkout ${nowBranch}`);
             process.exit(1);
 
             return;
         }
 
-        exec('git fetch --tags');
+        execStdout('git fetch --tags');
 
         const tagAttribute = await readline('请输入tag特征值，通常用于服务构建时做特殊处理，不需要可【回车】跳过:');
 
@@ -138,11 +138,11 @@ module.exports = async opt => {
         const tagBase = `${projectName}-${time}V${num}-${tagEnv}`;
         const buildTag = `build-${projectName}-${tagEnv}`;
 
-        const nowTags = exec(`git tag -l "${tagBase}*"`, false);
+        const nowTags = execStdout(`git tag -l "${tagBase}*"`, false);
 
         if (nowTags) {
             printf('<---当前环境和特征下本迭代的tag--->', ColorsEnum.CYAN);
-            exec(`git tag -l "${tagBase}*"`);
+            execStdout(`git tag -l "${tagBase}*"`);
             printf('<---当前环境和特征下本迭代的tag--->', ColorsEnum.CYAN);
         }
 
@@ -150,7 +150,7 @@ module.exports = async opt => {
 
         if (!version) {
             printf('tag版本号不能为空！', ColorsEnum.RED);
-            exec(`git checkout ${nowBranch}`);
+            execStdout(`git checkout ${nowBranch}`);
             process.exit(1);
 
             return;
@@ -162,25 +162,25 @@ module.exports = async opt => {
 
         printf(`tagName=${tag}`, ColorsEnum.CYAN);
 
-        exec('git stash');
+        execStdout('git stash');
         if (!isTagMode) {
-            exec(`git checkout ${baseBranch}`);
-            exec('git fetch');
-            exec('git pull --rebase');
-            exec('git push');
+            execStdout(`git checkout ${baseBranch}`);
+            execStdout('git fetch');
+            execStdout('git pull --rebase');
+            execStdout('git push');
         } else {
-            const res = execAndGetDetails(`git checkout ${otherBranch}`);
+            const res = exec(`git checkout ${otherBranch}`);
             if (res.code !== 0) {
                 printf(res.stderr, ColorsEnum.RED);
                 process.exit(1);
                 return;
             }
         }
-        exec(`git branch -D ${releaseBranch}`);
-        exec(`git checkout -b ${releaseBranch}`);
-        exec(`git tag -d ${buildTag}`);
+        execStdout(`git branch -D ${releaseBranch}`);
+        execStdout(`git checkout -b ${releaseBranch}`);
+        execStdout(`git tag -d ${buildTag}`);
 
-        const result1 = execAndGetDetails(`${isTagMode ? '' : `git merge ${baseBranch} ${otherBranch} -m 合并生成${tag} &&`}
+        const result1 = exec(`${isTagMode ? '' : `git merge ${baseBranch} ${otherBranch} -m 合并生成${tag} &&`}
           git cherry-pick ${baseCommitId} &&
           npm i &&
           npm run build ${projectName} ${env}`);
@@ -203,7 +203,7 @@ module.exports = async opt => {
             tag
         }, null, 2), 'utf-8');
 
-        const result2 = execAndGetDetails(`git add . &&
+        const result2 = exec(`git add . &&
           git commit -m ${tag} &&
           git tag -a ${buildTag} -m ${buildTag} &&
           git tag -a ${tag} -m ${tag} &&
@@ -226,7 +226,7 @@ module.exports = async opt => {
     } catch (e) {
         console.error(e);
     } finally {
-        exec(`git checkout ${nowBranch}`);
+        execStdout(`git checkout ${nowBranch}`);
         process.exit(0);
     }
 };

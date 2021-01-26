@@ -4,7 +4,7 @@
  */
 const {
     readline,
-    exec
+    execStdout
 } = require('../utils');
 
 module.exports = async path => {
@@ -18,12 +18,12 @@ module.exports = async path => {
             dbInfo = newDbInfo;
         }
 
-        exec(`rimraf ${path}/.create ${path}/${dbName} &&
+        execStdout(`rimraf ${path}/.create ${path}/${dbName} &&
           sequelize-auto-xcb -z -C ${dbInfo} -d ${dbName} -e mysql -o "${path}/.create/${dbName}" &&
           shx cp -R -F ${path}/.create/${dbName} ${path}`);
     } catch (e) {
 
     } finally {
-        exec(`rimraf ${path}/.create`);
+        execStdout(`rimraf ${path}/.create`);
     }
 };

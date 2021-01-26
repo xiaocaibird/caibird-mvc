@@ -11,7 +11,7 @@ process.on('uncaughtException', err => {
     process.exit(1);
 });
 
-const exec = (cmd, printfInfo = true) => shelljs.exec(cmd.replace(/\n/g, ' '), {
+const execStdout = (cmd, printfInfo = true) => shelljs.exec(cmd.replace(/\n/g, ' '), {
     silent: !printfInfo,
     env: {
         ...process.env,
@@ -19,7 +19,7 @@ const exec = (cmd, printfInfo = true) => shelljs.exec(cmd.replace(/\n/g, ' '), {
     }
 }).stdout;
 
-const execAndGetDetails = (cmd, printfInfo = true) => shelljs.exec(cmd.replace(/\n/g, ' '), {
+const exec = (cmd, printfInfo = true) => shelljs.exec(cmd.replace(/\n/g, ' '), {
     silent: !printfInfo,
     env: {
         ...process.env,
@@ -56,8 +56,8 @@ const readline = (title, color = ColorsEnum.YELLOW) => new Promise(resolve => {
 });
 
 module.exports = {
+    execStdout,
     exec,
-    execAndGetDetails,
     printf,
     readline,
     ColorsEnum
