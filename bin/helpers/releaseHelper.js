@@ -18,8 +18,8 @@ const upload = async ({ ossConfig }) => {
     const ossDir = ossConfig.dir;
     const ossOptions = ossConfig.getOssOptions && await ossConfig.getOssOptions();
 
-    const dirPath = path.join(process.cwd(), 'assets/bundle');
-    const files = fs.readdirSync(dirPath);
+    const jsBundleDir = ossConfig.jsBundleDir;
+    const files = fs.readdirSync(jsBundleDir);
 
     printf('=====开始上传=====', ColorsEnum.CYAN);
 
@@ -34,7 +34,7 @@ const upload = async ({ ossConfig }) => {
             });
 
             printf(`正在上传${file}...`);
-            const rsp = await client.put(`${ossDir}/${file}`, `${dirPath}/${file}`);
+            const rsp = await client.put(`${ossDir}/${file}`, `${jsBundleDir}/${file}`);
 
             if (!(rsp.url && rsp.res.status === 200)) {
                 printf(`上传${file}失败!`, ColorsEnum.RED);
