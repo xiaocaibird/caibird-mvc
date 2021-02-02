@@ -26,7 +26,7 @@ class ResponseHelper {
             return;
         }
         const version = settingHelper.getCustomConfig('version');
-        json.version = version || process.env.APP_VERSION as string;
+        json.version = version || process.env.PROJECT_VERSION as string;
         json.msg = json.msg || (json.code !== eFetch.JsonSuccessCode.Success && cMessage.jsonError[json.code]) || '';
         json.fetchId = (ctx.state as dp.Obj).fetchId as string;
 
