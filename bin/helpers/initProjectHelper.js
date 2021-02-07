@@ -3,7 +3,7 @@
  * @Desc 安装一些工程必备的依赖
  */
 const {
-    exec,
+    execStdout,
     printf,
     ColorsEnum
 } = require('../utils');
@@ -18,5 +18,5 @@ module.exports = ({
 
     const s = new Set(defaultGlobalList.concat(globalList || []));
 
-    exec(`npm i -g ${[...s].join(' ')}`);
+    execStdout(`npm i -g ${[...s].join(' ')}`);
 };

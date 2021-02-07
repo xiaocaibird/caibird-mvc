@@ -10,16 +10,16 @@ const {
     printf,
     ColorsEnum,
     readline,
-    exec,
-    execAndGetDetails
+    execStdout,
+    exec
 } = require('../utils');
 
 const upload = async ({ ossConfig }) => {
     const ossDir = ossConfig.dir;
     const ossOptions = ossConfig.getOssOptions && await ossConfig.getOssOptions();
 
-    const dirPath = path.join(process.cwd(), 'assets/bundle');
-    const files = fs.readdirSync(dirPath);
+    const jsBundleDir = ossConfig.jsBundleDir;
+    const files = fs.readdirSync(jsBundleDir);
 
     printf('=====开始上传=====', ColorsEnum.CYAN);
 
@@ -34,7 +34,7 @@ const upload = async ({ ossConfig }) => {
             });
 
             printf(`正在上传${file}...`);
-            const rsp = await client.put(`${ossDir}/${file}`, `${dirPath}/${file}`);
+            const rsp = await client.put(`${ossDir}/${file}`, `${jsBundleDir}/${file}`);
 
             if (!(rsp.url && rsp.res.status === 200)) {
                 printf(`上传${file}失败!`, ColorsEnum.RED);
@@ -48,22 +48,35 @@ const upload = async ({ ossConfig }) => {
 
 module.exports = async opt => {
     const { baseCommitId } = opt;
-    const isDev = process.argv.includes('--dev');
-    const isTest = process.argv.includes('--test');
-    const isExp = process.argv.includes('--exp');
+
+    const production = 'production';
+
+    const projectName = process.argv[2];
+    const env = process.argv[3] || production;
+
+    const envMap = {
+        production,
+        exp: 'expProduction',
+        test: 'test',
+        dev: 'dev'
+    };
+
+    const isDev = env === envMap.dev;
+    const isTest = env === envMap.test;
+    const isExp = env === envMap.exp;
     const isPro = !isDev && !isTest && !isExp;
 
-    const confirmRelease = await readline(`确认发布${isDev ? '【开发】环境' : isTest ? '【测试】环境' : isExp ? '【体验】环境' : '【正式】环境'}？确认请输入"Y":`);
+    const confirmRelease = await readline(`确认发布项目【${projectName}】到${isDev ? '【开发】环境' : isTest ? '【测试】环境' : isExp ? '【体验】环境' : '【正式】环境'}？确认请输入"Y":`);
 
     if (confirmRelease !== 'Y') {
         printf('退出发布!', ColorsEnum.RED);
-        process.exit();
+        process.exit(0);
         return;
     }
 
-    const nowBranch = exec('git symbolic-ref --short -q HEAD', false);
+    const nowBranch = execStdout('git symbolic-ref --short -q HEAD', false);
 
-    const releaseBranch = 'release-build';
+    const releaseBranch = `release-build-${projectName}`;
     const baseBranch = isDev ? 'dev' : isTest ? 'test' : isExp ? 'exp' : 'master';
 
     let otherBranch = '';
@@ -80,7 +93,7 @@ module.exports = async opt => {
             otherBranch = await readline('请输入要发布的指定tag:');
             if (!otherBranch) {
                 printf('tag名不能为空!', ColorsEnum.RED);
-                process.exit();
+                process.exit(1);
                 return;
             }
         } else {
@@ -111,25 +124,25 @@ module.exports = async opt => {
 
         if (num !== '1' && num !== '2') {
             printf('迭代编号输入错误', ColorsEnum.RED);
-            exec(`git checkout ${nowBranch}`);
-            process.exit();
+            execStdout(`git checkout ${nowBranch}`);
+            process.exit(1);
 
             return;
         }
 
-        exec('git fetch --tags');
+        execStdout('git fetch --tags');
 
         const tagAttribute = await readline('请输入tag特征值，通常用于服务构建时做特殊处理，不需要可【回车】跳过:');
 
         const tagEnv = `${isDev ? 'dev' : isTest ? 'test' : isExp ? 'exp' : 'production'}${tagAttribute ? `#${tagAttribute}` : ''}`;
-        const tagBase = `${time}V${num}-${tagEnv}`;
-        const buildTag = `build-${tagEnv}`;
+        const tagBase = `${projectName}-${time}V${num}-${tagEnv}`;
+        const buildTag = `build-${projectName}-${tagEnv}`;
 
-        const nowTags = exec(`git tag -l "${tagBase}*"`, false);
+        const nowTags = execStdout(`git tag -l "${tagBase}*"`, false);
 
         if (nowTags) {
             printf('<---当前环境和特征下本迭代的tag--->', ColorsEnum.CYAN);
-            exec(`git tag -l "${tagBase}*"`);
+            execStdout(`git tag -l "${tagBase}*"`);
             printf('<---当前环境和特征下本迭代的tag--->', ColorsEnum.CYAN);
         }
 
@@ -137,8 +150,8 @@ module.exports = async opt => {
 
         if (!version) {
             printf('tag版本号不能为空！', ColorsEnum.RED);
-            exec(`git checkout ${nowBranch}`);
-            process.exit();
+            execStdout(`git checkout ${nowBranch}`);
+            process.exit(1);
 
             return;
         }
@@ -149,32 +162,32 @@ module.exports = async opt => {
 
         printf(`tagName=${tag}`, ColorsEnum.CYAN);
 
-        exec('git stash');
+        execStdout('git stash');
         if (!isTagMode) {
-            exec(`git checkout ${baseBranch}`);
-            exec('git fetch');
-            exec('git pull --rebase');
-            exec('git push');
+            execStdout(`git checkout ${baseBranch}`);
+            execStdout('git fetch');
+            execStdout('git pull --rebase');
+            execStdout('git push');
         } else {
-            const res = execAndGetDetails(`git checkout ${otherBranch}`);
+            const res = exec(`git checkout ${otherBranch}`);
             if (res.code !== 0) {
                 printf(res.stderr, ColorsEnum.RED);
-                process.exit();
+                process.exit(1);
                 return;
             }
         }
-        exec(`git branch -D ${releaseBranch}`);
-        exec(`git checkout -b ${releaseBranch}`);
-        exec(`git tag -d ${buildTag}`);
+        execStdout(`git branch -D ${releaseBranch}`);
+        execStdout(`git checkout -b ${releaseBranch}`);
+        execStdout(`git tag -d ${buildTag}`);
 
-        const result1 = execAndGetDetails(`${isTagMode ? '' : `git merge ${baseBranch} ${otherBranch} -m 合并生成${tag} &&`}
+        const result1 = exec(`${isTagMode ? '' : `git merge ${baseBranch} ${otherBranch} -m 合并生成${tag} &&`}
           git cherry-pick ${baseCommitId} &&
           npm i &&
-          cross-env TAG_NAME=${tag} npm run build${isDev ? ':dev' : isTest ? ':test' : isExp ? ':exp' : ''}`);
+          npm run build ${projectName} ${env}`);
 
         if (!(result1.code === 0 || result1.code === 128 || result1.code === 127)) {
             printf(`发布失败！！！ exit code: ${result1.code}`, ColorsEnum.RED);
-            process.exit();
+            process.exit(1);
             return;
         }
 
@@ -190,11 +203,11 @@ module.exports = async opt => {
             tag
         }, null, 2), 'utf-8');
 
-        const result2 = execAndGetDetails(`git add . &&
+        const result2 = exec(`git add . &&
           git commit -m ${tag} &&
           git tag -a ${buildTag} -m ${buildTag} &&
           git tag -a ${tag} -m ${tag} &&
-          ${isPro && !tagAttribute ? `git tag -a release-v${fullVersion} -m release-v${fullVersion} && git push origin release-v${fullVersion} &&` : ''}
+          ${isPro && !tagAttribute ? `git tag -a release-${projectName}-v${fullVersion} -m release-${projectName}-v${fullVersion} && git push origin release-${projectName}-v${fullVersion} &&` : ''}
           git push origin ${buildTag} ${tag} -f && echo will complete...`);
 
         if (result2.code === 0 || result2.code === 128 || result2.code === 127) {
@@ -213,7 +226,7 @@ module.exports = async opt => {
     } catch (e) {
         console.error(e);
     } finally {
-        exec(`git checkout ${nowBranch}`);
-        process.exit();
+        execStdout(`git checkout ${nowBranch}`);
+        process.exit(0);
     }
 };

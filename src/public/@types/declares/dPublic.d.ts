@@ -84,7 +84,8 @@ declare namespace dp {
     interface CustomProcessEnv {
         RUN_ENV: any;
 
-        APP_VERSION: any;
+        PROJECT_VERSION: any;
+        PROJECT_NAME: any;
         TAG_NAME: any;
 
         NODE_ENV_VALUE: any;

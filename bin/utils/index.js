@@ -5,18 +5,26 @@
 const shelljs = require('shelljs');
 
 process.on('unhandledRejection', err => {
-    process.exit();
+    process.exit(1);
 });
 process.on('uncaughtException', err => {
-    process.exit();
+    process.exit(1);
 });
 
-const exec = (cmd, printfInfo = true) => shelljs.exec(cmd.replace(/\n/g, ' '), {
-    silent: !printfInfo
+const execStdout = (cmd, printfInfo = true) => shelljs.exec(cmd.replace(/\n/g, ' '), {
+    silent: !printfInfo,
+    env: {
+        ...process.env,
+        FORCE_COLOR: true
+    }
 }).stdout;
 
-const execAndGetDetails = (cmd, printfInfo = true) => shelljs.exec(cmd.replace(/\n/g, ' '), {
-    silent: !printfInfo
+const exec = (cmd, printfInfo = true) => shelljs.exec(cmd.replace(/\n/g, ' '), {
+    silent: !printfInfo,
+    env: {
+        ...process.env,
+        FORCE_COLOR: true
+    }
 });
 
 const _colorsInfo = {
@@ -48,8 +56,8 @@ const readline = (title, color = ColorsEnum.YELLOW) => new Promise(resolve => {
 });
 
 module.exports = {
+    execStdout,
     exec,
-    execAndGetDetails,
     printf,
     readline,
     ColorsEnum
