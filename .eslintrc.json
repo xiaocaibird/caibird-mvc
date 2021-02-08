@@ -62,6 +62,10 @@
             "types": {},
             "extendDefaults": true
         }],
+        // 统一字面量字段的定义风格
+        "@typescript-eslint/class-literal-property-style": ["error", "fields"],
+        // 强制使用Record
+        "@typescript-eslint/consistent-indexed-object-style": "error",
         //#endregion
 
         //#region eslint-base rules
