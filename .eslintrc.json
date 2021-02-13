@@ -62,10 +62,159 @@
             "types": {},
             "extendDefaults": true
         }],
-        // 统一字面量字段的定义风格
+        // 禁止不一致的字面量字段的定义风格
         "@typescript-eslint/class-literal-property-style": ["error", "fields"],
-        // 强制使用Record
+        // 禁止使用Record以外的语法来定义索引对象
         "@typescript-eslint/consistent-indexed-object-style": "error",
+        // 禁止随意使用类型断言，且断言必需是as语法
+        "@typescript-eslint/consistent-type-assertions": ["error", {
+            "assertionStyle": "as",
+            "objectLiteralTypeAssertions": "never"
+        }],
+        // 禁止使用不一致的类型定义语法（type或interface）【无需-type和interface有不同的适用场景】
+        "@typescript-eslint/consistent-type-definitions": "off",
+        // 禁止不一致的类型导入【ts已有】
+        "@typescript-eslint/consistent-type-imports": "off",
+        // 禁止省略函数的返回类型【无需】
+        "@typescript-eslint/explicit-function-return-type": "off",
+        // 禁止省略类成员的可见性
+        "@typescript-eslint/explicit-member-accessibility": ["error", {
+            "accessibility": "explicit"
+        }],
+        // 禁止模块导出函数省略入参和出参类型【无需】
+        "@typescript-eslint/explicit-module-boundary-types": "off",
+        // 禁止不一致的类型定义字段分割符
+        "@typescript-eslint/member-delimiter-style": ["error", {
+            "multiline": {
+                "delimiter": "comma",
+                "requireLast": true
+            },
+            "singleline": {
+                "delimiter": "comma",
+                "requireLast": false
+            }
+        }],
+        // 禁止不一致的成员排序
+        "@typescript-eslint/member-ordering": ["error", {
+            "default": {
+                "memberTypes": [
+                    // Index signature
+                    "signature",
+
+                    // Static
+                    "private-static-field",
+                    "protected-static-field",
+                    "public-static-field",
+                    "static-field",
+
+                    "private-static-method",
+                    "protected-static-method",
+                    "public-static-method",
+                    "static-method",
+
+                    // Constructors
+                    "private-constructor",
+                    "protected-constructor",
+                    "public-constructor",
+                    "constructor",
+
+                    // Fields
+                    "private-abstract-field",
+                    "protected-abstract-field",
+                    "public-abstract-field",
+
+                    "private-decorated-field",
+                    "protected-decorated-field",
+                    "public-decorated-field",
+
+                    "private-instance-field",
+                    "protected-instance-field",
+                    "public-instance-field",
+
+                    "private-field",
+                    "protected-field",
+                    "public-field",
+
+                    "abstract-field",
+                    "decorated-field",
+                    "instance-field",
+                    "field",
+
+                    // Methods
+                    "private-abstract-method",
+                    "protected-abstract-method",
+                    "public-abstract-method",
+
+                    "private-decorated-method",
+                    "protected-decorated-method",
+                    "public-decorated-method",
+
+                    "private-instance-method",
+                    "protected-instance-method",
+                    "public-instance-method",
+
+                    "private-method",
+                    "protected-method",
+                    "public-method",
+
+                    "abstract-method",
+                    "decorated-method",
+                    "instance-method",
+                    "method"
+                ],
+                "order": "as-written"
+            }
+        }],
+        // 禁止不一致的函数字段定义方式
+        "@typescript-eslint/method-signature-style": ["error", "method"],
+        // 禁止不合规的命名【TODO】
+        "@typescript-eslint/naming-convention": "off",
+        // 禁止没有实在toString的成员进行字符串转换
+        "@typescript-eslint/no-base-to-string": ["error", {
+            "ignoredTypeNames": ["RegExp"]
+        }],
+        // 禁止可能产生歧义的非空断言
+        "@typescript-eslint/no-confusing-non-null-assertion": "error",
+        // 禁止使用返回值为void的表达式
+        "@typescript-eslint/no-confusing-void-expression": [
+            "error",
+            {
+                "ignoreArrowShorthand": true,
+                "ignoreVoidOperator": true
+            }
+        ],
+        // 禁止动态delete【无需】
+        "@typescript-eslint/no-dynamic-delete": "off",
+        // 禁止空interface【无需】
+        "@typescript-eslint/no-empty-interface": "off",
+        // 禁止使用any
+        "@typescript-eslint/no-explicit-any": ["error", {
+            "fixToUnknown": true
+        }],
+        // 禁止多余的非空断言
+        "@typescript-eslint/no-extra-non-null-assertion": "error",
+        // 禁止不合法的使用类（比如空类，或者只有静态成员的类）
+        "@typescript-eslint/no-extraneous-class": "error",
+        // 禁止忽略promise的异常处理【无需】
+        "@typescript-eslint/no-floating-promises": "off",
+        // 禁止使用for in
+        "@typescript-eslint/no-for-in-array": "error",
+        // 禁止将catch e 定义为any
+        "@typescript-eslint/no-implicit-any-catch": "error",
+        // 禁止无意义的类型声明
+        "@typescript-eslint/no-inferrable-types": "error",
+        // 禁止使用void【无需】
+        "@typescript-eslint/no-invalid-void-type": "off",
+        // 禁止不合法的构造函数定义
+        "@typescript-eslint/no-misused-new": "error",
+        // 禁止不合法的使用promise
+        "@typescript-eslint/no-misused-promises": [
+            "error",
+            {
+                "checksVoidReturn": true,
+                "checksConditionals": true
+            }
+        ]
         //#endregion
 
         //#region eslint-base rules
