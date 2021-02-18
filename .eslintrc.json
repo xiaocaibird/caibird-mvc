@@ -73,7 +73,7 @@
         }],
         // 禁止使用不一致的类型定义语法（type或interface）【无需-type和interface有不同的适用场景】
         "@typescript-eslint/consistent-type-definitions": "off",
-        // 禁止不一致的类型导入【ts已有】
+        // 禁止不合法的类型导入【ts已有】
         "@typescript-eslint/consistent-type-imports": "off",
         // 禁止省略函数的返回类型【无需】
         "@typescript-eslint/explicit-function-return-type": "off",
@@ -214,7 +214,215 @@
                 "checksVoidReturn": true,
                 "checksConditionals": true
             }
-        ]
+        ],
+        // 禁止使用namespace【无需】
+        "@typescript-eslint/no-namespace": "error",
+        // 禁止在可选链后使用会产生歧义的非空断言
+        "@typescript-eslint/no-non-null-asserted-optional-chain": "error",
+        // 禁止非空断言
+        "@typescript-eslint/no-non-null-assertion": "error",
+        // 禁止在构造函数上使用参数属性【无需】
+        "@typescript-eslint/no-parameter-properties": "off",
+        // 禁止使用require
+        "@typescript-eslint/no-require-imports": "error",
+        // 禁止给this重命名
+        "@typescript-eslint/no-this-alias": ["error", {
+            "allowDestructuring": true
+        }],
+        // 禁止使用类型别名(type)
+        "@typescript-eslint/no-type-alias": "off",
+        // 禁止不必要的比较
+        "@typescript-eslint/no-unnecessary-boolean-literal-compare": "error",
+        // 禁止总为true或总为false有表达式
+        "@typescript-eslint/no-unnecessary-condition": ["error", {
+            "allowConstantLoopConditions": true // 在循环表达式中允许 
+        }],
+        // 禁止不必要的命名空间或枚举限定符
+        "@typescript-eslint/no-unnecessary-qualifier": "error",
+        // 禁止给泛型传递与默认值相同的值 
+        "@typescript-eslint/no-unnecessary-type-arguments": "error",
+        // 禁止无必要的类型断言
+        "@typescript-eslint/no-unnecessary-type-assertion": "error",
+        // 禁止泛型extends any或unknown
+        "@typescript-eslint/no-unnecessary-type-constraint": "error",
+        // 禁止不安全的any转换
+        "@typescript-eslint/no-unsafe-assignment": "error",
+        // 禁止不安全的any执行
+        "@typescript-eslint/no-unsafe-call": "error",
+        // 禁止不安全的any访问
+        "@typescript-eslint/no-unsafe-member-access": "error",
+        // 禁止return any
+        "@typescript-eslint/no-unsafe-return": "error",
+        // 禁止var require
+        "@typescript-eslint/no-var-requires": "error",
+        // 禁止在可以使用非空断言时使用类型断言
+        "@typescript-eslint/non-nullable-type-assertion-style": "error",
+        // 禁止在可以使用const 使用let
+        "@typescript-eslint/prefer-as-const": "error",
+        // 禁止定义隐式的enum成员
+        "@typescript-eslint/prefer-enum-initializers": "error",
+        // 禁止在可以用for of时用for i++
+        "@typescript-eslint/prefer-for-of": "error",
+        // 禁止在单一函数类型时用interface来定义
+        "@typescript-eslint/prefer-function-type": "error",
+        // 禁止用includes以外的方式来判断字符串或数组的存在
+        "@typescript-eslint/prefer-includes": "error",
+        // 禁止定义对象和非字面量的枚举值
+        "@typescript-eslint/prefer-literal-enum-member": "error",
+        // 禁止使用module(类型扩展除外)
+        "@typescript-eslint/prefer-namespace-keyword": "error",
+        // 禁止在赋值运算时使用||，要用??替代
+        "@typescript-eslint/prefer-nullish-coalescing": "error",
+        // 禁止在可以用可选链时使用&&
+        "@typescript-eslint/prefer-optional-chain": "error",
+        // 禁止省略必要的readonly
+        "@typescript-eslint/prefer-readonly": "error",
+        // 禁止定义可变的方法参数
+        "@typescript-eslint/prefer-readonly-parameter-types": "error",
+        // 禁止在array.reduce的返回值上使用类型断言
+        "@typescript-eslint/prefer-reduce-type-parameter": "error",
+        // 禁止在正则匹配能用exec时使用match
+        "@typescript-eslint/prefer-regexp-exec": "error",
+        // 禁止在能使用startWith和endWith时使用其它方式来判断子字符串
+        "@typescript-eslint/prefer-string-starts-ends-with": "error",
+        // 禁止使用ts-ignore 【无需-已禁止使用ts注释】
+        "@typescript-eslint/prefer-ts-expect-error": "off",
+        // 禁止promise函数省略async
+        "@typescript-eslint/promise-function-async": "error",
+        // 禁止在使用arrar.sort时不传入回调
+        "@typescript-eslint/require-array-sort-compare": ["error", {
+            "ignoreStringArrays": true
+        }],
+        // 禁止混合使用加法运算符
+        "@typescript-eslint/restrict-plus-operands": ["error", {
+            "checkCompoundAssignments": true
+        }],
+        // 禁止在字符串模板中用非法类型
+        "@typescript-eslint/restrict-template-expressions": ["error", {
+            "allowNumber": true,
+            "allowBoolean": true,
+            "allowAny": false,
+            "allowNullish": false
+        }],
+        // 禁止联合类型与交叉类型不按顺序定义
+        "@typescript-eslint/sort-type-union-intersection-members": "error",
+        // 禁止不合法的真假表达式
+        "@typescript-eslint/strict-boolean-expressions": ["error", {
+            "allowString": true,
+            "allowNumber": true,
+            "allowNullableObject": true,
+            "allowNullableBoolean": false,
+            "allowNullableString": false,
+            "allowNullableNumber": false,
+            "allowAny": false
+        }],
+        // 禁止在switch语句中忽略联合类型的部分成员
+        "@typescript-eslint/switch-exhaustiveness-check": "error",
+        // 禁止使用三线表达式
+        "@typescript-eslint/triple-slash-reference": "error",
+        // 禁止不合法的类型定义空格
+        "@typescript-eslint/type-annotation-spacing": "error",
+        // 禁止省略类型定义【无需】
+        "@typescript-eslint/typedef": "off",
+        // 禁止调用没有bind的方法
+        "@typescript-eslint/unbound-method": ["error",
+            {
+                "ignoreStatic": true
+            }
+        ],
+        // 禁止定义可以合并的函数重载
+        "@typescript-eslint/unified-signatures": "error",
+        //#endregion
+
+        //#region ts-ext rules
+        // 禁止不一致的花括号风格
+        "brace-style": "off",
+        "@typescript-eslint/brace-style": ["error",
+            "1tbs",
+            {
+                "allowSingleLine": true
+            }
+        ],
+
+        // 禁止不一致的尾部逗号
+        "comma-dangle": "off",
+        "@typescript-eslint/comma-dangle": ["error", {
+            "arrays": "only-multiline",
+            "objects": "only-multiline",
+            "imports": "only-multiline",
+            "exports": "only-multiline",
+            "functions": "only-multiline",
+            "enums": "only-multiline",
+            "generics": "only-multiline",
+            "tuples": "only-multiline"
+        }],
+
+        // 禁止不一致的逗号空格
+        "comma-spacing": "off",
+        "@typescript-eslint/comma-spacing": ["error"],
+
+        // 禁止将可选参数放前面【ts已有】
+        "default-param-last": "off",
+        "@typescript-eslint/default-param-last": ["off"],
+
+        // 禁止在可以用点访问属性时用中括号来访问
+        "dot-notation": "off",
+        "@typescript-eslint/dot-notation": ["error"],
+
+        // 禁止在调用函数时在括号前加空格
+        "func-call-spacing": "off",
+        "@typescript-eslint/func-call-spacing": ["error"],
+
+        // 禁止不一致的缩进
+        "indent": "off",
+        "@typescript-eslint/indent": ["error", 4, {
+            "SwitchCase": 1,
+            "VariableDeclarator": "first",
+            "outerIIFEBody": 1,
+            "MemberExpression": 1,
+            "FunctionDeclaration": {
+                "body": 1,
+                "parameters": "first"
+            },
+            "FunctionExpression": {
+                "body": 1,
+                "parameters": "first"
+            },
+            "CallExpression": {
+                "arguments": "first"
+            },
+            "ArrayExpression": "first",
+            "ObjectExpression": "first",
+            "ImportDeclaration": "first",
+            "flatTernaryExpressions": true,
+            "offsetTernaryExpressions": true,
+            "ignoreComments": false
+        }],
+
+        // 禁止不一致的变量初始化风格【无需】
+        "init-declarations": "off",
+        "@typescript-eslint/init-declarations": "off",
+
+        // 禁止不一致的关键字前后空格
+        "keyword-spacing": "off",
+        "@typescript-eslint/keyword-spacing": ["error"],
+
+        // 禁止不一致的类成员空行风格
+        "lines-between-class-members": "off",
+        "@typescript-eslint/lines-between-class-members": ["error", "always", {
+            "exceptAfterOverload": true,
+            "exceptAfterSingleLine": true
+        }],
+
+        // 禁止在不必要的时候使用Array创建数组
+        "no-array-constructor": "off",
+        "@typescript-eslint/no-array-constructor": ["error"],
+
+        // 禁止重复的类成员【ts已有】
+        "no-dupe-class-members": "off",
+        "@typescript-eslint/no-dupe-class-members": "off",
+
+        
         //#endregion
 
         //#region eslint-base rules
