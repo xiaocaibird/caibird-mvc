@@ -422,7 +422,121 @@
         "no-dupe-class-members": "off",
         "@typescript-eslint/no-dupe-class-members": "off",
 
-        
+        // 禁止重复的import
+        "no-duplicate-imports": "off",
+        "@typescript-eslint/no-duplicate-imports": ["error"],
+
+        // 禁止使用空函数
+        "no-empty-function": "off",
+        "@typescript-eslint/no-empty-function": "off",
+
+        // 禁止多余括号
+        "no-extra-parens": "off",
+        "@typescript-eslint/no-extra-parens": ["error", "all", {
+            "ignoreJSX": "multi-line"
+        }],
+
+        // 禁止多余的分号
+        "no-extra-semi": "off",
+        "@typescript-eslint/no-extra-semi": ["error"],
+
+        // 禁止eval相关的操作
+        "no-implied-eval": "off",
+        "@typescript-eslint/no-implied-eval": ["error"],
+
+        // 禁止在很可能为undefined的场景下使用this
+        "no-invalid-this": "off",
+        "@typescript-eslint/no-invalid-this": ["error", {
+            "capIsConstructor": false
+        }],
+
+        // 禁止在循环中的函数访问不安全的循环变量（通常是var引起的闭包失效）【无需-已禁用var】
+        "no-loop-func": "off",
+        "@typescript-eslint/no-loop-func": "off",
+
+        // 禁止失精度的数字
+        "no-loss-of-precision": "off",
+        "@typescript-eslint/no-loss-of-precision": ["error"],
+
+        // 禁止使用魔法数字
+        "no-magic-numbers": "off",
+        "@typescript-eslint/no-magic-numbers": ["error",
+            {
+                "ignore": [-1, 0, 1, 2, 3, 4, 5],
+                "ignoreArrayIndexes": false,
+                "ignoreDefaultValues": false,
+                "enforceConst": false,
+                "detectObjects": true,
+                "ignoreEnums": true,
+                "ignoreNumericLiteralTypes": true,
+                "ignoreReadonlyClassProperties": true
+            }
+        ],
+
+        // 禁止在同一作用域定义同名的变量
+        "no-redeclare": "off",
+        "@typescript-eslint/no-redeclare": ["error", {
+            "builtinGlobals": true,
+            "ignoreDeclarationMerge": true
+        }],
+
+        // 禁止定义阴影变量(即内外作用域的同名变量)
+        "no-shadow": "off",
+        "@typescript-eslint/no-shadow": ["error", {
+            "builtinGlobals": true,
+            "hoist": "functions"
+        }],
+
+        // 禁止throw 非Error对象
+        "no-throw-literal": "off",
+        "@typescript-eslint/no-throw-literal": ["error"],
+
+        // 禁止无意义的表达式
+        "no-unused-expressions": "off",
+        "@typescript-eslint/no-unused-expressions": ["error", {
+            "allowShortCircuit": false,
+            "allowTernary": false,
+            "allowTaggedTemplates": false,
+            "enforceForJSX": true
+        }],
+
+        // 禁止未使用的变量
+        "no-unused-vars": "off",
+        "@typescript-eslint/no-unused-vars": ["error", {
+            "vars": "all",
+            // "varsIgnorePattern": "",
+            "args": "all",
+            "ignoreRestSiblings": false,
+            "argsIgnorePattern": "^_",
+            "caughtErrors": "all",
+            // "caughtErrorsIgnorePattern": ""
+        }],
+
+        // 禁止在定义前使用【ts已有】
+        "no-use-before-define": "off",
+        "@typescript-eslint/no-use-before-define": "off",
+
+        // 禁止不必要的构造函数
+        "no-useless-constructor": "off",
+        "@typescript-eslint/no-useless-constructor": ["error"],
+
+        // 禁止不一致的对象格式
+        "object-curly-spacing": "off",
+        "@typescript-eslint/object-curly-spacing": ["error", "always", {
+            "arraysInObjects": true,
+            "objectsInObjects": true
+        }],
+
+        // 禁止不一致的引用使用
+        "quotes": "off",
+        "@typescript-eslint/quotes": ["error", "single", {
+            "avoidEscape": false,
+            "allowTemplateLiterals": false
+        }],
+
+        // 禁止在没有await时使用async
+        "require-await": "off",
+        "@typescript-eslint/require-await": ["error"],
         //#endregion
 
         //#region eslint-base rules
