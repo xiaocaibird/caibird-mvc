@@ -537,6 +537,17 @@
         // 禁止在没有await时使用async
         "require-await": "off",
         "@typescript-eslint/require-await": ["error"],
+
+        // 禁止不必要的await
+        "no-return-await": "off",
+        "@typescript-eslint/return-await": ["error", "never"],
+
+        // 必需使用分号
+        "semi": "off",
+        "@typescript-eslint/semi": ["error", "always", {
+            "omitLastInOneLineBlock": false,
+            
+        }],
         //#endregion
 
         //#region eslint-base rules
