@@ -1,7 +1,6 @@
 {
     /**
      * @Creater cmZhou
-     * @version 7.17.0
      */
     "root": true,
     "env": {
@@ -32,9 +31,9 @@
         "@typescript-eslint"
     ],
     "extends": [
-        "eslint:all",
-        "plugin:@typescript-eslint/all",
-        "plugin:react/all"
+        "eslint:all", // 7.19.0
+        "plugin:@typescript-eslint/all", // 4.14.2
+        "plugin:react/all" // 7.22.0
     ],
     "globals": {},
     "rules": {
@@ -508,7 +507,7 @@
             "args": "all",
             "ignoreRestSiblings": false,
             "argsIgnorePattern": "^_",
-            "caughtErrors": "all",
+            "caughtErrors": "all"
             // "caughtErrorsIgnorePattern": ""
         }],
 
