@@ -1,2 +1,2 @@
-type A = readonly { a: '', b: '' }[];
+type A = ReadonlyArray<{ a: '', b: '' }>;
 type B = ReadonlyArray<{}>
