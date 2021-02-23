@@ -36,6 +36,12 @@
         // "plugin:react/all" // 7.22.0
     ],
     "globals": {},
+    // "processor": "",
+    "overrides": [],
+    "ignorePatterns": [],
+    "settings": {},
+    "noInlineConfig": false,
+    "reportUnusedDisableDirectives": true,
     "rules": {
         //#region 【ts-base】 66(errors) + 13(off) = 79(rules)
         // 禁止不连续的函数重载
@@ -44,18 +50,19 @@
         "@typescript-eslint/array-type": ["error", {
             "default": "array",
             "readonly": "generic"
-        }]
-        // // 禁止对非promise的值用await
-        // "@typescript-eslint/await-thenable": ["error"],
-        // // 禁止使用@ts-nocheck等注释
-        // "@typescript-eslint/ban-ts-comment": ["error", {
-        //     "ts-expect-error": true,
-        //     "ts-ignore": true,
-        //     "ts-nocheck": true,
-        //     "ts-check": false
-        // }],
-        // // 禁止tslint的注释
-        // "@typescript-eslint/ban-tslint-comment": ["error"],
+        }],
+        // 禁止对非promise的值用await
+        "@typescript-eslint/await-thenable": ["error"],
+        // 禁止使用@ts-nocheck等注释
+        "@typescript-eslint/ban-ts-comment": ["error", {
+            // "minimumDescriptionLength": 1000,
+            "ts-expect-error": true,
+            "ts-ignore": true,
+            "ts-nocheck": true,
+            "ts-check": false
+        }],
+        // 禁止tslint的注释
+        "@typescript-eslint/ban-tslint-comment": ["error"]
         // // 禁止一些类型
         // "@typescript-eslint/ban-types": ["error", {
         //     "types": {},
@@ -611,11 +618,5 @@
         // //#endregion
         // // 禁止重复定义函数
         // "no-func-assign": ["error"]
-    },
-    // "processor": "",
-    "overrides": [],
-    "ignorePatterns": [],
-    "settings": {},
-    "noInlineConfig": false,
-    "reportUnusedDisableDirectives": true
+    }
 }

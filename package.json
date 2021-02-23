@@ -8,6 +8,7 @@
     "update-package": "rimraf node_modules package-lock.json && npm run install-shelljs && node bin/updatePackage",
     "clear:tsc": "rimraf .tsc",
     "tslint": "node node_modules/tslint/bin/tslint -t verbose --project tsconfig.json",
+    "eslint": ".\\node_modules\\.bin\\eslint --cache --cache-location \"./.eslint/cache\" -f codeframe --ext .ts,tsx src/",
     "tsc": "npm run clear:tsc && node node_modules/typescript/bin/tsc",
     "check-tsc": "npm run tslint && npm run tsc"
   },

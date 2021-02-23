@@ -55,7 +55,7 @@ window.addEventListener('error', async evt => {
                     error.message = errJson.message || '';
                 } catch {
                     try {
-                        // tslint:disable-next-line: no-unsafe-any
+                        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
                         error = new (window as any)[errName || '']() as Error;
                     } catch {
                         error = new Error();
