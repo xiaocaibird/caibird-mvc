@@ -9,6 +9,7 @@
     "clear:tsc": "rimraf .tsc",
     "tslint": "node node_modules/tslint/bin/tslint -t verbose --project tsconfig.json",
     "eslint": ".\\node_modules\\.bin\\eslint --cache --cache-location \"./.eslint/cache\" -f codeframe --ext .ts,tsx src/",
+    "eslint-fix": ".\\node_modules\\.bin\\eslint --cache --cache-location \"./.eslint/cache\" -f codeframe --ext .ts,tsx src/ --fix",
     "tsc": "npm run clear:tsc && node node_modules/typescript/bin/tsc",
     "check-tsc": "npm run tslint && npm run tsc"
   },
