@@ -493,8 +493,8 @@
         "@typescript-eslint/no-unused-expressions": ["error", {
             "allowShortCircuit": false,
             "allowTernary": false,
-            "allowTaggedTemplates": false,
-            "enforceForJSX": true
+            "allowTaggedTemplates": false
+            // "enforceForJSX": true // 【TODO】开启eslint会出错，why？
         }],
 
         // 禁止未使用的变量
@@ -561,55 +561,56 @@
         }],
         //#endregion
 
-        //#region eslint-base rules
+        //#region 【eslint-possible-errors】 rules
         // 禁止方向错误的for循环
-        "for-direction": "error",
+        "for-direction": ["error"],
         // 禁止无return的getter【ts已有】
         "getter-return": "off",
-        // 禁止在new Promise时使用async【无需】
-        "no-async-promise-executor": "off",
+        // 禁止在new Promise时使用async
+        "no-async-promise-executor": ["error"],
         // 禁止在for 中使用await【无需】
         "no-await-in-loop": "off",
         // 禁止比较-0
-        "no-compare-neg-zero": "error",
+        "no-compare-neg-zero": ["error"],
         // 禁止在条件语句中赋值
         "no-cond-assign": ["error", "always"],
-        // 禁止console
-        "no-console": ["error", {
-            "allow": ["error"]
-        }],
+        // 禁止console【TODO】
+        "no-console": "off",
         // 禁止在条件中使用常量
-        "no-constant-condition": "error",
+        "no-constant-condition": ["error", {
+            "checkLoops": true
+        }],
         // 禁止在正则中出现ascii中的的control字符
-        "no-control-regex": "error",
+        "no-control-regex": ["error"],
         // 禁止使用debugger
-        "no-debugger": "error",
+        "no-debugger": ["error"],
         // 禁止重复的函数参数【ts已有】
         "no-dupe-args": "off",
         // 禁止重复的条件判断
-        "no-dupe-else-if": "error",
+        "no-dupe-else-if": ["error"],
         // 禁止object有重复的key【ts已有】
         "no-dupe-keys": "off",
         // 禁止switch中有重复的case
-        "no-duplicate-case": "error",
+        "no-duplicate-case": ["error"],
         // 禁止空代码块
         "no-empty": ["error", {
             "allowEmptyCatch": true
         }],
         // 禁止包含空字符的正则
-        "no-empty-character-class": "error",
+        "no-empty-character-class": ["error"],
         // 禁止给catch(e)中的e赋值
-        "no-ex-assign": "error",
+        "no-ex-assign": ["error"],
         // 禁止不必要的boolean转换
         "no-extra-boolean-cast": ["error", {
             "enforceForLogicalOperands": true
         }],
-        // 禁止多余的括号
-        "no-extra-parens": "error",
-        // 禁止多余的分号
-        "no-extra-semi": "error"
+        // 禁止多余的括号【ts-plugin已有】
+        // "no-extra-parens": "off",
+        // // 禁止多余的分号【ts-plugin已有】
+        // "no-extra-semi": "off",
         //#endregion
-
+        // 禁止重复定义函数
+        "no-func-assign": ["error"]
     },
     // "processor": "",
     "overrides": [],
