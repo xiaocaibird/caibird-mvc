@@ -37,16 +37,16 @@
     ],
     "globals": {},
     "rules": {
-        //#region ts-base rules
+        //#region 【ts-base】 66(errors) + 13(off) = 79(rules)
         // 禁止不连续的函数重载
-        "@typescript-eslint/adjacent-overload-signatures": "error",
+        "@typescript-eslint/adjacent-overload-signatures": ["error"],
         // 禁止不统一的array type定义
         "@typescript-eslint/array-type": ["error", {
             "default": "array",
             "readonly": "array"
         }],
         // 禁止对非promise的值用await
-        "@typescript-eslint/await-thenable": "error",
+        "@typescript-eslint/await-thenable": ["error"],
         // 禁止使用@ts-nocheck等注释
         "@typescript-eslint/ban-ts-comment": ["error", {
             "ts-expect-error": true,
@@ -55,7 +55,7 @@
             "ts-check": false
         }],
         // 禁止tslint的注释
-        "@typescript-eslint/ban-tslint-comment": "error",
+        "@typescript-eslint/ban-tslint-comment": ["error"],
         // 禁止一些类型
         "@typescript-eslint/ban-types": ["error", {
             "types": {},
@@ -64,7 +64,7 @@
         // 禁止不一致的字面量字段的定义风格
         "@typescript-eslint/class-literal-property-style": ["error", "fields"],
         // 禁止使用Record以外的语法来定义索引对象
-        "@typescript-eslint/consistent-indexed-object-style": "error",
+        "@typescript-eslint/consistent-indexed-object-style": ["error"],
         // 禁止随意使用类型断言，且断言必需是as语法
         "@typescript-eslint/consistent-type-assertions": ["error", {
             "assertionStyle": "as",
@@ -173,10 +173,9 @@
             "ignoredTypeNames": ["RegExp"]
         }],
         // 禁止可能产生歧义的非空断言
-        "@typescript-eslint/no-confusing-non-null-assertion": "error",
+        "@typescript-eslint/no-confusing-non-null-assertion": ["error"],
         // 禁止使用返回值为void的表达式
-        "@typescript-eslint/no-confusing-void-expression": [
-            "error",
+        "@typescript-eslint/no-confusing-void-expression": ["error",
             {
                 "ignoreArrowShorthand": true,
                 "ignoreVoidOperator": true
@@ -191,39 +190,38 @@
             "fixToUnknown": true
         }],
         // 禁止多余的非空断言
-        "@typescript-eslint/no-extra-non-null-assertion": "error",
+        "@typescript-eslint/no-extra-non-null-assertion": ["error"],
         // 禁止不合法的使用类（比如空类，或者只有静态成员的类）
-        "@typescript-eslint/no-extraneous-class": "error",
+        "@typescript-eslint/no-extraneous-class": ["error"],
         // 禁止忽略promise的异常处理【无需】
         "@typescript-eslint/no-floating-promises": "off",
         // 禁止使用for in
-        "@typescript-eslint/no-for-in-array": "error",
+        "@typescript-eslint/no-for-in-array": ["error"],
         // 禁止将catch e 定义为any
-        "@typescript-eslint/no-implicit-any-catch": "error",
+        "@typescript-eslint/no-implicit-any-catch": ["error"],
         // 禁止无意义的类型声明
-        "@typescript-eslint/no-inferrable-types": "error",
+        "@typescript-eslint/no-inferrable-types": ["error"],
         // 禁止使用void【无需】
         "@typescript-eslint/no-invalid-void-type": "off",
         // 禁止不合法的构造函数定义
-        "@typescript-eslint/no-misused-new": "error",
+        "@typescript-eslint/no-misused-new": ["error"],
         // 禁止不合法的使用promise
-        "@typescript-eslint/no-misused-promises": [
-            "error",
+        "@typescript-eslint/no-misused-promises": ["error",
             {
                 "checksVoidReturn": true,
                 "checksConditionals": true
             }
         ],
         // 禁止使用namespace【无需】
-        "@typescript-eslint/no-namespace": "error",
+        "@typescript-eslint/no-namespace": ["error"],
         // 禁止在可选链后使用会产生歧义的非空断言
-        "@typescript-eslint/no-non-null-asserted-optional-chain": "error",
+        "@typescript-eslint/no-non-null-asserted-optional-chain": ["error"],
         // 禁止非空断言
-        "@typescript-eslint/no-non-null-assertion": "error",
+        "@typescript-eslint/no-non-null-assertion": ["error"],
         // 禁止在构造函数上使用参数属性【无需】
         "@typescript-eslint/no-parameter-properties": "off",
         // 禁止使用require
-        "@typescript-eslint/no-require-imports": "error",
+        "@typescript-eslint/no-require-imports": ["error"],
         // 禁止给this重命名
         "@typescript-eslint/no-this-alias": ["error", {
             "allowDestructuring": true
@@ -231,63 +229,63 @@
         // 禁止使用类型别名(type)
         "@typescript-eslint/no-type-alias": "off",
         // 禁止不必要的比较
-        "@typescript-eslint/no-unnecessary-boolean-literal-compare": "error",
+        "@typescript-eslint/no-unnecessary-boolean-literal-compare": ["error"],
         // 禁止总为true或总为false有表达式
         "@typescript-eslint/no-unnecessary-condition": ["error", {
             "allowConstantLoopConditions": true // 在循环表达式中允许 
         }],
         // 禁止不必要的命名空间或枚举限定符
-        "@typescript-eslint/no-unnecessary-qualifier": "error",
+        "@typescript-eslint/no-unnecessary-qualifier": ["error"],
         // 禁止给泛型传递与默认值相同的值 
-        "@typescript-eslint/no-unnecessary-type-arguments": "error",
+        "@typescript-eslint/no-unnecessary-type-arguments": ["error"],
         // 禁止无必要的类型断言
-        "@typescript-eslint/no-unnecessary-type-assertion": "error",
+        "@typescript-eslint/no-unnecessary-type-assertion": ["error"],
         // 禁止泛型extends any或unknown
-        "@typescript-eslint/no-unnecessary-type-constraint": "error",
+        "@typescript-eslint/no-unnecessary-type-constraint": ["error"],
         // 禁止不安全的any转换
-        "@typescript-eslint/no-unsafe-assignment": "error",
+        "@typescript-eslint/no-unsafe-assignment": ["error"],
         // 禁止不安全的any执行
-        "@typescript-eslint/no-unsafe-call": "error",
+        "@typescript-eslint/no-unsafe-call": ["error"],
         // 禁止不安全的any访问
-        "@typescript-eslint/no-unsafe-member-access": "error",
+        "@typescript-eslint/no-unsafe-member-access": ["error"],
         // 禁止return any
-        "@typescript-eslint/no-unsafe-return": "error",
+        "@typescript-eslint/no-unsafe-return": ["error"],
         // 禁止var require
-        "@typescript-eslint/no-var-requires": "error",
+        "@typescript-eslint/no-var-requires": ["error"],
         // 禁止在可以使用非空断言时使用类型断言
-        "@typescript-eslint/non-nullable-type-assertion-style": "error",
+        "@typescript-eslint/non-nullable-type-assertion-style": ["error"],
         // 禁止在可以使用const 使用let
-        "@typescript-eslint/prefer-as-const": "error",
+        "@typescript-eslint/prefer-as-const": ["error"],
         // 禁止定义隐式的enum成员
-        "@typescript-eslint/prefer-enum-initializers": "error",
+        "@typescript-eslint/prefer-enum-initializers": ["error"],
         // 禁止在可以用for of时用for i++
-        "@typescript-eslint/prefer-for-of": "error",
+        "@typescript-eslint/prefer-for-of": ["error"],
         // 禁止在单一函数类型时用interface来定义
-        "@typescript-eslint/prefer-function-type": "error",
+        "@typescript-eslint/prefer-function-type": ["error"],
         // 禁止用includes以外的方式来判断字符串或数组的存在
-        "@typescript-eslint/prefer-includes": "error",
+        "@typescript-eslint/prefer-includes": ["error"],
         // 禁止定义对象和非字面量的枚举值
-        "@typescript-eslint/prefer-literal-enum-member": "error",
+        "@typescript-eslint/prefer-literal-enum-member": ["error"],
         // 禁止使用module(类型扩展除外)
-        "@typescript-eslint/prefer-namespace-keyword": "error",
+        "@typescript-eslint/prefer-namespace-keyword": ["error"],
         // 禁止在赋值运算时使用||，要用??替代
-        "@typescript-eslint/prefer-nullish-coalescing": "error",
+        "@typescript-eslint/prefer-nullish-coalescing": ["error"],
         // 禁止在可以用可选链时使用&&
-        "@typescript-eslint/prefer-optional-chain": "error",
+        "@typescript-eslint/prefer-optional-chain": ["error"],
         // 禁止省略必要的readonly
-        "@typescript-eslint/prefer-readonly": "error",
+        "@typescript-eslint/prefer-readonly": ["error"],
         // 禁止定义可变的方法参数
-        "@typescript-eslint/prefer-readonly-parameter-types": "error",
+        "@typescript-eslint/prefer-readonly-parameter-types": ["error"],
         // 禁止在array.reduce的返回值上使用类型断言
-        "@typescript-eslint/prefer-reduce-type-parameter": "error",
+        "@typescript-eslint/prefer-reduce-type-parameter": ["error"],
         // 禁止在正则匹配能用exec时使用match
-        "@typescript-eslint/prefer-regexp-exec": "error",
+        "@typescript-eslint/prefer-regexp-exec": ["error"],
         // 禁止在能使用startWith和endWith时使用其它方式来判断子字符串
-        "@typescript-eslint/prefer-string-starts-ends-with": "error",
+        "@typescript-eslint/prefer-string-starts-ends-with": ["error"],
         // 禁止使用ts-ignore 【无需-已禁止使用ts注释】
         "@typescript-eslint/prefer-ts-expect-error": "off",
         // 禁止promise函数省略async
-        "@typescript-eslint/promise-function-async": "error",
+        "@typescript-eslint/promise-function-async": ["error"],
         // 禁止在使用arrar.sort时不传入回调
         "@typescript-eslint/require-array-sort-compare": ["error", {
             "ignoreStringArrays": true
@@ -304,7 +302,7 @@
             "allowNullish": false
         }],
         // 禁止联合类型与交叉类型不按顺序定义
-        "@typescript-eslint/sort-type-union-intersection-members": "error",
+        "@typescript-eslint/sort-type-union-intersection-members": ["error"],
         // 禁止不合法的真假表达式
         "@typescript-eslint/strict-boolean-expressions": ["error", {
             "allowString": true,
@@ -316,11 +314,11 @@
             "allowAny": false
         }],
         // 禁止在switch语句中忽略联合类型的部分成员
-        "@typescript-eslint/switch-exhaustiveness-check": "error",
+        "@typescript-eslint/switch-exhaustiveness-check": ["error"],
         // 禁止使用三线表达式
-        "@typescript-eslint/triple-slash-reference": "error",
+        "@typescript-eslint/triple-slash-reference": ["error"],
         // 禁止不合法的类型定义空格
-        "@typescript-eslint/type-annotation-spacing": "error",
+        "@typescript-eslint/type-annotation-spacing": ["error"],
         // 禁止省略类型定义【无需】
         "@typescript-eslint/typedef": "off",
         // 禁止调用没有bind的方法
@@ -330,10 +328,10 @@
             }
         ],
         // 禁止定义可以合并的函数重载
-        "@typescript-eslint/unified-signatures": "error",
+        "@typescript-eslint/unified-signatures": ["error"],
         //#endregion
 
-        //#region ts-ext rules
+        //#region 【ts-ext】 29(errors) + 6(off) = 35(rules)
         // 禁止不一致的花括号风格
         "brace-style": "off",
         "@typescript-eslint/brace-style": ["error",
