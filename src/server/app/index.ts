@@ -44,7 +44,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
     private readonly defaultFilters = {
         descriptionFilter: this.filterCreater(
             'descriptionFilter',
-            (target, option: string | { name: string; desc: string } = '') => {
+            (target, option: string | { name: string, desc: string } = '') => {
                 if (uString.check(option)) {
                     target.filterInfo.name = option;
                 } else {
@@ -518,7 +518,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
             prefix
         });
         router.all('/:controller?/:action?/:value*', async (ctx, next) => {
-            const { controller = defaultController, action = defaultAction } = ctx.params as { controller?: string; action?: string };
+            const { controller = defaultController, action = defaultAction } = ctx.params as { controller?: string, action?: string };
 
             const controllerName = this.getControllerName(controller);
             const Controller = this.apiMap[controllerName];
@@ -659,55 +659,55 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
 }
 
 type Options<TRules extends dp.Obj, TState extends dp.Obj, TCustom extends dp.Obj, TControllerDefaultConfig extends dp.Obj | undefined> = {
-    host: string;
-    port: number;
-    appKeys: string[];
+    host: string,
+    port: number,
+    appKeys: string[],
 
-    prefix?: string;
-    allowHttp?: boolean;
-    defaultController?: string;
-    defaultAction?: string;
-    formRequestKey?: string;
+    prefix?: string,
+    allowHttp?: boolean,
+    defaultController?: string,
+    defaultAction?: string,
+    formRequestKey?: string,
 
-    reportInitOpt?: dReport.InitOptions;
+    reportInitOpt?: dReport.InitOptions,
 
-    tracingConfig?: jaegerClient.TracingConfig;
-    tracingOptions?: jaegerClient.TracingOptions;
-    tracingPathIgnore?: string[];
+    tracingConfig?: jaegerClient.TracingConfig,
+    tracingOptions?: jaegerClient.TracingOptions,
+    tracingPathIgnore?: string[],
 
-    disableDefaultTimestamp?: boolean;
-    disableDefalutLog?: boolean;
+    disableDefaultTimestamp?: boolean,
+    disableDefalutLog?: boolean,
 
-    disableAllDefaultErrorHandler?: boolean;
-    disableDefaultRequestErrorHandler?: boolean;
-    disableDefaultAppErrorHandler?: boolean;
-    disableDefaultUnhandledRejectionHandler?: boolean;
-    disableDefaultUncaughtExceptionHandler?: boolean;
+    disableAllDefaultErrorHandler?: boolean,
+    disableDefaultRequestErrorHandler?: boolean,
+    disableDefaultAppErrorHandler?: boolean,
+    disableDefaultUnhandledRejectionHandler?: boolean,
+    disableDefaultUncaughtExceptionHandler?: boolean,
 
-    bodyOptions?: koaBody.IKoaBodyOptions;
+    bodyOptions?: koaBody.IKoaBodyOptions,
     renderConfig?: {
-        dir: string;
-        opt?: dp.GetFuncParams<typeof koaViews>[1];
-    };
+        dir: string,
+        opt?: dp.GetFuncParams<typeof koaViews>[1],
+    },
 
-    onPreUseKoaBody?(koa: dMvc.S.Koa<TState, TCustom>, app: App<TRules, TState, TCustom, TControllerDefaultConfig>): dp.PromiseOrSelf<void>;
-    onPreUseMvc?(koa: dMvc.S.Koa<TState, TCustom>, app: App<TRules, TState, TCustom, TControllerDefaultConfig>): dp.PromiseOrSelf<void>;
-    onPostUseMvc?(koa: dMvc.S.Koa<TState, TCustom>, app: App<TRules, TState, TCustom, TControllerDefaultConfig>): dp.PromiseOrSelf<void>;
+    onPreUseKoaBody?(koa: dMvc.S.Koa<TState, TCustom>, app: App<TRules, TState, TCustom, TControllerDefaultConfig>): dp.PromiseOrSelf<void>,
+    onPreUseMvc?(koa: dMvc.S.Koa<TState, TCustom>, app: App<TRules, TState, TCustom, TControllerDefaultConfig>): dp.PromiseOrSelf<void>,
+    onPostUseMvc?(koa: dMvc.S.Koa<TState, TCustom>, app: App<TRules, TState, TCustom, TControllerDefaultConfig>): dp.PromiseOrSelf<void>,
 
-    onPreInit?(app: App<TRules, TState, TCustom, TControllerDefaultConfig>): dp.PromiseOrSelf<void>;
-    onPostInit?(app: App<TRules, TState, TCustom, TControllerDefaultConfig>): dp.PromiseOrSelf<void>;
-    onEnd?(app: App<TRules, TState, TCustom, TControllerDefaultConfig>): dp.PromiseOrSelf<void>;
+    onPreInit?(app: App<TRules, TState, TCustom, TControllerDefaultConfig>): dp.PromiseOrSelf<void>,
+    onPostInit?(app: App<TRules, TState, TCustom, TControllerDefaultConfig>): dp.PromiseOrSelf<void>,
+    onEnd?(app: App<TRules, TState, TCustom, TControllerDefaultConfig>): dp.PromiseOrSelf<void>,
 
-    onRequestBegin?(ctx: dMvc.S.Ctx<TState, TCustom>, next: dp.PromiseFunc, app: App<TRules, TState, TCustom, TControllerDefaultConfig>): dp.PromiseOrSelf<void>;
-    onRequestEnd?(ctx: dMvc.S.Ctx<TState, TCustom>, next: dp.PromiseFunc, app: App<TRules, TState, TCustom, TControllerDefaultConfig>): dp.PromiseOrSelf<void>;
-    onRequestError?(error: unknown, ctx: dMvc.S.Ctx<TState, TCustom>, app: App<TRules, TState, TCustom, TControllerDefaultConfig>): dp.PromiseOrSelf<void>;
+    onRequestBegin?(ctx: dMvc.S.Ctx<TState, TCustom>, next: dp.PromiseFunc, app: App<TRules, TState, TCustom, TControllerDefaultConfig>): dp.PromiseOrSelf<void>,
+    onRequestEnd?(ctx: dMvc.S.Ctx<TState, TCustom>, next: dp.PromiseFunc, app: App<TRules, TState, TCustom, TControllerDefaultConfig>): dp.PromiseOrSelf<void>,
+    onRequestError?(error: unknown, ctx: dMvc.S.Ctx<TState, TCustom>, app: App<TRules, TState, TCustom, TControllerDefaultConfig>): dp.PromiseOrSelf<void>,
 
-    onAppError?(error: unknown, ctx: dMvc.S.Ctx<TState, TCustom> | null, app: App<TRules, TState, TCustom, TControllerDefaultConfig>): void;
-    unhandledRejection?(error: unknown, promise: Promise<unknown>, app: App<TRules, TState, TCustom, TControllerDefaultConfig>): void;
-    uncaughtException?(error: Error, app: App<TRules, TState, TCustom, TControllerDefaultConfig>): void;
+    onAppError?(error: unknown, ctx: dMvc.S.Ctx<TState, TCustom> | null, app: App<TRules, TState, TCustom, TControllerDefaultConfig>): void,
+    unhandledRejection?(error: unknown, promise: Promise<unknown>, app: App<TRules, TState, TCustom, TControllerDefaultConfig>): void,
+    uncaughtException?(error: Error, app: App<TRules, TState, TCustom, TControllerDefaultConfig>): void,
 } & (TControllerDefaultConfig extends undefined ? { controllerDefaultConfig?: undefined } : { controllerDefaultConfig: TControllerDefaultConfig });
 
 type StartOpt<TRules, TState, TCustom> = {
-    controllers: dp.Obj<dp.Class>;
-    defaultFilters?: dMvc.S.Decorator<TRules, TState, TCustom>[];
+    controllers: dp.Obj<dp.Class>,
+    defaultFilters?: dMvc.S.Decorator<TRules, TState, TCustom>[],
 };

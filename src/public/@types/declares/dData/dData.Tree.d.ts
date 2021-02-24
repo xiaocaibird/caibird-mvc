@@ -5,7 +5,7 @@
 declare namespace dData {
     namespace Tree {
         type Id = string | number;
-        type Base = { id: Id; pid?: Id | null };
+        type Base = { id: Id, pid?: Id | null };
         type Item<T extends Base> = T & { children?: Item<T>[] };
     }
 }

@@ -6,7 +6,7 @@ import { v1, v4, v5 } from 'uuid';
 
 export namespace uUuid {
     type HandleOpt = {
-        keepSeparator?: boolean;
+        keepSeparator?: boolean,
     };
 
     const handleUuid = (uuid: string, opt: HandleOpt = {}) => {

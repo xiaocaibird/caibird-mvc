@@ -8,8 +8,8 @@ import webpack from 'webpack';
 import webpackHot from 'webpack-hot-middleware';
 
 export default async <T extends Koa<any, any>>(koa: T, options: {
-    webpackConfig: webpack.Configuration;
-    publicPath: string;
+    webpackConfig: webpack.Configuration,
+    publicPath: string,
 }) => {
     const { webpackConfig, publicPath } = options;
     const compiler = webpack(webpackConfig);

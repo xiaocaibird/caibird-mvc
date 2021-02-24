@@ -9,8 +9,8 @@ import { uString } from '../utils/uString';
 
 export abstract class HNavigator {
     protected constructor(protected readonly options: {
-        homePath?: string;
-        loginPath?: string;
+        homePath?: string,
+        loginPath?: string,
     } = {}) {
         this.HOME_PATH = options.homePath || '/';
         this.LOGIN_PATH = options.loginPath || '/';

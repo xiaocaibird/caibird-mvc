@@ -11,7 +11,7 @@ declare global {
             type BaseCtxState = { fetchId?: string };
 
             interface BaseCtxCustom<TState> extends BaseKoa.Context {
-                state: TState & BaseCtxState & BaseKoa.DefaultState;
+                state: TState & BaseCtxState & BaseKoa.DefaultState,
             }
 
             type CtxState<TState> = TState & BaseCtxState;
@@ -29,7 +29,7 @@ declare global {
             type BaseController<TState, TCustom> = new (ctx: Ctx<TState, TCustom>) => dp.Obj;
 
             type ControllerProps<TRules, TState, TCustom> = {
-                __actions__: dp.Obj<Action<TRules, TState, TCustom>>;
+                __actions__: dp.Obj<Action<TRules, TState, TCustom>>,
             };
 
             type InitController<TRules, TState, TCustom> = Partial<CommonProps<TRules, TState, TCustom> & ControllerProps<TRules, TState, TCustom>> & BaseController<TState, TCustom>;
@@ -41,7 +41,7 @@ declare global {
             type Action<TRules, TState, TCustom> = CommonProps<TRules, TState, TCustom> & BaseAction;
 
             interface ActionPropertyDescriptor<TRules, TState, TCustom> extends PropertyDescriptor {
-                value?: InitAction<TRules, TState, TCustom>;
+                value?: InitAction<TRules, TState, TCustom>,
             }
 
             type FilterController<TRules, TState, TCustom> = InitController<TRules, TState, TCustom> | InstanceType<InitController<TRules, TState, TCustom>>;
@@ -50,64 +50,64 @@ declare global {
             type Filter<TRules, TState, TCustom> = Function & FilterProps<TRules, TState, TCustom>;
 
             type FilterProps<TRules, TState, TCustom> = {
-                filterName?: string;
-                defaultOrder?: number;
-                onCheckRule?(target: Action<TRules, TState, TCustom> | Controller<TRules, TState, TCustom>, options: { controller: string; action: string }, ctx: Ctx<TState, TCustom>): dp.PromiseOrSelf<void>;
-                preExecute?(target: Action<TRules, TState, TCustom> | Controller<TRules, TState, TCustom>, ctx: Ctx<TState, TCustom>): dp.PromiseOrSelf<void>;
-                postExecute?(target: Action<TRules, TState, TCustom> | Controller<TRules, TState, TCustom>, ctx: Ctx<TState, TCustom>): dp.PromiseOrSelf<void>;
+                filterName?: string,
+                defaultOrder?: number,
+                onCheckRule?(target: Action<TRules, TState, TCustom> | Controller<TRules, TState, TCustom>, options: { controller: string, action: string }, ctx: Ctx<TState, TCustom>): dp.PromiseOrSelf<void>,
+                preExecute?(target: Action<TRules, TState, TCustom> | Controller<TRules, TState, TCustom>, ctx: Ctx<TState, TCustom>): dp.PromiseOrSelf<void>,
+                postExecute?(target: Action<TRules, TState, TCustom> | Controller<TRules, TState, TCustom>, ctx: Ctx<TState, TCustom>): dp.PromiseOrSelf<void>,
             };
 
             type CommonProps<TRules, TState, TCustom> = {
-                filterOrderList: dp.Obj<Filter<TRules, TState, TCustom>[]>;
-                filterList: Filter<TRules, TState, TCustom>[];
-                filterRules: { httpMethod?: eHttp.MethodType[] | eHttp.MethodType } & Partial<TRules>;
+                filterOrderList: dp.Obj<Filter<TRules, TState, TCustom>[]>,
+                filterList: Filter<TRules, TState, TCustom>[],
+                filterRules: { httpMethod?: eHttp.MethodType[] | eHttp.MethodType } & Partial<TRules>,
                 filterInfo: {
-                    name?: string;
-                    desc?: string;
-                };
+                    name?: string,
+                    desc?: string,
+                },
             };
 
             type ActionReturn<T> = {
-                type: 'json' | 'xml' | 'redirect' | 'file' | 'render' | 'buffer';
-                result: T;
+                type: 'json' | 'xml' | 'redirect' | 'file' | 'render' | 'buffer',
+                result: T,
             };
 
             interface JsonActionReturn<T extends dp.Obj | null> extends ActionReturn<dFetch.SuccessJsonBody<T>> {
-                type: 'json';
+                type: 'json',
             }
 
             interface FileActionReturn extends ActionReturn<{
-                path: string;
-                opt?: KoaSend.SendOptions;
+                path: string,
+                opt?: KoaSend.SendOptions,
             }> {
-                type: 'file';
+                type: 'file',
             }
 
             interface RenderActionReturn<T extends dp.Obj | undefined> extends ActionReturn<{
-                view: string;
-                params?: T;
+                view: string,
+                params?: T,
             }> {
-                type: 'render';
+                type: 'render',
             }
 
             interface BufferActionReturn extends ActionReturn<{
-                buffer: Buffer;
-                fileName: string;
-                opt?: { type: eHttp.ContentDispositionType };
+                buffer: Buffer,
+                fileName: string,
+                opt?: { type: eHttp.ContentDispositionType },
             }> {
-                type: 'buffer';
+                type: 'buffer',
             }
 
             interface RedirectActionReturn extends ActionReturn<{
-                url: string;
+                url: string,
             }> {
-                type: 'redirect';
+                type: 'redirect',
             }
 
             interface XmlActionReturn extends ActionReturn<{
-                xmlStr: string;
+                xmlStr: string,
             }> {
-                type: 'xml';
+                type: 'xml',
             }
         }
     }

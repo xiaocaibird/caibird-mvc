@@ -8,14 +8,14 @@ import { uFunction } from '../utils/uFunction';
 
 export abstract class HReact<TRootContext> {
     protected constructor(protected readonly options: {
-        defaultContext: TRootContext;
+        defaultContext: TRootContext,
     }) { }
     public readonly rootContext = createContext(this.options.defaultContext);
 
     public readonly withAsync = <T extends React.ComponentType<any>>(importComponent: dp.PromiseFunc<unknown[], T>, displayName?: string) => {
         const createHocDisplayName = this.createHocDisplayName;
 
-        const With = class extends React.PureComponent<dReact.GetProps<T> & { onAsyncInnerDidMount?(opt: { innerRef: React.RefObject<React.ReactInstance> }): void }, { Component?: T; isClassComponent?: boolean }> {
+        const With = class extends React.PureComponent<dReact.GetProps<T> & { onAsyncInnerDidMount?(opt: { innerRef: React.RefObject<React.ReactInstance> }): void }, { Component?: T, isClassComponent?: boolean }> {
             private static inner?: T;
 
             public static displayName = displayName || createHocDisplayName('withAsync');

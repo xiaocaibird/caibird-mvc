@@ -5,10 +5,10 @@
 import base, { setCompatible } from '../../@common/consts/cError';
 
 type ErrJson = {
-    _compatible_key_: string;
-    args: unknown[];
-    stack?: string;
-    message?: string;
+    _compatible_key_: string,
+    args: unknown[],
+    stack?: string,
+    message?: string,
 };
 
 let onAppError: undefined | ((err: unknown) => dp.PromiseOrSelf<void>);

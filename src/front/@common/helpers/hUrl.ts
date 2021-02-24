@@ -4,8 +4,8 @@
  */
 export abstract class HUrl {
     public constructor(protected readonly options: {
-        prefix?: string;
-        imgPath: string;
+        prefix?: string,
+        imgPath: string,
     }) { }
 
     public readonly full = (url = '') => `${location.protocol}//${location.host}${this.options.prefix || ''}${url}`;

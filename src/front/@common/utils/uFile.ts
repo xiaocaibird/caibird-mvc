@@ -75,7 +75,7 @@ export namespace uFile {
         readFile<string>(file, eFile.F.FileReaderResultDateType.DataUrl);
 
     export const getImgSize = async (img: string | File) => {
-        type ImgInfo = { width: number; height: number };
+        type ImgInfo = { width: number, height: number };
         return new Promise<ImgInfo>((resolve, _reject) => {
             const imageInfo = {
                 width: 0,

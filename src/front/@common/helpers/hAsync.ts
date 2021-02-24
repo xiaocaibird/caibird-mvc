@@ -9,8 +9,8 @@ import { uObject } from '../utils/uObject';
 export abstract class HAsync<TCustomRunOpt extends dp.Obj = dp.Obj> {
     protected constructor() {}
     protected readonly map: dp.Obj<dp.Obj<{
-        status: eAsync.F.Status;
-        task: Promise<unknown>;
+        status: eAsync.F.Status,
+        task: Promise<unknown>,
     } | undefined>> = {};
 
     protected abstract readonly onRunBegin?: (...p: dp.GetFuncParams<HAsync<TCustomRunOpt>['run']>) => dp.PromiseOrSelf<void>;
@@ -104,11 +104,11 @@ export abstract class HAsync<TCustomRunOpt extends dp.Obj = dp.Obj> {
 type Callback = (status: eAsync.F.Status) => void;
 
 type Options = {
-    onExecuteSuccess?: Callback;
-    onExecuteFail?: Callback;
-    onExecuteEnd?: Callback;
+    onExecuteSuccess?: Callback,
+    onExecuteFail?: Callback,
+    onExecuteEnd?: Callback,
 
-    key?: symbol;
-    action?: eAsync.F.Action;
+    key?: symbol,
+    action?: eAsync.F.Action,
 };
 //#endregion

@@ -8,10 +8,10 @@ export namespace uString {
     export const equalIgnoreCase = (a: string, b: string) => a.toLowerCase() === b.toLowerCase();
 
     export const subText = (params: {
-        str: string;
-        maxLength: number;
-        diffSBC?: boolean;
-        suffix?: string;
+        str: string,
+        maxLength: number,
+        diffSBC?: boolean,
+        suffix?: string,
     }) => {
         const { str, maxLength, diffSBC = true, suffix = '..' } = params;
         if (diffSBC) {

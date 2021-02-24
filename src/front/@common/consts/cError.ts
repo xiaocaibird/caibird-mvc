@@ -23,8 +23,8 @@ namespace _cError {
     export class ReactError extends CommonError {
         public constructor(
             public readonly details: {
-                error: Error;
-                errorInfo: React.ErrorInfo;
+                error: Error,
+                errorInfo: React.ErrorInfo,
             },
             public readonly options: dError.F.Options,
             public readonly logOptions: dReport.ErrorLogOptions | false = false
@@ -37,8 +37,8 @@ namespace _cError {
     export class ApiFetchFail extends CommonError {
         public constructor(
             public readonly details: {
-                error: unknown;
-                info: dRequest.F.WEB.FetchInfo;
+                error: unknown,
+                info: dRequest.F.WEB.FetchInfo,
             },
             public readonly options: dError.F.Options,
             public readonly logOptions: dReport.ErrorLogOptions | false = false
@@ -51,7 +51,7 @@ namespace _cError {
     export class ApiJsonResultEmpty extends CommonError {
         public constructor(
             public readonly details: {
-                info: dRequest.F.WEB.FetchInfo;
+                info: dRequest.F.WEB.FetchInfo,
             },
             public readonly options: dError.F.Options,
             public readonly logOptions: dReport.ErrorLogOptions | false = false
@@ -64,8 +64,8 @@ namespace _cError {
     export class ApiJsonResultError extends CommonError {
         public constructor(
             public readonly details: {
-                rsp: dFetch.JsonBody;
-                info: dRequest.F.WEB.FetchInfo;
+                rsp: dFetch.JsonBody,
+                info: dRequest.F.WEB.FetchInfo,
             },
             public readonly options: dError.F.Options,
             public readonly logOptions: dReport.ErrorLogOptions | false = false
@@ -78,8 +78,8 @@ namespace _cError {
     export class LoginError extends CommonError {
         public constructor(
             public readonly details: {
-                rsp: dFetch.JsonBody;
-                info: dRequest.F.WEB.FetchInfo;
+                rsp: dFetch.JsonBody,
+                info: dRequest.F.WEB.FetchInfo,
             },
             public readonly options: dError.F.Options,
             public readonly logOptions: dReport.ErrorLogOptions | false = false

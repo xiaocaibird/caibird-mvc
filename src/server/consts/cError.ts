@@ -89,8 +89,8 @@ export default cError;
 
 //#region 私有类型
 type StatusInfo = {
-    status: eHttp.StatusCode;
-    msg: string;
+    status: eHttp.StatusCode,
+    msg: string,
 };
 
 type ErrorInfo = eHttp.StatusCode | StatusInfo | dFetch.ErrorJsonBody;

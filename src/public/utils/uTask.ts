@@ -9,9 +9,9 @@ export namespace uTask {
     });
 
     export const retry = async <T extends dp.Func>(task: T, opt: {
-        maxRunTimes?: number;
-        delay?: number;
-        shouldRetry?(params: { error: unknown; nowRunTimes: number }): dp.PromiseOrSelf<boolean>;
+        maxRunTimes?: number,
+        delay?: number,
+        shouldRetry?(params: { error: unknown, nowRunTimes: number }): dp.PromiseOrSelf<boolean>,
     } = {}) => {
         const { maxRunTimes = 5, delay, shouldRetry } = opt;
         const errors: any[] = [];

@@ -82,23 +82,23 @@ declare namespace dp {
     type PromiseFuncPropNames<T> = { [K in keyof T]: T[K] extends PromiseFunc ? K : never }[keyof T];
 
     interface CustomProcessEnv {
-        RUN_ENV: any;
+        RUN_ENV: any,
 
-        PROJECT_VERSION: any;
-        PROJECT_NAME: any;
-        TAG_NAME: any;
+        PROJECT_VERSION: any,
+        PROJECT_NAME: any,
+        TAG_NAME: any,
 
-        NODE_ENV_VALUE: any;
+        NODE_ENV_VALUE: any,
 
-        IS_PRODUCTION: any;
-        IS_EXP_PRODUCTION: any;
+        IS_PRODUCTION: any,
+        IS_EXP_PRODUCTION: any,
 
-        IS_TEST: any;
-        IS_DEV_TEST: any;
-        IS_LOCAL_TEST: any;
+        IS_TEST: any,
+        IS_DEV_TEST: any,
+        IS_LOCAL_TEST: any,
     }
 }
 
 interface Window {
-    __REDUX_DEVTOOLS_EXTENSION__?(): import('redux').StoreEnhancer;
+    __REDUX_DEVTOOLS_EXTENSION__?(): import('redux').StoreEnhancer,
 }

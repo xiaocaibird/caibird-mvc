@@ -33,26 +33,26 @@ export abstract class HDb {
     public readonly clearIllegalChar = (text: string) => text.replace(/[^\u0000-\uFFFF]/g, '');
 
     public readonly setOneToOne = (aTable: {
-        model: Sequelize.Model<any, any>;
-        key?: string;
-        as?: string;
+        model: Sequelize.Model<any, any>,
+        key?: string,
+        as?: string,
     }, bTable: {
-        model: Sequelize.Model<any, any>;
-        key?: string;
-        as?: string;
+        model: Sequelize.Model<any, any>,
+        key?: string,
+        as?: string,
     }, key?: string) => {
         aTable.model.belongsTo(bTable.model, { foreignKey: aTable.key || key, targetKey: bTable.key || key, as: bTable.as });
         bTable.model.belongsTo(aTable.model, { foreignKey: bTable.key || key, targetKey: aTable.key || key, as: aTable.as });
     }
 
     public readonly setOneToMany = (mainTable: {
-        model: Sequelize.Model<any, any>;
-        key?: string;
-        as?: string;
+        model: Sequelize.Model<any, any>,
+        key?: string,
+        as?: string,
     }, depTable: {
-        model: Sequelize.Model<any, any>;
-        key?: string;
-        as?: string;
+        model: Sequelize.Model<any, any>,
+        key?: string,
+        as?: string,
     }) => {
         mainTable.model.hasMany(depTable.model, { foreignKey: depTable.key, sourceKey: mainTable.key, as: depTable.as });
         depTable.model.belongsTo(mainTable.model, { foreignKey: depTable.key, targetKey: mainTable.key, as: mainTable.as });
@@ -63,9 +63,9 @@ export abstract class HDb {
     public readonly createSubTable = <I, A>(
         suffix: string,
         defineInfo: {
-            attributes: Sequelize.DefineModelAttributes<A>;
-            options: Sequelize.DefineOptions<I>;
-            seq: Sequelize.Sequelize;
+            attributes: Sequelize.DefineModelAttributes<A>,
+            options: Sequelize.DefineOptions<I>,
+            seq: Sequelize.Sequelize,
         }
     ) => defineInfo.seq.define<I, A>(`${defineInfo.options.tableName}_${suffix}`, defineInfo.attributes, {
         ...defineInfo.options,
@@ -76,9 +76,9 @@ export abstract class HDb {
         dbSeq: Sequelize.Sequelize,
         defineFunc: (seq: Sequelize.Sequelize, Seq: Sequelize.SequelizeStatic) => Sequelize.Model<I, A>
     ) => new Promise<{
-        attributes: Sequelize.DefineModelAttributes<A>;
-        options: Sequelize.DefineOptions<I>;
-        seq: Sequelize.Sequelize;
+        attributes: Sequelize.DefineModelAttributes<A>,
+        options: Sequelize.DefineOptions<I>,
+        seq: Sequelize.Sequelize,
     }>((resolve, reject) => {
         dbSeq.beforeDefine(this.createSubTable.name, (attributes, options) => {
             resolve({

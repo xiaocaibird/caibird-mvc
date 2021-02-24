@@ -121,20 +121,21 @@
             // "ignoredMethodNames": [],
             // "overrides": {},
             "accessibility": "explicit"
+        }],
+        // 禁止模块导出函数省略入参和出参类型【无需】
+        "@typescript-eslint/explicit-module-boundary-types": "off",
+        // 禁止不一致的类型定义字段分割符
+        "@typescript-eslint/member-delimiter-style": ["error", {
+            // "overrides": {},
+            "multiline": {
+                "delimiter": "comma",
+                "requireLast": true
+            },
+            "singleline": {
+                "delimiter": "comma",
+                "requireLast": false
+            }
         }]
-        // // 禁止模块导出函数省略入参和出参类型【无需】
-        // "@typescript-eslint/explicit-module-boundary-types": "off",
-        // // 禁止不一致的类型定义字段分割符
-        // "@typescript-eslint/member-delimiter-style": ["error", {
-        //     "multiline": {
-        //         "delimiter": "comma",
-        //         "requireLast": true
-        //     },
-        //     "singleline": {
-        //         "delimiter": "comma",
-        //         "requireLast": false
-        //     }
-        // }],
         // // 禁止不一致的成员排序
         // "@typescript-eslint/member-ordering": ["error", {
         //     "default": {

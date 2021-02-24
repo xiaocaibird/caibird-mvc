@@ -6,30 +6,30 @@ declare namespace dRequest {
     namespace F {
         namespace WEB {
             type Options<TNoHandle extends boolean | undefined = undefined, TFormFetch extends boolean | undefined = undefined, TCustom extends dp.Obj = dp.Obj> = {
-                noHandle?: TNoHandle;
-                timeout?: number;
-                contentType?: string | null;
-                requestedWith?: string | null;
-                withCredentials?: boolean;
-                isFormFetch?: TFormFetch;
-                isJsonpFetch?: boolean;
-                jsonpCallbackParamName?: string;
-                jsonpCallbackFuncName?: string;
-                type?: eHttp.MethodType;
-                noReportError?: boolean;
-                errorPrompt?: ePrompt.F.Type;
-                errorPromptStyle?: ePrompt.F.StyleType;
-                retryTimes?: number;
-                headers?: dp.Obj<string>;
+                noHandle?: TNoHandle,
+                timeout?: number,
+                contentType?: string | null,
+                requestedWith?: string | null,
+                withCredentials?: boolean,
+                isFormFetch?: TFormFetch,
+                isJsonpFetch?: boolean,
+                jsonpCallbackParamName?: string,
+                jsonpCallbackFuncName?: string,
+                type?: eHttp.MethodType,
+                noReportError?: boolean,
+                errorPrompt?: ePrompt.F.Type,
+                errorPromptStyle?: ePrompt.F.StyleType,
+                retryTimes?: number,
+                headers?: dp.Obj<string>,
                 shouldRetry?(opt: {
-                    error: unknown;
-                    nowRetryTimes: number;
-                }): dp.PromiseOrSelf<boolean>;
+                    error: unknown,
+                    nowRetryTimes: number,
+                }): dp.PromiseOrSelf<boolean>,
             } & Partial<TCustom>;
 
             type DetailsOptions<TNoHandle extends boolean | undefined = undefined, TFormFetch extends boolean | undefined = undefined, TCustom extends dp.Obj = dp.Obj> =
                 Options<TNoHandle, TFormFetch, TCustom> & {
-                    checkLoginWhenNoHandle?: boolean;
+                    checkLoginWhenNoHandle?: boolean,
                 };
 
             type GetReq<T> = T extends dFetch.ApiInfo<any, any> ? T['req'] : never;
@@ -50,9 +50,9 @@ declare namespace dRequest {
             };
 
             type FetchInfo = {
-                url: string;
-                req?: unknown;
-                rsp?: unknown;
+                url: string,
+                req?: unknown,
+                rsp?: unknown,
             };
         }
     }

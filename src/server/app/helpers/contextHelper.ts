@@ -75,7 +75,7 @@ class ContextHelper {
     public readonly getTamp = () => this.zone.get(this.TAMP_KEY) as Tamp | null;
 }
 
-type Tamp = { timestamp: { key: string; value: number; span: number }[] };
+type Tamp = { timestamp: { key: string, value: number, span: number }[] };
 
 export const contextHelper = ContextHelper.instance;
 export default contextHelper;

@@ -30,25 +30,25 @@ declare namespace dFetch {
     };
 
     interface SuccessJsonBody<T> extends JsonBody {
-        code: eFetch.JsonSuccessCode.Success;
-        data: T;
+        code: eFetch.JsonSuccessCode.Success,
+        data: T,
     }
     interface ErrorJsonBody extends JsonBody {
-        code: eFetch.JsonErrorCode;
-        data?: undefined;
+        code: eFetch.JsonErrorCode,
+        data?: undefined,
     }
 
     type JsonBody = {
-        code: eFetch.JsonErrorCode | eFetch.JsonSuccessCode.Success;
-        msg?: string;
-        version?: string;
-        fetchId?: string;
+        code: eFetch.JsonErrorCode | eFetch.JsonSuccessCode.Success,
+        msg?: string,
+        version?: string,
+        fetchId?: string,
     } & Partial<ExtendJsonBody>;
 
     interface ExtendJsonBody { }
 
     type ApiInfo<TReq, TRsp> = {
-        req: TReq;
-        rsp: TRsp;
+        req: TReq,
+        rsp: TRsp,
     };
 }

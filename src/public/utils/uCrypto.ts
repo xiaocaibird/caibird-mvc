@@ -7,7 +7,7 @@ import crypto, { HashOptions } from 'crypto';
 export namespace uCrypto {
     const defaultPartSize = 100000;
     export const hash = (data: string | Buffer, algorithm: string, opt: {
-        partSize?: number;
+        partSize?: number,
     } & HashOptions = {}) => {
         const { partSize = defaultPartSize } = opt;
         const h = crypto.createHash(algorithm, opt);
@@ -39,10 +39,10 @@ export namespace uCrypto {
     };
 
     export const getStringCipher = (key: crypto.CipherKey = 'caibird-mvc_default_key', iv: crypto.BinaryLike = 'caibird-mvc_default_iv1', params: {
-        algorithm?: string;
-        encryptInputEncoding?: crypto.Utf8AsciiBinaryEncoding;
-        encryptOutputEncoding?: crypto.HexBase64BinaryEncoding;
-        options?: import('stream').TransformOptions;
+        algorithm?: string,
+        encryptInputEncoding?: crypto.Utf8AsciiBinaryEncoding,
+        encryptOutputEncoding?: crypto.HexBase64BinaryEncoding,
+        options?: import('stream').TransformOptions,
     } = {}) => {
         const {
             algorithm = 'aes-128-cbc',

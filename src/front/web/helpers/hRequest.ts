@@ -12,15 +12,15 @@ import { uString } from '../utils/uString';
 import { uUuid } from '../utils/uUuid';
 export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCustomOpt extends dp.Obj> {
     protected constructor(protected readonly options: {
-        prefix?: string;
-        formRequestKey?: string;
-        disableVersionCheck?: boolean;
-        versionCheckInterval?: number;
-        timeout?: number;
-        defaultErrorPrompt?: ePrompt.F.Type;
-        defaultErrorPromptStyle?: ePrompt.F.StyleType;
-        defaultRetryTimes?: number;
-        errorProbability?: number;
+        prefix?: string,
+        formRequestKey?: string,
+        disableVersionCheck?: boolean,
+        versionCheckInterval?: number,
+        timeout?: number,
+        defaultErrorPrompt?: ePrompt.F.Type,
+        defaultErrorPromptStyle?: ePrompt.F.StyleType,
+        defaultRetryTimes?: number,
+        errorProbability?: number,
     }) { }
 
     private jsonpIndex = 0;

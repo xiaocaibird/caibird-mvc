@@ -9,9 +9,9 @@ export namespace uHttp {
         url: string,
         params?: string | dp.Obj<dp.UrlParams> | null,
         opt: {
-            isClear?: boolean;
-            isSort?: boolean;
-            sortFn?(a: string, b: string): number;
+            isClear?: boolean,
+            isSort?: boolean,
+            sortFn?(a: string, b: string): number,
         } = {}) => {
         if (!params) return url;
 
@@ -49,8 +49,8 @@ export namespace uHttp {
     export const stringifyQuery = (
         obj: dp.AllowNon<dp.Obj<dp.UrlParams>>,
         opt: {
-            isSort?: boolean;
-            sortFn?(a: string, b: string): number;
+            isSort?: boolean,
+            sortFn?(a: string, b: string): number,
         } = {}) => {
         try {
             if (!obj) return '';

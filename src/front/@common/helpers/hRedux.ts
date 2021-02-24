@@ -7,15 +7,15 @@ import Redux, { combineReducers, createStore } from 'redux';
 
 export abstract class HRedux<TState extends dp.Obj, TActions extends dRedux.BaseActions = dRedux.BaseActions> {
     public static readonly createReducer = <TStatePart, TActionsType>(
-        opt: { handlers: dRedux.ReducerHandlers<TActionsType, TStatePart>; defaultState: TStatePart }) => ({
+        opt: { handlers: dRedux.ReducerHandlers<TActionsType, TStatePart>, defaultState: TStatePart }) => ({
             handlers: opt.handlers,
             defaultState: cloneDeep(opt.defaultState)
         })
 
     protected constructor(protected readonly options: {
-        actions: dRedux.TransformActions<TActions>;
-        reducers: dRedux.Reducers<TActions, TState>;
-        storageKey: string;
+        actions: dRedux.TransformActions<TActions>,
+        reducers: dRedux.Reducers<TActions, TState>,
+        storageKey: string,
     }) {
         this.action = { ...options.actions };
     }
@@ -40,7 +40,7 @@ export abstract class HRedux<TState extends dp.Obj, TActions extends dRedux.Base
     public readonly action: dRedux.TransformActions<TActions>;
 
     protected storeCreater(initState?: Redux.PreloadedState<TState>) {
-        const reducers = Object.keys(this.options.reducers).reduce<Redux.ReducersMapObject<any, { type: string; payload: unknown }>>((obj, item) => {
+        const reducers = Object.keys(this.options.reducers).reduce<Redux.ReducersMapObject<any, { type: string, payload: unknown }>>((obj, item) => {
             const k = item as keyof TState;
             obj[k] = this.getReducer(this.options.reducers[k]);
 
@@ -53,8 +53,8 @@ export abstract class HRedux<TState extends dp.Obj, TActions extends dRedux.Base
         return createStore(Reducer, initState, process.env.IS_LOCAL_TEST && window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : undefined);
     }
 
-    protected getReducer<T>({ defaultState, handlers }: { defaultState: T; handlers: dp.Obj<Function | undefined> }) {
-        return (state = cloneDeep(defaultState), actionResult: { type: string; payload: unknown }) => {
+    protected getReducer<T>({ defaultState, handlers }: { defaultState: T, handlers: dp.Obj<Function | undefined> }) {
+        return (state = cloneDeep(defaultState), actionResult: { type: string, payload: unknown }) => {
             const handler = handlers[actionResult.type];
             if (handler) {
                 return handler(state, actionResult.payload);

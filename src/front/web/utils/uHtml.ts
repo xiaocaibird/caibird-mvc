@@ -6,10 +6,10 @@ import base from '../../@common/utils/uHtml';
 
 namespace _uHtml {
     export const getTextWidth = (text: string, opt?: {
-        parent?: Element;
-        fontFamily?: string;
-        fontSize?: string;
-        fontWeight?: string;
+        parent?: Element,
+        fontFamily?: string,
+        fontSize?: string,
+        fontWeight?: string,
     }) => {
         const pre = document.createElement('pre');
         pre.style.opacity = '0';

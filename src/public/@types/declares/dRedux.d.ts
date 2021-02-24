@@ -15,15 +15,15 @@ declare global {
         };
 
         type ActionResult<TActions extends BaseActions> = {
-            [K in keyof ActionReturn<TActions>]: ActionReturn<TActions>[K] extends { type: string; payload: any } ?
-            { type: K; payload: ActionReturn<TActions>[K]['payload'] } :
+            [K in keyof ActionReturn<TActions>]: ActionReturn<TActions>[K] extends { type: string, payload: any } ?
+            { type: K, payload: ActionReturn<TActions>[K]['payload'] } :
             { type: K }
         };
 
         type Reducers<TActions, TState extends dp.Obj> = {
             [K in keyof TState]: {
-                defaultState: TState[K];
-                handlers: ReducerHandlers<TActions, TState[K]>;
+                defaultState: TState[K],
+                handlers: ReducerHandlers<TActions, TState[K]>,
             }
         };
         type ReducerHandlers<TActions, TStatePart> = {
