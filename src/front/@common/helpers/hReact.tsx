@@ -20,7 +20,7 @@ export abstract class HReact<TRootContext> {
 
             public static displayName = displayName || createHocDisplayName('withAsync');
 
-            constructor(props: dReact.GetProps<T>) {
+            public constructor(props: dReact.GetProps<T>) {
                 super(props);
 
                 this.state = {

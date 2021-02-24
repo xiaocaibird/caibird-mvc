@@ -8,7 +8,7 @@ import { cMessage } from './cMessage';
 
 namespace _cError {
     export class Base extends Error {
-        constructor(
+        public constructor(
             public readonly info: ErrorInfo,
             public readonly logOptions: dReport.ErrorLogOptions = {}
         ) {
@@ -18,7 +18,7 @@ namespace _cError {
     }
 
     export class ParameterJson extends Base {
-        constructor(
+        public constructor(
             msg = cMessage.jsonError[eFetch.JsonErrorCode.ParameterError],
             logOptions: dReport.ErrorLogOptions = {}
         ) {
@@ -29,7 +29,7 @@ namespace _cError {
     }
 
     export class Json extends Base {
-        constructor(
+        public constructor(
             info: Partial<dFetch.ErrorJsonBody> | string = {},
             logOptions: dReport.ErrorLogOptions = {}
         ) {
@@ -39,7 +39,7 @@ namespace _cError {
     }
 
     export class TimeoutJson extends Json {
-        constructor(
+        public constructor(
             msg = cMessage.jsonError[eFetch.JsonErrorCode.Timeout],
             logOptions: dReport.ErrorLogOptions = {}
         ) {
@@ -49,7 +49,7 @@ namespace _cError {
     }
 
     export class TopJson extends Json {
-        constructor(
+        public constructor(
             info: dFetch.ErrorJsonBody,
             logOptions: Omit<dReport.ErrorLogOptions, 'type' | 'always' | 'attribute'> = {}
         ) {
@@ -59,7 +59,7 @@ namespace _cError {
     }
 
     export class Status extends Base {
-        constructor(
+        public constructor(
             info: StatusInfo | eHttp.StatusCode,
             logOptions: Omit<dReport.ErrorLogOptions, 'type'> = {}
         ) {
@@ -74,7 +74,7 @@ namespace _cError {
     }
 
     export class Redis extends Base {
-        constructor(
+        public constructor(
             msg = cMessage.jsonError[eFetch.JsonErrorCode.RedisError],
             logOptions: dReport.ErrorLogOptions = {}
         ) {

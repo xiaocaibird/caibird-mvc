@@ -33,7 +33,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
         }
     } as const;
 
-    constructor(public readonly options: Options<TRules, TState, TCustom, TControllerDefaultConfig>) {
+    public constructor(public readonly options: Options<TRules, TState, TCustom, TControllerDefaultConfig>) {
         reportHelper.init(this.options.reportInitOpt);
     }
 
@@ -145,7 +145,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
         } as const;
 
         return class baseController {
-            constructor(
+            public constructor(
                 protected readonly ctx: dMvc.S.Ctx<TState, TCustom>
             ) { }
 

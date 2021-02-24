@@ -3,7 +3,7 @@
  * @Desc url helper
  */
 export abstract class HUrl {
-    constructor(protected readonly options: {
+    public constructor(protected readonly options: {
         prefix?: string;
         imgPath: string;
     }) { }

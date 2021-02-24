@@ -109,17 +109,19 @@
         "@typescript-eslint/consistent-type-assertions": ["error", {
             "assertionStyle": "as",
             "objectLiteralTypeAssertions": "never"
+        }],
+        // 禁止使用不一致的类型定义语法（type或interface）【无需-type和interface有不同的适用场景】
+        "@typescript-eslint/consistent-type-definitions": "off",
+        // 禁止不合法的类型导入【ts已有】
+        "@typescript-eslint/consistent-type-imports": "off",
+        // 禁止省略函数的返回类型【无需】
+        "@typescript-eslint/explicit-function-return-type": "off",
+        // 禁止省略类成员的可见性
+        "@typescript-eslint/explicit-member-accessibility": ["error", {
+            // "ignoredMethodNames": [],
+            // "overrides": {},
+            "accessibility": "explicit"
         }]
-        // // 禁止使用不一致的类型定义语法（type或interface）【无需-type和interface有不同的适用场景】
-        // "@typescript-eslint/consistent-type-definitions": "off",
-        // // 禁止不合法的类型导入【ts已有】
-        // "@typescript-eslint/consistent-type-imports": "off",
-        // // 禁止省略函数的返回类型【无需】
-        // "@typescript-eslint/explicit-function-return-type": "off",
-        // // 禁止省略类成员的可见性
-        // "@typescript-eslint/explicit-member-accessibility": ["error", {
-        //     "accessibility": "explicit"
-        // }],
         // // 禁止模块导出函数省略入参和出参类型【无需】
         // "@typescript-eslint/explicit-module-boundary-types": "off",
         // // 禁止不一致的类型定义字段分割符

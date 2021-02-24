@@ -13,7 +13,7 @@ export default class App {
         }
     } as const;
 
-    constructor(public readonly options: Options) {
+    public constructor(public readonly options: Options) {
         const { writeLog } = options;
         this.initError();
         writeLog && setWriteLog(writeLog);

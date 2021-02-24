@@ -10,7 +10,7 @@ namespace _cError {
     export class BassError extends Error { }
 
     export class CommonError extends BassError {
-        constructor(
+        public constructor(
             public readonly options: dError.F.Options,
             public readonly logOptions: dReport.ErrorLogOptions | false = false,
             public readonly name = CommonError.name
@@ -21,7 +21,7 @@ namespace _cError {
     }
 
     export class ReactError extends CommonError {
-        constructor(
+        public constructor(
             public readonly details: {
                 error: Error;
                 errorInfo: React.ErrorInfo;
@@ -35,7 +35,7 @@ namespace _cError {
     }
 
     export class ApiFetchFail extends CommonError {
-        constructor(
+        public constructor(
             public readonly details: {
                 error: unknown;
                 info: dRequest.F.WEB.FetchInfo;
@@ -49,7 +49,7 @@ namespace _cError {
     }
 
     export class ApiJsonResultEmpty extends CommonError {
-        constructor(
+        public constructor(
             public readonly details: {
                 info: dRequest.F.WEB.FetchInfo;
             },
@@ -62,7 +62,7 @@ namespace _cError {
     }
 
     export class ApiJsonResultError extends CommonError {
-        constructor(
+        public constructor(
             public readonly details: {
                 rsp: dFetch.JsonBody;
                 info: dRequest.F.WEB.FetchInfo;
@@ -76,7 +76,7 @@ namespace _cError {
     }
 
     export class LoginError extends CommonError {
-        constructor(
+        public constructor(
             public readonly details: {
                 rsp: dFetch.JsonBody;
                 info: dRequest.F.WEB.FetchInfo;
@@ -90,7 +90,7 @@ namespace _cError {
     }
 
     export class VersionMismatch extends CommonError {
-        constructor(
+        public constructor(
             public readonly options: dError.F.Options,
             public readonly logOptions: dReport.ErrorLogOptions | false = false
         ) {
@@ -100,7 +100,7 @@ namespace _cError {
     }
 
     export class Noop extends BassError {
-        constructor(public msg?: string) {
+        public constructor(public msg?: string) {
             super();
             compatible(this, [...arguments]);
         }
