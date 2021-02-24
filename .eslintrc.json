@@ -100,16 +100,16 @@
                 }
             },
             "extendDefaults": false
+        }],
+        // 禁止不一致的字面量字段的定义风格
+        "@typescript-eslint/class-literal-property-style": ["error", "fields"],
+        // 禁止使用Record以外的语法来定义索引对象
+        "@typescript-eslint/consistent-indexed-object-style": ["error", "record"],
+        // 禁止随意使用类型断言，且断言必需是as语法
+        "@typescript-eslint/consistent-type-assertions": ["error", {
+            "assertionStyle": "as",
+            "objectLiteralTypeAssertions": "never"
         }]
-        // // 禁止不一致的字面量字段的定义风格
-        // "@typescript-eslint/class-literal-property-style": ["error", "fields"],
-        // // 禁止使用Record以外的语法来定义索引对象
-        // "@typescript-eslint/consistent-indexed-object-style": ["error"],
-        // // 禁止随意使用类型断言，且断言必需是as语法
-        // "@typescript-eslint/consistent-type-assertions": ["error", {
-        //     "assertionStyle": "as",
-        //     "objectLiteralTypeAssertions": "never"
-        // }],
         // // 禁止使用不一致的类型定义语法（type或interface）【无需-type和interface有不同的适用场景】
         // "@typescript-eslint/consistent-type-definitions": "off",
         // // 禁止不合法的类型导入【ts已有】
