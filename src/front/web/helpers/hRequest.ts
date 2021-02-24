@@ -118,7 +118,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
             try {
                 req[jsonpCallbackParamName] = funcName;
 
-                script.src = uHttp.urlAddQuery(url, req);
+                script.src = uHttp.urlAddQuery(url, req as dp.Obj<dp.UrlParams>); // TODO 处理类型断言
 
                 (window as any)[funcName] = (data: T) => {
                     clear();
@@ -295,7 +295,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
 
         if (opt.isJsonpFetch) {
             const reqObj = uString.check(req) ? uHttp.parseUrl(req) : req;
-            data = await this.jsonpFetch<T>(url, reqObj || {}, opt);
+            data = await this.jsonpFetch<T>(url, reqObj as dp.Obj || {}, opt); // TODO 处理类型断言
         } else {
             xhr = await this.fetch(type, url, req, opt);
 
@@ -356,7 +356,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
             };
 
             if (uString.equalIgnoreCase(type, eHttp.MethodType.GET)) {
-                xhr.open(type, uHttp.urlAddQuery(url, sendData), true);
+                xhr.open(type, uHttp.urlAddQuery(url, sendData as dp.Obj<dp.UrlParams>), true); // TODO 处理类型断言
                 Object.keys(headers).forEach(k => {
                     if (headers[k] != null) xhr.setRequestHeader(k, headers[k]);
                 });
@@ -376,7 +376,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
                         xhr.send(JSON.stringify(sendData));
                     } else if (contentType === eHttp.ContentType.FORM) {
                         xhr.setRequestHeader('Content-Type', eHttp.ContentType.FORM);
-                        xhr.send(uString.check(sendData) ? sendData : uHttp.stringifyQuery(sendData));
+                        xhr.send(uString.check(sendData) ? sendData : uHttp.stringifyQuery(sendData as dp.AllowNon<dp.Obj<dp.UrlParams>>)); // TODO 处理类型断言
                     } else {
                         xhr.send(JSON.stringify(sendData));
                     }

@@ -5,7 +5,8 @@
 import stringify from 'json-stringify-safe';
 
 export namespace uObject {
-    export const check = (obj: unknown): obj is dp.Obj => typeof obj === 'object';
+    // eslint-disable-next-line @typescript-eslint/ban-types
+    export const check = (obj: unknown): obj is object => typeof obj === 'object';
 
     export const checkInstance = <I, T extends dp.Class>(obj: I, type: T): obj is InstanceType<T> => obj instanceof type;
 

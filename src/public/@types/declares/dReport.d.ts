@@ -25,9 +25,9 @@ declare namespace dReport {
     type LogOptions = {
         key: string;
         msg?: string;
-        details?: dp.Obj;
+        details?: Partial<Error> | dp.Obj;
         error?: any;
-        source?: dp.Obj;
+        source?: Partial<Error> | dp.Obj;
         attribute?: boolean;
         always?: boolean;
         type?: eReport.LogType;

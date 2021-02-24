@@ -13,7 +13,7 @@ declare namespace dp {
 
     type Keys = keyof any;
 
-    type Obj<T = any> = {
+    type Obj<T = unknown> = {
         [K in Keys]: T;
     };
 

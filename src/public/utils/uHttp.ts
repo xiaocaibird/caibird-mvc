@@ -7,7 +7,7 @@ import uString from './uString';
 export namespace uHttp {
     export const urlAddQuery = (
         url: string,
-        params?: string | dp.Obj | null,
+        params?: string | dp.Obj<dp.UrlParams> | null,
         opt: {
             isClear?: boolean;
             isSort?: boolean;
