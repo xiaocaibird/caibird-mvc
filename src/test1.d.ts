@@ -1,2 +1,2 @@
 type A = ReadonlyArray<{ a: '', b: '' }>;
-type B = ReadonlyArray<{}>
+type B = ReadonlyArray<dp.Obj>

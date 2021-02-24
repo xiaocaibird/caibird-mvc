@@ -21,7 +21,7 @@ export namespace uXml {
         return xmlStr;
     };
 
-    export const parse = <T extends object>(xmlStr: string, options: OptionsV2 & { timeout?: number } = {}) => new Promise<T>((resolve, reject) => {
+    export const parse = <T extends dp.Obj>(xmlStr: string, options: OptionsV2 & { timeout?: number } = {}) => new Promise<T>((resolve, reject) => {
         const { timeout = eDate.MsTimespan.PromiseTimeout } = options;
 
         if (options.explicitArray === undefined) {

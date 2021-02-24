@@ -4,7 +4,7 @@
  */
 declare namespace dSetting {
     namespace S {
-        type CheckType<T extends dp.Obj<object | string | undefined>> = T;
+        type CheckType<T extends dp.Obj<dp.Obj | string | undefined>> = T;
 
         type GlobalConfig = CheckType<{
         }>;
@@ -30,7 +30,7 @@ declare namespace dSetting {
             };
         }>;
 
-        type CheckInterface<T extends object | string | undefined> = T;
+        type CheckInterface<T extends dp.Obj | string | undefined> = T;
 
         type CheckCustomConfig = CheckInterface<CustomConfig[keyof CustomConfig]>;
         interface CustomConfig {

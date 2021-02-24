@@ -15,7 +15,7 @@ export namespace uArray {
         }
     };
 
-    export const updateAndGetNew = <TItem extends object | undefined | null>(list: TItem[], value: Partial<TItem>, index: number) => {
+    export const updateAndGetNew = <TItem extends dp.Obj | undefined | null>(list: TItem[], value: Partial<TItem>, index: number) => {
         const newList = list.slice();
 
         if (index < 0 || index >= newList.length) return newList;

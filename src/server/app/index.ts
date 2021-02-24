@@ -23,7 +23,7 @@ import { uUuid } from '../utils/uUuid';
 
 import { contextHelper, reportHelper, responseHelper, settingHelper } from './helpers';
 
-export default class App<TRules extends object, TState extends object, TCustom extends object, TControllerDefaultConfig extends object | undefined> {
+export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom extends dp.Obj, TControllerDefaultConfig extends dp.Obj | undefined> {
     public static readonly staticHelpers = {
         report: {
             ...reportHelper
@@ -100,7 +100,7 @@ export default class App<TRules extends object, TState extends object, TCustom e
         const defaultConfig = this.options.controllerDefaultConfig as TControllerDefaultConfig;
 
         const View = {
-            Json: <TData extends object | null = null, TOther extends Omit<dFetch.JsonBody, 'code' | 'version'> | undefined = undefined>(data: TData = (null as any), other?: TOther): dMvc.S.JsonActionReturn<TData> => ({
+            Json: <TData extends dp.Obj | null = null, TOther extends Omit<dFetch.JsonBody, 'code' | 'version'> | undefined = undefined>(data: TData = (null as any), other?: TOther): dMvc.S.JsonActionReturn<TData> => ({
                 type: 'json',
                 result: {
                     code: eFetch.JsonSuccessCode.Success,
@@ -129,7 +129,7 @@ export default class App<TRules extends object, TState extends object, TCustom e
                     url
                 }
             }),
-            Render: <T extends object | undefined = undefined>(view: string, params?: T): dMvc.S.RenderActionReturn<T> => ({
+            Render: <T extends dp.Obj | undefined = undefined>(view: string, params?: T): dMvc.S.RenderActionReturn<T> => ({
                 type: 'render',
                 result: {
                     view,
@@ -658,7 +658,7 @@ export default class App<TRules extends object, TState extends object, TCustom e
     }
 }
 
-type Options<TRules extends object, TState extends object, TCustom extends object, TControllerDefaultConfig extends object | undefined> = {
+type Options<TRules extends dp.Obj, TState extends dp.Obj, TCustom extends dp.Obj, TControllerDefaultConfig extends dp.Obj | undefined> = {
     host: string;
     port: number;
     appKeys: string[];

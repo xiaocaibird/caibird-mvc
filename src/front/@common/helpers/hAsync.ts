@@ -6,7 +6,7 @@ import { cError } from '../consts/cError';
 import { uFunction } from '../utils/uFunction';
 import { uObject } from '../utils/uObject';
 
-export abstract class HAsync<TCustomRunOpt extends object = {}> {
+export abstract class HAsync<TCustomRunOpt extends dp.Obj = dp.Obj> {
     protected constructor() {}
     protected readonly map: dp.Obj<dp.Obj<{
         status: eAsync.F.Status;

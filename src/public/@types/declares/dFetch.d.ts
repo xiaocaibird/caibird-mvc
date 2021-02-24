@@ -9,8 +9,8 @@ declare namespace dFetch {
         [C in keyof TControllers]: {
             [A in keyof TControllers[C]['prototype']]: ApiInfo<
                 TControllers[C]['prototype'][A] extends () => any ? never :
-                TControllers[C]['prototype'][A] extends (req: object) => any ?
-                TControllers[C]['prototype'][A] extends (req: dMvc.S.ActionReq<infer Req>) => any ? Req extends object ? Req : never : never : never,
+                TControllers[C]['prototype'][A] extends (req: dp.Obj) => any ?
+                TControllers[C]['prototype'][A] extends (req: dMvc.S.ActionReq<infer Req>) => any ? Req extends dp.Obj ? Req : never : never : never,
                 TControllers[C]['prototype'][A] extends ((...p: any[]) => Promise<infer Rsp>) ? Rsp extends dMvc.S.JsonActionReturn<infer R> ? R : never : never
             >;
         };

@@ -10,7 +10,7 @@ import { uHttp } from '../utils/uHttp';
 import { uObject } from '../utils/uObject';
 import { uString } from '../utils/uString';
 import { uUuid } from '../utils/uUuid';
-export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCustomOpt extends {}> {
+export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCustomOpt extends dp.Obj> {
     protected constructor(protected readonly options: {
         prefix?: string;
         formRequestKey?: string;
@@ -31,7 +31,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
     }, this.options.versionCheckInterval);
 
     protected abstract readonly onFetchSuccess?: (opt: dRequest.F.WEB.Options & Partial<TCustomOpt>, details: dRequest.F.WEB.FetchInfo, xhr?: XMLHttpRequest) => dp.PromiseOrSelf<void>;
-    protected abstract readonly onGetResultError?: (error: object | null, opt: dRequest.F.WEB.Options & Partial<TCustomOpt>, details: dRequest.F.WEB.FetchInfo) => dp.PromiseOrSelf<boolean>;
+    protected abstract readonly onGetResultError?: (error: dp.Obj | null, opt: dRequest.F.WEB.Options & Partial<TCustomOpt>, details: dRequest.F.WEB.FetchInfo) => dp.PromiseOrSelf<boolean>;
     protected abstract readonly preGetNoHandleResult?: (rsp: dFetch.SuccessJsonBody<unknown> | dFetch.ErrorJsonBody | null, opt: dRequest.F.WEB.DetailsOptions & Partial<TCustomOpt>, details: dRequest.F.WEB.FetchInfo) => dp.PromiseOrSelf<void>;
     protected abstract readonly onGetNoHandleResultError?: (error: unknown, opt: dRequest.F.WEB.DetailsOptions & Partial<TCustomOpt>, details: dRequest.F.WEB.FetchInfo) => dp.PromiseOrSelf<void>;
 

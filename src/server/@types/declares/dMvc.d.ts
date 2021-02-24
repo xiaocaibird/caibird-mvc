@@ -24,9 +24,9 @@ declare global {
 
             type Middleware<TState, TCustom> = BaseKoa.Middleware<CtxState<TState>, CtxCustom<TState, TCustom>>;
 
-            type ActionReq<T extends object> = Partial<T>;
+            type ActionReq<T extends dp.Obj> = Partial<T>;
 
-            type BaseController<TState, TCustom> = new (ctx: Ctx<TState, TCustom>) => object;
+            type BaseController<TState, TCustom> = new (ctx: Ctx<TState, TCustom>) => dp.Obj;
 
             type ControllerProps<TRules, TState, TCustom> = {
                 __actions__: dp.Obj<Action<TRules, TState, TCustom>>;
@@ -72,7 +72,7 @@ declare global {
                 result: T;
             };
 
-            interface JsonActionReturn<T extends object | null> extends ActionReturn<dFetch.SuccessJsonBody<T>> {
+            interface JsonActionReturn<T extends dp.Obj | null> extends ActionReturn<dFetch.SuccessJsonBody<T>> {
                 type: 'json';
             }
 
@@ -83,7 +83,7 @@ declare global {
                 type: 'file';
             }
 
-            interface RenderActionReturn<T extends object | undefined> extends ActionReturn<{
+            interface RenderActionReturn<T extends dp.Obj | undefined> extends ActionReturn<{
                 view: string;
                 params?: T;
             }> {
