@@ -135,78 +135,76 @@
                 "delimiter": "comma",
                 "requireLast": false
             }
+        }],
+        // 禁止不一致的成员排序
+        "@typescript-eslint/member-ordering": ["error", {
+            "default": {
+                "memberTypes": [
+                    // Index signature
+                    "signature",
+
+                    // Static
+                    "private-static-field",
+                    "protected-static-field",
+                    "public-static-field",
+                    "static-field",
+
+                    "private-static-method",
+                    "protected-static-method",
+                    "public-static-method",
+                    "static-method",
+
+                    // Constructors
+                    "private-constructor",
+                    "protected-constructor",
+                    "public-constructor",
+                    "constructor",
+
+                    // Fields
+                    "private-abstract-field",
+                    "private-decorated-field",
+                    "private-instance-field",
+                    "private-field",
+
+                    "protected-abstract-field",
+                    "protected-decorated-field",
+                    "protected-instance-field",
+                    "protected-field",
+
+                    "public-abstract-field",
+                    "public-decorated-field",
+                    "public-instance-field",
+                    "public-field",
+
+                    "abstract-field",
+                    "decorated-field",
+                    "instance-field",
+                    "field",
+
+                    // Methods
+                    "private-abstract-method",
+                    "private-decorated-method",
+                    "private-instance-method",
+                    "private-method",
+
+                    "protected-abstract-method",
+                    "protected-decorated-method",
+                    "protected-instance-method",
+                    "protected-method",
+
+                    "public-abstract-method",
+                    "public-decorated-method",
+                    "public-instance-method",
+                    "public-method",
+
+                    "abstract-method",
+                    "decorated-method",
+                    "instance-method",
+                    "method"
+                ],
+                "order": "as-written"
+            }
         }]
-        // // 禁止不一致的成员排序
-        // "@typescript-eslint/member-ordering": ["error", {
-        //     "default": {
-        //         "memberTypes": [
-        //             // Index signature
-        //             "signature",
-
-        //             // Static
-        //             "private-static-field",
-        //             "protected-static-field",
-        //             "public-static-field",
-        //             "static-field",
-
-        //             "private-static-method",
-        //             "protected-static-method",
-        //             "public-static-method",
-        //             "static-method",
-
-        //             // Constructors
-        //             "private-constructor",
-        //             "protected-constructor",
-        //             "public-constructor",
-        //             "constructor",
-
-        //             // Fields
-        //             "private-abstract-field",
-        //             "protected-abstract-field",
-        //             "public-abstract-field",
-
-        //             "private-decorated-field",
-        //             "protected-decorated-field",
-        //             "public-decorated-field",
-
-        //             "private-instance-field",
-        //             "protected-instance-field",
-        //             "public-instance-field",
-
-        //             "private-field",
-        //             "protected-field",
-        //             "public-field",
-
-        //             "abstract-field",
-        //             "decorated-field",
-        //             "instance-field",
-        //             "field",
-
-        //             // Methods
-        //             "private-abstract-method",
-        //             "protected-abstract-method",
-        //             "public-abstract-method",
-
-        //             "private-decorated-method",
-        //             "protected-decorated-method",
-        //             "public-decorated-method",
-
-        //             "private-instance-method",
-        //             "protected-instance-method",
-        //             "public-instance-method",
-
-        //             "private-method",
-        //             "protected-method",
-        //             "public-method",
-
-        //             "abstract-method",
-        //             "decorated-method",
-        //             "instance-method",
-        //             "method"
-        //         ],
-        //         "order": "as-written"
-        //     }
-        // }],
         // // 禁止不一致的函数字段定义方式
         // "@typescript-eslint/method-signature-style": ["error", "method"],
         // // 禁止不合规的命名【TODO】
