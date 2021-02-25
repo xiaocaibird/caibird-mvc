@@ -204,32 +204,31 @@
                 ],
                 "order": "as-written"
             }
+        }],
+        // 禁止不一致的函数字段定义方式
+        "@typescript-eslint/method-signature-style": ["error", "method"],
+        // 禁止不合规的命名【TODO】
+        "@typescript-eslint/naming-convention": "off",
+        // 禁止没有实现toString的成员进行字符串转换【无需】
+        "@typescript-eslint/no-base-to-string": "off",
+        // 禁止可能产生歧义的非空断言
+        "@typescript-eslint/no-confusing-non-null-assertion": ["error"],
+        // 禁止使用返回值为void的表达式
+        "@typescript-eslint/no-confusing-void-expression": ["error",
+            {
+                "ignoreArrowShorthand": true,
+                "ignoreVoidOperator": true
+            }
+        ],
+        // 禁止动态delete【无需】
+        "@typescript-eslint/no-dynamic-delete": "off",
+        // 禁止空interface【无需】
+        "@typescript-eslint/no-empty-interface": "off",
+        // 禁止使用any
+        "@typescript-eslint/no-explicit-any": ["error", {
+            "ignoreRestArgs": false,
+            "fixToUnknown": true
         }]
-        // // 禁止不一致的函数字段定义方式
-        // "@typescript-eslint/method-signature-style": ["error", "method"],
-        // // 禁止不合规的命名【TODO】
-        // "@typescript-eslint/naming-convention": "off",
-        // // 禁止没有实在toString的成员进行字符串转换
-        // "@typescript-eslint/no-base-to-string": ["error", {
-        //     "ignoredTypeNames": ["RegExp"]
-        // }],
-        // // 禁止可能产生歧义的非空断言
-        // "@typescript-eslint/no-confusing-non-null-assertion": ["error"],
-        // // 禁止使用返回值为void的表达式
-        // "@typescript-eslint/no-confusing-void-expression": ["error",
-        //     {
-        //         "ignoreArrowShorthand": true,
-        //         "ignoreVoidOperator": true
-        //     }
-        // ],
-        // // 禁止动态delete【无需】
-        // "@typescript-eslint/no-dynamic-delete": "off",
-        // // 禁止空interface【无需】
-        // "@typescript-eslint/no-empty-interface": "off",
-        // // 禁止使用any
-        // "@typescript-eslint/no-explicit-any": ["error", {
-        //     "fixToUnknown": true
-        // }],
         // // 禁止多余的非空断言
         // "@typescript-eslint/no-extra-non-null-assertion": ["error"],
         // // 禁止不合法的使用类（比如空类，或者只有静态成员的类）
