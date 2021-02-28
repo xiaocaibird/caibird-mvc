@@ -40,7 +40,8 @@ export abstract class HRedux<TState extends dp.Obj, TActions extends dRedux.Base
     public readonly action: dRedux.TransformActions<TActions>;
 
     protected storeCreater(initState?: Redux.PreloadedState<TState>) {
-        const reducers = Object.keys(this.options.reducers).reduce<Redux.ReducersMapObject<unknown, { type: string, payload: unknown }>>((obj, item) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const reducers = Object.keys(this.options.reducers).reduce<Redux.ReducersMapObject<any, { type: string, payload: unknown }>>((obj, item) => {
             const k = item as keyof TState;
             obj[k] = this.getReducer(this.options.reducers[k]);
 

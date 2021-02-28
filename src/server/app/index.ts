@@ -100,7 +100,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
         const defaultConfig = this.options.controllerDefaultConfig as TControllerDefaultConfig;
 
         const View = {
-            Json: <TData extends dp.Obj | null = null, TOther extends Omit<dFetch.JsonBody, 'code' | 'version'> | undefined = undefined>(data: TData = (null as unknown), other?: TOther): dMvc.S.JsonActionReturn<TData> => ({
+            Json: <TData extends dp.Obj | null = null, TOther extends Omit<dFetch.JsonBody, 'code' | 'version'> | undefined = undefined>(data: TData = (null as unknown as TData), other?: TOther): dMvc.S.JsonActionReturn<TData> => ({
                 type: 'json',
                 result: {
                     code: eFetch.JsonSuccessCode.Success,
@@ -218,7 +218,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
             const controller = target as dMvc.S.InitController<TRules, TState, TCustom>;
 
             if (!uFunction.checkExtendsClass(controller, baseController)) {
-                throw new Error(`${(controller as unknown).name} controller 没有继承 baseController！`);
+                throw new Error(`${(controller as unknown as dp.Class).name} controller 没有继承 baseController！`);
             }
 
             const AController = Object.getPrototypeOf(target) as dp.Class & Partial<dMvc.S.CommonProps<TRules, TState, TCustom>>;
@@ -557,10 +557,10 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
             const rsp = await Action.bind(controllerObj)({ ...ctx.query, ...body, ...formParams });
 
             const actionReturn = rsp as null | undefined |
-                dMvc.S.JsonActionReturn<unknown> |
+                dMvc.S.JsonActionReturn<dp.Obj> |
                 dMvc.S.FileActionReturn |
                 dMvc.S.RedirectActionReturn |
-                dMvc.S.RenderActionReturn<unknown> |
+                dMvc.S.RenderActionReturn<dp.Obj> |
                 dMvc.S.BufferActionReturn |
                 dMvc.S.XmlActionReturn;
 

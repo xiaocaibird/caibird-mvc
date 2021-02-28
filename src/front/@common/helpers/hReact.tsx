@@ -12,7 +12,8 @@ export abstract class HReact<TRootContext> {
     }) { }
     public readonly rootContext = createContext(this.options.defaultContext);
 
-    public readonly withAsync = <T extends React.ComponentType<unknown>>(importComponent: dp.PromiseFunc<unknown[], T>, displayName?: string) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    public readonly withAsync = <T extends React.ComponentType>(importComponent: dp.PromiseFunc<any[], T>, displayName?: string) => {
         const createHocDisplayName = this.createHocDisplayName;
 
         const With = class extends React.PureComponent<dReact.GetProps<T> & { onAsyncInnerDidMount?(opt: { innerRef: React.RefObject<React.ReactInstance> }): void }, { Component?: T, isClassComponent?: boolean }> {
@@ -48,8 +49,8 @@ export abstract class HReact<TRootContext> {
                 const { Component, isClassComponent } = this.state;
 
                 return Component ?
-                    isClassComponent ? <Component ref={this.innerRef} {...this.props as unknown} /> :
-                        <Component {...this.props as unknown} /> : null;
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    isClassComponent ? <Component ref={this.innerRef} {...this.props as any} /> : <Component {...this.props as any} /> : null;
             }
 
             public async componentDidMount() {
@@ -79,6 +80,6 @@ export abstract class HReact<TRootContext> {
         (props: TProps) => props.visible ? <Component {...props} /> : null
     )
 
-    public readonly createHocDisplayName = (hocName: string, WrappedComponent?: React.ComponentType<unknown>) =>
+    public readonly createHocDisplayName = (hocName: string, WrappedComponent?: React.ComponentType) =>
         `${hocName}(${WrappedComponent && (WrappedComponent.displayName || WrappedComponent.name) || 'Component'})`
 }

@@ -2,6 +2,7 @@
  * @Creater cmZhou
  * @Desc 公共的常用类型
  */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 declare namespace dp {
     type AllowNon<T> = T | undefined | null;
 
@@ -11,7 +12,7 @@ declare namespace dp {
 
     type UrlParams = number | string | boolean | null | undefined;
 
-    type Keys = keyof unknown;
+    type Keys = string | number | symbol;
 
     type Obj<T = unknown> = {
         [K in Keys]: T;
@@ -21,17 +22,17 @@ declare namespace dp {
         [k in K]: T;
     };
 
-    type Func<P extends unknown[] = unknown[], T = unknown> = (...p: P) => T;
+    type Func<P extends any[] = any[], T = any> = (...p: P) => T;
 
-    type Class<P extends unknown[] = unknown[], T = unknown> = new (...p: P) => T;
+    type Class<P extends any[] = any[], T = any> = new (...p: P) => T;
 
-    type MapType<K = unknown, V = unknown> = Map<K, V>;
+    type MapType<K, V> = Map<K, V>;
 
     type GetClassParams<T extends Class> = T extends Class<infer P> ? P : never;
 
     type GetFuncParams<T extends Func> = T extends Func<infer P> ? P : never;
 
-    type PromiseFunc<P extends unknown[] = unknown[], T = unknown> = (...p: P) => Promise<T>;
+    type PromiseFunc<P extends any[] = any[], T = any> = (...p: P) => Promise<T>;
 
     type PromiseOrSelf<T> = Promise<T> | T;
 
@@ -82,20 +83,20 @@ declare namespace dp {
     type PromiseFuncPropNames<T> = { [K in keyof T]: T[K] extends PromiseFunc ? K : never }[keyof T];
 
     interface CustomProcessEnv {
-        RUN_ENV: unknown,
+        RUN_ENV: any,
 
-        PROJECT_VERSION: unknown,
-        PROJECT_NAME: unknown,
-        TAG_NAME: unknown,
+        PROJECT_VERSION: any,
+        PROJECT_NAME: any,
+        TAG_NAME: any,
 
-        NODE_ENV_VALUE: unknown,
+        NODE_ENV_VALUE: any,
 
-        IS_PRODUCTION: unknown,
-        IS_EXP_PRODUCTION: unknown,
+        IS_PRODUCTION: any,
+        IS_EXP_PRODUCTION: any,
 
-        IS_TEST: unknown,
-        IS_DEV_TEST: unknown,
-        IS_LOCAL_TEST: unknown,
+        IS_TEST: any,
+        IS_DEV_TEST: any,
+        IS_LOCAL_TEST: any,
     }
 }
 

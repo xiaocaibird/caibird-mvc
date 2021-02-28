@@ -21,8 +21,8 @@ export abstract class HAsync<TCustomRunOpt extends dp.Obj = dp.Obj> {
     };
 
     protected readonly getNowState = (promiseKey: symbol, key?: symbol) => {
-        const strKey: string = key as unknown;
-        const strPromiseKey: string = promiseKey as unknown;
+        const strKey = key as unknown as string;
+        const strPromiseKey = promiseKey as unknown as string;
         if (strKey) {
             const obj = this.map[strKey][strPromiseKey];
             if (obj) {
@@ -56,15 +56,15 @@ export abstract class HAsync<TCustomRunOpt extends dp.Obj = dp.Obj> {
 
         const promise = uFunction.check(task) ? task() : task;
 
-        const strKey: string = key as unknown;
-        const strPromiseKey: string = promiseKey as unknown;
+        const strKey = key as unknown as string;
+        const strPromiseKey = promiseKey as unknown as string;
 
         if (strKey) {
             if (!this.map[strKey]) {
                 this.map[strKey] = {};
             }
             Object.getOwnPropertySymbols(this.map[strKey]).forEach(item => {
-                const strItem: string = item as unknown;
+                const strItem = item as unknown as string;
                 const promiseInfo = this.map[strKey][strItem];
                 if (promiseInfo) {
                     if (action === eAsync.F.Action.Break) {

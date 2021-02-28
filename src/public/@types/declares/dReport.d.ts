@@ -26,7 +26,7 @@ declare namespace dReport {
         key: string,
         msg?: string,
         details?: Partial<Error> | dp.Obj,
-        error?: unknown,
+        error?: Partial<Error> | dp.Obj,
         source?: Partial<Error> | dp.Obj,
         attribute?: boolean,
         always?: boolean,

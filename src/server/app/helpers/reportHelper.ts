@@ -41,7 +41,7 @@ class ReportHelper {
     public static readonly instance = new ReportHelper();
     private constructor() { }
 
-    private readonly logs = new Proxy<unknown>({}, {
+    private readonly logs = new Proxy<dp.Obj>({}, {
         get: (target: Record<eReport.LogType, log4js.Logger>, key: eReport.LogType) => {
             if (!target[key]) {
                 target[key] = log4js.getLogger(key);

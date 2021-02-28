@@ -23,7 +23,7 @@ export namespace uTree {
         const { keepChildren } = opt;
 
         list.forEach(item => {
-            let newItem: unknown = {
+            let newItem: dp.Obj = {
                 ...item
             };
 
