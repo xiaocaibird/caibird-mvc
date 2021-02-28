@@ -283,16 +283,13 @@
         "@typescript-eslint/no-unnecessary-boolean-literal-compare": ["error", {
             "allowComparingNullableBooleansToTrue": true,
             "allowComparingNullableBooleansToFalse": true
-        }]/* ,
-        // 禁止总为true或总为false有表达式
-        "@typescript-eslint/no-unnecessary-condition": ["error", {
-            "allowRuleToRunWithoutStrictNullChecksIKnowWhatIAmDoing": false,
-            "allowConstantLoopConditions": true // 在循环表达式中允许 
-        }] */
-        // // 禁止不必要的命名空间或枚举限定符
-        // "@typescript-eslint/no-unnecessary-qualifier": ["error"],
-        // // 禁止给泛型传递与默认值相同的值 
-        // "@typescript-eslint/no-unnecessary-type-arguments": ["error"],
+        }],
+        // 禁止总为true或总为false有表达式【TODO】
+        "@typescript-eslint/no-unnecessary-condition": "off",
+        // 禁止不必要的命名空间或枚举限定符
+        "@typescript-eslint/no-unnecessary-qualifier": ["error"],
+        // 禁止给泛型传递与默认值相同的值 
+        "@typescript-eslint/no-unnecessary-type-arguments": ["error"]
         // // 禁止无必要的类型断言
         // "@typescript-eslint/no-unnecessary-type-assertion": ["error"],
         // // 禁止泛型extends any或unknown
