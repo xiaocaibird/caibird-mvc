@@ -356,7 +356,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
                 });
 
                 unhandledRejection && unhandledRejection(reason, promise, this);
-            } catch (e) {
+            } catch (e: unknown) {
                 console.error('unhandledRejection:', e);
             }
         });
@@ -369,7 +369,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
                 });
 
                 uncaughtException && uncaughtException(err, this);
-            } catch (e) {
+            } catch (e: unknown) {
                 console.error('uncaughtException:', e);
             }
         });
@@ -391,7 +391,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
                 }
 
                 onAppError && onAppError(err, ctx, this);
-            } catch (e) {
+            } catch (e: unknown) {
                 console.error('app error:', e);
             }
         });
@@ -446,7 +446,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
                     error: err
                 });
             }
-        } catch (e) {
+        } catch (e: unknown) {
             const err = (e || new Error()) as Error;
             responseHelper.status(eHttp.StatusCode.ServerError, err.message);
             reportHelper.unknownError({
@@ -492,7 +492,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
                 } else {
                     throw new cError.Status({ msg: '请使用https访问', status: eHttp.StatusCode.NotFound }, { key: 'https_only' });
                 }
-            } catch (e) {
+            } catch (e: unknown) {
                 const err = (e || new Error()) as Error;
                 onRequestError && await onRequestError(err, ctx, this);
                 !(disableAllDefaultErrorHandler || disableDefaultRequestErrorHandler) && this.defaultOnRequestError(err);

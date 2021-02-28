@@ -85,7 +85,7 @@ export abstract class HAsync<TCustomRunOpt extends dp.Obj = dp.Obj> {
             const data = await promise;
             handleStatus(onExecuteSuccess);
             return data;
-        } catch (e) {
+        } catch (e: unknown) {
             if (!uObject.checkInstance(e, cError.Noop)) {
                 handleStatus(onExecuteFail);
             }

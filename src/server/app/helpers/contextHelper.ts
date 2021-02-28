@@ -26,7 +26,7 @@ class ContextHelper {
                 this.zone.set(this.CTX_KEY, ctx);
                 this.zone.set(this.TAMP_KEY, { timestamp: [] });
                 await fn();
-            } catch (e) {
+            } catch (e: unknown) {
                 throw e;
             } finally {
                 this.clear();

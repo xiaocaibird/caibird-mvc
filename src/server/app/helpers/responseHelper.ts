@@ -84,7 +84,7 @@ class ResponseHelper {
         }
         try {
             await koaSend(ctx, path, opt);
-        } catch (e) {
+        } catch (e: unknown) {
             const error = (e || new Error()) as Error;
             throw new cError.Status(eHttp.StatusCode.ServerError,
                 { key: 'responseHelper_sendFile', error });
@@ -107,7 +107,7 @@ class ResponseHelper {
         }
         try {
             await ctx.render(view, params);
-        } catch (e) {
+        } catch (e: unknown) {
             const error = (e || new Error()) as Error;
             throw new cError.Status(eHttp.StatusCode.ServerError,
                 { key: 'responseHelper_render', error });

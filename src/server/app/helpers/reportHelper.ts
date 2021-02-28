@@ -121,7 +121,7 @@ class ReportHelper {
                 return info;
             }
             return undefined;
-        } catch (e) {
+        } catch (e: unknown) {
             const error = (e || new Error()) as Error;
             return {
                 message: error.message,
@@ -322,7 +322,7 @@ class ReportHelper {
                 const logInfo = this.getLogInfo(opt, new LogStack().stack || '', ctx);
                 logger.info(uObject.safeStringify(logInfo));
             }
-        } catch (e) {
+        } catch (e: unknown) {
             console.error('writeLog:', e);
         }
     }

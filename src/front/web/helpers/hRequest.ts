@@ -63,7 +63,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
         const getResult = async (): Promise<unknown> => {
             try {
                 return this.getResult(url, req, opt);
-            } catch (e) {
+            } catch (e: unknown) {
                 if (shouldRetry) {
                     nowRetryTimes++;
                     if (await shouldRetry({
@@ -126,7 +126,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
                 };
 
                 document.body.append(script);
-            } catch (e) {
+            } catch (e: unknown) {
                 clear();
                 reject(e);
             }
@@ -152,7 +152,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
         try {
             rsp = await this.fetchJson<dFetch.SuccessJsonBody<T> | dFetch.ErrorJsonBody | null>(type, url, req, opt);
             info.rsp = rsp;
-        } catch (e) {
+        } catch (e: unknown) {
             const error = e as dp.Obj;
             if (!(!this.onGetResultError ? true : await this.onGetResultError(error, opt, info))) throw new cError.Noop();
 
@@ -250,7 +250,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
         try {
             rsp = await this.fetchJson<dFetch.SuccessJsonBody<T> | dFetch.ErrorJsonBody>(type, url, req, opt);
             info.rsp = rsp;
-        } catch (e) {
+        } catch (e: unknown) {
             const error = e as dp.Obj;
             this.onGetNoHandleResultError && await this.onGetNoHandleResultError(error, opt, info);
 

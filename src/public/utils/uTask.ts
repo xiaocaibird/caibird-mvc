@@ -18,7 +18,7 @@ export namespace uTask {
         for (let i = 1; i <= maxRunTimes; i++) {
             try {
                 return task() as ReturnType<T>;
-            } catch (e) {
+            } catch (e: unknown) {
                 if (!shouldRetry || await shouldRetry({ error: e, nowRunTimes: i })) {
                     errors.push(e);
                     if (delay != null) {

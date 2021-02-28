@@ -71,7 +71,7 @@ window.addEventListener('error', async evt => {
             }
         } catch { }
         onAppError && await onAppError(error);
-    } catch (e) {
+    } catch (e: unknown) {
         console.error('onerror fail:', e);
         console.log('onerror evt:', evt);
     }
@@ -88,7 +88,7 @@ window.addEventListener('unhandledrejection', async evt => {
             }
         } catch { }
         onAppError && await onAppError(error);
-    } catch (e) {
+    } catch (e: unknown) {
         console.error('onunhandledrejection fail:', e);
         console.log('onunhandledrejection evt:', evt);
     }

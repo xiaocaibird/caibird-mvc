@@ -232,13 +232,20 @@
         // 禁止多余的非空断言
         "@typescript-eslint/no-extra-non-null-assertion": ["error"],
         // 禁止不合法的使用类（比如空类，或者只有静态成员的类）
-        "@typescript-eslint/no-extraneous-class": ["error"]
-        // // 禁止忽略promise的异常处理【无需】
-        // "@typescript-eslint/no-floating-promises": "off",
-        // // 禁止使用for in
-        // "@typescript-eslint/no-for-in-array": ["error"],
-        // // 禁止将catch e 定义为any
-        // "@typescript-eslint/no-implicit-any-catch": ["error"],
+        "@typescript-eslint/no-extraneous-class": ["error", {
+            "allowConstructorOnly": false,
+            "allowEmpty": false,
+            "allowStaticOnly": false,
+            "allowWithDecorator": false
+        }],
+        // 禁止忽略promise的异常处理【无需】
+        "@typescript-eslint/no-floating-promises": "off",
+        // 禁止使用for in
+        "@typescript-eslint/no-for-in-array": ["error"],
+        // 禁止将catch e 定义为any
+        "@typescript-eslint/no-implicit-any-catch": ["error", {
+            "allowExplicitAny": false
+        }]
         // // 禁止无意义的类型声明
         // "@typescript-eslint/no-inferrable-types": ["error"],
         // // 禁止使用void【无需】

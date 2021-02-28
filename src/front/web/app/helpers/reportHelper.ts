@@ -37,7 +37,7 @@ class ReportHelper {
                     ...source
                 }
             }));
-        } catch (e) {
+        } catch (e: unknown) {
             console.error('writeLog:', e);
         }
     }
