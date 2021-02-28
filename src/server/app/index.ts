@@ -211,6 +211,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
 
         const baseController: dp.Class & Partial<dMvc.S.CommonProps<TRules, TState, TCustom>> = this.baseController;
 
+        // eslint-disable-next-line @typescript-eslint/no-extraneous-class
         const setClass: dp.Class & Partial<dMvc.S.CommonProps<TRules, TState, TCustom>> = class SetClass { };
         defaultFilters.forEach(filter => filter(setClass));
 

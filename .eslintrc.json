@@ -228,11 +228,11 @@
         "@typescript-eslint/no-explicit-any": ["error", {
             "ignoreRestArgs": false,
             "fixToUnknown": true
-        }]
-        // // 禁止多余的非空断言
-        // "@typescript-eslint/no-extra-non-null-assertion": ["error"],
-        // // 禁止不合法的使用类（比如空类，或者只有静态成员的类）
-        // "@typescript-eslint/no-extraneous-class": ["error"],
+        }],
+        // 禁止多余的非空断言
+        "@typescript-eslint/no-extra-non-null-assertion": ["error"],
+        // 禁止不合法的使用类（比如空类，或者只有静态成员的类）
+        "@typescript-eslint/no-extraneous-class": ["error"]
         // // 禁止忽略promise的异常处理【无需】
         // "@typescript-eslint/no-floating-promises": "off",
         // // 禁止使用for in
