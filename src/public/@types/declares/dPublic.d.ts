@@ -11,39 +11,39 @@ declare namespace dp {
 
     type UrlParams = number | string | boolean | null | undefined;
 
-    type Keys = keyof any;
+    type Keys = keyof unknown;
 
     type Obj<T = unknown> = {
         [K in Keys]: T;
     };
 
-    type StrictObj<K extends number | string, T = any> = {
+    type StrictObj<K extends number | string, T = unknown> = {
         [k in K]: T;
     };
 
-    type Func<P extends any[] = any[], T = any> = (...p: P) => T;
+    type Func<P extends unknown[] = unknown[], T = unknown> = (...p: P) => T;
 
-    type Class<P extends any[] = any[], T = any> = new (...p: P) => T;
+    type Class<P extends unknown[] = unknown[], T = unknown> = new (...p: P) => T;
 
-    type MapType<K = any, V = any> = Map<K, V>;
+    type MapType<K = unknown, V = unknown> = Map<K, V>;
 
     type GetClassParams<T extends Class> = T extends Class<infer P> ? P : never;
 
     type GetFuncParams<T extends Func> = T extends Func<infer P> ? P : never;
 
-    type PromiseFunc<P extends any[] = any[], T = any> = (...p: P) => Promise<T>;
+    type PromiseFunc<P extends unknown[] = unknown[], T = unknown> = (...p: P) => Promise<T>;
 
     type PromiseOrSelf<T> = Promise<T> | T;
 
     type AllowKeys<T extends { [p in Exclude<keyof T, K>]: never }, K extends string> = T;
 
-    type NeedKeys<T extends Record<K, any>, K extends string> = T;
+    type NeedKeys<T extends Record<K, unknown>, K extends string> = T;
 
-    type StrictKeys<T extends Record<K, any> & { [p in Exclude<keyof T, K>]: never }, K extends string> = T;
+    type StrictKeys<T extends Record<K, unknown> & { [p in Exclude<keyof T, K>]: never }, K extends string> = T;
 
     type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
-    type ObjectPartial<T> = T extends any[] ? T: Partial<T>;
+    type ObjectPartial<T> = T extends unknown[] ? T: Partial<T>;
 
     type DeepReadonly<T> =
         T extends Function ? T :
@@ -51,7 +51,7 @@ declare namespace dp {
         T extends ReadonlyMap<infer K, infer V> ? ReadonlyMap<K, DeepReadonly<V>> :
         T extends Set<infer V> ? ReadonlySet<DeepReadonly<V>> :
         T extends ReadonlySet<infer V> ? ReadonlySet<DeepReadonly<V>> :
-        T extends any[] ? ReadonlyArray<DeepReadonly<T[number]>> :
+        T extends unknown[] ? ReadonlyArray<DeepReadonly<T[number]>> :
         T extends ReadonlyArray<infer V> ? ReadonlyArray<DeepReadonly<V>> :
         T extends dp.Obj ? { readonly [P in keyof T]: DeepReadonly<T[P]>; } : T;
 
@@ -61,7 +61,7 @@ declare namespace dp {
         T extends ReadonlyMap<infer K, infer V> ? Map<K, DeepWritable<V>> :
         T extends Set<infer V> ? Set<DeepWritable<V>> :
         T extends ReadonlySet<infer V> ? Set<DeepWritable<V>> :
-        T extends any[] ? DeepWritable<T[number]>[] :
+        T extends unknown[] ? DeepWritable<T[number]>[] :
         T extends ReadonlyArray<infer V> ? DeepWritable<V>[] :
         T extends dp.Obj ? { -readonly [P in keyof T]: DeepWritable<T[P]>; } : T;
 
@@ -71,7 +71,7 @@ declare namespace dp {
         T extends ReadonlyMap<infer K, infer V> ? ReadonlyMap<K, DeepPartial<V>> :
         T extends Set<infer V> ? Set<DeepPartial<V>> :
         T extends ReadonlySet<infer V> ? ReadonlySet<DeepPartial<V>> :
-        T extends any[] ? DeepPartial<T[number]>[] :
+        T extends unknown[] ? DeepPartial<T[number]>[] :
         T extends ReadonlyArray<infer V> ? ReadonlyArray<DeepPartial<V>> :
         T extends dp.Obj ? { [P in keyof T]?: DeepPartial<T[P]>; } : T;
 
@@ -82,20 +82,20 @@ declare namespace dp {
     type PromiseFuncPropNames<T> = { [K in keyof T]: T[K] extends PromiseFunc ? K : never }[keyof T];
 
     interface CustomProcessEnv {
-        RUN_ENV: any,
+        RUN_ENV: unknown,
 
-        PROJECT_VERSION: any,
-        PROJECT_NAME: any,
-        TAG_NAME: any,
+        PROJECT_VERSION: unknown,
+        PROJECT_NAME: unknown,
+        TAG_NAME: unknown,
 
-        NODE_ENV_VALUE: any,
+        NODE_ENV_VALUE: unknown,
 
-        IS_PRODUCTION: any,
-        IS_EXP_PRODUCTION: any,
+        IS_PRODUCTION: unknown,
+        IS_EXP_PRODUCTION: unknown,
 
-        IS_TEST: any,
-        IS_DEV_TEST: any,
-        IS_LOCAL_TEST: any,
+        IS_TEST: unknown,
+        IS_DEV_TEST: unknown,
+        IS_LOCAL_TEST: unknown,
     }
 }
 

@@ -38,9 +38,9 @@ class SettingHelper {
                     return obj as dp.DeepPartial<T[TKey]>;
                 }
 
-                return jsonStr as any;
+                return jsonStr as unknown;
             } catch {
-                return jsonStr as any;
+                return jsonStr as unknown;
             }
         } catch {
             return dft as dp.DeepPartial<T[TKey]>;

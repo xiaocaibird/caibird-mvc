@@ -32,8 +32,8 @@ declare namespace dRequest {
                     checkLoginWhenNoHandle?: boolean,
                 };
 
-            type GetReq<T> = T extends dFetch.ApiInfo<any, any> ? T['req'] : never;
-            type GetRsp<T> = T extends dFetch.ApiInfo<any, any> ? T['rsp'] : never;
+            type GetReq<T> = T extends dFetch.ApiInfo<unknown, unknown> ? T['req'] : never;
+            type GetRsp<T> = T extends dFetch.ApiInfo<unknown, unknown> ? T['rsp'] : never;
 
             type Details<T> = dFetch.SuccessJsonBody<T> | dFetch.ErrorJsonBody;
 

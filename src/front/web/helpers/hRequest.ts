@@ -35,7 +35,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
     protected abstract readonly preGetNoHandleResult?: (rsp: dFetch.SuccessJsonBody<unknown> | dFetch.ErrorJsonBody | null, opt: dRequest.F.WEB.DetailsOptions & Partial<TCustomOpt>, details: dRequest.F.WEB.FetchInfo) => dp.PromiseOrSelf<void>;
     protected abstract readonly onGetNoHandleResultError?: (error: unknown, opt: dRequest.F.WEB.DetailsOptions & Partial<TCustomOpt>, details: dRequest.F.WEB.FetchInfo) => dp.PromiseOrSelf<void>;
 
-    public readonly api = new Proxy<any>({}, {
+    public readonly api = new Proxy<unknown>({}, {
         get: (_target, controllerName) =>
             new Proxy({}, {
                 get: (_controller, actionName) =>
@@ -106,7 +106,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
             const clear = () => {
                 try {
                     script.remove();
-                    delete (window as any)[funcName];
+                    delete (window as unknown)[funcName];
                     clearTimeout(timeoutId);
                 } catch { }
             };
@@ -120,7 +120,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
 
                 script.src = uHttp.urlAddQuery(url, req as dp.Obj<dp.UrlParams>); // TODO 处理类型断言
 
-                (window as any)[funcName] = (data: T) => {
+                (window as unknown)[funcName] = (data: T) => {
                     clear();
                     resolve(data);
                 };

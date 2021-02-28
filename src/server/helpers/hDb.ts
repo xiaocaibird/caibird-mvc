@@ -33,11 +33,11 @@ export abstract class HDb {
     public readonly clearIllegalChar = (text: string) => text.replace(/[^\u0000-\uFFFF]/g, '');
 
     public readonly setOneToOne = (aTable: {
-        model: Sequelize.Model<any, any>,
+        model: Sequelize.Model<unknown, unknown>,
         key?: string,
         as?: string,
     }, bTable: {
-        model: Sequelize.Model<any, any>,
+        model: Sequelize.Model<unknown, unknown>,
         key?: string,
         as?: string,
     }, key?: string) => {
@@ -46,11 +46,11 @@ export abstract class HDb {
     }
 
     public readonly setOneToMany = (mainTable: {
-        model: Sequelize.Model<any, any>,
+        model: Sequelize.Model<unknown, unknown>,
         key?: string,
         as?: string,
     }, depTable: {
-        model: Sequelize.Model<any, any>,
+        model: Sequelize.Model<unknown, unknown>,
         key?: string,
         as?: string,
     }) => {

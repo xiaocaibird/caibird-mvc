@@ -7,7 +7,7 @@ import koaWebpack from 'koa-webpack';
 import webpack from 'webpack';
 import webpackHot from 'webpack-hot-middleware';
 
-export default async <T extends Koa<any, any>>(koa: T, options: {
+export default async <T extends Koa<unknown, unknown>>(koa: T, options: {
     webpackConfig: webpack.Configuration,
     publicPath: string,
 }) => {

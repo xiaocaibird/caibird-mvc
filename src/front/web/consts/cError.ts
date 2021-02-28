@@ -50,13 +50,13 @@ window.addEventListener('error', async evt => {
 
                     const ErrClass = cError[errName];
 
-                    error = new (ErrClass as any)(...errJson.args) as Error;
+                    error = new (ErrClass as unknown)(...errJson.args) as Error;
                     error.stack = errJson.stack || `${evt.filename} | lineno: ${evt.lineno} | colno: ${evt.colno}`;
                     error.message = errJson.message || '';
                 } catch {
                     try {
                         // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-                        error = new (window as any)[errName || '']() as Error;
+                        error = new (window as unknown)[errName || '']() as Error;
                     } catch {
                         error = new Error();
                     }
