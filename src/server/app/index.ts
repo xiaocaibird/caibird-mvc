@@ -555,9 +555,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
                 formParams = uObject.parseJson(body[formRequestKey] as string);
             }
 
-            const rsp = await Action.bind(controllerObj)({ ...ctx.query, ...body, ...formParams });
-
-            const actionReturn = rsp as null | undefined |
+            const actionReturn = await Action.bind(controllerObj)({ ...ctx.query, ...body, ...formParams }) as null | undefined |
                 dMvc.S.JsonActionReturn<dp.Obj> |
                 dMvc.S.FileActionReturn |
                 dMvc.S.RedirectActionReturn |

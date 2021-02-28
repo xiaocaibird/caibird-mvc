@@ -34,7 +34,7 @@ class SettingHelper {
             const jsonStr = fs.readFileSync(`/etc/my-setting/${filename}/${key}`, 'utf-8');
 
             try {
-                const obj = JSON.parse(jsonStr);
+                const obj: unknown = JSON.parse(jsonStr);
                 if (obj && typeof obj === 'object') {
                     return obj as dp.DeepPartial<T[TKey]>;
                 }

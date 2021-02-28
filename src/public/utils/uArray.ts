@@ -8,7 +8,7 @@ export namespace uArray {
     export const jsonParse = <T>(str: string): T[] => {
         const dft: T[] = [];
         try {
-            const arr = JSON.parse(str);
+            const arr: unknown = JSON.parse(str);
             return check<T>(arr) ? arr : dft;
         } catch {
             return dft;

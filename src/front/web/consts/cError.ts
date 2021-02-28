@@ -79,7 +79,7 @@ window.addEventListener('error', async evt => {
 
 window.addEventListener('unhandledrejection', async evt => {
     try {
-        const error = evt.reason;
+        const error: unknown = evt.reason;
         try {
             if (isCompatibleHandler) {
                 if (error instanceof cError.BassError) {

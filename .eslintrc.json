@@ -289,13 +289,15 @@
         // 禁止不必要的命名空间或枚举限定符
         "@typescript-eslint/no-unnecessary-qualifier": ["error"],
         // 禁止给泛型传递与默认值相同的值 
-        "@typescript-eslint/no-unnecessary-type-arguments": ["error"]
-        // // 禁止无必要的类型断言
-        // "@typescript-eslint/no-unnecessary-type-assertion": ["error"],
-        // // 禁止泛型extends any或unknown
-        // "@typescript-eslint/no-unnecessary-type-constraint": ["error"],
-        // // 禁止不安全的any转换
-        // "@typescript-eslint/no-unsafe-assignment": ["error"],
+        "@typescript-eslint/no-unnecessary-type-arguments": ["error"],
+        // 禁止无必要的类型断言【失效】
+        "@typescript-eslint/no-unnecessary-type-assertion": ["error", {
+            // "typesToIgnore": []
+        }],
+        // 禁止泛型extends any或unknown
+        "@typescript-eslint/no-unnecessary-type-constraint": ["error"],
+        // 禁止不安全的any转换
+        "@typescript-eslint/no-unsafe-assignment": ["error"]
         // // 禁止不安全的any执行
         // "@typescript-eslint/no-unsafe-call": ["error"],
         // // 禁止不安全的any访问
