@@ -303,11 +303,11 @@
         // 禁止不安全的any访问
         "@typescript-eslint/no-unsafe-member-access": ["error"],
         // 禁止return any
-        "@typescript-eslint/no-unsafe-return": ["error"]
-        // // 禁止var require
-        // "@typescript-eslint/no-var-requires": ["error"],
-        // // 禁止在可以使用非空断言时使用类型断言
-        // "@typescript-eslint/non-nullable-type-assertion-style": ["error"],
+        "@typescript-eslint/no-unsafe-return": ["error"],
+        // 禁止var require
+        "@typescript-eslint/no-var-requires": ["error"],
+        // 禁止在可以使用非空断言时使用类型断言
+        "@typescript-eslint/non-nullable-type-assertion-style": ["error"]
         // // 禁止在可以使用const 使用let
         // "@typescript-eslint/prefer-as-const": ["error"],
         // // 禁止定义隐式的enum成员

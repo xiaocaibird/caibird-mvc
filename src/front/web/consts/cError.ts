@@ -45,14 +45,18 @@ window.addEventListener('error', async evt => {
                 try {
                     const errInfo = getErrInfo(evt.message);
 
-                    errName = errInfo.name as keyof typeof cError;
-                    errJson = errInfo.json as ErrJson;
+                    errName = errInfo.name;
+                    errJson = errInfo.json;
 
-                    const ErrClass = cError[errName];
+                    if (errName && errJson) {
+                        const ErrClass = cError[errName];
 
-                    error = new (ErrClass as unknown as dp.Class)(...errJson.args) as Error;
-                    error.stack = errJson.stack || `${evt.filename} | lineno: ${evt.lineno} | colno: ${evt.colno}`;
-                    error.message = errJson.message || '';
+                        error = new (ErrClass as unknown as dp.Class)(...errJson.args) as Error;
+                        error.stack = errJson.stack || `${evt.filename} | lineno: ${evt.lineno} | colno: ${evt.colno}`;
+                        error.message = errJson.message || '';
+                    } else {
+                        throw new Error();
+                    }
                 } catch {
                     try {
                         error = new (window as unknown as dp.Obj<dp.Class>)[errName || '']() as Error;
