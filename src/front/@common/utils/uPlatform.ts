@@ -21,9 +21,9 @@ export namespace uPlatform {
         let compare = '';
         let version = '';
 
-        if (str[0] === '<' || str[0] === '>' || str[0] === '=') {
+        if (str.startsWith('<') || str.startsWith('>') || str.startsWith('=')) {
             compare += str[0];
-            if ((str[0] === '<' || str[0] === '>') && str[1] === '=') {
+            if ((str.startsWith('<') || str.startsWith('>')) && str[1] === '=') {
                 compare += str[1];
                 version = str.slice(2);
             } else {
