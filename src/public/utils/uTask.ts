@@ -17,7 +17,7 @@ export namespace uTask {
         const errors: unknown[] = [];
         for (let i = 1; i <= maxRunTimes; i++) {
             try {
-                return task() as ReturnType<T>;
+                return task() as Promise<ReturnType<T>>;
             } catch (e: unknown) {
                 if (!shouldRetry || await shouldRetry({ error: e, nowRunTimes: i })) {
                     errors.push(e);

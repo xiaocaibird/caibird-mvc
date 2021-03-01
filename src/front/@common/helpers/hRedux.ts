@@ -58,7 +58,7 @@ export abstract class HRedux<TState extends dp.Obj, TActions extends dRedux.Base
         return (state = cloneDeep(defaultState), actionResult: { type: string, payload: unknown }) => {
             const handler = handlers[actionResult.type];
             if (handler) {
-                return handler(state, actionResult.payload);
+                return handler(state, actionResult.payload) as T;
             }
             return state;
         };

@@ -297,13 +297,13 @@
         // 禁止泛型extends any或unknown
         "@typescript-eslint/no-unnecessary-type-constraint": ["error"],
         // 禁止不安全的any转换
-        "@typescript-eslint/no-unsafe-assignment": ["error"]
-        // // 禁止不安全的any执行
-        // "@typescript-eslint/no-unsafe-call": ["error"],
-        // // 禁止不安全的any访问
-        // "@typescript-eslint/no-unsafe-member-access": ["error"],
-        // // 禁止return any
-        // "@typescript-eslint/no-unsafe-return": ["error"],
+        "@typescript-eslint/no-unsafe-assignment": ["error"],
+        // 禁止不安全的any执行
+        "@typescript-eslint/no-unsafe-call": ["error"],
+        // 禁止不安全的any访问
+        "@typescript-eslint/no-unsafe-member-access": ["error"],
+        // 禁止return any
+        "@typescript-eslint/no-unsafe-return": ["error"]
         // // 禁止var require
         // "@typescript-eslint/no-var-requires": ["error"],
         // // 禁止在可以使用非空断言时使用类型断言
