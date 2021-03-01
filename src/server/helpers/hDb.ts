@@ -41,8 +41,8 @@ export abstract class HDb {
         key?: string,
         as?: string,
     }, key?: string) => {
-        aTable.model.belongsTo(bTable.model, { foreignKey: aTable.key || key, targetKey: bTable.key || key, as: bTable.as });
-        bTable.model.belongsTo(aTable.model, { foreignKey: bTable.key || key, targetKey: aTable.key || key, as: aTable.as });
+        aTable.model.belongsTo(bTable.model, { foreignKey: aTable.key ?? key, targetKey: bTable.key ?? key, as: bTable.as });
+        bTable.model.belongsTo(aTable.model, { foreignKey: bTable.key ?? key, targetKey: aTable.key ?? key, as: aTable.as });
     }
 
     public readonly setOneToMany = (mainTable: {

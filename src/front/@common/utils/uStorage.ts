@@ -34,7 +34,7 @@ export namespace uStorage {
     export const getObjectValue = <T>(key: string) => {
         const objStr = getValue(objectKey);
         try {
-            const obj = JSON.parse(objStr || '') as dp.Obj;
+            const obj = JSON.parse(objStr ?? '') as dp.Obj;
             return obj[key] as T;
         } catch {
             return undefined;
@@ -45,7 +45,7 @@ export namespace uStorage {
         const objStr = getValue(objectKey);
         let obj: dp.Obj = {};
         try {
-            obj = JSON.parse(objStr || '') as dp.Obj;
+            obj = JSON.parse(objStr ?? '') as dp.Obj;
         } catch {
         }
         obj[key] = value;

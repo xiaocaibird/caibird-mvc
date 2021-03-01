@@ -5,13 +5,13 @@
 import platform from 'platform';
 
 namespace _cPlatform {
-    export const MODEL = platform.product || '';
-    export const MANUFACTURER = platform.manufacturer || '';
+    export const MODEL = platform.product ?? '';
+    export const MANUFACTURER = platform.manufacturer ?? '';
 
-    export const OS_NAME = platform.os?.family || '';
+    export const OS_NAME = platform.os?.family ?? '';
     const OS_NAME_LC = OS_NAME.toLowerCase();
 
-    export const OS_VERSION = platform.os?.version || '';
+    export const OS_VERSION = platform.os?.version ?? '';
 
     export const isIOS = OS_NAME_LC === ePlatform.F.OsName.IOS.toLowerCase();
     export const isAndroid = OS_NAME_LC === ePlatform.F.OsName.Android.toLowerCase();

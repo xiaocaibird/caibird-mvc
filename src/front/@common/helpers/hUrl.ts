@@ -8,7 +8,7 @@ export abstract class HUrl {
         imgPath: string,
     }) { }
 
-    public readonly full = (url = '') => `${location.protocol}//${location.host}${this.options.prefix || ''}${url}`;
+    public readonly full = (url = '') => `${location.protocol}//${location.host}${this.options.prefix ?? ''}${url}`;
 
     public readonly image = (imgName: string) => `${this.options.imgPath}/${imgName}`;
 }

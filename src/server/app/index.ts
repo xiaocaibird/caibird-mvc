@@ -37,7 +37,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
         reportHelper.init(this.options.reportInitOpt);
     }
 
-    private readonly tracer = this.options.tracingConfig && jaegerClient.initTracer(this.options.tracingConfig, this.options.tracingOptions || {});
+    private readonly tracer = this.options.tracingConfig && jaegerClient.initTracer(this.options.tracingConfig, this.options.tracingOptions ?? {});
 
     private readonly baseController = this.createBaseController();
 
@@ -158,7 +158,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
         controller: T,
         filter: dMvc.S.Filter<TRules, TState, TCustom>,
         actionDes?: dMvc.S.ActionPropertyDescriptor<TRules, TState, TCustom>,
-        order = filter.defaultOrder || 0) => {
+        order = filter.defaultOrder ?? 0) => {
         let target;
         let isController = false;
         if (uFunction.check<dMvc.S.InitController<TRules, TState, TCustom>>(controller)) {
@@ -352,7 +352,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
             try {
                 !(disableAllDefaultErrorHandler || disableDefaultUnhandledRejectionHandler) && reportHelper.appError({
                     key: 'process_unhandledRejection',
-                    error: reason || undefined
+                    error: reason ?? undefined
                 });
 
                 unhandledRejection && unhandledRejection(reason, promise, this);
@@ -423,7 +423,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
                         ...logOptions,
                         key: logOptions.key || key,
                         msg: logOptions.msg || key,
-                        type: logOptions.type || eReport.LogType.Error,
+                        type: logOptions.type ?? eReport.LogType.Error,
                         source: error
                     }
                 );

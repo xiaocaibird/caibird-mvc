@@ -53,24 +53,24 @@ window.addEventListener('error', async evt => {
 
                         error = new (ErrClass as unknown as dp.Class)(...errJson.args) as Error;
                         error.stack = errJson.stack || `${evt.filename} | lineno: ${evt.lineno} | colno: ${evt.colno}`;
-                        error.message = errJson.message || '';
+                        error.message = errJson.message ?? '';
                     } else {
                         throw new Error();
                     }
                 } catch {
                     try {
-                        error = new (window as unknown as dp.Obj<dp.Class>)[errName || '']() as Error;
+                        error = new (window as unknown as dp.Obj<dp.Class>)[errName ?? '']() as Error;
                     } catch {
                         error = new Error();
                     }
                     error.message = evt.message;
                     error.stack = `${evt.filename} | lineno: ${evt.lineno} | colno: ${evt.colno}`;
-                    error.name = errName || 'Error';
+                    error.name = errName ?? 'Error';
                 }
             }
             if (isCompatibleHandler) {
                 if (error instanceof cError.BassError) {
-                    error.message = errJson?.message || '';
+                    error.message = errJson?.message ?? '';
                 }
             }
         } catch { }
@@ -87,7 +87,7 @@ window.addEventListener('unhandledrejection', async evt => {
         try {
             if (isCompatibleHandler) {
                 if (error instanceof cError.BassError) {
-                    error.message = getErrInfo(error.message).json?.message || '';
+                    error.message = getErrInfo(error.message).json?.message ?? '';
                 }
             }
         } catch { }

@@ -46,7 +46,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
     private readonly handleApi = (controllerName: string, actionName: string, req?: dp.Obj, opt: dRequest.F.WEB.Options & Partial<TCustomOpt> = {}) => {
         const { isFormFetch, noHandle, retryTimes, shouldRetry } = opt;
 
-        const maxRetryTimes = (retryTimes == null ? this.options.defaultRetryTimes : retryTimes) || 0;
+        const maxRetryTimes = (retryTimes == null ? this.options.defaultRetryTimes : retryTimes) ?? 0;
         let nowRetryTimes = 0;
 
         const url = `/${controllerName}/${actionName}`;
@@ -323,7 +323,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
         };
     }
 
-    public readonly getLocalUrl = (url: string) => (this.options.prefix || '') + url;
+    public readonly getLocalUrl = (url: string) => (this.options.prefix ?? '') + url;
 
     public readonly fetch = (type: eHttp.MethodType, oriUrl: string, req?: string | dp.Obj | FormData | null, opt: dRequest.F.WEB.Options = {}) => {
         let url = oriUrl.trim();
@@ -331,7 +331,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
             url = this.getLocalUrl(url);
         }
 
-        const sendData = req || {};
+        const sendData = req ?? {};
         const p = new Promise<XMLHttpRequest>((resolve, reject) => {
             const { timeout = this.options.timeout == null ? eDate.MsTimespan.RequestTimeout : this.options.timeout,
                 contentType, headers = {}, withCredentials, requestedWith = eHttp.RequestedWith.XMLHttpRequest } = opt;

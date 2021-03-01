@@ -69,7 +69,7 @@ class ResponseHelper {
             });
             return;
         }
-        ctx.set('Content-Disposition', `${opt.type || eHttp.ContentDispositionType.Attachment};filename=${encodeURIComponent(fileName)}`);
+        ctx.set('Content-Disposition', `${opt.type ?? eHttp.ContentDispositionType.Attachment};filename=${encodeURIComponent(fileName)}`);
         ctx.body = buffer;
         ctx.status = eHttp.StatusCode.Ok;
     }

@@ -122,7 +122,7 @@ export namespace uFile {
         while (n--) {
             u8arr[n] = bstr.charCodeAt(n);
         }
-        return new Blob([u8arr], { type: mime || '' });
+        return new Blob([u8arr], { type: mime ?? '' });
     };
 }
 

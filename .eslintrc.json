@@ -307,23 +307,23 @@
         // 禁止var require
         "@typescript-eslint/no-var-requires": ["error"],
         // 禁止在可以使用非空断言时使用类型断言
-        "@typescript-eslint/non-nullable-type-assertion-style": ["error"]
-        // // 禁止在可以使用const 使用let
-        // "@typescript-eslint/prefer-as-const": ["error"],
-        // // 禁止定义隐式的enum成员
-        // "@typescript-eslint/prefer-enum-initializers": ["error"],
-        // // 禁止在可以用for of时用for i++
-        // "@typescript-eslint/prefer-for-of": ["error"],
-        // // 禁止在单一函数类型时用interface来定义
-        // "@typescript-eslint/prefer-function-type": ["error"],
-        // // 禁止用includes以外的方式来判断字符串或数组的存在
-        // "@typescript-eslint/prefer-includes": ["error"],
-        // // 禁止定义对象和非字面量的枚举值
-        // "@typescript-eslint/prefer-literal-enum-member": ["error"],
-        // // 禁止使用module(类型扩展除外)
-        // "@typescript-eslint/prefer-namespace-keyword": ["error"],
-        // // 禁止在赋值运算时使用||，要用??替代
-        // "@typescript-eslint/prefer-nullish-coalescing": ["error"],
+        "@typescript-eslint/non-nullable-type-assertion-style": ["error"],
+        // 禁止在可以使用const 使用let
+        "@typescript-eslint/prefer-as-const": ["error"],
+        // 禁止定义隐式的enum成员
+        "@typescript-eslint/prefer-enum-initializers": ["error"],
+        // 禁止在可以用for of时用for i++
+        "@typescript-eslint/prefer-for-of": ["error"],
+        // 禁止在单一函数类型时用interface来定义
+        "@typescript-eslint/prefer-function-type": ["error"],
+        // 禁止用includes以外的方式来判断字符串或数组的存在
+        "@typescript-eslint/prefer-includes": ["error"],
+        // 禁止定义对象和非字面量的枚举值【无需】
+        "@typescript-eslint/prefer-literal-enum-member": "off",
+        // 禁止使用module(类型扩展除外)
+        "@typescript-eslint/prefer-namespace-keyword": ["error"],
+        // 禁止在赋值运算时使用||，要用??替代【check】
+        "@typescript-eslint/prefer-nullish-coalescing": ["error", { "ignoreConditionalTests": true, "ignoreMixedLogicalExpressions": true }]
         // // 禁止在可以用可选链时使用&&
         // "@typescript-eslint/prefer-optional-chain": ["error"],
         // // 禁止省略必要的readonly

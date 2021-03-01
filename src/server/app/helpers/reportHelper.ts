@@ -169,8 +169,8 @@ class ReportHelper {
         const state = ctx && ctx.state as dp.Obj;
 
         const logInfo: dReport.LogInfo = {
-            type: opt.type || eReport.LogType.Other,
-            level: opt.level || 'info',
+            type: opt.type ?? eReport.LogType.Other,
+            level: opt.level ?? 'info',
             key: this.handleInfo(opt.key, 100),
             date: date.format('YYYY-MM-DD'),
             time: date.format('HH:mm:ss:SSS'),
@@ -203,7 +203,7 @@ class ReportHelper {
                 result[item] = {
                     type: 'file',
                     filename: `log4js/${projectLogName ? projectLogName : 'default'}/${item}.log`,
-                    maxLogSize: maxLogSize[item as eReport.LogType] || unitSize,
+                    maxLogSize: maxLogSize[item as eReport.LogType] ?? unitSize,
                     compress: true,
                     keepFileExt: true,
                     layout: { type: 'dummy' }
@@ -261,7 +261,7 @@ class ReportHelper {
 
                 const path = ctx.path.toString().trim().toLowerCase();
 
-                const reportConfig = settingHelper.getCustomConfig('reportConfig') || {};
+                const reportConfig = settingHelper.getCustomConfig('reportConfig') ?? {};
 
                 if (alwaysLog) {
                     if (opt.type === eReport.LogType.DbLog) {
@@ -314,12 +314,12 @@ class ReportHelper {
 
             if (opt.type.includes('error') || opt.type.includes('Error')) {
                 opt.level = 'error';
-                const logInfo = this.getLogInfo(opt, new LogStack().stack || '', ctx);
+                const logInfo = this.getLogInfo(opt, new LogStack().stack ?? '', ctx);
 
                 logger.error(uObject.safeStringify(logInfo));
             } else {
                 opt.level = 'info';
-                const logInfo = this.getLogInfo(opt, new LogStack().stack || '', ctx);
+                const logInfo = this.getLogInfo(opt, new LogStack().stack ?? '', ctx);
                 logger.info(uObject.safeStringify(logInfo));
             }
         } catch (e: unknown) {
