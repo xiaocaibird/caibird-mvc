@@ -341,7 +341,14 @@
         // 禁止使用ts-ignore 【无需-已禁止使用ts注释】
         "@typescript-eslint/prefer-ts-expect-error": "off",
         // 禁止promise函数省略async
-        "@typescript-eslint/promise-function-async": ["error"]
+        "@typescript-eslint/promise-function-async": ["error", {
+            "allowAny": true,
+            "allowedPromiseNames": ["Thenable", "Bluebird"],
+            "checkArrowFunctions": true,
+            "checkFunctionDeclarations": true,
+            "checkFunctionExpressions": true,
+            "checkMethodDeclarations": true
+        }]
         // // 禁止在使用arrar.sort时不传入回调
         // "@typescript-eslint/require-array-sort-compare": ["error", {
         //     "ignoreStringArrays": true
