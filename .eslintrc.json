@@ -325,15 +325,17 @@
         // 禁止在赋值运算时使用||，要用??替代【check】
         "@typescript-eslint/prefer-nullish-coalescing": "off", //["error", { "ignoreConditionalTests": true, "ignoreMixedLogicalExpressions": true }]
         // 禁止在可以用可选链时使用&&
-        "@typescript-eslint/prefer-optional-chain": ["error"]
-        // // 禁止省略必要的readonly
-        // "@typescript-eslint/prefer-readonly": ["error"],
-        // // 禁止定义可变的方法参数
-        // "@typescript-eslint/prefer-readonly-parameter-types": ["error"],
-        // // 禁止在array.reduce的返回值上使用类型断言
-        // "@typescript-eslint/prefer-reduce-type-parameter": ["error"],
-        // // 禁止在正则匹配能用exec时使用match
-        // "@typescript-eslint/prefer-regexp-exec": ["error"],
+        "@typescript-eslint/prefer-optional-chain": ["error"],
+        // 禁止省略必要的readonly
+        "@typescript-eslint/prefer-readonly": ["error", {
+            "onlyInlineLambdas": false
+        }],
+        // 禁止定义可变的方法参数【效果差】
+        "@typescript-eslint/prefer-readonly-parameter-types": "off",
+        // 禁止在array.reduce的返回值上使用类型断言
+        "@typescript-eslint/prefer-reduce-type-parameter": ["error"],
+        // 禁止在正则匹配能用exec时使用match【check】
+        "@typescript-eslint/prefer-regexp-exec": "off"
         // // 禁止在能使用startWith和endWith时使用其它方式来判断子字符串
         // "@typescript-eslint/prefer-string-starts-ends-with": ["error"],
         // // 禁止使用ts-ignore 【无需-已禁止使用ts注释】
