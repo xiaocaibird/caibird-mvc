@@ -165,7 +165,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
             target = controller;
             isController = true;
         } else {
-            target = actionDes && actionDes.value || null;
+            target = actionDes?.value || null;
         }
 
         if (!target) {
@@ -355,7 +355,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
                     error: reason ?? undefined
                 });
 
-                unhandledRejection && unhandledRejection(reason, promise, this);
+                unhandledRejection?.(reason, promise, this);
             } catch (e: unknown) {
                 console.error('unhandledRejection:', e);
             }
@@ -364,11 +364,11 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
             try {
                 !(disableAllDefaultErrorHandler || disableDefaultUncaughtExceptionHandler) && reportHelper.appError({
                     key: 'process_uncaughtException',
-                    msg: err && err.message,
+                    msg: err?.message,
                     error: err
                 });
 
-                uncaughtException && uncaughtException(err, this);
+                uncaughtException?.(err, this);
             } catch (e: unknown) {
                 console.error('uncaughtException:', e);
             }
@@ -384,13 +384,13 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
                         }
                         reportHelper.appError({
                             key: 'app_error',
-                            msg: err && err.message,
+                            msg: err?.message,
                             error: err
                         }, ctx);
                     });
                 }
 
-                onAppError && onAppError(err, ctx, this);
+                onAppError?.(err, ctx, this);
             } catch (e: unknown) {
                 console.error('app error:', e);
             }
@@ -469,7 +469,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
             const beginDate = Date.now();
 
             try {
-                span && span.log({ event: 'fetchId', value: ctx.state.fetchId });
+                span?.log({ event: 'fetchId', value: ctx.state.fetchId });
 
                 !disableDefalutLog && reportHelper.beginLog({ key: 'request_entry_begin' });
                 contextHelper.addTamp('entry_begin');
@@ -478,9 +478,9 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
                 if (!UUID) {
                     const newUuid = uUuid.get();
                     ctx.cookies.set(cKey.cookie.UUID, newUuid, { expires: new Date(Date.now() + eDate.MsCount.Chiliad), signed: false, httpOnly: false });
-                    span && span.log({ event: 'uuid', value: newUuid });
+                    span?.log({ event: 'uuid', value: newUuid });
                 } else {
-                    span && span.log({ event: 'uuid', value: UUID });
+                    span?.log({ event: 'uuid', value: UUID });
                 }
 
                 const isHttps = ctx.get('x-forwarded-proto') === 'https' || ctx.protocol === 'https';
@@ -499,7 +499,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
             } finally {
                 contextHelper.addTamp('entry_end');
                 !disableDefalutLog && reportHelper.endLog({ key: 'request_entry_end', details: { tamp: contextHelper.getTamp(), timespan: Date.now() - beginDate } });
-                span && span.finish();
+                span?.finish();
             }
         });
     }

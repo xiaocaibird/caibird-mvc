@@ -177,7 +177,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
                 });
         }
 
-        if (rsp && rsp.data !== undefined && rsp.code === eFetch.JsonSuccessCode.Success) {
+        if (rsp?.data !== undefined && rsp.code === eFetch.JsonSuccessCode.Success) {
             return rsp.data;
         }
         if (!(!this.onGetResultError ? true : await this.onGetResultError(null, opt, info))) throw new cError.Noop();

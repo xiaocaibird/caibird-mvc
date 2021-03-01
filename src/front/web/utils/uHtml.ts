@@ -14,12 +14,12 @@ namespace _uHtml {
         const pre = document.createElement('pre');
         pre.style.opacity = '0';
         pre.style.position = 'absolute';
-        pre.style.fontFamily = opt && opt.fontFamily || '';
-        pre.style.fontSize = opt && opt.fontSize || '';
-        pre.style.fontWeight = opt && opt.fontWeight || '';
+        pre.style.fontFamily = opt?.fontFamily || '';
+        pre.style.fontSize = opt?.fontSize || '';
+        pre.style.fontWeight = opt?.fontWeight || '';
         pre.innerText = text;
 
-        if (opt && opt.parent) {
+        if (opt?.parent) {
             opt.parent.appendChild(pre);
         } else {
             document.body.appendChild(pre);

@@ -46,10 +46,10 @@ export abstract class HAsync<TCustomRunOpt extends dp.Obj = dp.Obj> {
 
             if (status === eAsync.F.Status.BeBreaked) {
                 if (noThrow) return status;
-                throw new cError.Noop(`break ${key && key.toString()} promise`);
+                throw new cError.Noop(`break ${key?.toString()} promise`);
             }
             if (status === eAsync.F.Status.Running) {
-                callback && callback(status);
+                callback?.(status);
             }
             return status;
         };

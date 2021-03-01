@@ -134,7 +134,7 @@ class ReportHelper {
     private readonly getLogInfo = (opt: dReport.LogOptions, logStack: string, ctx: Koa.Context | null) => {
         let uuid = '';
         try {
-            uuid = ctx && ctx.cookies.get(cKey.cookie.UUID) || '';
+            uuid = ctx?.cookies.get(cKey.cookie.UUID) || '';
         } catch { }
 
         let ctxInfo: dReport.LogInfo['ctx'] = null;
@@ -176,7 +176,7 @@ class ReportHelper {
             time: date.format('HH:mm:ss:SSS'),
             msg: this.handleInfo(opt.msg, 500),
             uuid: this.handleInfo(uuid, 50),
-            fetchId: this.handleInfo(state && state.fetchId || '', 50),
+            fetchId: this.handleInfo(state?.fetchId || '', 50),
             details: this.handleInfo(opt.details, 4000),
             error: this.handleInfo(opt.error, 1000, true),
             source: this.handleInfo(opt.source, 1000, true),
@@ -255,7 +255,7 @@ class ReportHelper {
 
             if (opt.always) {
                 isWriteLog = true;
-            } else if (ctx && ctx.path != null) {
+            } else if (ctx?.path != null) {
                 const getList = (list: string[], settingList: string[] = []) =>
                     [...list, ...settingList].map(item => item == null ? '' : item.toString().trim().toLowerCase());
 

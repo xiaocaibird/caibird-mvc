@@ -323,9 +323,9 @@
         // 禁止使用module(类型扩展除外)
         "@typescript-eslint/prefer-namespace-keyword": ["error"],
         // 禁止在赋值运算时使用||，要用??替代【check】
-        "@typescript-eslint/prefer-nullish-coalescing": ["error", { "ignoreConditionalTests": true, "ignoreMixedLogicalExpressions": true }]
-        // // 禁止在可以用可选链时使用&&
-        // "@typescript-eslint/prefer-optional-chain": ["error"],
+        "@typescript-eslint/prefer-nullish-coalescing": "off", //["error", { "ignoreConditionalTests": true, "ignoreMixedLogicalExpressions": true }]
+        // 禁止在可以用可选链时使用&&
+        "@typescript-eslint/prefer-optional-chain": ["error"]
         // // 禁止省略必要的readonly
         // "@typescript-eslint/prefer-readonly": ["error"],
         // // 禁止定义可变的方法参数

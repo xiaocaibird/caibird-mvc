@@ -38,7 +38,7 @@ export abstract class HReact<TRootContext> {
                 const { onAsyncInnerDidMount } = this.props;
                 const { Component } = this.state;
                 if (Component && !this.isCallOnInnerDidMount) {
-                    onAsyncInnerDidMount && onAsyncInnerDidMount({
+                    onAsyncInnerDidMount?.({
                         innerRef: this.innerRef
                     });
                     this.isCallOnInnerDidMount = true;

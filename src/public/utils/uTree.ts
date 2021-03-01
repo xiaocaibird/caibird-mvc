@@ -30,7 +30,7 @@ export namespace uTree {
             newItem = keepChildren ? newItem : uObject.deleteKey(newItem, 'children');
 
             result.push(newItem as TKeepChildren extends true ? dData.Tree.Item<TBase> : TBase);
-            if (item.children && item.children.length) {
+            if (item.children?.length) {
                 _flatten(item.children, result, opt);
             }
         });

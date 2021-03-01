@@ -113,7 +113,7 @@ export namespace uFile {
     export const dataURLtoBlob = (dataurl: string) => {
         const arr = dataurl.split(',');
         const match = arr[0].match(/:(.*?);/);
-        const mime = match && match[1];
+        const mime = match?.[1];
         const bstr = atob(arr[1]);
 
         let n = bstr.length;
