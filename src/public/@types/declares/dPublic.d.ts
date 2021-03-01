@@ -47,7 +47,7 @@ declare namespace dp {
     type ObjectPartial<T> = T extends unknown[] ? T: Partial<T>;
 
     type DeepReadonly<T> =
-        T extends Function ? T :
+        T extends Func ? T :
         T extends Map<infer K, infer V> ? ReadonlyMap<K, DeepReadonly<V>> :
         T extends ReadonlyMap<infer K, infer V> ? ReadonlyMap<K, DeepReadonly<V>> :
         T extends Set<infer V> ? ReadonlySet<DeepReadonly<V>> :
@@ -57,7 +57,7 @@ declare namespace dp {
         T extends Obj ? { readonly [P in keyof T]: DeepReadonly<T[P]>; } : T;
 
     type DeepWritable<T> =
-        T extends Function ? T :
+        T extends Func ? T :
         T extends Map<infer K, infer V> ? Map<K, DeepWritable<V>> :
         T extends ReadonlyMap<infer K, infer V> ? Map<K, DeepWritable<V>> :
         T extends Set<infer V> ? Set<DeepWritable<V>> :
@@ -67,7 +67,7 @@ declare namespace dp {
         T extends Obj ? { -readonly [P in keyof T]: DeepWritable<T[P]>; } : T;
 
     type DeepPartial<T> =
-        T extends Function ? T :
+        T extends Func ? T :
         T extends Map<infer K, infer V> ? Map<K, DeepPartial<V>> :
         T extends ReadonlyMap<infer K, infer V> ? ReadonlyMap<K, DeepPartial<V>> :
         T extends Set<infer V> ? Set<DeepPartial<V>> :
@@ -77,7 +77,7 @@ declare namespace dp {
         T extends Obj ? { [P in keyof T]?: DeepPartial<T[P]>; } : T;
 
     type NonFuncProp<T> = Pick<T, NonFuncPropNames<T>>;
-    type NonFuncPropNames<T> = { [K in keyof T]: T[K] extends Function ? never : K }[keyof T];
+    type NonFuncPropNames<T> = { [K in keyof T]: T[K] extends Func ? never : K }[keyof T];
 
     type PromiseFuncProp<T> = Pick<T, PromiseFuncPropNames<T>>;
     type PromiseFuncPropNames<T> = { [K in keyof T]: T[K] extends PromiseFunc ? K : never }[keyof T];

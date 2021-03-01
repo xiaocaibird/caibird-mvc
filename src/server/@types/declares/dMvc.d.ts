@@ -47,7 +47,7 @@ declare global {
             type FilterController<TRules, TState, TCustom> = InitController<TRules, TState, TCustom> | InstanceType<InitController<TRules, TState, TCustom>>;
             type Decorator<TRules, TState, TCustom> = (controller: FilterController<TRules, TState, TCustom>, action?: string, actionDes?: ActionPropertyDescriptor<TRules, TState, TCustom>) => void;
 
-            type Filter<TRules, TState, TCustom> = Function & FilterProps<TRules, TState, TCustom>;
+            type Filter<TRules, TState, TCustom> = dp.Func & FilterProps<TRules, TState, TCustom>;
 
             type FilterProps<TRules, TState, TCustom> = {
                 filterName?: string,

@@ -3,6 +3,7 @@
  * @Desc 通信常用类型
  */
 declare namespace dFetch {
+    // eslint-disable-next-line @typescript-eslint/ban-types
     type BaseControllers = dp.Obj<Function>;
 
     type StandardApi<TControllers extends BaseControllers> = {

@@ -175,7 +175,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
             actionDes.writable = false;
         }
 
-        const ACtrl = Object.getPrototypeOf(target) as Function & Partial<dMvc.S.CommonProps<TRules, TState, TCustom>>;
+        const ACtrl = Object.getPrototypeOf(target) as dp.Func & Partial<dMvc.S.CommonProps<TRules, TState, TCustom>>;
 
         if (isController && Function.prototype !== ACtrl && target.filterInfo === ACtrl.filterInfo || !target.filterInfo) {
             target.filterInfo = {};
@@ -202,7 +202,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
         target.filterList.push(filter);
         target.filterOrderList[order].push(filter);
 
-        return target as T extends Function ? dMvc.S.CommonProps<TRules, TState, TCustom> & dMvc.S.ControllerProps<TRules, TState, TCustom> &
+        return target as T extends dp.Func ? dMvc.S.CommonProps<TRules, TState, TCustom> & dMvc.S.ControllerProps<TRules, TState, TCustom> &
             dMvc.S.BaseController<TState, TCustom> : dMvc.S.CommonProps<TRules, TState, TCustom> & dMvc.S.BaseAction;
     }
 
@@ -632,7 +632,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
 
     private filterCreater<TOption = undefined>(
         name: string,
-        handler: (target: Function & dMvc.S.CommonProps<TRules, TState, TCustom>, option?: TOption) => void,
+        handler: (target: dp.Func & dMvc.S.CommonProps<TRules, TState, TCustom>, option?: TOption) => void,
         props?: Omit<dMvc.S.FilterProps<TRules, TState, TCustom>, 'filterName'>
     ) {
         const filter = (option?: TOption, order = 0): dMvc.S.Decorator<TRules, TState, TCustom> =>

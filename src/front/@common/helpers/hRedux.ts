@@ -54,7 +54,7 @@ export abstract class HRedux<TState extends dp.Obj, TActions extends dRedux.Base
         return createStore(Reducer, initState, process.env.IS_LOCAL_TEST && window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : undefined);
     }
 
-    protected getReducer<T>({ defaultState, handlers }: { defaultState: T, handlers: dp.Obj<Function | undefined> }) {
+    protected getReducer<T>({ defaultState, handlers }: { defaultState: T, handlers: dp.Obj<dp.Func | undefined> }) {
         return (state = cloneDeep(defaultState), actionResult: { type: string, payload: unknown }) => {
             const handler = handlers[actionResult.type];
             if (handler) {
