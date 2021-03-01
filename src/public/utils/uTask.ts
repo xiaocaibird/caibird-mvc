@@ -4,7 +4,7 @@
  */
 
 export namespace uTask {
-    export const sleep = (delay = 100) => new Promise<undefined>(resolve => {
+    export const sleep = async (delay = 100) => new Promise<undefined>(resolve => {
         setTimeout(resolve, delay);
     });
 

@@ -97,7 +97,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
         return getResult();
     }
 
-    protected readonly jsonpFetch = <T>(url: string, req: dp.Obj, opt: dRequest.F.WEB.Options = {}) => {
+    protected readonly jsonpFetch = async <T>(url: string, req: dp.Obj, opt: dRequest.F.WEB.Options = {}) => {
         const { timeout = this.options.timeout == null ? eDate.MsTimespan.RequestTimeout : this.options.timeout, jsonpCallbackParamName = 'callback', jsonpCallbackFuncName } = opt;
 
         return new Promise<T>((resolve, reject) => {
@@ -325,7 +325,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
 
     public readonly getLocalUrl = (url: string) => (this.options.prefix ?? '') + url;
 
-    public readonly fetch = (type: eHttp.MethodType, oriUrl: string, req?: string | dp.Obj | FormData | null, opt: dRequest.F.WEB.Options = {}) => {
+    public readonly fetch = async (type: eHttp.MethodType, oriUrl: string, req?: string | dp.Obj | FormData | null, opt: dRequest.F.WEB.Options = {}) => {
         let url = oriUrl.trim();
         if (!url.startsWith('http://') && !url.startsWith('https://')) {
             url = this.getLocalUrl(url);

@@ -458,7 +458,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
         }
     }
 
-    private readonly entryMiddleware: dMvc.S.Middleware<TState, TCustom> = (ctx, next) => {
+    private readonly entryMiddleware: dMvc.S.Middleware<TState, TCustom> = async (ctx, next) => {
         const { disableDefalutLog, onRequestBegin, onRequestEnd, onRequestError, disableAllDefaultErrorHandler, disableDefaultRequestErrorHandler, tracingPathIgnore = [] } = this.options;
 
         ctx.state.fetchId = uUuid.get();

@@ -337,11 +337,11 @@
         // 禁止在正则匹配能用exec时使用match【check】
         "@typescript-eslint/prefer-regexp-exec": "off",
         // 禁止在能使用startWith和endWith时使用其它方式来判断子字符串
-        "@typescript-eslint/prefer-string-starts-ends-with": ["error"]
-        // // 禁止使用ts-ignore 【无需-已禁止使用ts注释】
-        // "@typescript-eslint/prefer-ts-expect-error": "off",
-        // // 禁止promise函数省略async
-        // "@typescript-eslint/promise-function-async": ["error"],
+        "@typescript-eslint/prefer-string-starts-ends-with": ["error"],
+        // 禁止使用ts-ignore 【无需-已禁止使用ts注释】
+        "@typescript-eslint/prefer-ts-expect-error": "off",
+        // 禁止promise函数省略async
+        "@typescript-eslint/promise-function-async": ["error"]
         // // 禁止在使用arrar.sort时不传入回调
         // "@typescript-eslint/require-array-sort-compare": ["error", {
         //     "ignoreStringArrays": true
