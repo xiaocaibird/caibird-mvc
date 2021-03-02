@@ -43,7 +43,7 @@
     "noInlineConfig": false,
     "reportUnusedDisableDirectives": true,
     "rules": {
-        //#region 【ts-base】 66(errors) + 13(off) = 79(rules)
+        //#region 【ts-base】 57(errors) + 22(off) = 79(rules)
         // 禁止不连续的函数重载
         "@typescript-eslint/adjacent-overload-signatures": ["error"],
         // 禁止不统一的array type定义
@@ -284,7 +284,7 @@
             "allowComparingNullableBooleansToTrue": true,
             "allowComparingNullableBooleansToFalse": true
         }],
-        // 禁止总为true或总为false有表达式【TODO】
+        // 禁止总为true或总为false的表达式【TODO】
         "@typescript-eslint/no-unnecessary-condition": "off",
         // 禁止不必要的命名空间或枚举限定符
         "@typescript-eslint/no-unnecessary-qualifier": ["error"],
@@ -382,34 +382,26 @@
                 "union",
                 "nullish"
             ]
-        }]
-        // // 禁止不合法的真假表达式
-        // "@typescript-eslint/strict-boolean-expressions": ["error", {
-        //     "allowString": true,
-        //     "allowNumber": true,
-        //     "allowNullableObject": true,
-        //     "allowNullableBoolean": false,
-        //     "allowNullableString": false,
-        //     "allowNullableNumber": false,
-        //     "allowAny": false
-        // }],
-        // // 禁止在switch语句中忽略联合类型的部分成员
-        // "@typescript-eslint/switch-exhaustiveness-check": ["error"],
-        // // 禁止使用三线表达式
-        // "@typescript-eslint/triple-slash-reference": ["error"],
-        // // 禁止不合法的类型定义空格
-        // "@typescript-eslint/type-annotation-spacing": ["error"],
-        // // 禁止省略类型定义【无需】
-        // "@typescript-eslint/typedef": "off",
-        // // 禁止调用没有bind的方法
-        // "@typescript-eslint/unbound-method": ["error",
-        //     {
-        //         "ignoreStatic": true
-        //     }
-        // ],
-        // // 禁止定义可以合并的函数重载
-        // "@typescript-eslint/unified-signatures": ["error"],
-        // //#endregion
+        }],
+        // 禁止不合法的真假表达式【TODO】
+        "@typescript-eslint/strict-boolean-expressions": "off",
+        // 禁止在switch语句中忽略联合类型的部分成员
+        "@typescript-eslint/switch-exhaustiveness-check": ["error"],
+        // 禁止使用三线表达式
+        "@typescript-eslint/triple-slash-reference": ["error"],
+        // 禁止不合法的类型定义空格
+        "@typescript-eslint/type-annotation-spacing": ["error", {
+            // "before": false,
+            // "after": true,
+            // "overrides": {}
+        }],
+        // 禁止省略类型定义【无需】
+        "@typescript-eslint/typedef": "off",
+        // 禁止调用没有bind的方法【BUG】
+        "@typescript-eslint/unbound-method": "off",
+        // 禁止定义可以合并的函数重载
+        "@typescript-eslint/unified-signatures": ["error"],
+        //#endregion
 
         // //#region 【ts-ext】 29(errors) + 6(off) = 35(rules)
         // // 禁止不一致的花括号风格
