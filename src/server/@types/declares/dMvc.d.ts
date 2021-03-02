@@ -11,12 +11,12 @@ declare global {
             type BaseCtxState = { fetchId?: string };
 
             interface BaseCtxCustom<TState> extends BaseKoa.Context {
-                state: TState & BaseCtxState & BaseKoa.DefaultState,
+                state: BaseCtxState & BaseKoa.DefaultState & TState,
             }
 
-            type CtxState<TState> = TState & BaseCtxState;
+            type CtxState<TState> = BaseCtxState & TState;
 
-            type CtxCustom<TState, TCustom> = TCustom & BaseCtxCustom<TState>;
+            type CtxCustom<TState, TCustom> = BaseCtxCustom<TState> & TCustom;
 
             type Ctx<TState, TCustom> = BaseKoa.ParameterizedContext<CtxState<TState>, CtxCustom<TState, TCustom>>;
 
@@ -32,13 +32,13 @@ declare global {
                 __actions__: dp.Obj<Action<TRules, TState, TCustom>>,
             };
 
-            type InitController<TRules, TState, TCustom> = Partial<CommonProps<TRules, TState, TCustom> & ControllerProps<TRules, TState, TCustom>> & BaseController<TState, TCustom>;
-            type Controller<TRules, TState, TCustom> = CommonProps<TRules, TState, TCustom> & ControllerProps<TRules, TState, TCustom> & BaseController<TState, TCustom>;
+            type InitController<TRules, TState, TCustom> = BaseController<TState, TCustom> & Partial<CommonProps<TRules, TState, TCustom> & ControllerProps<TRules, TState, TCustom>>;
+            type Controller<TRules, TState, TCustom> = BaseController<TState, TCustom> & CommonProps<TRules, TState, TCustom> & ControllerProps<TRules, TState, TCustom>;
 
             type BaseAction = dp.PromiseFunc;
 
-            type InitAction<TRules, TState, TCustom> = Partial<CommonProps<TRules, TState, TCustom>> & BaseAction;
-            type Action<TRules, TState, TCustom> = CommonProps<TRules, TState, TCustom> & BaseAction;
+            type InitAction<TRules, TState, TCustom> = BaseAction & Partial<CommonProps<TRules, TState, TCustom>>;
+            type Action<TRules, TState, TCustom> = BaseAction & CommonProps<TRules, TState, TCustom>;
 
             interface ActionPropertyDescriptor<TRules, TState, TCustom> extends PropertyDescriptor {
                 value?: InitAction<TRules, TState, TCustom>,
@@ -60,7 +60,7 @@ declare global {
             type CommonProps<TRules, TState, TCustom> = {
                 filterOrderList: dp.Obj<Filter<TRules, TState, TCustom>[]>,
                 filterList: Filter<TRules, TState, TCustom>[],
-                filterRules: { httpMethod?: eHttp.MethodType[] | eHttp.MethodType } & Partial<TRules>,
+                filterRules: Partial<TRules> & { httpMethod?: eHttp.MethodType | eHttp.MethodType[] },
                 filterInfo: {
                     name?: string,
                     desc?: string,
@@ -68,7 +68,7 @@ declare global {
             };
 
             type ActionReturn<T> = {
-                type: 'json' | 'xml' | 'redirect' | 'file' | 'render' | 'buffer',
+                type: 'buffer' | 'file' | 'json' | 'redirect' | 'render' | 'xml',
                 result: T,
             };
 

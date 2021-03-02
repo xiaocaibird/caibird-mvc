@@ -32,7 +32,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
 
     protected abstract readonly onFetchSuccess?: (opt: dRequest.F.WEB.Options & Partial<TCustomOpt>, details: dRequest.F.WEB.FetchInfo, xhr?: XMLHttpRequest) => dp.PromiseOrSelf<void>;
     protected abstract readonly onGetResultError?: (error: dp.Obj | null, opt: dRequest.F.WEB.Options & Partial<TCustomOpt>, details: dRequest.F.WEB.FetchInfo) => dp.PromiseOrSelf<boolean>;
-    protected abstract readonly preGetNoHandleResult?: (rsp: dFetch.SuccessJsonBody<unknown> | dFetch.ErrorJsonBody | null, opt: dRequest.F.WEB.DetailsOptions & Partial<TCustomOpt>, details: dRequest.F.WEB.FetchInfo) => dp.PromiseOrSelf<void>;
+    protected abstract readonly preGetNoHandleResult?: (rsp: dFetch.ErrorJsonBody | dFetch.SuccessJsonBody<unknown> | null, opt: dRequest.F.WEB.DetailsOptions & Partial<TCustomOpt>, details: dRequest.F.WEB.FetchInfo) => dp.PromiseOrSelf<void>;
     protected abstract readonly onGetNoHandleResultError?: (error: unknown, opt: dRequest.F.WEB.DetailsOptions & Partial<TCustomOpt>, details: dRequest.F.WEB.FetchInfo) => dp.PromiseOrSelf<void>;
 
     public readonly api = new Proxy<dp.Obj>({}, {
@@ -148,9 +148,9 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
         };
         const key = 'hRequest_getResult_';
 
-        let rsp: dFetch.SuccessJsonBody<T> | dFetch.ErrorJsonBody | null;
+        let rsp: dFetch.ErrorJsonBody | dFetch.SuccessJsonBody<T> | null;
         try {
-            rsp = await this.fetchJson<dFetch.SuccessJsonBody<T> | dFetch.ErrorJsonBody | null>(type, url, req, opt);
+            rsp = await this.fetchJson<dFetch.ErrorJsonBody | dFetch.SuccessJsonBody<T> | null>(type, url, req, opt);
             info.rsp = rsp;
         } catch (e: unknown) {
             const error = e as dp.Obj;
@@ -246,9 +246,9 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
         };
         const key = 'hRequest_getNoHandleResult_';
 
-        let rsp: dFetch.SuccessJsonBody<T> | dFetch.ErrorJsonBody;
+        let rsp: dFetch.ErrorJsonBody | dFetch.SuccessJsonBody<T>;
         try {
-            rsp = await this.fetchJson<dFetch.SuccessJsonBody<T> | dFetch.ErrorJsonBody>(type, url, req, opt);
+            rsp = await this.fetchJson<dFetch.ErrorJsonBody | dFetch.SuccessJsonBody<T>>(type, url, req, opt);
             info.rsp = rsp;
         } catch (e: unknown) {
             const error = e as dp.Obj;
@@ -289,7 +289,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
         };
     }
 
-    public readonly fetchJson = async <T>(type: eHttp.MethodType, url: string, req?: string | dp.Obj | FormData | null, opt: dRequest.F.WEB.Options & Partial<TCustomOpt> = {}) => {
+    public readonly fetchJson = async <T>(type: eHttp.MethodType, url: string, req?: dp.Obj | FormData | string | null, opt: dRequest.F.WEB.Options & Partial<TCustomOpt> = {}) => {
         let data;
         let xhr;
 
@@ -325,7 +325,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
 
     public readonly getLocalUrl = (url: string) => (this.options.prefix ?? '') + url;
 
-    public readonly fetch = async (type: eHttp.MethodType, oriUrl: string, req?: string | dp.Obj | FormData | null, opt: dRequest.F.WEB.Options = {}) => {
+    public readonly fetch = async (type: eHttp.MethodType, oriUrl: string, req?: dp.Obj | FormData | string | null, opt: dRequest.F.WEB.Options = {}) => {
         let url = oriUrl.trim();
         if (!url.startsWith('http://') && !url.startsWith('https://')) {
             url = this.getLocalUrl(url);

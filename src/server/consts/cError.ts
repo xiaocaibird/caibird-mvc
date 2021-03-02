@@ -51,7 +51,7 @@ namespace _cError {
     export class TopJson extends Json {
         public constructor(
             info: dFetch.ErrorJsonBody,
-            logOptions: Omit<dReport.ErrorLogOptions, 'type' | 'always' | 'attribute'> = {}
+            logOptions: Omit<dReport.ErrorLogOptions, 'always' | 'attribute' | 'type'> = {}
         ) {
             super(info, { type: eReport.LogType.TopError, always: true, attribute: true, ...logOptions });
         }
@@ -60,7 +60,7 @@ namespace _cError {
 
     export class Status extends Base {
         public constructor(
-            info: StatusInfo | eHttp.StatusCode,
+            info: eHttp.StatusCode | StatusInfo,
             logOptions: Omit<dReport.ErrorLogOptions, 'type'> = {}
         ) {
             super(info, {
@@ -93,5 +93,5 @@ type StatusInfo = {
     msg: string,
 };
 
-type ErrorInfo = eHttp.StatusCode | StatusInfo | dFetch.ErrorJsonBody;
+type ErrorInfo = dFetch.ErrorJsonBody | eHttp.StatusCode | StatusInfo;
 //#endregion

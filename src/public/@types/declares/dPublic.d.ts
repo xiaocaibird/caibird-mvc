@@ -4,15 +4,15 @@
  */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 declare namespace dp {
-    type AllowNon<T> = T | undefined | null;
+    type AllowNon<T> = T | null | undefined;
 
     type AllowValueNon<T extends Obj> = {
         [P in keyof T]?: T[P] | null;
     };
 
-    type UrlParams = number | string | boolean | null | undefined;
+    type UrlParams = boolean | number | string | null | undefined;
 
-    type Keys = string | number;
+    type Keys = number | string;
 
     type Obj<T = unknown> = {
         [K in Keys]: T;

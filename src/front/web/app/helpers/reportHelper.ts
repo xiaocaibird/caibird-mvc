@@ -48,10 +48,10 @@ class ReportHelper {
     public readonly webError = (opt: Omit<dReport.LogOptions, 'type'>) =>
         this.log({ ...opt, type: eReport.LogType.WebError })
 
-    public readonly webReactError = (opt: Omit<dReport.LogOptions, 'type' | 'always' | 'attribute'>) =>
+    public readonly webReactError = (opt: Omit<dReport.LogOptions, 'always' | 'attribute' | 'type'>) =>
         this.log({ ...opt, type: eReport.LogType.WebReactError, always: true, attribute: true })
 
-    public readonly webTopError = (opt: Omit<dReport.LogOptions, 'type' | 'always' | 'attribute'>) =>
+    public readonly webTopError = (opt: Omit<dReport.LogOptions, 'always' | 'attribute' | 'type'>) =>
         this.log({ ...opt, type: eReport.LogType.WebTopError, always: true, attribute: true })
 }
 

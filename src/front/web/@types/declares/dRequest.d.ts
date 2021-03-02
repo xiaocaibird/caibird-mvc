@@ -5,7 +5,7 @@
 declare namespace dRequest {
     namespace F {
         namespace WEB {
-            type Options<TNoHandle extends boolean | undefined = undefined, TFormFetch extends boolean | undefined = undefined, TCustom extends dp.Obj = dp.Obj> = {
+            type Options<TNoHandle extends boolean | undefined = undefined, TFormFetch extends boolean | undefined = undefined, TCustom extends dp.Obj = dp.Obj> = Partial<TCustom> & {
                 noHandle?: TNoHandle,
                 timeout?: number,
                 contentType?: string | null,
@@ -25,7 +25,7 @@ declare namespace dRequest {
                     error: unknown,
                     nowRetryTimes: number,
                 }): dp.PromiseOrSelf<boolean>,
-            } & Partial<TCustom>;
+            };
 
             type DetailsOptions<TNoHandle extends boolean | undefined = undefined, TFormFetch extends boolean | undefined = undefined, TCustom extends dp.Obj = dp.Obj> =
                 Options<TNoHandle, TFormFetch, TCustom> & {
@@ -35,7 +35,7 @@ declare namespace dRequest {
             type GetReq<T> = T extends dFetch.ApiInfo<unknown, unknown> ? T['req'] : never;
             type GetRsp<T> = T extends dFetch.ApiInfo<unknown, unknown> ? T['rsp'] : never;
 
-            type Details<T> = dFetch.SuccessJsonBody<T> | dFetch.ErrorJsonBody;
+            type Details<T> = dFetch.ErrorJsonBody | dFetch.SuccessJsonBody<T>;
 
             type Api<TControllers extends dFetch.BaseControllers, TCustom extends dp.Obj> = {
                 readonly [C in keyof dFetch.StandardApi<TControllers>]: {

@@ -79,7 +79,7 @@ class ReportHelper {
                 }
                 return uObject.parseJson(json);
             } else if (uObject.check(info) && info) {
-                const obj = info as dp.Obj<string | number | dp.Obj | undefined>;
+                const obj = info as dp.Obj<dp.Obj | number | string | undefined>;
 
                 let result: dp.Obj = {};
 
@@ -335,10 +335,10 @@ class ReportHelper {
 
     public readonly dbLog = (opt: Omit<dReport.LogOptions, 'type'>) => this.log({ ...opt, type: eReport.LogType.DbLog });
 
-    public readonly unknownError = (opt: Omit<dReport.LogOptions, 'type' | 'always' | 'attribute'>, ctx?: Koa.Context | null) =>
+    public readonly unknownError = (opt: Omit<dReport.LogOptions, 'always' | 'attribute' | 'type'>, ctx?: Koa.Context | null) =>
         this.log({ ...opt, type: eReport.LogType.UnknownError, always: true, attribute: true }, ctx)
 
-    public readonly appError = (opt: Omit<dReport.LogOptions, 'type' | 'always' | 'attribute'>, ctx?: Koa.Context | null) =>
+    public readonly appError = (opt: Omit<dReport.LogOptions, 'always' | 'attribute' | 'type'>, ctx?: Koa.Context | null) =>
         this.log({ ...opt, type: eReport.LogType.AppError, always: true, attribute: true }, ctx)
 }
 

@@ -39,12 +39,12 @@ declare namespace dFetch {
         data?: undefined,
     }
 
-    type JsonBody = {
+    type JsonBody = Partial<ExtendJsonBody> & {
         code: eFetch.JsonErrorCode | eFetch.JsonSuccessCode.Success,
         msg?: string,
         version?: string,
         fetchId?: string,
-    } & Partial<ExtendJsonBody>;
+    };
 
     interface ExtendJsonBody { }
 

@@ -25,18 +25,18 @@ declare namespace dReport {
     type LogOptions = {
         key: string,
         msg?: string,
-        details?: Partial<Error> | dp.Obj,
-        error?: Partial<Error> | dp.Obj,
-        source?: Partial<Error> | dp.Obj,
+        details?: dp.Obj | Partial<Error>,
+        error?: dp.Obj | Partial<Error>,
+        source?: dp.Obj | Partial<Error>,
         attribute?: boolean,
         always?: boolean,
         type?: eReport.LogType,
-        level?: 'info' | 'error',
+        level?: 'error' | 'info',
     };
 
     type LogInfo = {
         type: eReport.LogType,
-        level: 'info' | 'error',
+        level: 'error' | 'info',
         key: unknown,
         date: unknown,
         time: unknown,
@@ -71,7 +71,7 @@ declare namespace dReport {
         } | null,
     };
 
-    type ErrorLogOptions = Omit<LogOptions, 'source' | 'key'> & {
+    type ErrorLogOptions = Omit<LogOptions, 'key' | 'source'> & {
         key?: string,
     };
 }

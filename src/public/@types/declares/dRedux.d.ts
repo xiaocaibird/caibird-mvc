@@ -9,7 +9,7 @@ declare global {
         type TransformActions<TActions extends BaseActions> = {
             [K in keyof TActions]:
             TActions[K] extends (payload?: infer Value) => unknown ?
-            (payload?: Value extends dp.Obj | number | string | boolean | symbol ? Value : undefined) => ActionResult<TActions>[K] :
+            (payload?: Value extends dp.Obj | boolean | number | string | symbol ? Value : undefined) => ActionResult<TActions>[K] :
             TActions[K] extends (payload: infer Value) => unknown ?
             (payload: Value) => ActionResult<TActions>[K] : never;
         };

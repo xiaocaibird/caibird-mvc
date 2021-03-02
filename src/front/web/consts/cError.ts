@@ -11,7 +11,7 @@ type ErrJson = {
     message?: string,
 };
 
-let onAppError: undefined | ((err: unknown) => dp.PromiseOrSelf<void>);
+let onAppError: ((err: unknown) => dp.PromiseOrSelf<void>) | undefined;
 export const setOnAppError = (fn: (err: unknown) => dp.PromiseOrSelf<void>) => onAppError = fn;
 
 const getErrInfo = (message: string) => {

@@ -202,8 +202,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
         target.filterList.push(filter);
         target.filterOrderList[order].push(filter);
 
-        return target as T extends dp.Func ? dMvc.S.CommonProps<TRules, TState, TCustom> & dMvc.S.ControllerProps<TRules, TState, TCustom> &
-            dMvc.S.BaseController<TState, TCustom> : dMvc.S.CommonProps<TRules, TState, TCustom> & dMvc.S.BaseAction;
+        return target as T extends dp.Func ? dMvc.S.BaseController<TState, TCustom> & dMvc.S.CommonProps<TRules, TState, TCustom> & dMvc.S.ControllerProps<TRules, TState, TCustom> : dMvc.S.BaseAction & dMvc.S.CommonProps<TRules, TState, TCustom>;
     }
 
     private readonly initController = async (startOpt: StartOpt<TRules, TState, TCustom>) => {
@@ -405,7 +404,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
         await this.initController(startOpt);
     }
 
-    private readonly defaultOnRequestError = (error: InstanceType<typeof cError.Base> | Error) => {
+    private readonly defaultOnRequestError = (error: Error | InstanceType<typeof cError.Base>) => {
         const key = 'defaultOnRequestError';
         try {
             if (uObject.checkInstance(error, cError.Base)) {
@@ -555,13 +554,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
                 formParams = uObject.parseJson(body[formRequestKey] as string);
             }
 
-            const actionReturn = await Action.bind(controllerObj)({ ...ctx.query, ...body, ...formParams }) as null | undefined |
-                dMvc.S.JsonActionReturn<dp.Obj> |
-                dMvc.S.FileActionReturn |
-                dMvc.S.RedirectActionReturn |
-                dMvc.S.RenderActionReturn<dp.Obj> |
-                dMvc.S.BufferActionReturn |
-                dMvc.S.XmlActionReturn;
+            const actionReturn = await Action.bind(controllerObj)({ ...ctx.query, ...body, ...formParams }) as dMvc.S.BufferActionReturn | dMvc.S.FileActionReturn | dMvc.S.JsonActionReturn<dp.Obj> | dMvc.S.RedirectActionReturn | dMvc.S.RenderActionReturn<dp.Obj> | dMvc.S.XmlActionReturn | null | undefined;
 
             contextHelper.addTamp(`${controllerName}_${actionName}_end`);
 
@@ -632,7 +625,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
 
     private filterCreater<TOption = undefined>(
         name: string,
-        handler: (target: dp.Func & dMvc.S.CommonProps<TRules, TState, TCustom>, option?: TOption) => void,
+        handler: (target: dMvc.S.CommonProps<TRules, TState, TCustom> & dp.Func, option?: TOption) => void,
         props?: Omit<dMvc.S.FilterProps<TRules, TState, TCustom>, 'filterName'>
     ) {
         const filter = (option?: TOption, order = 0): dMvc.S.Decorator<TRules, TState, TCustom> =>
@@ -657,7 +650,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
     }
 }
 
-type Options<TRules extends dp.Obj, TState extends dp.Obj, TCustom extends dp.Obj, TControllerDefaultConfig extends dp.Obj | undefined> = {
+type Options<TRules extends dp.Obj, TState extends dp.Obj, TCustom extends dp.Obj, TControllerDefaultConfig extends dp.Obj | undefined> = (TControllerDefaultConfig extends undefined ? { controllerDefaultConfig?: undefined } : { controllerDefaultConfig: TControllerDefaultConfig }) & {
     host: string,
     port: number,
     appKeys: string[],
@@ -704,7 +697,7 @@ type Options<TRules extends dp.Obj, TState extends dp.Obj, TCustom extends dp.Ob
     onAppError?(error: unknown, ctx: dMvc.S.Ctx<TState, TCustom> | null, app: App<TRules, TState, TCustom, TControllerDefaultConfig>): void,
     unhandledRejection?(error: unknown, promise: Promise<unknown>, app: App<TRules, TState, TCustom, TControllerDefaultConfig>): void,
     uncaughtException?(error: Error, app: App<TRules, TState, TCustom, TControllerDefaultConfig>): void,
-} & (TControllerDefaultConfig extends undefined ? { controllerDefaultConfig?: undefined } : { controllerDefaultConfig: TControllerDefaultConfig });
+};
 
 type StartOpt<TRules, TState, TCustom> = {
     controllers: dp.Obj<dp.Class>,

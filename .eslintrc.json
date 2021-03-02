@@ -363,9 +363,26 @@
             "allowBoolean": true,
             "allowAny": false,
             "allowNullish": false
+        }],
+        // 禁止联合类型与交叉类型不按顺序定义
+        "@typescript-eslint/sort-type-union-intersection-members": ["error", {
+            "checkIntersections": true,
+            "checkUnions": true,
+            "groupOrder": [
+                "named",
+                "keyword",
+                "operator",
+                "literal",
+                "function",
+                "import",
+                "conditional",
+                "object",
+                "tuple",
+                "intersection",
+                "union",
+                "nullish"
+            ]
         }]
-        // // 禁止联合类型与交叉类型不按顺序定义
-        // "@typescript-eslint/sort-type-union-intersection-members": ["error"],
         // // 禁止不合法的真假表达式
         // "@typescript-eslint/strict-boolean-expressions": ["error", {
         //     "allowString": true,

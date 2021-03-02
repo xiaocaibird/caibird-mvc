@@ -6,9 +6,9 @@ import crypto, { HashOptions } from 'crypto';
 
 export namespace uCrypto {
     const defaultPartSize = 100000;
-    export const hash = (data: string | Buffer, algorithm: string, opt: {
+    export const hash = (data: Buffer | string, algorithm: string, opt: HashOptions & {
         partSize?: number,
-    } & HashOptions = {}) => {
+    } = {}) => {
         const { partSize = defaultPartSize } = opt;
         const h = crypto.createHash(algorithm, opt);
         const total = Math.ceil(data.length / partSize);

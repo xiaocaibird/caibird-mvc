@@ -7,7 +7,7 @@ import uString from './uString';
 export namespace uHttp {
     export const urlAddQuery = (
         url: string,
-        params?: string | dp.Obj<dp.UrlParams> | null,
+        params?: dp.Obj<dp.UrlParams> | string | null,
         opt: {
             isClear?: boolean,
             isSort?: boolean,
@@ -78,7 +78,7 @@ export namespace uHttp {
         }
     };
 
-    export const createFormData = (obj: dp.Obj<string | Blob>) => {
+    export const createFormData = (obj: dp.Obj<Blob | string>) => {
         const formData = new FormData();
         Object.keys(obj).forEach(item => formData.append(item, obj[item]));
         return formData;

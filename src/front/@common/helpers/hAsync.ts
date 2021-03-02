@@ -37,7 +37,7 @@ export abstract class HAsync<TCustomRunOpt extends dp.Obj = dp.Obj> {
         return eAsync.F.Status.Running;
     }
 
-    public readonly run = async <T = void>(task: Promise<T> | dp.PromiseFunc<unknown[], T>, opt: Options & Partial<TCustomRunOpt> = {}) => {
+    public readonly run = async <T = void>(task: dp.PromiseFunc<unknown[], T> | Promise<T>, opt: Options & Partial<TCustomRunOpt> = {}) => {
         const { action = eAsync.F.Action.Break, key, onExecuteSuccess, onExecuteFail, onExecuteEnd } = opt;
         const promiseKey = Symbol();
 
