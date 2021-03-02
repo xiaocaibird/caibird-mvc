@@ -424,49 +424,57 @@
             "enums": "always-multiline",
             "generics": "always-multiline",
             "tuples": "always-multiline"
+        }],
+
+        // 禁止不一致的逗号空格
+        "comma-spacing": "off",
+        "@typescript-eslint/comma-spacing": ["error", {
+            "before": false,
+            "after": true
+        }],
+
+        // 禁止将可选参数放前面【无需-ts的检查已够用】
+        "default-param-last": "off",
+        "@typescript-eslint/default-param-last": ["off"],
+
+        // 禁止在可以用点访问属性时用中括号来访问
+        "dot-notation": "off",
+        "@typescript-eslint/dot-notation": ["error", {
+            // "allowPattern": "",
+            "allowKeywords": true,
+            "allowPrivateClassPropertyAccess": false,
+            "allowProtectedClassPropertyAccess": false
+        }],
+
+        // 禁止在调用函数时在括号前加空格
+        "func-call-spacing": "off",
+        "@typescript-eslint/func-call-spacing": ["error", "never"],
+
+        // 禁止不一致的缩进
+        "indent": "off",
+        "@typescript-eslint/indent": ["error", 4, {
+            "SwitchCase": 1,
+            "VariableDeclarator": "first",
+            "outerIIFEBody": 1,
+            "MemberExpression": 1,
+            "FunctionDeclaration": {
+                "body": 1,
+                "parameters": "first"
+            },
+            "FunctionExpression": {
+                "body": 1,
+                "parameters": "first"
+            },
+            "CallExpression": {
+                "arguments": "first"
+            },
+            "ArrayExpression": "first",
+            "ObjectExpression": "first",
+            "ImportDeclaration": "first",
+            "flatTernaryExpressions": true,
+            "offsetTernaryExpressions": true,
+            "ignoreComments": false
         }]
-
-        // // 禁止不一致的逗号空格
-        // "comma-spacing": "off",
-        // "@typescript-eslint/comma-spacing": ["error"],
-
-        // // 禁止将可选参数放前面【ts已有】
-        // "default-param-last": "off",
-        // "@typescript-eslint/default-param-last": ["off"],
-
-        // // 禁止在可以用点访问属性时用中括号来访问
-        // "dot-notation": "off",
-        // "@typescript-eslint/dot-notation": ["error"],
-
-        // // 禁止在调用函数时在括号前加空格
-        // "func-call-spacing": "off",
-        // "@typescript-eslint/func-call-spacing": ["error"],
-
-        // // 禁止不一致的缩进
-        // "indent": "off",
-        // "@typescript-eslint/indent": ["error", 4, {
-        //     "SwitchCase": 1,
-        //     "VariableDeclarator": "first",
-        //     "outerIIFEBody": 1,
-        //     "MemberExpression": 1,
-        //     "FunctionDeclaration": {
-        //         "body": 1,
-        //         "parameters": "first"
-        //     },
-        //     "FunctionExpression": {
-        //         "body": 1,
-        //         "parameters": "first"
-        //     },
-        //     "CallExpression": {
-        //         "arguments": "first"
-        //     },
-        //     "ArrayExpression": "first",
-        //     "ObjectExpression": "first",
-        //     "ImportDeclaration": "first",
-        //     "flatTernaryExpressions": true,
-        //     "offsetTernaryExpressions": true,
-        //     "ignoreComments": false
-        // }],
 
         // // 禁止不一致的变量初始化风格【无需】
         // "init-declarations": "off",
