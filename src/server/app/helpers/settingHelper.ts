@@ -31,7 +31,7 @@ class SettingHelper {
                 const obj = (require(relativePath) as { default: T }).default;
                 return (obj[key] || dft) as dp.DeepPartial<T[TKey]>;
             }
-            const jsonStr = fs.readFileSync(`/etc/my-setting/${filename}/${key}`, 'utf-8');
+            const jsonStr = fs.readFileSync(`/etc/my-setting/${filename}/${key.toString()}`, 'utf-8');
 
             try {
                 const obj: unknown = JSON.parse(jsonStr);

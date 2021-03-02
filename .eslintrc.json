@@ -348,22 +348,22 @@
             "checkFunctionDeclarations": true,
             "checkFunctionExpressions": true,
             "checkMethodDeclarations": true
+        }],
+        // 禁止在使用arrar.sort时不传入回调
+        "@typescript-eslint/require-array-sort-compare": ["error", {
+            "ignoreStringArrays": true
+        }],
+        // 禁止混合使用加法运算符
+        "@typescript-eslint/restrict-plus-operands": ["error", {
+            "checkCompoundAssignments": true
+        }],
+        // 禁止在字符串模板中用非法类型
+        "@typescript-eslint/restrict-template-expressions": ["error", {
+            "allowNumber": true,
+            "allowBoolean": true,
+            "allowAny": false,
+            "allowNullish": false
         }]
-        // // 禁止在使用arrar.sort时不传入回调
-        // "@typescript-eslint/require-array-sort-compare": ["error", {
-        //     "ignoreStringArrays": true
-        // }],
-        // // 禁止混合使用加法运算符
-        // "@typescript-eslint/restrict-plus-operands": ["error", {
-        //     "checkCompoundAssignments": true
-        // }],
-        // // 禁止在字符串模板中用非法类型
-        // "@typescript-eslint/restrict-template-expressions": ["error", {
-        //     "allowNumber": true,
-        //     "allowBoolean": true,
-        //     "allowAny": false,
-        //     "allowNullish": false
-        // }],
         // // 禁止联合类型与交叉类型不按顺序定义
         // "@typescript-eslint/sort-type-union-intersection-members": ["error"],
         // // 禁止不合法的真假表达式

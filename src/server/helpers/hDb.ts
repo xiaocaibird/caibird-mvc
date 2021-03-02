@@ -67,9 +67,9 @@ export abstract class HDb {
             options: Sequelize.DefineOptions<I>,
             seq: Sequelize.Sequelize,
         }
-    ) => defineInfo.seq.define<I, A>(`${defineInfo.options.tableName}_${suffix}`, defineInfo.attributes, {
+    ) => defineInfo.seq.define<I, A>(`${defineInfo.options.tableName ?? ''}_${suffix}`, defineInfo.attributes, {
         ...defineInfo.options,
-        tableName: `${defineInfo.options.tableName}_${suffix}`
+        tableName: `${defineInfo.options.tableName ?? ''}_${suffix}`
     })
 
     public readonly getDefineInfo = async <I, A>(

@@ -12,7 +12,7 @@ declare namespace dp {
 
     type UrlParams = number | string | boolean | null | undefined;
 
-    type Keys = string | number | symbol;
+    type Keys = string | number;
 
     type Obj<T = unknown> = {
         [K in Keys]: T;
