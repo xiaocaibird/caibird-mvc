@@ -39,8 +39,8 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
         get: (_target, controllerName) =>
             new Proxy({}, {
                 get: (_controller, actionName) =>
-                    (req?: dp.Obj, opt: dRequest.F.WEB.Options & Partial<TCustomOpt> = {}) => this.handleApi(controllerName.toString(), actionName.toString(), req, opt)
-            })
+                    (req?: dp.Obj, opt: dRequest.F.WEB.Options & Partial<TCustomOpt> = {}) => this.handleApi(controllerName.toString(), actionName.toString(), req, opt),
+            }),
     }) as dRequest.F.WEB.Api<TControllers, TCustomOpt>;
 
     private readonly handleApi = (controllerName: string, actionName: string, req?: dp.Obj, opt: dRequest.F.WEB.Options & Partial<TCustomOpt> = {}) => {
@@ -68,7 +68,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
                     nowRetryTimes++;
                     if (await shouldRetry({
                         error: e,
-                        nowRetryTimes
+                        nowRetryTimes,
                     })) {
                         return getResult();
                     }
@@ -144,7 +144,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
         const info: dRequest.F.WEB.FetchInfo = {
             url,
             req,
-            rsp: undefined
+            rsp: undefined,
         };
         const key = 'hRequest_getResult_';
 
@@ -159,13 +159,13 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
             throw new cError.ApiFetchFail(
                 {
                     error,
-                    info
+                    info,
                 },
                 {
                     key: `${key}fetch_fail`,
                     showPrompt: nowShowPrompt,
                     promptStyleType: nowPromptStyleType,
-                    msg: (error && (error.msg || error.message) || defaultMsg) as string
+                    msg: (error && (error.msg || error.message) || defaultMsg) as string,
                 },
                 noReportError === true ? false : {
                     key: `${key}fetch_fail`,
@@ -173,7 +173,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
                     details: info,
                     error,
                     always: true,
-                    attribute: true
+                    attribute: true,
                 });
         }
 
@@ -185,19 +185,19 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
         if (!rsp) {
             throw new cError.ApiJsonResultEmpty(
                 {
-                    info
+                    info,
                 },
                 {
                     key: `${key}rsp_empty`,
                     showPrompt: nowShowPrompt,
                     promptStyleType: nowPromptStyleType,
-                    msg: defaultMsg
+                    msg: defaultMsg,
                 }, noReportError === true ? false : {
                     key: `${key}rsp_empty`,
                     type: eReport.LogType.WebTopError,
                     details: info,
                     always: true,
-                    attribute: true
+                    attribute: true,
                 });
         }
 
@@ -215,24 +215,24 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
             throw new cError.LoginError(
                 {
                     rsp,
-                    info
+                    info,
                 },
                 {
                     key: `${key}login_error`,
-                    msg: rsp.msg || '请登录！'
+                    msg: rsp.msg || '请登录！',
                 });
         }
 
         throw new cError.ApiJsonResultError(
             {
                 rsp,
-                info
+                info,
             },
             {
                 key: `${key}api_error`,
                 showPrompt: nowShowPrompt,
                 promptStyleType: nowPromptStyleType,
-                msg: rsp.msg
+                msg: rsp.msg,
             });
     }
     protected readonly getNoHandleResult = async <T>(url: string, req?: dp.Obj | null, opt: dRequest.F.WEB.DetailsOptions & Partial<TCustomOpt> = {}) => {
@@ -242,7 +242,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
         const info: dRequest.F.WEB.FetchInfo = {
             url,
             req,
-            rsp: null
+            rsp: null,
         };
         const key = 'hRequest_getNoHandleResult_';
 
@@ -257,7 +257,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
             const msg = error && (error.msg || error.message) || defaultMsg;
             return {
                 code: eFetch.JsonErrorCode.FetchError,
-                msg
+                msg,
             };
         }
 
@@ -274,18 +274,18 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
                 throw new cError.LoginError(
                     {
                         rsp,
-                        info
+                        info,
                     },
                     {
                         key: `${key}login_error`,
-                        msg: rsp.msg || '请登录！'
+                        msg: rsp.msg || '请登录！',
                     });
             }
         }
 
         return {
             ...rsp,
-            data: rsp.data
+            data: rsp.data,
         };
     }
 
@@ -311,15 +311,15 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
             response: xhr && {
                 responseText: xhr.responseText,
                 status: xhr.status,
-                statusText: xhr.statusText
+                statusText: xhr.statusText,
             },
             request: {
                 type,
                 url,
                 req,
-                opt
+                opt,
             },
-            msg: '网络异常！请稍后再试'
+            msg: '网络异常！请稍后再试',
         };
     }
 

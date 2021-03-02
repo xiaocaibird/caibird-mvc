@@ -17,7 +17,7 @@ export abstract class HAsync<TCustomRunOpt extends dp.Obj = dp.Obj> {
         task: Promise<unknown>,
     } | undefined>> = {};
     public readonly keys = {
-        GLOBAL_UNIQUE: Symbol('GLOBAL_UNIQUE')
+        GLOBAL_UNIQUE: Symbol('GLOBAL_UNIQUE'),
     };
 
     protected readonly getNowState = (promiseKey: symbol, key?: symbol) => {
@@ -76,7 +76,7 @@ export abstract class HAsync<TCustomRunOpt extends dp.Obj = dp.Obj> {
             });
             this.map[strKey][strPromiseKey] = {
                 status: eAsync.F.Status.Running,
-                task: promise
+                task: promise,
             };
         }
 

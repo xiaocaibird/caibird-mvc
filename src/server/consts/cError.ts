@@ -10,7 +10,7 @@ namespace _cError {
     export class Base extends Error {
         public constructor(
             public readonly info: ErrorInfo,
-            public readonly logOptions: dReport.ErrorLogOptions = {}
+            public readonly logOptions: dReport.ErrorLogOptions = {},
         ) {
             super(uObject.check(info) ? info.msg : info.toString());
         }
@@ -20,7 +20,7 @@ namespace _cError {
     export class ParameterJson extends Base {
         public constructor(
             msg = cMessage.jsonError[eFetch.JsonErrorCode.ParameterError],
-            logOptions: dReport.ErrorLogOptions = {}
+            logOptions: dReport.ErrorLogOptions = {},
         ) {
             super({ code: eFetch.JsonErrorCode.ParameterError, msg }, logOptions);
         }
@@ -31,7 +31,7 @@ namespace _cError {
     export class Json extends Base {
         public constructor(
             info: Partial<dFetch.ErrorJsonBody> | string = {},
-            logOptions: dReport.ErrorLogOptions = {}
+            logOptions: dReport.ErrorLogOptions = {},
         ) {
             super({ code: eFetch.JsonErrorCode.CommonFail, ...(uObject.check(info) ? info : { msg: info }) }, logOptions);
         }
@@ -41,7 +41,7 @@ namespace _cError {
     export class TimeoutJson extends Json {
         public constructor(
             msg = cMessage.jsonError[eFetch.JsonErrorCode.Timeout],
-            logOptions: dReport.ErrorLogOptions = {}
+            logOptions: dReport.ErrorLogOptions = {},
         ) {
             super({ code: eFetch.JsonErrorCode.Timeout, msg }, logOptions);
         }
@@ -51,7 +51,7 @@ namespace _cError {
     export class TopJson extends Json {
         public constructor(
             info: dFetch.ErrorJsonBody,
-            logOptions: Omit<dReport.ErrorLogOptions, 'always' | 'attribute' | 'type'> = {}
+            logOptions: Omit<dReport.ErrorLogOptions, 'always' | 'attribute' | 'type'> = {},
         ) {
             super(info, { type: eReport.LogType.TopError, always: true, attribute: true, ...logOptions });
         }
@@ -61,13 +61,13 @@ namespace _cError {
     export class Status extends Base {
         public constructor(
             info: eHttp.StatusCode | StatusInfo,
-            logOptions: Omit<dReport.ErrorLogOptions, 'type'> = {}
+            logOptions: Omit<dReport.ErrorLogOptions, 'type'> = {},
         ) {
             super(info, {
                 type: eReport.LogType.StatusError,
                 always: (uObject.check(info) ? info.status : info) === eHttp.StatusCode.ServerError ? true : false,
                 attribute: (uObject.check(info) ? info.status : info) === eHttp.StatusCode.ServerError ? true : false,
-                ...logOptions
+                ...logOptions,
             });
         }
         public readonly name = 'StatusError';
@@ -76,7 +76,7 @@ namespace _cError {
     export class Redis extends Base {
         public constructor(
             msg = cMessage.jsonError[eFetch.JsonErrorCode.RedisError],
-            logOptions: dReport.ErrorLogOptions = {}
+            logOptions: dReport.ErrorLogOptions = {},
         ) {
             super({ code: eFetch.JsonErrorCode.RedisError, msg }, logOptions);
         }

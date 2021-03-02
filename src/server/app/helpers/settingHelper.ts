@@ -22,7 +22,7 @@ class SettingHelper {
     public readonly setProjectName = (name: string) => this.projectName = name;
 
     public readonly getValue = <T extends dSetting.S.CustomConfig | dSetting.S.CustomSecret | dSetting.S.GlobalConfig | dSetting.S.GlobalSecret, TKey extends keyof T>(
-        key: TKey, filename: string, dft?: T[TKey]
+        key: TKey, filename: string, dft?: T[TKey],
     ): dp.DeepPartial<T[TKey]> | undefined => {
         try {
             if (process.env.IS_LOCAL_TEST) {

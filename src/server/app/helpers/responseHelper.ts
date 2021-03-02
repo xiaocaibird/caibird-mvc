@@ -21,7 +21,7 @@ class ResponseHelper {
         if (ctx.headerSent) {
             reportHelper.appError({
                 key: 'responseHelper_setJson_headerSent',
-                msg: 'ctx.headerSent===true'
+                msg: 'ctx.headerSent===true',
             });
             return;
         }
@@ -39,7 +39,7 @@ class ResponseHelper {
         if (ctx.headerSent) {
             reportHelper.appError({
                 key: 'responseHelper_setXml_headerSent',
-                msg: 'ctx.headerSent===true'
+                msg: 'ctx.headerSent===true',
             });
             return;
         }
@@ -53,7 +53,7 @@ class ResponseHelper {
         if (ctx.headerSent) {
             reportHelper.appError({
                 key: 'responseHelper_setStatus_headerSent',
-                msg: 'ctx.headerSent===true'
+                msg: 'ctx.headerSent===true',
             });
             return;
         }
@@ -65,7 +65,7 @@ class ResponseHelper {
         if (ctx.headerSent) {
             reportHelper.appError({
                 key: 'responseHelper_sendBuffer_headerSent',
-                msg: 'ctx.headerSent===true'
+                msg: 'ctx.headerSent===true',
             });
             return;
         }
@@ -78,7 +78,7 @@ class ResponseHelper {
         if (ctx.headerSent) {
             reportHelper.appError({
                 key: 'responseHelper_sendFile_headerSent',
-                msg: 'ctx.headerSent===true'
+                msg: 'ctx.headerSent===true',
             });
             return;
         }
@@ -95,14 +95,14 @@ class ResponseHelper {
         if (ctx.headerSent) {
             reportHelper.appError({
                 key: 'responseHelper_render_headerSent',
-                msg: 'ctx.headerSent===true'
+                msg: 'ctx.headerSent===true',
             });
             return;
         }
         if (!this.isInitRender) {
             throw new cError.Status({
                 status: eHttp.StatusCode.ServerError,
-                msg: '未初始化render中间件'
+                msg: '未初始化render中间件',
             }, { key: 'responseHelper_render_noInit' });
         }
         try {

@@ -4,7 +4,7 @@
  */
 declare namespace eFetch {
     const enum JsonSuccessCode {
-        Success = 0
+        Success = 0,
     }
     const enum JsonErrorCode {
         //#region 通用
@@ -42,7 +42,7 @@ declare namespace eFetch {
         //#endregion
 
         //#region Redis
-        RedisError = 5000
+        RedisError = 5000,
         //#endregion
     }
 }

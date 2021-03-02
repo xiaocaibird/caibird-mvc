@@ -403,28 +403,28 @@
         "@typescript-eslint/unified-signatures": ["error"],
         //#endregion
 
-        // //#region 【ts-ext】 29(errors) + 6(off) = 35(rules)
-        // // 禁止不一致的花括号风格
-        // "brace-style": "off",
-        // "@typescript-eslint/brace-style": ["error",
-        //     "1tbs",
-        //     {
-        //         "allowSingleLine": true
-        //     }
-        // ],
+        //#region 【ts-ext】 29(errors) + 6(off) = 35(rules)
+        // 禁止不一致的花括号风格
+        "brace-style": "off",
+        "@typescript-eslint/brace-style": ["error",
+            "1tbs",
+            {
+                "allowSingleLine": true
+            }
+        ],
 
-        // // 禁止不一致的尾部逗号
-        // "comma-dangle": "off",
-        // "@typescript-eslint/comma-dangle": ["error", {
-        //     "arrays": "only-multiline",
-        //     "objects": "only-multiline",
-        //     "imports": "only-multiline",
-        //     "exports": "only-multiline",
-        //     "functions": "only-multiline",
-        //     "enums": "only-multiline",
-        //     "generics": "only-multiline",
-        //     "tuples": "only-multiline"
-        // }],
+        // 禁止不一致的尾部逗号
+        "comma-dangle": "off",
+        "@typescript-eslint/comma-dangle": ["error", {
+            "arrays": "always-multiline",
+            "objects": "always-multiline",
+            "imports": "always-multiline",
+            "exports": "always-multiline",
+            "functions": "always-multiline",
+            "enums": "always-multiline",
+            "generics": "always-multiline",
+            "tuples": "always-multiline"
+        }]
 
         // // 禁止不一致的逗号空格
         // "comma-spacing": "off",

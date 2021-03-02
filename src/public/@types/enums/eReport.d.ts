@@ -24,6 +24,6 @@ declare namespace eReport {
         WebUnknownError = 'webUnknownError',
         WebReactError = 'webReactError',
 
-        Other = 'other'
+        Other = 'other',
     }
 }

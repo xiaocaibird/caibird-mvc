@@ -4,11 +4,11 @@
  */
 namespace _cKey {
     export const cookie = {
-        UUID: 'caibird-mvc_uuid'
+        UUID: 'caibird-mvc_uuid',
     };
 
     export const query = {
-        FORM_REQUEST: 'caibird-mvc_form_request'
+        FORM_REQUEST: 'caibird-mvc_form_request',
     };
 }
 

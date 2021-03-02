@@ -14,18 +14,18 @@ export abstract class HDb {
         pool: {
             max: 50,
             min: 0,
-            idle: 5000
+            idle: 5000,
         },
         timezone: '+08:00',
         define: {
             createdAt: false,
             deletedAt: false,
-            updatedAt: false
+            updatedAt: false,
         },
         logging: (...p: unknown[]) => {
             const details = (p.length === 1 ? p[0] : p) as dp.Obj;
             reportHelper.dbLog({ key: 'sequelize_logging', msg: 'Sequelize logging', details });
-        }
+        },
     };
 
     public readonly Op: dp.DeepReadonly<typeof Sequelize.Op> = Sequelize.Op;
@@ -66,15 +66,15 @@ export abstract class HDb {
             attributes: Sequelize.DefineModelAttributes<A>,
             options: Sequelize.DefineOptions<I>,
             seq: Sequelize.Sequelize,
-        }
+        },
     ) => defineInfo.seq.define<I, A>(`${defineInfo.options.tableName ?? ''}_${suffix}`, defineInfo.attributes, {
         ...defineInfo.options,
-        tableName: `${defineInfo.options.tableName ?? ''}_${suffix}`
+        tableName: `${defineInfo.options.tableName ?? ''}_${suffix}`,
     })
 
     public readonly getDefineInfo = async <I, A>(
         dbSeq: Sequelize.Sequelize,
-        defineFunc: (seq: Sequelize.Sequelize, Seq: Sequelize.SequelizeStatic) => Sequelize.Model<I, A>
+        defineFunc: (seq: Sequelize.Sequelize, Seq: Sequelize.SequelizeStatic) => Sequelize.Model<I, A>,
     ) => new Promise<{
         attributes: Sequelize.DefineModelAttributes<A>,
         options: Sequelize.DefineOptions<I>,
@@ -84,7 +84,7 @@ export abstract class HDb {
             resolve({
                 attributes: attributes as Sequelize.DefineModelAttributes<A>,
                 options,
-                seq: dbSeq
+                seq: dbSeq,
             });
         });
         defineFunc(dbSeq, Sequelize);

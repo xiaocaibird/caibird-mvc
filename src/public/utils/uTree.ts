@@ -24,7 +24,7 @@ export namespace uTree {
 
         list.forEach(item => {
             let newItem: dp.Obj = {
-                ...item
+                ...item,
             };
 
             newItem = keepChildren ? newItem : uObject.deleteKey(newItem, 'children');

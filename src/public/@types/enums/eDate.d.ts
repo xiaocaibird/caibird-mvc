@@ -16,13 +16,13 @@ declare namespace eDate {
 
         CN_YMD = 'YYYY年MM月DD日',
         CN_YMD_Hm = 'YYYY年MM月DD日HH时mm分',
-        CN_YMD_Hms = 'YYYY年MM月DD日HH时mm分ss秒'
+        CN_YMD_Hms = 'YYYY年MM月DD日HH时mm分ss秒',
     }
 
     const enum DayCount {
         OneWeek = 7,
         OneMonth = 30,
-        OneYear = 365
+        OneYear = 365,
     }
 
     const enum MsCount {
@@ -36,7 +36,7 @@ declare namespace eDate {
         TenMin = 600000,
         OneHour = 3600000,
         OneDay = 86400000,
-        Chiliad = 525600000000
+        Chiliad = 525600000000,
     }
 
     const enum SecCount {
@@ -45,12 +45,12 @@ declare namespace eDate {
         FiveMin = 300,
         TenMin = 600,
         OneHour = 3600,
-        OneDay = 86400
+        OneDay = 86400,
     }
 
     const enum MsTimespan {
         PromiseTimeout = MsCount.FiveSec,
-        RequestTimeout = 60000
+        RequestTimeout = 60000,
     }
 
     const enum Per {
@@ -58,6 +58,6 @@ declare namespace eDate {
         MsToSec = 1000,
         SecToMin = 60,
         MinToHour = 60,
-        HourToDay = 24
+        HourToDay = 24,
     }
 }

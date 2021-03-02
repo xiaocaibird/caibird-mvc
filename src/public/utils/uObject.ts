@@ -12,7 +12,7 @@ export namespace uObject {
 
     export const removeUndefinedProp = <T extends dp.Obj>(value: T) => {
         const result = {
-            ...value
+            ...value,
         };
         for (const k in result) {
             if (result[k] === undefined) {

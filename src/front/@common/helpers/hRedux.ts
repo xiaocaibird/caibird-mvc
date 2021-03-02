@@ -9,7 +9,7 @@ export abstract class HRedux<TState extends dp.Obj, TActions extends dRedux.Base
     public static readonly createReducer = <TStatePart, TActionsType>(
         opt: { handlers: dRedux.ReducerHandlers<TActionsType, TStatePart>, defaultState: TStatePart }) => ({
             handlers: opt.handlers,
-            defaultState: cloneDeep(opt.defaultState)
+            defaultState: cloneDeep(opt.defaultState),
         })
 
     protected constructor(protected readonly options: {

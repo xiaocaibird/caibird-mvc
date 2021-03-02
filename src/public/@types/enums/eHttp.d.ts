@@ -9,7 +9,7 @@ declare namespace eHttp {
         NoLogin = 401,
         PermissionDenied = 403,
         NotFound = 404,
-        ServerError = 500
+        ServerError = 500,
     }
 
     const enum MethodType {
@@ -17,20 +17,20 @@ declare namespace eHttp {
         GET = 'GET',
         PUT = 'PUT',
         DELETE = 'DELETE',
-        OPTION = 'OPTIONS'
+        OPTION = 'OPTIONS',
     }
     const enum ContentDispositionType {
         Inline = 'inline',
-        Attachment = 'attachment'
+        Attachment = 'attachment',
     }
     const enum ContentType {
         TEXT = 'text/plain;charset=utf-8',
         JSON = 'application/json',
         FORM = 'application/x-www-form-urlencoded',
         XML = 'application/xml',
-        MULTIPART = 'multipart/form-data'
+        MULTIPART = 'multipart/form-data',
     }
     const enum RequestedWith {
-        XMLHttpRequest = 'XMLHttpRequest'
+        XMLHttpRequest = 'XMLHttpRequest',
     }
 }

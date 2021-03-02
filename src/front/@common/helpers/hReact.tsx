@@ -26,7 +26,7 @@ export abstract class HReact<TRootContext> {
 
                 this.state = {
                     Component: With.inner,
-                    isClassComponent: uFunction.checkExtendsClass(With.inner, React.Component)
+                    isClassComponent: uFunction.checkExtendsClass(With.inner, React.Component),
                 };
             }
 
@@ -39,7 +39,7 @@ export abstract class HReact<TRootContext> {
                 const { Component } = this.state;
                 if (Component && !this.isCallOnInnerDidMount) {
                     onAsyncInnerDidMount?.({
-                        innerRef: this.innerRef
+                        innerRef: this.innerRef,
                     });
                     this.isCallOnInnerDidMount = true;
                 }
@@ -63,7 +63,7 @@ export abstract class HReact<TRootContext> {
 
                     this.setState({
                         Component,
-                        isClassComponent
+                        isClassComponent,
                     });
                 }
             }
@@ -77,7 +77,7 @@ export abstract class HReact<TRootContext> {
     }
 
     public readonly withAutoDestroy = <TProps extends { visible?: boolean }>(Component: React.ComponentType<TProps>) => memo(
-        (props: TProps) => props.visible ? <Component {...props} /> : null
+        (props: TProps) => props.visible ? <Component {...props} /> : null,
     )
 
     public readonly createHocDisplayName = (hocName: string, WrappedComponent?: React.ComponentType) =>

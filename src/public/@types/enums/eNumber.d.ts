@@ -6,6 +6,6 @@ declare namespace eNumber {
     const enum Common {
         Ten = 10,
         Hundred = 100,
-        Thousand = 1000
+        Thousand = 1000,
     }
 }

@@ -34,7 +34,7 @@ const logTypeNameMap: {
     webTopError: 'webTopError',
     webUnknownError: 'webUnknownError',
     webReactError: 'webReactError',
-    other: 'other'
+    other: 'other',
 };
 
 class ReportHelper {
@@ -47,7 +47,7 @@ class ReportHelper {
                 target[key] = log4js.getLogger(key);
             }
             return target[key];
-        }
+        },
     }) as Readonly<Record<eReport.LogType, log4js.Logger>>;
 
     private options: dReport.InitOptions = {};
@@ -58,7 +58,7 @@ class ReportHelper {
                 if (info.length > 50000) {
                     return {
                         _type_: 'text',
-                        _msg_: '【contentSizeIsTooBig】'
+                        _msg_: '【contentSizeIsTooBig】',
                     };
                 }
 
@@ -74,7 +74,7 @@ class ReportHelper {
                 if (json.length > maxLength) {
                     return {
                         _type_: 'Array',
-                        _msg_: '【contentSizeIsTooBig】'
+                        _msg_: '【contentSizeIsTooBig】',
                     };
                 }
                 return uObject.parseJson(json);
@@ -92,7 +92,7 @@ class ReportHelper {
                         code,
                         name,
                         message,
-                        stack
+                        stack,
                     };
 
                     obj.code = undefined;
@@ -106,12 +106,12 @@ class ReportHelper {
                     result = {
                         ...result,
                         _type_: 'Object',
-                        _msg_: '【contentSizeIsTooBig】'
+                        _msg_: '【contentSizeIsTooBig】',
                     };
                 } else {
                     result = {
                         ...uObject.parseJson(json),
-                        ...result
+                        ...result,
                     };
                 }
                 return result;
@@ -126,7 +126,7 @@ class ReportHelper {
             return {
                 message: error.message,
                 _type_: 'Error',
-                _msg_: '【handleInfoError】'
+                _msg_: '【handleInfoError】',
             };
         }
     }
@@ -143,15 +143,15 @@ class ReportHelper {
             ctxInfo = ctx && {
                 header: {
                     request: this.handleInfo(ctx.request.header, 2000),
-                    response: this.handleInfo(ctx.response.header, 2000)
+                    response: this.handleInfo(ctx.response.header, 2000),
                 },
                 body: {
                     request: (ctx.request.is('json') || ctx.request.is('xml')) && this.handleInfo(ctx.request.body, 2000) || '【otherType】',
-                    response: (ctx.response.is('json') || ctx.response.is('xml')) && this.handleInfo(ctx.response.body, 2000) || '【otherType】'
+                    response: (ctx.response.is('json') || ctx.response.is('xml')) && this.handleInfo(ctx.response.body, 2000) || '【otherType】',
                 },
                 type: {
                     request: this.handleInfo(ctx.request.type, 100),
-                    response: this.handleInfo(ctx.response.type, 100)
+                    response: this.handleInfo(ctx.response.type, 100),
                 },
                 query: this.handleInfo(ctx.query, 1000),
                 ips: this.handleInfo(ctx.ips, 500),
@@ -160,7 +160,7 @@ class ReportHelper {
                 originalUrl: this.handleInfo(ctx.request.originalUrl, 1000),
                 session: this.handleInfo(ctx.session, 1000),
                 status: this.handleInfo(ctx.status),
-                method: this.handleInfo(ctx.method)
+                method: this.handleInfo(ctx.method),
             };
         } catch { }
 
@@ -181,7 +181,7 @@ class ReportHelper {
             error: this.handleInfo(opt.error, 1000, true),
             source: this.handleInfo(opt.source, 1000, true),
             logStack: this.handleInfo(logStack, 1500),
-            ctx: ctxInfo
+            ctx: ctxInfo,
         };
 
         return logInfo;
@@ -195,7 +195,7 @@ class ReportHelper {
             beginLog: unitSize * 2,
             endLog: unitSize * 2,
             dbLog: unitSize * 2,
-            statusError: unitSize * 2
+            statusError: unitSize * 2,
         }, projectLogName } = opt;
 
         const getAppenders = () => {
@@ -206,7 +206,7 @@ class ReportHelper {
                     maxLogSize: maxLogSize[item as eReport.LogType] ?? unitSize,
                     compress: true,
                     keepFileExt: true,
-                    layout: { type: 'dummy' }
+                    layout: { type: 'dummy' },
                 };
                 return result;
             }, {});
@@ -219,7 +219,7 @@ class ReportHelper {
                 result[item] = {
                     appenders: [item],
                     level: 'info',
-                    enableCallStack: true
+                    enableCallStack: true,
                 };
                 return result;
             }, {});
@@ -227,7 +227,7 @@ class ReportHelper {
             obj.default = {
                 appenders: ['log'],
                 level: 'info',
-                enableCallStack: true
+                enableCallStack: true,
             };
 
             return obj;
@@ -235,7 +235,7 @@ class ReportHelper {
 
         log4js.configure({
             appenders: getAppenders(),
-            categories: getCategories()
+            categories: getCategories(),
         });
     }
 

@@ -22,20 +22,20 @@ class ReportHelper {
                     name: details.name,
                     message: details.message,
                     stack: details.stack,
-                    ...details
+                    ...details,
                 },
                 error: err && {
                     name: err.name,
                     message: err.message,
                     stack: err.stack,
-                    ...error
+                    ...error,
                 },
                 source: source && {
                     name: source.name,
                     message: source.message,
                     stack: source.stack,
-                    ...source
-                }
+                    ...source,
+                },
             }));
         } catch (e: unknown) {
             console.error('writeLog:', e);

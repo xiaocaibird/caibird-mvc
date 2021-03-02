@@ -47,11 +47,11 @@ export namespace uCrypto {
         const {
             algorithm = 'aes-128-cbc',
             encryptInputEncoding = 'utf8',
-            encryptOutputEncoding = 'hex'
+            encryptOutputEncoding = 'hex',
         } = params;
         return {
             encrypt: (data: string) => strCipher(data, key, iv, algorithm, encryptInputEncoding, encryptOutputEncoding),
-            decrypt: (encrypted: string) => strDecipher(encrypted, key, iv, algorithm, encryptOutputEncoding, encryptInputEncoding)
+            decrypt: (encrypted: string) => strDecipher(encrypted, key, iv, algorithm, encryptOutputEncoding, encryptInputEncoding),
         };
     };
 }

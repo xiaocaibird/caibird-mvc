@@ -31,7 +31,7 @@ const getErrInfo = (message: string) => {
 
     return {
         name,
-        json
+        json,
     };
 };
 
@@ -110,7 +110,7 @@ setCompatible((instance, args) => {
                 _compatible_key_: errorCompatible,
                 args,
                 stack: instance.stack,
-                message: instance.message
+                message: instance.message,
             };
             instance.message = JSON.stringify(obj);
         }

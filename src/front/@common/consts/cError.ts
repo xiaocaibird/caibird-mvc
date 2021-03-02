@@ -13,7 +13,7 @@ namespace _cError {
         public constructor(
             public readonly options: dError.F.Options,
             public readonly logOptions: dReport.ErrorLogOptions | false = false,
-            public readonly name = CommonError.name
+            public readonly name = CommonError.name,
         ) {
             super();
             compatible(this, [...arguments]);
@@ -27,7 +27,7 @@ namespace _cError {
                 errorInfo: React.ErrorInfo,
             },
             public readonly options: dError.F.Options,
-            public readonly logOptions: dReport.ErrorLogOptions | false = false
+            public readonly logOptions: dReport.ErrorLogOptions | false = false,
         ) {
             super(options, logOptions, ReactError.name);
             compatible(this, [...arguments]);
@@ -41,7 +41,7 @@ namespace _cError {
                 info: dRequest.F.WEB.FetchInfo,
             },
             public readonly options: dError.F.Options,
-            public readonly logOptions: dReport.ErrorLogOptions | false = false
+            public readonly logOptions: dReport.ErrorLogOptions | false = false,
         ) {
             super(options, logOptions, ApiFetchFail.name);
             compatible(this, [...arguments]);
@@ -54,7 +54,7 @@ namespace _cError {
                 info: dRequest.F.WEB.FetchInfo,
             },
             public readonly options: dError.F.Options,
-            public readonly logOptions: dReport.ErrorLogOptions | false = false
+            public readonly logOptions: dReport.ErrorLogOptions | false = false,
         ) {
             super(options, logOptions, ApiJsonResultEmpty.name);
             compatible(this, [...arguments]);
@@ -68,7 +68,7 @@ namespace _cError {
                 info: dRequest.F.WEB.FetchInfo,
             },
             public readonly options: dError.F.Options,
-            public readonly logOptions: dReport.ErrorLogOptions | false = false
+            public readonly logOptions: dReport.ErrorLogOptions | false = false,
         ) {
             super(options, logOptions, ApiJsonResultError.name);
             compatible(this, [...arguments]);
@@ -82,7 +82,7 @@ namespace _cError {
                 info: dRequest.F.WEB.FetchInfo,
             },
             public readonly options: dError.F.Options,
-            public readonly logOptions: dReport.ErrorLogOptions | false = false
+            public readonly logOptions: dReport.ErrorLogOptions | false = false,
         ) {
             super(options, logOptions, LoginError.name);
             compatible(this, [...arguments]);
@@ -92,7 +92,7 @@ namespace _cError {
     export class VersionMismatch extends CommonError {
         public constructor(
             public readonly options: dError.F.Options,
-            public readonly logOptions: dReport.ErrorLogOptions | false = false
+            public readonly logOptions: dReport.ErrorLogOptions | false = false,
         ) {
             super(options, logOptions, VersionMismatch.name);
             compatible(this, [...arguments]);

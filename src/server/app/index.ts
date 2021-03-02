@@ -26,11 +26,11 @@ import { contextHelper, reportHelper, responseHelper, settingHelper } from './he
 export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom extends dp.Obj, TControllerDefaultConfig extends dp.Obj | undefined> {
     public static readonly staticHelpers = {
         report: {
-            ...reportHelper
+            ...reportHelper,
         },
         setting: {
-            ...settingHelper
-        }
+            ...settingHelper,
+        },
     } as const;
 
     public constructor(public readonly options: Options<TRules, TState, TCustom, TControllerDefaultConfig>) {
@@ -51,7 +51,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
                     target.filterInfo.name = option.name;
                     target.filterInfo.desc = option.desc;
                 }
-            }
+            },
         ),
         httpMethodFilter: this.filterCreater(
             'httpMethodFilter',
@@ -70,9 +70,9 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
                             throw new cError.Status(eHttp.StatusCode.NotFound);
                         }
                     }
-                }
-            }
-        )
+                },
+            },
+        ),
     } as const;
 
     public readonly koa = new Koa<dMvc.S.CtxState<TState>, dMvc.S.CtxCustom<TState, TCustom>>();
@@ -87,13 +87,13 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
             defaultFilters: this.defaultFilters,
             getControllerName: this.getControllerName.bind(this),
             getActionName: this.getActionName.bind(this),
-            filterCreater: this.filterCreater.bind(this)
+            filterCreater: this.filterCreater.bind(this),
         },
         context: {
             get: () => contextHelper.get<TState, TCustom>(),
             getOrNull: () => contextHelper.getOrNull<TState, TCustom>(),
-            addTamp: contextHelper.addTamp
-        }
+            addTamp: contextHelper.addTamp,
+        },
     } as const;
 
     private createBaseController() {
@@ -105,48 +105,48 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
                 result: {
                     code: eFetch.JsonSuccessCode.Success,
                     data,
-                    ...other
-                }
+                    ...other,
+                },
             }),
             File: (path: string, opt?: KoaSend.SendOptions): dMvc.S.FileActionReturn => ({
                 type: 'file',
                 result: {
                     path,
-                    opt
-                }
+                    opt,
+                },
             }),
             Buffer: (buffer: Buffer, fileName: string, opt?: { type: eHttp.ContentDispositionType }): dMvc.S.BufferActionReturn => ({
                 type: 'buffer',
                 result: {
                     buffer,
                     fileName,
-                    opt
-                }
+                    opt,
+                },
             }),
             Redirect: (url: string): dMvc.S.RedirectActionReturn => ({
                 type: 'redirect',
                 result: {
-                    url
-                }
+                    url,
+                },
             }),
             Render: <T extends dp.Obj | undefined = undefined>(view: string, params?: T): dMvc.S.RenderActionReturn<T> => ({
                 type: 'render',
                 result: {
                     view,
-                    params
-                }
+                    params,
+                },
             }),
             Xml: (xmlStr: string): dMvc.S.XmlActionReturn => ({
                 type: 'xml',
                 result: {
-                    xmlStr
-                }
-            })
+                    xmlStr,
+                },
+            }),
         } as const;
 
         return class baseController {
             public constructor(
-                protected readonly ctx: dMvc.S.Ctx<TState, TCustom>
+                protected readonly ctx: dMvc.S.Ctx<TState, TCustom>,
             ) { }
 
             protected readonly defaultConfig = defaultConfig;
@@ -345,13 +345,13 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
             disableDefaultUncaughtExceptionHandler,
             onAppError,
             uncaughtException,
-            unhandledRejection
+            unhandledRejection,
         } = this.options;
         process.on('unhandledRejection', (reason, promise) => {
             try {
                 !(disableAllDefaultErrorHandler || disableDefaultUnhandledRejectionHandler) && reportHelper.appError({
                     key: 'process_unhandledRejection',
-                    error: reason ?? undefined
+                    error: reason ?? undefined,
                 });
 
                 unhandledRejection?.(reason, promise, this);
@@ -364,7 +364,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
                 !(disableAllDefaultErrorHandler || disableDefaultUncaughtExceptionHandler) && reportHelper.appError({
                     key: 'process_uncaughtException',
                     msg: err?.message,
-                    error: err
+                    error: err,
                 });
 
                 uncaughtException?.(err, this);
@@ -384,7 +384,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
                         reportHelper.appError({
                             key: 'app_error',
                             msg: err?.message,
-                            error: err
+                            error: err,
                         }, ctx);
                     });
                 }
@@ -423,8 +423,8 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
                         key: logOptions.key || key,
                         msg: logOptions.msg || key,
                         type: logOptions.type ?? eReport.LogType.Error,
-                        source: error
-                    }
+                        source: error,
+                    },
                 );
             } else if (uObject.checkInstance(error, Sequelize.Error)) {
                 responseHelper.json({ code: eFetch.JsonErrorCode.DbError, msg: error.message });
@@ -433,7 +433,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
                     msg: error.message,
                     error,
                     attribute: true,
-                    always: true
+                    always: true,
                 });
             } else {
                 const err = (error || new Error()) as Error;
@@ -442,7 +442,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
                 reportHelper.unknownError({
                     key: key + '_unknown',
                     msg: err.message,
-                    error: err
+                    error: err,
                 });
             }
         } catch (e: unknown) {
@@ -452,7 +452,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
                 key: key + '_error',
                 msg: err.message,
                 error: err,
-                details: error
+                details: error,
             });
         }
     }
@@ -512,10 +512,10 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
             prefix,
             defaultController = 'index',
             defaultAction = 'index',
-            formRequestKey = cKey.query.FORM_REQUEST
+            formRequestKey = cKey.query.FORM_REQUEST,
         } = this.options;
         const router = new KoaRouter<dMvc.S.CtxState<TState>, dMvc.S.CtxCustom<TState, TCustom>>({
-            prefix
+            prefix,
         });
         router.all('/:controller?/:action?/:value*', async (ctx, next) => {
             const { controller = defaultController, action = defaultAction } = ctx.params as { controller?: string, action?: string };
@@ -564,7 +564,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
             if (actionReturn == null) {
                 throw new cError.Status(
                     { status: eHttp.StatusCode.ServerError, msg: 'Router Return Error' },
-                    { key: `router_${controller}_${action}_actionReturn_null` }
+                    { key: `router_${controller}_${action}_actionReturn_null` },
                 );
             }
 
@@ -590,7 +590,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
                 default:
                     throw new cError.Status(
                         { status: eHttp.StatusCode.ServerError, msg: 'Router Return Error' },
-                        { key: `router_${controller}_${action}_actionReturn_typeError`, details: actionReturn }
+                        { key: `router_${controller}_${action}_actionReturn_typeError`, details: actionReturn },
                     );
             }
         });
@@ -604,7 +604,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
             onPreUseKoaBody,
             onPreUseMvc,
             onPostUseMvc,
-            renderConfig
+            renderConfig,
         } = this.options;
 
         this.koa.use(this.entryMiddleware);
@@ -626,7 +626,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
     private filterCreater<TOption = undefined>(
         name: string,
         handler: (target: dMvc.S.CommonProps<TRules, TState, TCustom> & dp.Func, option?: TOption) => void,
-        props?: Omit<dMvc.S.FilterProps<TRules, TState, TCustom>, 'filterName'>
+        props?: Omit<dMvc.S.FilterProps<TRules, TState, TCustom>, 'filterName'>,
     ) {
         const filter = (option?: TOption, order = 0): dMvc.S.Decorator<TRules, TState, TCustom> =>
             (controller, _action, actionDes) => {

@@ -10,7 +10,7 @@ declare namespace ePlatform {
             Linux = 'Linux',
 
             IOS = 'IOS',
-            Android = 'Android'
+            Android = 'Android',
         }
     }
 }

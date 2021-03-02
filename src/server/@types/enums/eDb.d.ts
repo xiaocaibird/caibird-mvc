@@ -6,7 +6,7 @@ declare namespace eDb {
     namespace S {
         const enum OrderType {
             ASC = 'ASC',
-            DESC = 'DESC'
+            DESC = 'DESC',
         }
 
         const enum Op {
@@ -46,7 +46,7 @@ declare namespace eDb {
             col = 'col',
             placeholder = 'placeholder',
             join = 'join',
-            raw = 'raw'
+            raw = 'raw',
         }
     }
 }

@@ -11,6 +11,6 @@ const _cKey = {};
  */
 export const cKey: dp.DeepReadonly<typeof _cKey & typeof base> = {
     ...base,
-    ..._cKey
+    ..._cKey,
 };
 export default cKey;

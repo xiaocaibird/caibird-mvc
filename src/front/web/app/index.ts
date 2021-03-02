@@ -9,8 +9,8 @@ import reportHelper, { setWriteLog } from './helpers/reportHelper';
 export default class App {
     public static readonly staticHelpers = {
         report: {
-            ...reportHelper
-        }
+            ...reportHelper,
+        },
     } as const;
 
     public constructor(public readonly options: Options) {

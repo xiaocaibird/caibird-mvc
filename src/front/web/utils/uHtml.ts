@@ -39,6 +39,6 @@ namespace _uHtml {
 
 export const uHtml = {
     ...base,
-    ..._uHtml
+    ..._uHtml,
 };
 export default uHtml;

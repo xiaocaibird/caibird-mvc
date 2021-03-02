@@ -23,7 +23,7 @@ export namespace uArray {
         if (newList[index] || value) {
             newList[index] = {
                 ...newList[index],
-                ...value
+                ...value,
             };
         } else {
             newList[index] = value;

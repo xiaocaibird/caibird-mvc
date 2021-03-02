@@ -14,7 +14,7 @@ export namespace uFile {
                 resolve({
                     code: eFile.F.FileReaderResultCode.Success,
                     data: fr.result as TData,
-                    fileReader: fr
+                    fileReader: fr,
                 });
                 clearTimeout(timeout);
             };
@@ -22,14 +22,14 @@ export namespace uFile {
                 reject({
                     code: eFile.F.FileReaderResultCode.Fail,
                     fileReader: fr,
-                    error
+                    error,
                 });
                 clearTimeout(timeout);
             };
             const timeout = setTimeout(() => {
                 reject({
                     code: eFile.F.FileReaderResultCode.Timeout,
-                    fileReader: fr
+                    fileReader: fr,
                 });
                 fr.abort();
             }, eDate.MsTimespan.PromiseTimeout * eNumber.Common.Ten);
@@ -79,7 +79,7 @@ export namespace uFile {
         return new Promise<ImgInfo>((resolve, _reject) => {
             const imageInfo = {
                 width: 0,
-                height: 0
+                height: 0,
             };
 
             if (!img) {
