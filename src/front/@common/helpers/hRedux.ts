@@ -27,9 +27,11 @@ export abstract class HRedux<TState extends dp.Obj, TActions extends dRedux.Base
         }
         return this.store;
     }
+
     public get State() {
         return this.Store.getState();
     }
+
     public get lastState() {
         return this._lastState;
     }

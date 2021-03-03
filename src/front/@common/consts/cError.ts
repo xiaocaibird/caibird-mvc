@@ -104,6 +104,7 @@ namespace _cError {
             super();
             compatible(this, [...arguments]);
         }
+
         public readonly name = Noop.name;
     }
 }

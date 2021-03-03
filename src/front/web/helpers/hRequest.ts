@@ -235,6 +235,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
                 msg: rsp.msg,
             });
     }
+
     protected readonly getNoHandleResult = async <T>(url: string, req?: dp.Obj | null, opt: dRequest.F.WEB.DetailsOptions & Partial<TCustomOpt> = {}) => {
         const { type = eHttp.MethodType.POST, checkLoginWhenNoHandle } = opt;
 

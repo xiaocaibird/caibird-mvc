@@ -10,6 +10,7 @@ export abstract class HReact<TRootContext> {
     protected constructor(protected readonly options: {
         defaultContext: TRootContext,
     }) { }
+
     public readonly rootContext = createContext(this.options.defaultContext);
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -15,6 +15,7 @@ export abstract class HNavigator {
         this.HOME_PATH = options.homePath || '/';
         this.LOGIN_PATH = options.loginPath || '/';
     }
+
     protected readonly navigator = createHashHistory();
     protected readonly HOME_PATH: string;
     protected readonly LOGIN_PATH: string;

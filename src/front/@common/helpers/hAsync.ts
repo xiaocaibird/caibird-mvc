@@ -16,6 +16,7 @@ export abstract class HAsync<TCustomRunOpt extends dp.Obj = dp.Obj> {
         status: eAsync.F.Status,
         task: Promise<unknown>,
     } | undefined>> = {};
+
     public readonly keys = {
         GLOBAL_UNIQUE: Symbol('GLOBAL_UNIQUE'),
     };

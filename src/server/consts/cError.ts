@@ -14,6 +14,7 @@ namespace _cError {
         ) {
             super(uObject.check(info) ? info.msg : info.toString());
         }
+
         public readonly name: string = 'BaseError';
     }
 
@@ -35,6 +36,7 @@ namespace _cError {
         ) {
             super({ code: eFetch.JsonErrorCode.CommonFail, ...(uObject.check(info) ? info : { msg: info }) }, logOptions);
         }
+
         public readonly name: string = 'JsonError';
     }
 
@@ -45,6 +47,7 @@ namespace _cError {
         ) {
             super({ code: eFetch.JsonErrorCode.Timeout, msg }, logOptions);
         }
+
         public readonly name = 'TimeoutJsonError';
     }
 
@@ -55,6 +58,7 @@ namespace _cError {
         ) {
             super(info, { type: eReport.LogType.TopError, always: true, attribute: true, ...logOptions });
         }
+
         public readonly name = 'TopJsonError';
     }
 
@@ -70,6 +74,7 @@ namespace _cError {
                 ...logOptions,
             });
         }
+
         public readonly name = 'StatusError';
     }
 
@@ -80,6 +85,7 @@ namespace _cError {
         ) {
             super({ code: eFetch.JsonErrorCode.RedisError, msg }, logOptions);
         }
+
         public readonly name = 'ReidsError';
     }
 }
