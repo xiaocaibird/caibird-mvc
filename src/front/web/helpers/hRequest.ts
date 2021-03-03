@@ -307,6 +307,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
         if (data) {
             return data;
         }
+        // eslint-disable-next-line @typescript-eslint/no-throw-literal
         throw {
             xhr,
             response: xhr && {

@@ -29,6 +29,7 @@ export namespace uTask {
                 }
             }
         }
+        // eslint-disable-next-line @typescript-eslint/no-throw-literal
         throw errors;
     };
 }
