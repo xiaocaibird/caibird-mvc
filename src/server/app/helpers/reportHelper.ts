@@ -2,7 +2,7 @@
  * @Creater cmZhou
  * @Desc app reportHelper
  */
-/* eslint-disable no-magic-numbers */
+/* eslint-disable @typescript-eslint/no-magic-numbers */
 import type Koa from 'koa';
 import { get } from 'lodash';
 import log4js from 'log4js';

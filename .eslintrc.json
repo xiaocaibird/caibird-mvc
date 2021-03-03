@@ -493,66 +493,66 @@
         "@typescript-eslint/lines-between-class-members": ["error", "always", {
             "exceptAfterOverload": true,
             "exceptAfterSingleLine": true
-        }]
+        }],
 
-        // // 禁止在不必要的时候使用Array创建数组
-        // "no-array-constructor": "off",
-        // "@typescript-eslint/no-array-constructor": ["error"],
+        // 禁止在不必要的时候使用Array创建数组
+        "no-array-constructor": "off",
+        "@typescript-eslint/no-array-constructor": ["error"],
 
-        // // 禁止重复的类成员【ts已有】
-        // "no-dupe-class-members": "off",
-        // "@typescript-eslint/no-dupe-class-members": "off",
+        // 禁止重复的类成员【ts已有】
+        "no-dupe-class-members": "off",
+        "@typescript-eslint/no-dupe-class-members": "off",
 
-        // // 禁止重复的import
-        // "no-duplicate-imports": "off",
-        // "@typescript-eslint/no-duplicate-imports": ["error"],
+        // 禁止重复的import
+        "no-duplicate-imports": "off",
+        "@typescript-eslint/no-duplicate-imports": ["error", {
+            "includeExports": false
+        }],
 
-        // // 禁止使用空函数
-        // "no-empty-function": "off",
-        // "@typescript-eslint/no-empty-function": "off",
+        // 禁止使用空函数【无需】
+        "no-empty-function": "off",
+        "@typescript-eslint/no-empty-function": "off",
 
-        // // 禁止多余括号
-        // "no-extra-parens": "off",
-        // "@typescript-eslint/no-extra-parens": ["error", "all", {
-        //     "ignoreJSX": "multi-line"
-        // }],
+        // 禁止多余括号【check】
+        "no-extra-parens": "off",
+        "@typescript-eslint/no-extra-parens": "off", //["error", "all", { "ignoreJSX": "multi-line" }]
 
-        // // 禁止多余的分号
-        // "no-extra-semi": "off",
-        // "@typescript-eslint/no-extra-semi": ["error"],
+        // 禁止多余的分号
+        "no-extra-semi": "off",
+        "@typescript-eslint/no-extra-semi": ["error"],
 
-        // // 禁止eval相关的操作
-        // "no-implied-eval": "off",
-        // "@typescript-eslint/no-implied-eval": ["error"],
+        // 禁止eval相关的操作
+        "no-implied-eval": "off",
+        "@typescript-eslint/no-implied-eval": ["error"],
 
-        // // 禁止在很可能为undefined的场景下使用this
-        // "no-invalid-this": "off",
-        // "@typescript-eslint/no-invalid-this": ["error", {
-        //     "capIsConstructor": false
-        // }],
+        // 禁止在很可能为undefined的场景下使用this
+        "no-invalid-this": "off",
+        "@typescript-eslint/no-invalid-this": ["error", {
+            "capIsConstructor": false
+        }],
 
-        // // 禁止在循环中的函数访问不安全的循环变量（通常是var引起的闭包失效）【无需-已禁用var】
-        // "no-loop-func": "off",
-        // "@typescript-eslint/no-loop-func": "off",
+        // 禁止在循环中的函数访问不安全的循环变量（通常是var引起的闭包失效）【无需-已禁用var】
+        "no-loop-func": "off",
+        "@typescript-eslint/no-loop-func": "off",
 
-        // // 禁止失精度的数字
-        // "no-loss-of-precision": "off",
-        // "@typescript-eslint/no-loss-of-precision": ["error"],
+        // 禁止失精度的数字
+        "no-loss-of-precision": "off",
+        "@typescript-eslint/no-loss-of-precision": ["error"],
 
-        // // 禁止使用魔法数字
-        // "no-magic-numbers": "off",
-        // "@typescript-eslint/no-magic-numbers": ["error",
-        //     {
-        //         "ignore": [-1, 0, 1, 2, 3, 4, 5],
-        //         "ignoreArrayIndexes": false,
-        //         "ignoreDefaultValues": false,
-        //         "enforceConst": false,
-        //         "detectObjects": true,
-        //         "ignoreEnums": true,
-        //         "ignoreNumericLiteralTypes": true,
-        //         "ignoreReadonlyClassProperties": true
-        //     }
-        // ],
+        // 禁止使用魔法数字
+        "no-magic-numbers": "off",
+        "@typescript-eslint/no-magic-numbers": ["error",
+            {
+                "ignore": [-1, 0, 1, 2, 3, 4, 5],
+                "ignoreArrayIndexes": false,
+                "ignoreDefaultValues": true,
+                "enforceConst": true,
+                "detectObjects": false,
+                "ignoreEnums": true,
+                "ignoreNumericLiteralTypes": true,
+                "ignoreReadonlyClassProperties": true
+            }
+        ]
 
         // // 禁止在同一作用域定义同名的变量
         // "no-redeclare": "off",
