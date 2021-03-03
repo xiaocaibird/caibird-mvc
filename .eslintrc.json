@@ -403,7 +403,7 @@
         "@typescript-eslint/unified-signatures": ["error"],
         //#endregion
 
-        //#region 【ts-ext】 29(errors) + 6(off) = 35(rules)
+        //#region 【ts-ext】 27(errors) + 8(off) = 35(rules)
         // 禁止不一致的花括号风格
         "brace-style": "off",
         "@typescript-eslint/brace-style": ["error",
@@ -435,7 +435,7 @@
 
         // 禁止将可选参数放前面【无需-ts的检查已够用】
         "default-param-last": "off",
-        "@typescript-eslint/default-param-last": ["off"],
+        "@typescript-eslint/default-param-last": "off",
 
         // 禁止在可以用点访问属性时用中括号来访问
         "dot-notation": "off",
@@ -637,7 +637,7 @@
         "@typescript-eslint/space-infix-ops": ["error", {
             "int32Hint": false
         }]
-        // //#endregion
+        //#endregion
 
         // //#region 【eslint-possible-errors】 rules
         // // 禁止方向错误的for循环
