@@ -260,7 +260,6 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
                 }
             }
 
-            // eslint-disable-next-line prefer-object-spread
             controller.filterRules = Object.assign({}, setClass.filterRules, AController.filterRules, controller.filterRules);
 
             const controllerName = controller.name;
