@@ -205,7 +205,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
         return target as T extends dp.Func ? dMvc.S.BaseController<TState, TCustom> & dMvc.S.CommonProps<TRules, TState, TCustom> & dMvc.S.ControllerProps<TRules, TState, TCustom> : dMvc.S.BaseAction & dMvc.S.CommonProps<TRules, TState, TCustom>;
     }
 
-    private readonly initController = async (startOpt: StartOpt<TRules, TState, TCustom>) => {
+    private readonly initController = (startOpt: StartOpt<TRules, TState, TCustom>) => {
         const { controllers, defaultFilters = [] } = startOpt;
 
         const baseController: dp.Class & Partial<dMvc.S.CommonProps<TRules, TState, TCustom>> = this.baseController;
@@ -396,12 +396,12 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
         });
     }
 
-    private readonly init = async (startOpt: StartOpt<TRules, TState, TCustom>) => {
+    private readonly init = (startOpt: StartOpt<TRules, TState, TCustom>) => {
         const { disableDefaultTimestamp } = this.options;
         if (disableDefaultTimestamp) {
             contextHelper.disableDefaultTimestamp();
         }
-        await this.initController(startOpt);
+        this.initController(startOpt);
     }
 
     private readonly defaultOnRequestError = (error: Error | InstanceType<typeof cError.Base>) => {
@@ -503,7 +503,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
         });
     }
 
-    private readonly lastMiddleware: dMvc.S.Middleware<TState, TCustom> = async () => {
+    private readonly lastMiddleware: dMvc.S.Middleware<TState, TCustom> = () => {
         throw new cError.Status(eHttp.StatusCode.NotFound);
     }
 
@@ -641,7 +641,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
         this.koa.keys = appKeys;
         this.listenError();
         onPreInit && await onPreInit(this);
-        await this.init(startOpt);
+        this.init(startOpt);
         onPostInit && await onPostInit(this);
         await this.use();
         onEnd && await onEnd(this);
