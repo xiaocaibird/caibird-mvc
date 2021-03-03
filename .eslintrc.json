@@ -475,22 +475,25 @@
             "offsetTernaryExpressions": true,
             "ignoredNodes": ["ConditionalExpression"],
             "ignoreComments": false
+        }],
+
+        // 禁止不一致的变量初始化风格【无需】
+        "init-declarations": "off",
+        "@typescript-eslint/init-declarations": "off",
+
+        // 禁止不一致的关键字前后空格
+        "keyword-spacing": "off",
+        "@typescript-eslint/keyword-spacing": ["error", {
+            "before": true,
+            "after": true
+        }],
+
+        // 禁止不一致的类成员空行风格
+        "lines-between-class-members": "off",
+        "@typescript-eslint/lines-between-class-members": ["error", "always", {
+            "exceptAfterOverload": true,
+            "exceptAfterSingleLine": true
         }]
-
-        // // 禁止不一致的变量初始化风格【无需】
-        // "init-declarations": "off",
-        // "@typescript-eslint/init-declarations": "off",
-
-        // // 禁止不一致的关键字前后空格
-        // "keyword-spacing": "off",
-        // "@typescript-eslint/keyword-spacing": ["error"],
-
-        // // 禁止不一致的类成员空行风格
-        // "lines-between-class-members": "off",
-        // "@typescript-eslint/lines-between-class-members": ["error", "always", {
-        //     "exceptAfterOverload": true,
-        //     "exceptAfterSingleLine": true
-        // }],
 
         // // 禁止在不必要的时候使用Array创建数组
         // "no-array-constructor": "off",
