@@ -459,20 +459,21 @@
             "MemberExpression": 1,
             "FunctionDeclaration": {
                 "body": 1,
-                "parameters": "first"
+                "parameters": 1
             },
             "FunctionExpression": {
                 "body": 1,
-                "parameters": "first"
+                "parameters": 1
             },
             "CallExpression": {
-                "arguments": "first"
+                "arguments": 1
             },
-            "ArrayExpression": "first",
-            "ObjectExpression": "first",
-            "ImportDeclaration": "first",
+            "ArrayExpression": 1,
+            "ObjectExpression": 1,
+            "ImportDeclaration": 1,
             "flatTernaryExpressions": true,
             "offsetTernaryExpressions": true,
+            "ignoredNodes": ["ConditionalExpression"],
             "ignoreComments": false
         }]
 

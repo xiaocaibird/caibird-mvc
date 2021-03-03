@@ -41,11 +41,11 @@ declare namespace dRequest {
                 readonly [C in keyof dFetch.StandardApi<TControllers>]: {
                     readonly [A in keyof dFetch.StandardApi<TControllers>[C]]: GetReq<dFetch.StandardApi<TControllers>[C][A]> extends never ?
                     <TNoHandle extends boolean | undefined = undefined, TFormFetch extends boolean | undefined = undefined>
-                        (req?: null, opt?: TNoHandle extends true ? DetailsOptions<TNoHandle, TFormFetch, TCustom> : Options<TNoHandle, TFormFetch, TCustom>) =>
-                        Promise<TFormFetch extends true ? never : TNoHandle extends true ? Details<GetRsp<dFetch.StandardApi<TControllers>[C][A]>> : GetRsp<dFetch.StandardApi<TControllers>[C][A]>> :
+                    (req?: null, opt?: TNoHandle extends true ? DetailsOptions<TNoHandle, TFormFetch, TCustom> : Options<TNoHandle, TFormFetch, TCustom>) =>
+                    Promise<TFormFetch extends true ? never : TNoHandle extends true ? Details<GetRsp<dFetch.StandardApi<TControllers>[C][A]>> : GetRsp<dFetch.StandardApi<TControllers>[C][A]>> :
                     <TNoHandle extends boolean | undefined = undefined, TFormFetch extends boolean | undefined = undefined>
-                        (req: GetReq<dFetch.StandardApi<TControllers>[C][A]>, opt?: TNoHandle extends true ? DetailsOptions<TNoHandle, TFormFetch, TCustom> : Options<TNoHandle, TFormFetch, TCustom>) =>
-                        Promise<TFormFetch extends true ? never : TNoHandle extends true ? Details<GetRsp<dFetch.StandardApi<TControllers>[C][A]>> : GetRsp<dFetch.StandardApi<TControllers>[C][A]>>
+                    (req: GetReq<dFetch.StandardApi<TControllers>[C][A]>, opt?: TNoHandle extends true ? DetailsOptions<TNoHandle, TFormFetch, TCustom> : Options<TNoHandle, TFormFetch, TCustom>) =>
+                    Promise<TFormFetch extends true ? never : TNoHandle extends true ? Details<GetRsp<dFetch.StandardApi<TControllers>[C][A]>> : GetRsp<dFetch.StandardApi<TControllers>[C][A]>>
                 }
             };
 
