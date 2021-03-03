@@ -46,7 +46,7 @@ class SettingHelper {
         } catch {
             return dft as dp.DeepPartial<T[TKey]>;
         }
-    }
+    };
 
     public readonly getGlobalConfig = <TKey extends keyof dSetting.S.GlobalConfig>(key: TKey, dft?: dSetting.S.GlobalConfig[TKey]) => this.getValue<dSetting.S.GlobalConfig, TKey>(key, this.GLOBAL_CONFIG_NAME, dft);
 

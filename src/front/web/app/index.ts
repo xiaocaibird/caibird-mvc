@@ -23,7 +23,7 @@ export default class App {
         const { onAppError, isCompatibleAppErrorHandler } = this.options;
         onAppError && setOnAppError(onAppError);
         setIsCompatibleHandler(!!isCompatibleAppErrorHandler);
-    }
+    };
 
     public readonly start = async (opt: StartOpt) => {
         const { allowOpenInIframe, preRender, postRender } = this.options;
@@ -35,7 +35,7 @@ export default class App {
         preRender && await preRender(this);
         (await import('react-dom')).render(opt.rootComponent, opt.rootDom);
         postRender && await postRender(this);
-    }
+    };
 }
 
 type Options = {

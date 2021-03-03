@@ -129,7 +129,7 @@ class ReportHelper {
                 _msg_: '【handleInfoError】',
             };
         }
-    }
+    };
 
     private readonly getLogInfo = (opt: dReport.LogOptions, logStack: string, ctx: Koa.Context | null) => {
         let uuid = '';
@@ -185,7 +185,7 @@ class ReportHelper {
         };
 
         return logInfo;
-    }
+    };
 
     public readonly init = (opt: dReport.InitOptions = {}) => {
         this.options = opt;
@@ -237,7 +237,7 @@ class ReportHelper {
             appenders: getAppenders(),
             categories: getCategories(),
         });
-    }
+    };
 
     public readonly log = (opt: dReport.LogOptions, ctx = contextHelper.getOrNull()) => {
         if (this.options.useConsoleLog) {
@@ -325,7 +325,7 @@ class ReportHelper {
         } catch (e: unknown) {
             console.error('writeLog:', e);
         }
-    }
+    };
 
     public readonly beginLog = (opt: Omit<dReport.LogOptions, 'type'>) => this.log({ ...opt, type: eReport.LogType.BeginLog });
 
@@ -336,10 +336,10 @@ class ReportHelper {
     public readonly dbLog = (opt: Omit<dReport.LogOptions, 'type'>) => this.log({ ...opt, type: eReport.LogType.DbLog });
 
     public readonly unknownError = (opt: Omit<dReport.LogOptions, 'always' | 'attribute' | 'type'>, ctx?: Koa.Context | null) =>
-        this.log({ ...opt, type: eReport.LogType.UnknownError, always: true, attribute: true }, ctx)
+        this.log({ ...opt, type: eReport.LogType.UnknownError, always: true, attribute: true }, ctx);
 
     public readonly appError = (opt: Omit<dReport.LogOptions, 'always' | 'attribute' | 'type'>, ctx?: Koa.Context | null) =>
-        this.log({ ...opt, type: eReport.LogType.AppError, always: true, attribute: true }, ctx)
+        this.log({ ...opt, type: eReport.LogType.AppError, always: true, attribute: true }, ctx);
 }
 
 //#region 私有成员

@@ -612,18 +612,17 @@
 
         // 禁止在没有await时使用async
         "require-await": "off",
-        "@typescript-eslint/require-await": ["error"]
+        "@typescript-eslint/require-await": ["error"],
 
-        // // 禁止不必要的await
-        // "no-return-await": "off",
-        // "@typescript-eslint/return-await": ["error", "never"],
+        // 禁止不必要的await
+        "no-return-await": "off",
+        "@typescript-eslint/return-await": ["error", "never"],
 
-        // // 禁止不加分号
-        // "semi": "off",
-        // "@typescript-eslint/semi": ["error", "always", {
-        //     "omitLastInOneLineBlock": false
-        //     // "beforeStatementContinuationChars": "always"
-        // }],
+        // 禁止不加分号
+        "semi": "off",
+        "@typescript-eslint/semi": ["error", "always", {
+            "omitLastInOneLineBlock": false
+        }]
 
         // // 禁止不一致的函数间距格式
         // "space-before-function-paren": "off",

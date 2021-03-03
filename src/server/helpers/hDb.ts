@@ -43,7 +43,7 @@ export abstract class HDb {
     }, key?: string) => {
         aTable.model.belongsTo(bTable.model, { foreignKey: aTable.key ?? key, targetKey: bTable.key ?? key, as: bTable.as });
         bTable.model.belongsTo(aTable.model, { foreignKey: bTable.key ?? key, targetKey: aTable.key ?? key, as: aTable.as });
-    }
+    };
 
     public readonly setOneToMany = (mainTable: {
         model: Sequelize.Model<unknown, unknown>,
@@ -56,7 +56,7 @@ export abstract class HDb {
     }) => {
         mainTable.model.hasMany(depTable.model, { foreignKey: depTable.key, sourceKey: mainTable.key, as: depTable.as });
         depTable.model.belongsTo(mainTable.model, { foreignKey: depTable.key, targetKey: mainTable.key, as: mainTable.as });
-    }
+    };
 
     public readonly getDateSubTableSuffix = (date: moment.MomentInput) => moment(date).format('YYYYMMDD');
 
@@ -70,7 +70,7 @@ export abstract class HDb {
     ) => defineInfo.seq.define<I, A>(`${defineInfo.options.tableName ?? ''}_${suffix}`, defineInfo.attributes, {
         ...defineInfo.options,
         tableName: `${defineInfo.options.tableName ?? ''}_${suffix}`,
-    })
+    });
 
     public readonly getDefineInfo = async <I, A>(
         dbSeq: Sequelize.Sequelize,
@@ -93,5 +93,5 @@ export abstract class HDb {
         setTimeout(() => {
             reject(new cError.TimeoutJson());
         }, eDate.MsTimespan.PromiseTimeout);
-    })
+    });
 }

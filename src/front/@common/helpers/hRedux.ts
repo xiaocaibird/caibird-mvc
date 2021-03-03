@@ -11,7 +11,7 @@ export abstract class HRedux<TState extends dp.Obj, TActions extends dRedux.Base
     ) => ({
         handlers: opt.handlers,
         defaultState: cloneDeep(opt.defaultState),
-    })
+    });
 
     protected constructor(protected readonly options: {
         actions: dRedux.TransformActions<TActions>,
@@ -70,5 +70,5 @@ export abstract class HRedux<TState extends dp.Obj, TActions extends dRedux.Base
     public readonly dispatch = <T extends dRedux.ActionResult<TActions>[keyof dRedux.ActionResult<TActions>]>(actionResult: T) => {
         this.Store.dispatch(actionResult);
         this._lastState = this.Store.getState();
-    }
+    };
 }

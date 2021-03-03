@@ -95,7 +95,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
         };
 
         return getResult();
-    }
+    };
 
     protected readonly jsonpFetch = async <T>(url: string, req: dp.Obj, opt: dRequest.F.WEB.Options = {}) => {
         const { timeout = this.options.timeout == null ? eDate.MsTimespan.RequestTimeout : this.options.timeout, jsonpCallbackParamName = 'callback', jsonpCallbackFuncName } = opt;
@@ -131,7 +131,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
                 reject(e);
             }
         });
-    }
+    };
 
     protected readonly getResult = async <T>(url: string, req?: dp.Obj | null, opt: dRequest.F.WEB.Options & Partial<TCustomOpt> = {}): Promise<T> => {
         const { disableVersionCheck, defaultErrorPrompt, defaultErrorPromptStyle } = this.options;
@@ -234,7 +234,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
                 promptStyleType: nowPromptStyleType,
                 msg: rsp.msg,
             });
-    }
+    };
 
     protected readonly getNoHandleResult = async <T>(url: string, req?: dp.Obj | null, opt: dRequest.F.WEB.DetailsOptions & Partial<TCustomOpt> = {}) => {
         const { type = eHttp.MethodType.POST, checkLoginWhenNoHandle } = opt;
@@ -288,7 +288,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
             ...rsp,
             data: rsp.data,
         };
-    }
+    };
 
     public readonly fetchJson = async <T>(type: eHttp.MethodType, url: string, req?: dp.Obj | FormData | string | null, opt: dRequest.F.WEB.Options & Partial<TCustomOpt> = {}) => {
         let data;
@@ -323,7 +323,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
             },
             msg: '网络异常！请稍后再试',
         };
-    }
+    };
 
     public readonly getLocalUrl = (url: string) => (this.options.prefix ?? '') + url;
 
@@ -387,7 +387,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
         });
 
         return p;
-    }
+    };
 
     public readonly formFetch = (url: string, req?: dp.Obj, opt: dRequest.F.WEB.Options = {}) => {
         const { formRequestKey = cKey.query.FORM_REQUEST } = this.options;
@@ -413,5 +413,5 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
         input.remove();
         form.remove();
         iframe.remove();
-    }
+    };
 }

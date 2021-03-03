@@ -40,19 +40,19 @@ class ReportHelper {
         } catch (e: unknown) {
             console.error('writeLog:', e);
         }
-    }
+    };
 
     public readonly webLog = (opt: Omit<dReport.LogOptions, 'type'>) =>
-        this.log({ ...opt, type: eReport.LogType.WebLog })
+        this.log({ ...opt, type: eReport.LogType.WebLog });
 
     public readonly webError = (opt: Omit<dReport.LogOptions, 'type'>) =>
-        this.log({ ...opt, type: eReport.LogType.WebError })
+        this.log({ ...opt, type: eReport.LogType.WebError });
 
     public readonly webReactError = (opt: Omit<dReport.LogOptions, 'always' | 'attribute' | 'type'>) =>
-        this.log({ ...opt, type: eReport.LogType.WebReactError, always: true, attribute: true })
+        this.log({ ...opt, type: eReport.LogType.WebReactError, always: true, attribute: true });
 
     public readonly webTopError = (opt: Omit<dReport.LogOptions, 'always' | 'attribute' | 'type'>) =>
-        this.log({ ...opt, type: eReport.LogType.WebTopError, always: true, attribute: true })
+        this.log({ ...opt, type: eReport.LogType.WebTopError, always: true, attribute: true });
 }
 
 const reportHelper = ReportHelper.instance;

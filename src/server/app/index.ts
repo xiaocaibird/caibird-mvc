@@ -203,7 +203,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
         target.filterOrderList[order].push(filter);
 
         return target as T extends dp.Func ? dMvc.S.BaseController<TState, TCustom> & dMvc.S.CommonProps<TRules, TState, TCustom> & dMvc.S.ControllerProps<TRules, TState, TCustom> : dMvc.S.BaseAction & dMvc.S.CommonProps<TRules, TState, TCustom>;
-    }
+    };
 
     private readonly initController = (startOpt: StartOpt<TRules, TState, TCustom>) => {
         const { controllers, defaultFilters = [] } = startOpt;
@@ -290,7 +290,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
 
             this.apiMap[key] = controller as dMvc.S.Controller<TRules, TState, TCustom>;
         }
-    }
+    };
 
     private readonly onCheckRules = async (controller: dMvc.S.Controller<TRules, TState, TCustom>, action: dMvc.S.Action<TRules, TState, TCustom>) => {
         const controllerFilterOrderList = controller.filterOrderList;
@@ -320,7 +320,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
                 }
             }
         }
-    }
+    };
 
     private readonly onExecute = async (target: dMvc.S.Action<TRules, TState, TCustom> | dMvc.S.Controller<TRules, TState, TCustom>, executeType: eMvc.S.FilterExecuteType) => {
         const filterOrderList = target.filterOrderList;
@@ -335,7 +335,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
                 }
             }
         }
-    }
+    };
 
     private readonly listenError = () => {
         const {
@@ -394,7 +394,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
                 console.error('app error:', e);
             }
         });
-    }
+    };
 
     private readonly init = (startOpt: StartOpt<TRules, TState, TCustom>) => {
         const { disableDefaultTimestamp } = this.options;
@@ -402,7 +402,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
             contextHelper.disableDefaultTimestamp();
         }
         this.initController(startOpt);
-    }
+    };
 
     private readonly defaultOnRequestError = (error: Error | InstanceType<typeof cError.Base>) => {
         const key = 'defaultOnRequestError';
@@ -455,7 +455,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
                 details: error,
             });
         }
-    }
+    };
 
     private readonly entryMiddleware: dMvc.S.Middleware<TState, TCustom> = async (ctx, next) => {
         const { disableDefalutLog, onRequestBegin, onRequestEnd, onRequestError, disableAllDefaultErrorHandler, disableDefaultRequestErrorHandler, tracingPathIgnore = [] } = this.options;
@@ -501,11 +501,11 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
                 span?.finish();
             }
         });
-    }
+    };
 
     private readonly lastMiddleware: dMvc.S.Middleware<TState, TCustom> = () => {
         throw new cError.Status(eHttp.StatusCode.NotFound);
-    }
+    };
 
     private readonly getRoutes = () => {
         const {
@@ -596,7 +596,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
         });
 
         return router.routes();
-    }
+    };
 
     private readonly use = async () => {
         const {
@@ -618,7 +618,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
         this.koa.use(this.getRoutes());
         onPostUseMvc && await onPostUseMvc(this.koa, this);
         this.koa.use(this.lastMiddleware);
-    }
+    };
 
     private getControllerName(controller: string) { return controller.toLowerCase(); }
     private getActionName(action: string) { return action.toLowerCase(); }
@@ -647,7 +647,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
         onEnd && await onEnd(this);
         // this.koa.listen(port, host, () => console.log(`server run: http://${host}:${port}`));
         this.server.listen(port, host, () => console.log(`server run: http://${host}:${port}`));
-    }
+    };
 }
 
 type Options<TRules extends dp.Obj, TState extends dp.Obj, TCustom extends dp.Obj, TControllerDefaultConfig extends dp.Obj | undefined> = (TControllerDefaultConfig extends undefined ? { controllerDefaultConfig?: undefined } : { controllerDefaultConfig: TControllerDefaultConfig }) & {

@@ -26,19 +26,19 @@ export abstract class HNavigator {
             return false;
         }
         return true;
-    }
+    };
 
     public readonly push = (route: RouterHistory.LocationDescriptor) => {
         this.checkPathChange(route) && this.navigator.push(uObject.check(route) ? route : { pathname: route });
-    }
+    };
 
     public readonly replace = (route: RouterHistory.LocationDescriptor) => {
         this.checkPathChange(route) && this.navigator.replace(uObject.check(route) ? route : { pathname: route });
-    }
+    };
 
     public readonly back = () => {
         this.navigator.goBack();
-    }
+    };
 
     public readonly goHome = (isReplace = true) => {
         if (isReplace) {
@@ -46,12 +46,12 @@ export abstract class HNavigator {
         } else {
             this.push(this.HOME_PATH);
         }
-    }
+    };
 
     public readonly resetToHome = () => {
         this.goHome();
         this.reload();
-    }
+    };
 
     public readonly goLogin = (isReplace = true) => {
         if (isReplace) {
@@ -59,13 +59,13 @@ export abstract class HNavigator {
         } else {
             this.push(this.LOGIN_PATH);
         }
-    }
+    };
 
     public readonly reload = () => {
         location.reload();
-    }
+    };
 
     public readonly openUrl = (url: string, target: '_blank' | '_parent' | '_self' | '_top' = '_top') => {
         window.open(url, target);
-    }
+    };
 }

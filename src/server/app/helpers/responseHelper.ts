@@ -33,7 +33,7 @@ class ResponseHelper {
         ctx.body = json;
         ctx.status = eHttp.StatusCode.Ok;
         ctx.type = 'json';
-    }
+    };
 
     public readonly xml = (xmlStr: string, ctx = contextHelper.get()) => {
         if (ctx.headerSent) {
@@ -47,7 +47,7 @@ class ResponseHelper {
         ctx.body = xmlStr;
         ctx.status = eHttp.StatusCode.Ok;
         ctx.type = 'xml';
-    }
+    };
 
     public readonly status = (status: eHttp.StatusCode, msg?: string, ctx = contextHelper.get()) => {
         if (ctx.headerSent) {
@@ -59,7 +59,7 @@ class ResponseHelper {
         }
         ctx.body = msg || cMessage.httpStatus[status];
         ctx.status = status;
-    }
+    };
 
     public readonly buffer = (buffer: Buffer, fileName: string, opt: { type?: eHttp.ContentDispositionType } = {}, ctx = contextHelper.get()) => {
         if (ctx.headerSent) {
@@ -72,7 +72,7 @@ class ResponseHelper {
         ctx.set('Content-Disposition', `${opt.type ?? eHttp.ContentDispositionType.Attachment};filename=${encodeURIComponent(fileName)}`);
         ctx.body = buffer;
         ctx.status = eHttp.StatusCode.Ok;
-    }
+    };
 
     public readonly file = async (path: string, opt?: koaSend.SendOptions, ctx = contextHelper.get()) => {
         if (ctx.headerSent) {
@@ -89,7 +89,7 @@ class ResponseHelper {
             throw new cError.Status(eHttp.StatusCode.ServerError,
                 { key: 'responseHelper_sendFile', error });
         }
-    }
+    };
 
     public readonly render = async <T>(view: string, params?: T, ctx = contextHelper.get()) => {
         if (ctx.headerSent) {
@@ -112,7 +112,7 @@ class ResponseHelper {
             throw new cError.Status(eHttp.StatusCode.ServerError,
                 { key: 'responseHelper_render', error });
         }
-    }
+    };
 }
 
 export const responseHelper = ResponseHelper.instance;

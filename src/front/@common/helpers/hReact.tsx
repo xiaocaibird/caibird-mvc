@@ -44,7 +44,7 @@ export abstract class HReact<TRootContext> {
                     });
                     this.isCallOnInnerDidMount = true;
                 }
-            }
+            };
 
             public render() {
                 const { Component, isClassComponent } = this.state;
@@ -75,12 +75,12 @@ export abstract class HReact<TRootContext> {
         };
 
         return With;
-    }
+    };
 
     public readonly withAutoDestroy = <TProps extends { visible?: boolean }>(Component: React.ComponentType<TProps>) => memo(
         (props: TProps) => props.visible ? <Component {...props} /> : null,
-    )
+    );
 
     public readonly createHocDisplayName = (hocName: string, WrappedComponent?: React.ComponentType) =>
-        `${hocName}(${WrappedComponent && (WrappedComponent.displayName || WrappedComponent.name) || 'Component'})`
+        `${hocName}(${WrappedComponent && (WrappedComponent.displayName || WrappedComponent.name) || 'Component'})`;
 }

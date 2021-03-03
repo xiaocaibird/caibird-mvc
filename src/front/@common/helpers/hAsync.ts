@@ -36,7 +36,7 @@ export abstract class HAsync<TCustomRunOpt extends dp.Obj = dp.Obj> {
             return eAsync.F.Status.BeBreaked;
         }
         return eAsync.F.Status.Running;
-    }
+    };
 
     public readonly run = async <T = void>(task: dp.PromiseFunc<unknown[], T> | Promise<T>, opt: Options & Partial<TCustomRunOpt> = {}) => {
         const { action = eAsync.F.Action.Break, key, onExecuteSuccess, onExecuteFail, onExecuteEnd } = opt;
@@ -98,7 +98,7 @@ export abstract class HAsync<TCustomRunOpt extends dp.Obj = dp.Obj> {
                 this.map[strKey][strPromiseKey] = undefined;
             }
         }
-    }
+    };
 }
 
 //#region 私有类型
