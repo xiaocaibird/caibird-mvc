@@ -30,6 +30,7 @@ export abstract class HDb {
 
     public readonly Op: dp.DeepReadonly<typeof Sequelize.Op> = Sequelize.Op;
 
+    // eslint-disable-next-line no-control-regex
     public readonly clearIllegalChar = (text: string) => text.replace(/[^\u0000-\uFFFF]/g, '');
 
     public readonly setOneToOne = (aTable: {

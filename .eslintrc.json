@@ -636,30 +636,30 @@
         "space-infix-ops": "off",
         "@typescript-eslint/space-infix-ops": ["error", {
             "int32Hint": false
-        }]
+        }],
         //#endregion
 
-        // //#region 【eslint-possible-errors】 rules
-        // // 禁止方向错误的for循环
-        // "for-direction": ["error"],
-        // // 禁止无return的getter【ts已有】
-        // "getter-return": "off",
-        // // 禁止在new Promise时使用async
-        // "no-async-promise-executor": ["error"],
-        // // 禁止在for 中使用await【无需】
-        // "no-await-in-loop": "off",
-        // // 禁止比较-0
-        // "no-compare-neg-zero": ["error"],
-        // // 禁止在条件语句中赋值
-        // "no-cond-assign": ["error", "always"],
-        // // 禁止console【TODO】
-        // "no-console": "off",
-        // // 禁止在条件中使用常量
-        // "no-constant-condition": ["error", {
-        //     "checkLoops": true
-        // }],
-        // // 禁止在正则中出现ascii中的的control字符
-        // "no-control-regex": ["error"],
+        //#region 【eslint-possible-errors】 rules
+        // 禁止方向错误的for循环
+        "for-direction": ["error"],
+        // 禁止无return的getter【ts已有】
+        "getter-return": "off",
+        // 禁止在new Promise时使用async
+        "no-async-promise-executor": ["error"],
+        // 禁止在for 中使用await【无需】
+        "no-await-in-loop": "off",
+        // 禁止比较-0
+        "no-compare-neg-zero": ["error"],
+        // 禁止在条件语句中赋值
+        "no-cond-assign": ["error", "always"],
+        // 禁止console【TODO】
+        "no-console": "off",
+        // 禁止在条件中使用常量
+        "no-constant-condition": ["error", {
+            "checkLoops": true
+        }],
+        // 禁止在正则中出现ascii中的的control字符
+        "no-control-regex": ["error"]
         // // 禁止使用debugger
         // "no-debugger": ["error"],
         // // 禁止重复的函数参数【ts已有】
