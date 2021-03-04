@@ -1214,6 +1214,7 @@
 
         "@typescript-eslint/tslint/config": ["error",
             {
+                "lintFile": "./tslint.json",
                 "rules": {
                     // "array-bracket-spacing": [true, "never"],
 

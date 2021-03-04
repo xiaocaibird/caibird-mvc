@@ -62,10 +62,7 @@
         //禁止内部module，用namespace代替
         "no-internal-module": true,
         //不允许在变量赋值之外使用常数数值
-        "no-magic-numbers": [true, {
-            "allowed-numbers": [-1, 0, 1, 2, 3, 4, 5],
-            "ignore-jsx": true
-        }],
+        "no-magic-numbers": false,
         //统一使用es6的模块风格，不允许使用module和namespace(可以使用)
         "no-namespace": false,
         //不允许使用非空断言
@@ -228,7 +225,7 @@
         //能用三目表达式实现赋值时，就不要用if else (没必要)
         "prefer-conditional-expression": false,
         //不允许使用Object.assign(),要用扩展运算符
-        "prefer-object-spread": true,
+        "prefer-object-spread": false,
         //必需传radix(当前的项目和环境不需要传)
         "radix": false,
         //加法运算符只能用在number、string中。【编译时检查】
@@ -296,7 +293,7 @@
         "prefer-readonly": true,
         //禁止尾部逗号
         "trailing-comma": [true, {
-            "multiline": "never",
+            "multiline": "always",
             "singleline": "never"
         }],
         //#endregion
@@ -405,7 +402,7 @@
         //当返回类型是void时不能return undefined;。当返回类型是undefined时不能return;【编译时检查】
         "return-undefined": true,
         //强制使用分号结束语句
-        "semicolon": true,
+        "semicolon": false,
         //函数变量前的空格检查
         "space-before-function-paren": [true, {
             "anonymous": "always",
@@ -419,7 +416,7 @@
         //控制switch最后一个语句是否必需以break结束
         "switch-final-break": true,
         //类型定义必需使用分号结尾
-        "type-literal-delimiter": true,
+        "type-literal-delimiter": false,
         //禁止无用的bind
         "unnecessary-bind": true,
         //禁用无用的else
