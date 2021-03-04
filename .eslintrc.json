@@ -639,7 +639,7 @@
         }],
         //#endregion
 
-        //#region 【eslint-possible-errors】 rules
+        //#region 【eslint-possible-errors】 27(errors) + 8(off) = 35(rules)
         // 禁止方向错误的for循环
         "for-direction": ["error"],
         // 禁止无return的getter【ts已有】
@@ -712,6 +712,43 @@
         // 禁止对promise的执行函数返回具体值
         "no-promise-executor-return": ["error"],
         // 禁止直接使用object.prototype的内置方法
-        "no-prototype-builtins": ["error"]
+        "no-prototype-builtins": ["error"],
+        // 禁止正则中有多个空格
+        "no-regex-spaces": ["error"],
+        // 禁止在setter中return【ts已有】
+        "no-setter-return": "off",
+        // 禁止稀疏数组
+        "no-sparse-arrays": ["error"],
+        // 禁止在普通字符串中有模板字符串语法字符【无需-IDE可以直观看出区别】
+        "no-template-curly-in-string": "off",
+        // 禁止可能产生混乱的多行比较式
+        "no-unexpected-multiline": ["error"],
+        // 禁止无法到达的代码【ts已有】
+        "no-unreachable": "off",
+        // 禁止无效的循环
+        "no-unreachable-loop": ["error", {
+            "ignore": []
+        }],
+        // 禁止不安全的finally
+        "no-unsafe-finally": ["error"],
+        // 禁止不安全的操作符
+        "no-unsafe-negation": ["error", {
+            "enforceForOrderingRelations": true
+        }],
+        // 禁止不安全的可选链表达式访问【ts已有】
+        "no-unsafe-optional-chaining": "off",
+        // 禁止在正则中使用无效的转义
+        "no-useless-backreference": ["error"],
+        // 禁止可能有线程安全的promise操作【无需-多个promise交叉影响是很常见的，开发者应自己把控安全性】
+        "require-atomic-updates": "off",
+        // 禁止使用isNaN以外的方式判断NaN
+        "use-isnan": ["error", {
+            "enforceForSwitchCase": true,
+            "enforceForIndexOf": true
+        }],
+        // 禁止typeof与非法字符串比较【ts已有】
+        "valid-typeof": "off"
+        //#endregion
+    
     }
 }
