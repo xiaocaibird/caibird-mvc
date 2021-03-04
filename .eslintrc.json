@@ -759,7 +759,7 @@
 
         //#region 【eslint-best-practices】
         // 禁止单一的getter或setter【无需】
-        "accessor-pairs": ["error"],
+        "accessor-pairs": "off",
         // 禁止在array的一些回调中省略return
         "array-callback-return": ["error", {
             "allowImplicit": false,
