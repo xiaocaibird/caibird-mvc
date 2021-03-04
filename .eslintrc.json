@@ -34,6 +34,7 @@
         "eslint-plugin-unicorn",
         "eslint-plugin-jsdoc",
         "eslint-plugin-react",
+        "eslint-plugin-header",
         "@typescript-eslint"
     ],
     "extends": [
@@ -969,7 +970,11 @@
             "objectsInArrays": false,
             "arraysInArrays": false
         }],
-        "block-spacing": ["error", "always"]
+        "block-spacing": ["error", "always"],
+        // "encoding":["error"],
+        "header/header": ["error", "block", {
+            "pattern": "^\\*\n \\* @Creater .+\n \\* @Desc .+(\n \\* @Detail(( |\n)(((?!\\* @).)|\n)+)?)?\n $"
+        }, 0]
         //#endregion
     }
 }
