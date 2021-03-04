@@ -429,7 +429,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
             } else if (uObject.checkInstance(error, Sequelize.Error)) {
                 responseHelper.json({ code: eFetch.JsonErrorCode.DbError, msg: error.message });
                 reportHelper.dbError({
-                    key: key + '_db',
+                    key: `${key}_db`,
                     msg: error.message,
                     error,
                     attribute: true,
@@ -440,7 +440,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
 
                 responseHelper.status(eHttp.StatusCode.ServerError, err.message);
                 reportHelper.unknownError({
-                    key: key + '_unknown',
+                    key: `${key}_unknown`,
                     msg: err.message,
                     error: err,
                 });
@@ -449,7 +449,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
             const err = (e || new Error()) as Error;
             responseHelper.status(eHttp.StatusCode.ServerError, err.message);
             reportHelper.unknownError({
-                key: key + '_error',
+                key: `${key}_error`,
                 msg: err.message,
                 error: err,
                 details: error,

@@ -13,7 +13,7 @@ export namespace uCookie {
             exp.setTime(exp.getTime() + (days === 'keep' ? keepDays : days) * eDate.MsCount.OneDay);
         }
 
-        document.cookie = `${name}=${encodeURIComponent(value)}${exp == null ? '' : (';expires=' + exp.toUTCString())}`;
+        document.cookie = `${name}=${encodeURIComponent(value)}${exp == null ? '' : (`;expires=${exp.toUTCString()}`)}`;
     };
 
     export const getValue = (name: string) => {

@@ -10,7 +10,7 @@ export namespace uFile {
         if (!ctx.acceptsEncodings('gzip')) {
             return false;
         }
-        return fs.existsSync(path + '.gz');
+        return fs.existsSync(`${path}.gz`);
     };
 
     export const clearDir = (path: string, deleteDir = false) => {
