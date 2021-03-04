@@ -659,35 +659,59 @@
             "checkLoops": true
         }],
         // 禁止在正则中出现ascii中的的control字符
-        "no-control-regex": ["error"]
-        // // 禁止使用debugger
-        // "no-debugger": ["error"],
-        // // 禁止重复的函数参数【ts已有】
-        // "no-dupe-args": "off",
-        // // 禁止重复的条件判断
-        // "no-dupe-else-if": ["error"],
-        // // 禁止object有重复的key【ts已有】
-        // "no-dupe-keys": "off",
-        // // 禁止switch中有重复的case
-        // "no-duplicate-case": ["error"],
-        // // 禁止空代码块
-        // "no-empty": ["error", {
-        //     "allowEmptyCatch": true
-        // }],
-        // // 禁止包含空字符的正则
-        // "no-empty-character-class": ["error"],
-        // // 禁止给catch(e)中的e赋值
-        // "no-ex-assign": ["error"],
-        // // 禁止不必要的boolean转换
-        // "no-extra-boolean-cast": ["error", {
-        //     "enforceForLogicalOperands": true
-        // }],
-        // // 禁止多余的括号【ts-plugin已有】
-        // // "no-extra-parens": "off",
-        // // // 禁止多余的分号【ts-plugin已有】
-        // // "no-extra-semi": "off",
-        // //#endregion
-        // // 禁止重复定义函数
-        // "no-func-assign": ["error"]
+        "no-control-regex": ["error"],
+        // 禁止使用debugger
+        "no-debugger": ["error"],
+        // 禁止重复的函数参数【ts已有】
+        "no-dupe-args": "off",
+        // 禁止重复的条件判断
+        "no-dupe-else-if": ["error"],
+        // 禁止object有重复的key【ts已有】
+        "no-dupe-keys": "off",
+        // 禁止switch中有重复的case
+        "no-duplicate-case": ["error"],
+        // 禁止空代码块
+        "no-empty": ["error", {
+            "allowEmptyCatch": true
+        }],
+        // 禁止包含空字符的正则
+        "no-empty-character-class": ["error"],
+        // 禁止给catch(e)中的e赋值
+        "no-ex-assign": ["error"],
+        // 禁止不必要的boolean转换
+        "no-extra-boolean-cast": ["error", {
+            "enforceForLogicalOperands": true
+        }],
+        // 禁止多余的括号【ts-plugin已有】
+        // "no-extra-parens": "off",
+        // 禁止多余的分号【ts-plugin已有】
+        // "no-extra-semi": "off",
+        // 禁止重复定义函数
+        "no-func-assign": ["error"],
+        // 禁止给import的成员赋值
+        "no-import-assign": ["error"],
+        // 禁止在内部作用域定义function和var
+        "no-inner-declarations": ["error", "both"],
+        // 禁止无效的正则
+        "no-invalid-regexp": ["error", {
+            // "allowConstructorFlags": []
+        }],
+        // 禁止非法空格
+        "no-irregular-whitespace": ["error", {
+            "skipStrings": false,
+            "skipComments": false,
+            "skipRegExps": false,
+            "skipTemplates": false
+        }],
+        // 禁止失精数字【ts-plugin已有】
+        // "no-loss-of-precision": "off",
+        // 禁止正则中使用code point组合字符
+        "no-misleading-character-class": ["error"],
+        // 禁止对一些全局对象的非法调用
+        "no-obj-calls": ["error"],
+        // 禁止对promise的执行函数返回具体值
+        "no-promise-executor-return": ["error"],
+        // 禁止直接使用object.prototype的内置方法
+        "no-prototype-builtins": ["error"]
     }
 }

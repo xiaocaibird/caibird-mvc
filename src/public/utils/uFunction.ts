@@ -10,7 +10,7 @@ export namespace uFunction {
 
     // eslint-disable-next-line @typescript-eslint/ban-types
     export const checkExtendsClass = <T extends Function>(sonClass: dp.AllowNon<Function>, fatherClass: T): sonClass is T =>
-        sonClass ? !!(fatherClass.prototype as { isPrototypeOf: dp.Func }).isPrototypeOf(sonClass.prototype) : false;
+        sonClass ? Object.isPrototypeOf.call(fatherClass.prototype, sonClass.prototype) : false;
 }
 
 export default uFunction;
