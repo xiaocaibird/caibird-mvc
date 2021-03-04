@@ -698,7 +698,7 @@
         // 禁止给import的成员赋值
         "no-import-assign": ["error"],
         // 禁止在内部作用域定义function和var
-        "no-inner-declarations": ["error", "both"],
+        "no-inner-declarations": ["error", "functions"],
         // 禁止无效的正则
         "no-invalid-regexp": ["error", {
             // "allowConstructorFlags": []
@@ -809,12 +809,7 @@
         // "no-lone-blocks": ["error"],
         // "no-loop-func": ["error"],
         // "no-magic-numbers": ["error"],
-        "no-multi-spaces": ["error", {
-            "ignoreEOLComments": false,
-            "exceptions": {
-                "Property": false
-            }
-        }],
+        // "no-multi-spaces": ["error"],
         // "no-multi-str": ["error"],
         // "no-new": ["error"],
         // "no-new-func": ["error"],
@@ -1150,7 +1145,13 @@
         // "no-inferred-empty-object-type"缺失
 
         // "no-inner-declarations"已有
-        // "no-multi-spaces"已有
+
+        "no-multi-spaces": ["error", {
+            "ignoreEOLComments": false,
+            "exceptions": {
+                "Property": false
+            }
+        }],
 
         // "no-promise-as-boolean"REPLACE BY"@typescript-eslint/no-misused-promises"
 
@@ -1204,11 +1205,156 @@
         "prefer-arrow-callback": ["error", {
             "allowNamedFunctions": false,
             "allowUnboundThis": false
-        }]
+        }],
 
         // "unnecessary-else"缺失
 
         // "whitespace"缺失
         //#endregion
+
+        "@typescript-eslint/tslint/config": [
+            "error",
+            {
+                "rules": {
+                    // "array-bracket-spacing": [true, "never"],
+
+                    // "block-spacing": [true, "always"],
+
+                    "encoding": true,
+
+                    // "file-header": [true, "@Creater .+\n \\* @Desc .+(\n \\* @Detail(( |\n)(((?!\\* @).)|\n)+)?)?\n $"],
+
+                    // "import-spacing": true,
+
+                    // "jsx-no-string-ref": true,
+
+                    // "no-empty-character-class": true,
+
+                    // "no-ex-assign": true,
+
+                    "no-inferred-empty-object-type": true,
+
+                    // "no-inner-declarations": [
+                    //     true,
+                    //     "functions"
+                    // ],
+
+                    // "no-multi-spaces": [
+                    //     true,
+                    //     {
+                    //         "exceptions": {
+                    //             "VariableDeclaration": false,
+                    //             "PropertyAssignment": false,
+                    //             "BinaryExpression": false
+                    //         }
+                    //     }
+                    // ],
+
+                    // "no-promise-as-boolean": [
+                    //     true,
+                    //     {
+                    //         "promise-classes": [
+                    //             "Bluebird"
+                    //         ]
+                    //     }
+                    // ],
+
+                    // "no-restricted-globals": true,
+
+                    // "no-tautology-expression": true,
+
+                    "no-unnecessary-callback-wrapper": true,
+
+                    // "no-unsafe-any": true,
+
+                    "number-literal-format": true,
+
+                    // "object-curly-spacing": [
+                    //     true,
+                    //     "always"
+                    // ],
+
+                    // "prefer-method-signature": true,
+
+                    "prefer-switch": [true, 3],
+
+                    "prefer-while": true,
+
+                    // "react-no-unnecessary-fragment": true,
+
+                    "return-undefined": true,
+
+                    // "static-this": true,
+
+                    "switch-final-break": true,
+
+                    // "ter-computed-property-spacing": [
+                    //     true,
+                    //     "never"
+                    // ],
+
+                    // "ter-func-call-spacing": [
+                    //     true,
+                    //     "never"
+                    // ],
+
+                    // "ter-indent": [
+                    //     true,
+                    //     4,
+                    //     {
+                    //         "SwitchCase": 1,
+                    //         "VariableDeclarator": {
+                    //             "var": 1,
+                    //             "let": 1,
+                    //             "const": 1
+                    //         },
+                    //         "outerIIFEBody": 1,
+                    //         "MemberExpression": 1,
+                    //         "FunctionDeclaration": {
+                    //             "body": 1,
+                    //             "parameters": 1
+                    //         },
+                    //         "FunctionExpression": {
+                    //             "body": 1,
+                    //             "parameters": 1
+                    //         },
+                    //         "CallExpression": {
+                    //             "arguments": 1
+                    //         }
+                    //     }
+                    // ],
+
+                    // "ter-no-proto": true,
+
+                    // "ter-no-script-url": true,
+
+                    // "ter-no-self-compare": true,
+
+                    // "ter-no-tabs": true,
+
+                    // "ter-padded-blocks": [
+                    //     true,
+                    //     "never"
+                    // ],
+
+                    // "ter-prefer-arrow-callback": true,
+
+                    "unnecessary-else": [true, {
+                        "allow-else-if": true
+                    }],
+                    "whitespace": [true,
+                        "check-branch",
+                        "check-decl",
+                        "check-operator",
+                        "check-module",
+                        "check-preblock",
+                        "check-separator",
+                        "check-rest-spread",
+                        "check-type",
+                        "check-type-operator"
+                    ]
+                }
+            }
+        ]
     }
 }
