@@ -818,7 +818,7 @@
         // "no-octal-escape": ["error"],
         "no-param-reassign": ["error", {
             // "ignorePropertyModificationsForRegex": [],
-            "props": true
+            "props": false
         }],
         // "no-proto": ["error"],
         // "no-redeclare": ["error"],
@@ -871,7 +871,7 @@
         //#endregion
 
         //#region 【tslint】
-        "arrow-body-style": ["error", "always"],
+        "arrow-body-style": ["error", "as-needed"],
         "arrow-parens": ["error", "as-needed"],
 
         "constructor-super": "error",
@@ -909,7 +909,7 @@
         "no-new-func": "error",
         "no-new-wrappers": "error",
         "no-null/no-null": "off",
-        "no-plusplus": "error",
+        // "no-plusplus": "error",
 
         "no-restricted-imports": "off",
         "no-restricted-syntax": ["off", "ForInStatement"],
@@ -954,7 +954,9 @@
 
         "space-in-parens": ["error", "never"],
         "spaced-comment": ["error", "always", {
-            "markers": ["/"]
+            "line": {
+                "markers": ["#region", "#endregion"]
+            }
         }],
         "unicorn/filename-case": "off",
 
