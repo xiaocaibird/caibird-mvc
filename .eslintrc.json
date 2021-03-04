@@ -27,7 +27,6 @@
         }
     },
     "plugins": [
-        "eslint-plugin-react",
         "eslint-plugin-prefer-arrow",
         "eslint-plugin-import",
         "eslint-plugin-no-null",
@@ -35,7 +34,8 @@
         "eslint-plugin-jsdoc",
         "eslint-plugin-react",
         "eslint-plugin-header",
-        "@typescript-eslint"
+        "@typescript-eslint",
+        "@typescript-eslint/tslint"
     ],
     "extends": [
         // "eslint:all", 
