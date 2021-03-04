@@ -1212,8 +1212,7 @@
         // "whitespace"缺失
         //#endregion
 
-        "@typescript-eslint/tslint/config": [
-            "error",
+        "@typescript-eslint/tslint/config": ["error",
             {
                 "rules": {
                     // "array-bracket-spacing": [true, "never"],
