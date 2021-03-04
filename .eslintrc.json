@@ -809,7 +809,12 @@
         // "no-lone-blocks": ["error"],
         // "no-loop-func": ["error"],
         // "no-magic-numbers": ["error"],
-        // "no-multi-spaces": ["error"],
+        "no-multi-spaces": ["error", {
+            "ignoreEOLComments": false,
+            "exceptions": {
+                "Property": false
+            }
+        }],
         // "no-multi-str": ["error"],
         // "no-new": ["error"],
         // "no-new-func": ["error"],
@@ -964,17 +969,94 @@
         "yoda": "error",
         //#endregion
 
-        //#region 【tslint-eslint】
+        //#region 【tslint-lose】
         "array-bracket-spacing": ["error", "never", {
             "singleValue": false,
             "objectsInArrays": false,
             "arraysInArrays": false
         }],
+
         "block-spacing": ["error", "always"],
-        // "encoding":["error"],
+
+        // "encoding"缺失
+
+        // REPLACE:file-header
         "header/header": ["error", "block", {
             "pattern": "^\\*\n \\* @Creater .+\n \\* @Desc .+(\n \\* @Detail(( |\n)(((?!\\* @).)|\n)+)?)?\n $"
-        }, 0]
+        }, 0],
+
+        // "import-spacing"REPLACE BY"@typescript-eslint/object-curly-spacing",
+
+        // REPLACE:jsx-no-string-ref
+        "react/no-string-refs": ["error", {
+            "noTemplateLiterals": true
+        }],
+
+        // "no-empty-character-class"已有
+        // "no-ex-assign"已有
+
+        // "no-inferred-empty-object-type"缺失
+
+        // "no-inner-declarations"已有
+        // "no-multi-spaces"已有
+
+        // "no-promise-as-boolean"REPLACE BY"@typescript-eslint/no-misused-promises"
+
+        "no-restricted-globals": ["error"],
+
+        // "no-tautology-expression"REPLACE BY"no-constant-condition"
+
+        // "no-unnecessary-callback-wrapper"缺失
+
+        // "no-unsafe-any"REPLACE BY"no-unsafe-call"
+
+        // "number-literal-format"缺失
+
+        // "object-curly-spacing"已有
+
+        // "prefer-method-signature"REPLACE BY"@typescript-eslint/method-signature-style"
+
+        // "prefer-switch"缺失
+
+        // "prefer-while"缺失
+
+        // REPLACE:react-no-unnecessary-fragment
+        "react/jsx-no-useless-fragment": ["error"],
+
+        // "return-undefined"缺失
+
+        // "static-this"无需
+
+        // "switch-final-break"缺失
+
+        "computed-property-spacing": ["error", "never", {
+            "enforceForClassMembers": true
+        }],
+
+        // "func-call-spacing"已有
+
+        // "indent"已有
+
+        "no-proto": ["error"],
+
+        "no-script-url": ["error"],
+
+        "no-self-compare": ["error"],
+
+        "no-tabs": ["error", {
+            "allowIndentationTabs": false
+        }],
+
+        "padded-blocks": ["error", "never"],
+
+        "prefer-arrow-callback": ["error", {
+            "allowNamedFunctions": false,
+            "allowUnboundThis": false
+        }]
+
+        // "unnecessary-else"缺失
+
+        // "whitespace"缺失
         //#endregion
     }
 }
