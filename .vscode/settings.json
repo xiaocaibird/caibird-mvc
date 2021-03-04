@@ -28,5 +28,40 @@
     },
     "[html]": {
         "editor.defaultFormatter": "HookyQR.beautify"
-    }
+    },
+
+    // "eslint.alwaysShowStatus": false,
+    // "eslint.codeAction.disableRuleComment": {
+    // },
+    // "eslint.codeAction.showDocumentation": {
+    //     "enable": true
+    // },
+    // "eslint.codeActionsOnSave.mode": "all",
+    // "eslint.debug": false,
+    // "eslint.format.enable": false,
+    // "eslint.lintTask.enable": false,
+    // "eslint.lintTask.options": ".",
+    // "eslint.nodeEnv": "",
+    // "eslint.nodePath": "",
+    // "eslint.onIgnoredFiles": "off",
+    // "eslint.options": {
+    // },
+    // "eslint.packageManager": "npm",
+    // "eslint.probe": [
+    //     "javascript",
+    //     "javascriptreact",
+    //     "typescript",
+    //     "typescriptreact",
+    //     "html",
+    //     "vue",
+    //     "markdown"
+    // ],
+    // "eslint.quiet": false,
+    // "eslint.run": "onType",
+    // "eslint.runtime": "",
+    // "eslint.trace.server": null,
+    // "eslint.validate": [
+    // ],
+    // "eslint.workingDirectories": [
+    // ],
 }
