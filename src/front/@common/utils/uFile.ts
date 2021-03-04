@@ -92,7 +92,7 @@ export namespace uFile {
 
             image.src = src;
 
-            if (image.complete) {// 有缓存
+            if (image.complete) { // 有缓存
                 imageInfo.width = image.naturalWidth || image.width;
                 imageInfo.height = image.naturalHeight || image.height;
                 resolve(imageInfo);

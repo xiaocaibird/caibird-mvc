@@ -960,7 +960,16 @@
         }],
         "unicorn/filename-case": "off",
 
-        "yoda": "error"
+        "yoda": "error",
+        //#endregion
+
+        //#region 【tslint-eslint】
+        "array-bracket-spacing": ["error", "never", {
+            "singleValue": false,
+            "objectsInArrays": false,
+            "arraysInArrays": false
+        }],
+        "block-spacing": ["error", "always"]
         //#endregion
     }
 }
