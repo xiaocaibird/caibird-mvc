@@ -7,8 +7,5 @@
         "./configs/.eslintrc.json"
     ],
     "rules": {
-        "@typescript-eslint/tslint/config": ["error", {
-            "lintFile": "./tslint.json"
-        }]
     }
 }

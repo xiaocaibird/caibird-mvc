@@ -588,6 +588,6 @@
     },
     "rulesDirectory": [],
     "linterOptions": {
-        "exclude": ["**/dist/**", "**/node_modules/**", "**/lib/**", "**/bundle/**", "**/.tsc/**", "**/assets/**"]
+        "exclude": []
     }
 }
