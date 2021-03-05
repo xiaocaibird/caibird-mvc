@@ -10,7 +10,7 @@
         "@typescript-eslint/no-var-requires": "off",
         "@typescript-eslint/no-unsafe-member-access": "off",
         "@typescript-eslint/tslint/config": ["error", {
-            "rules": {}
+            "lintFile": "./bin/tslint.json"
         }]
     }
 }
