@@ -44,7 +44,7 @@
     "globals": {},
     // "processor": "",
     "overrides": [],
-    "ignorePatterns": ["**/dist/**", "**/node_modules/**", "**/lib/**", "**/bundle/**", "**/.tsc/**", "**/assets/**"],
+    "ignorePatterns": ["**/dist/**", "**/node_modules/**", "**/lib/**", "**/bundle/**", "**/.tsc/**", "**/assets/**", "**/server/models/**"],
     "settings": {},
     "noInlineConfig": false,
     "reportUnusedDisableDirectives": true,
