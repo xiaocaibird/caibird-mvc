@@ -1,10 +1,11 @@
 {
     "compilerOptions": {
+        "noEmit": false,
         "rootDir": ".",
-        "outDir": ".tsc"
+        "outDir": "../.tsc"
     },
     "include": [
         "./"
     ],
-    "extends": "./configs/tsconfig.json"
+    "extends": "../tsconfig.json"
 }

@@ -7,12 +7,11 @@
     "init-project": "npm i rimraf -g && rimraf node_modules && npm run install-shelljs && node bin/initProject && npm i",
     "update-package": "rimraf node_modules package-lock.json && npm run install-shelljs && node bin/updatePackage",
     "clear:tsc": "rimraf .tsc",
-    "tslint": "node node_modules/tslint/bin/tslint -t verbose --project tsconfig.json",
-    "eslint": ".\\node_modules\\.bin\\eslint --cache --cache-location \"./.eslint/cache\" -f codeframe --ext .ts,tsx src/",
-    "eslint-no-cache": "rimraf .eslint/cache && .\\node_modules\\.bin\\eslint --cache --cache-location \"./.eslint/cache\" -f codeframe --ext .ts,tsx src/",
-    "eslint-fix": ".\\node_modules\\.bin\\eslint --cache --cache-location \"./.eslint/cache\" -f codeframe --ext .ts,tsx src/ --fix",
-    "tsc": "npm run clear:tsc && node node_modules/typescript/bin/tsc",
-    "check-tsc": "npm run tslint && npm run tsc"
+    "eslint": ".\\node_modules\\.bin\\eslint --cache --cache-location \"./.eslint/cache\" -f codeframe --ext .ts,.tsx,.js,.jsx ./",
+    "eslint-no-cache": "rimraf .eslint/cache && npm run eslint",
+    "eslint-fix": ".\\node_modules\\.bin\\eslint --cache --cache-location \"./.eslint/cache\" -f codeframe --ext .ts,.tsx,.js,.jsx ./ --fix",
+    "tsc": "npm run clear:tsc && node node_modules/typescript/bin/tsc -p src/tsconfig.json",
+    "check-tsc": "npm run eslint && npm run tsc"
   },
   "author": "cmZhou",
   "description": "",
