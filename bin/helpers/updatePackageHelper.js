@@ -3,7 +3,7 @@
  * @Desc 把输入的依赖更新到最新版本
  */
 const {
-    execStdout
+    execStdout,
 } = require('../utils');
 
 const getVersionCode = versionStr => versionStr.trim().indexOf('^') === 0 ? versionStr.slice(1) : versionStr;
@@ -12,7 +12,7 @@ const update = ({
     ignore,
     packageJson,
     depLockList,
-    devDepLockList
+    devDepLockList,
 }) => {
     const ignoreList = ignore || [];
 

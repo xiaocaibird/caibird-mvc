@@ -2,13 +2,17 @@
     /**
      * @Creater cmZhou
      */
-    "extends": [
-        "../.eslintrc.json"
-    ],
     "rules": {
         "@typescript-eslint/no-require-imports": "off",
         "@typescript-eslint/no-var-requires": "off",
         "@typescript-eslint/no-unsafe-member-access": "off",
+        "@typescript-eslint/no-unsafe-call": "off",
+        "@typescript-eslint/no-unsafe-assignment": "off",
+        "@typescript-eslint/restrict-template-expressions": "off",
+        "@typescript-eslint/no-unsafe-return": "off",
+        "@typescript-eslint/no-implicit-any-catch": "off",
+        "@typescript-eslint/no-magic-numbers": "off",
+        "@typescript-eslint/prefer-optional-chain": "off",
         "@typescript-eslint/tslint/config": ["error", {
             "lintFile": "./bin/tslint.json"
         }]

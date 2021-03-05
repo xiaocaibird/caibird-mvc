@@ -5,13 +5,13 @@
 const {
     execStdout,
     printf,
-    ColorsEnum
+    ColorsEnum,
 } = require('../utils');
 
 const defaultGlobalList = ['sequelize-auto-xiaocaibird-fork', 'kill-port', 'cross-env', 'shx'];
 
 module.exports = ({
-    globalList
+    globalList,
 }) => {
     printf('请确认您安装了 Node v14 及以上版本', ColorsEnum.RED);
     printf('请自行安装tslint等插件', ColorsEnum.RED);

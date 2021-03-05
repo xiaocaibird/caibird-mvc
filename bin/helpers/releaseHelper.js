@@ -11,7 +11,7 @@ const {
     ColorsEnum,
     readline,
     execStdout,
-    exec
+    exec,
 } = require('../utils');
 
 const upload = async ({ ossConfig }) => {
@@ -30,7 +30,7 @@ const upload = async ({ ossConfig }) => {
                 bucket: ossConfig.bucket,
                 accessKeyId: ossConfig.accessKeyId,
                 accessKeySecret: ossConfig.accessKeySecret,
-                ...ossOptions
+                ...ossOptions,
             });
 
             printf(`正在上传${file}...`);
@@ -58,7 +58,7 @@ module.exports = async opt => {
         production,
         exp: 'expProduction',
         test: 'test',
-        dev: 'dev'
+        dev: 'dev',
     };
 
     const isDev = env === envMap.dev;
@@ -200,7 +200,7 @@ module.exports = async opt => {
         // 将构建的tag写入到log文件中，方便前端获取该值
         fs.writeFileSync(logPath, JSON.stringify({
             ...buildLog,
-            tag
+            tag,
         }, null, 2), 'utf-8');
 
         const result2 = exec(`git add . &&

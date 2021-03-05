@@ -7,5 +7,5 @@ module.exports = {
     gitClearTagHelper: require('./gitClearTagHelper'),
     initProjectHelper: require('./initProjectHelper'),
     releaseHelper: require('./releaseHelper'),
-    updatePackageHelper: require('./updatePackageHelper')
+    updatePackageHelper: require('./updatePackageHelper'),
 };

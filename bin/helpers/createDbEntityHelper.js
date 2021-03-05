@@ -4,7 +4,7 @@
  */
 const {
     readline,
-    execStdout
+    execStdout,
 } = require('../utils');
 
 module.exports = async path => {

@@ -8,7 +8,6 @@
     ],
     "jsRules": true,
     "rules": {
-        "no-magic-numbers": false,
         "no-require-imports": false
     }
 }

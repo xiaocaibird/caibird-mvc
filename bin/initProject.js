@@ -5,5 +5,5 @@
 const { initProjectHelper } = require('./helpers');
 
 initProjectHelper({
-    globalList: []
+    globalList: [],
 });
