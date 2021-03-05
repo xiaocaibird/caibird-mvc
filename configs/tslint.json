@@ -154,7 +154,7 @@
         //禁止使用for in迭代数组。【编译时检查】
         "no-for-in-array": true,
         //没有在package.json引入的模块不允许import
-        "no-implicit-dependencies": true,
+        "no-implicit-dependencies": false,
         //当泛型方法无法根据参数推断类型时，必需显式指定泛型的类型或设置默认类型，【编译时检查】
         "no-inferred-empty-object-type": true,
         //禁止在非字符串模板中使用${}(普通字符串中用${}时很容易知道是常规字符串，这里没必要禁用)
@@ -284,7 +284,7 @@
         //禁止同文件使用可合并的命名空间(有时候需要分开)
         "no-mergeable-namespace": false,
         //禁用reuqire
-        "no-require-imports": true,
+        "no-require-imports": false,
         //对象字段赋值要正确排序(目前类型定义时无法控制keys的排序，所以没必要限制了)
         "object-literal-sort-keys": false,
         //能使用const的必需使用const

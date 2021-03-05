@@ -995,7 +995,12 @@
         "id-match": "off",
         "import/no-default-export": "off",
         "import/no-deprecated": "warn",
-        "import/no-extraneous-dependencies": "error",
+        "import/no-extraneous-dependencies": ["error", {
+            "devDependencies": false,
+            "optionalDependencies": false,
+            "peerDependencies": false,
+            "bundledDependencies": false
+        }],
         "import/no-internal-modules": "error",
         "import/no-unassigned-import": "error",
         "import/order": "error",
