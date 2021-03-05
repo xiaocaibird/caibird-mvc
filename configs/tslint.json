@@ -292,10 +292,7 @@
         //能使用readonly的成员必需使用readonly。【编译时检查】
         "prefer-readonly": true,
         //禁止尾部逗号
-        "trailing-comma": [true, {
-            "multiline": "always",
-            "singleline": "never"
-        }],
+        "trailing-comma": false,
         //#endregion
 
         //#region Style

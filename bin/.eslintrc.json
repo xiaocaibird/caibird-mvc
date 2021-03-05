@@ -2,9 +2,8 @@
     /**
      * @Creater cmZhou
      */
-    "root": true,
     "extends": [
-        "./configs/.eslintrc.json"
+        "../.eslintrc.json"
     ],
     "rules": {
         "@typescript-eslint/tslint/config": ["error", {

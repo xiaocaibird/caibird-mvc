@@ -19,7 +19,7 @@
     },
     "[typescript]": {
         "editor.defaultFormatter": "vscode.typescript-language-features"
-    },
+    }
 
     // "eslint.alwaysShowStatus": false,
     // "eslint.codeAction.disableRuleComment": {
