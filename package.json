@@ -3,9 +3,10 @@
   "version": "2.1.7",
   "private": false,
   "scripts": {
-    "install-shelljs": "npm i shelljs@latest --save-dev",
-    "init-project": "npm i rimraf -g && rimraf node_modules && npm run install-shelljs && node bin/initProject && npm i",
-    "update-package": "rimraf node_modules package-lock.json && npm run install-shelljs && node bin/updatePackage",
+    "prepare": "husky install",
+
+    "init-project": "npm i rimraf -g && rimraf node_modules && npm i && husky install && node bin/initProject",
+    "update-package": "rimraf node_modules package-lock.json && npm i shelljs@latest --save-dev && node bin/updatePackage",
     "clear:tsc": "rimraf .tsc",
     "eslint": "eslint --cache --cache-location \"./.eslint/cache\" -f codeframe --ext .ts,.tsx,.js,.jsx ./",
     "eslint-no-cache": "rimraf .eslint/cache && npm run eslint",
