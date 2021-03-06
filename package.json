@@ -3,7 +3,7 @@
   "version": "2.1.7",
   "private": false,
   "scripts": {
-    "prepare": "husky install",
+    "prepare": "git config core.ignorecase false && husky install",
     "init-project": "npm i rimraf -g && rimraf node_modules && npm i && husky install && node bin/initProject",
     "update-package": "rimraf node_modules package-lock.json && npm i shelljs@latest --save-dev && node bin/updatePackage",
     "clear:tsc": "rimraf .tsc",
