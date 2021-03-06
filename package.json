@@ -11,7 +11,8 @@
     "eslint-no-cache": "rimraf .eslint/cache && npm run eslint",
     "eslint-fix": ".\\node_modules\\.bin\\eslint --cache --cache-location \"./.eslint/cache\" -f codeframe --ext .ts,.tsx,.js,.jsx ./ --fix",
     "tsc": "npm run clear:tsc && node node_modules/typescript/bin/tsc -p src/tsconfig.json",
-    "check-tsc": "npm run eslint && npm run tsc"
+    "check-tsc": "npm run eslint && npm run tsc",
+    "prepare": "husky install"
   },
   "husky": {
     "hooks": {
