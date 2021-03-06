@@ -14,11 +14,6 @@
     "check-tsc": "npm run eslint && npm run tsc",
     "prepare": "husky install"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "author": "cmZhou",
   "description": "",
   "dependencies": {},
