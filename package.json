@@ -17,6 +17,9 @@
   "description": "",
   "dependencies": {},
   "homepage": "https://github.com/xiaocaibird/caibird-mvc",
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": "npm run eslint-no-cache"
+  },
   "devDependencies": {
     "@types/ali-oss": "^6.0.5",
     "@types/cls-hooked": "^4.3.1",
