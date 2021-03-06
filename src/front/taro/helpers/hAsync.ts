@@ -1,6 +1,6 @@
 /**
- * @Creater cmZhou
- * @Desc async helper
+ * @Owners cmZhou
+ * @Title async helper
  */
 import { HAsync as base } from '../../@common/helpers/hAsync';
 

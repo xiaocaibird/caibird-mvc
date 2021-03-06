@@ -1,6 +1,6 @@
 /**
- * @Creater cmZhou
- * @Desc tree工具
+ * @Owners cmZhou
+ * @Title tree工具
  */
 import base from '../../public/utils/uTree';
 

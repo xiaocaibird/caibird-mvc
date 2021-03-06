@@ -1,6 +1,6 @@
 /**
- * @Creater cmZhou
- * @Desc cookie 工具
+ * @Owners cmZhou
+ * @Title cookie 工具
  */
 
 export namespace uCookie {

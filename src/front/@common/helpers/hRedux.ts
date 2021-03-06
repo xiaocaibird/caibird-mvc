@@ -1,6 +1,6 @@
 /**
- * @Creater cmZhou
- * @Desc redux helper
+ * @Owners cmZhou
+ * @Title redux helper
  */
 import { cloneDeep } from 'lodash';
 import Redux, { combineReducers, createStore } from 'redux';

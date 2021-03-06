@@ -1,6 +1,6 @@
 /**
- * @Creater cmZhou
- * @Desc bin helper 入口
+ * @Owners cmZhou
+ * @Title bin helper 入口
  */
 module.exports = {
     createDbEntityHelper: require('./createDbEntityHelper'),

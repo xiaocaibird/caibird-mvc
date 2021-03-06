@@ -1,6 +1,6 @@
 /**
- * @Creater cmZhou
- * @Desc uuid工具
+ * @Owners cmZhou
+ * @Title uuid工具
  */
 import base from '../../@common/utils/uUuid';
 

@@ -1,6 +1,6 @@
 /**
- * @Creater cmZhou
- * @Desc 发布
+ * @Owners cmZhou
+ * @Title 发布
  */
 const fs = require('fs');
 const path = require('path');

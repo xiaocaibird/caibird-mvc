@@ -1,6 +1,6 @@
 /**
- * @Creater cmZhou
- * @Desc file 常用枚举
+ * @Owners cmZhou
+ * @Title file 常用枚举
  */
 declare namespace eFile {
     namespace F {

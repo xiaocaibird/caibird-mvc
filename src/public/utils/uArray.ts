@@ -1,6 +1,6 @@
 /**
- * @Creater cmZhou
- * @Desc public array工具
+ * @Owners cmZhou
+ * @Title public array工具
  */
 export namespace uArray {
     export const check = <T>(obj: unknown): obj is T[] => obj instanceof Array;

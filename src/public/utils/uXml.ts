@@ -1,6 +1,6 @@
 /**
- * @Creater cmZhou
- * @Desc xml util
+ * @Owners cmZhou
+ * @Title xml util
  */
 import { OptionsV2, parseString } from 'xml2js';
 

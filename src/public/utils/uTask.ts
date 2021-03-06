@@ -1,6 +1,6 @@
 /**
- * @Creater cmZhou
- * @Desc task util
+ * @Owners cmZhou
+ * @Title task util
  */
 
 export namespace uTask {

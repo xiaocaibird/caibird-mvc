@@ -1,6 +1,6 @@
 /**
- * @Creater cmZhou
- * @Desc react 常用类型
+ * @Owners cmZhou
+ * @Title react 常用类型
  */
 declare namespace dReact {
     type State = never;

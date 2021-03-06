@@ -1,6 +1,6 @@
 /**
- * @Creater cmZhou
- * @Desc db常用枚举
+ * @Owners cmZhou
+ * @Title db常用枚举
  */
 declare namespace eDb {
     namespace S {

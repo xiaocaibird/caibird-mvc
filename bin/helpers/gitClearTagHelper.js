@@ -1,6 +1,6 @@
 /**
- * @Creater cmZhou
- * @Desc 清理git tag
+ * @Owners cmZhou
+ * @Title 清理git tag
  */
 const {
     readline,

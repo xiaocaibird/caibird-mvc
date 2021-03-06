@@ -1,6 +1,6 @@
 /**
- * @Creater cmZhou
- * @Desc web app
+ * @Owners cmZhou
+ * @Title web app
  */
 import { setIsCompatibleHandler, setOnAppError } from '../consts/cError';
 

@@ -1,6 +1,6 @@
 /**
- * @Creater cmZhou
- * @Desc 根据数据库中的表，创建sequelize的model
+ * @Owners cmZhou
+ * @Title 根据数据库中的表，创建sequelize的model
  */
 const {
     readline,

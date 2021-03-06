@@ -1,6 +1,6 @@
 /**
- * @Creater cmZhou
- * @Desc error 常用类型
+ * @Owners cmZhou
+ * @Title error 常用类型
  */
 declare namespace dError {
     namespace F {

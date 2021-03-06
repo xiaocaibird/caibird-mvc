@@ -1,6 +1,6 @@
 /**
- * @Creater cmZhou
- * @Desc redux 常用类型
+ * @Owners cmZhou
+ * @Title redux 常用类型
  */
 declare global {
     namespace dRedux {

@@ -1,6 +1,6 @@
 /**
- * @Creater cmZhou
- * @Desc redux helper
+ * @Owners cmZhou
+ * @Title redux helper
  */
 import { HRedux as base } from '../../@common/helpers/hRedux';
 

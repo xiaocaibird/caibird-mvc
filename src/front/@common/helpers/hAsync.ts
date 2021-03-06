@@ -1,6 +1,6 @@
 /**
- * @Creater cmZhou
- * @Desc async helper
+ * @Owners cmZhou
+ * @Title async helper
  */
 import { cError } from '../consts/cError';
 import { uFunction } from '../utils/uFunction';

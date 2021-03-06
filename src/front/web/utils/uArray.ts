@@ -1,6 +1,6 @@
 /**
- * @Creater cmZhou
- * @Desc array工具
+ * @Owners cmZhou
+ * @Title array工具
  */
 import base from '../../@common/utils/uArray';
 

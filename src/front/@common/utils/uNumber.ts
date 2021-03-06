@@ -1,6 +1,6 @@
 /**
- * @Creater cmZhou
- * @Desc number工具
+ * @Owners cmZhou
+ * @Title number工具
  */
 import base from '../../../public/utils/uNumber';
 

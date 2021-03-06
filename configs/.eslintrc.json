@@ -1,6 +1,6 @@
 {
     /**
-     * @Creater cmZhou
+     * @Owners cmZhou
      */
     "env": {
         "browser": true,
@@ -1133,7 +1133,7 @@
 
         // REPLACE:file-header
         "header/header": ["error", "block", {
-            "pattern": "^\\*\n \\* @Creater .+\n \\* @Desc .+(\n \\* @Detail(( |\n)(((?!\\* @).)|\n)+)?)?\n $"
+            "pattern": "^\\*\n \\* @Owners .+\n \\* @Title .+(\n \\* @Details(( |\n)(((?!\\* @).)|\n)+)?)?\n $"
         }, 0],
 
         // "import-spacing"REPLACE BY"@typescript-eslint/object-curly-spacing",

@@ -1,6 +1,6 @@
 /**
- * @Creater cmZhou
- * @Desc 常用异常类
+ * @Owners cmZhou
+ * @Title 常用异常类
  */
 import base, { setCompatible } from '../../@common/consts/cError';
 

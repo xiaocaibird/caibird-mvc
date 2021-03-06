@@ -1,6 +1,6 @@
 /**
- * @Creater cmZhou
- * @Desc file 工具
+ * @Owners cmZhou
+ * @Title file 工具
  */
 import base from '../../@common/utils/uFile';
 

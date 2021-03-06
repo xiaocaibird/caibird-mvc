@@ -1,6 +1,6 @@
 /**
- * @Creater cmZhou
- * @Desc app reportHelper
+ * @Owners cmZhou
+ * @Title app reportHelper
  */
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 import type Koa from 'koa';

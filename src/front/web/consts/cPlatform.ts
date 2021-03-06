@@ -1,6 +1,6 @@
 /**
- * @Creater cmZhou
- * @Desc platform 常量
+ * @Owners cmZhou
+ * @Title platform 常量
  */
 import base from '../../@common/consts/cPlatform';
 

@@ -1,6 +1,6 @@
 /**
- * @Creater cmZhou
- * @Desc public obj工具
+ * @Owners cmZhou
+ * @Title public obj工具
  */
 import stringify from 'json-stringify-safe';
 

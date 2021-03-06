@@ -1,6 +1,6 @@
 /**
- * @Creater cmZhou
- * @Desc request helper
+ * @Owners cmZhou
+ * @Title request helper
  */
 import { throttle } from 'lodash';
 

@@ -1,6 +1,6 @@
 /**
- * @Creater cmZhou
- * @Desc bin utils
+ * @Owners cmZhou
+ * @Title bin utils
  */
 const shelljs = require('shelljs');
 

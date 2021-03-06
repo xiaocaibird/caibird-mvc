@@ -1,6 +1,6 @@
 /**
- * @Creater cmZhou
- * @Desc 常用数字
+ * @Owners cmZhou
+ * @Title 常用数字
  */
 declare namespace eNumber {
     const enum Common {

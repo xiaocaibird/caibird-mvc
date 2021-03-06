@@ -1,6 +1,6 @@
 /**
- * @Creater cmZhou
- * @Desc public string工具
+ * @Owners cmZhou
+ * @Title public string工具
  */
 export namespace uString {
     export const check = (obj: unknown): obj is string => typeof obj === 'string';

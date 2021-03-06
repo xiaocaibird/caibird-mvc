@@ -1,6 +1,6 @@
 /**
- * @Creater cmZhou
- * @Desc public 函数工具
+ * @Owners cmZhou
+ * @Title public 函数工具
  */
 export namespace uFunction {
     export const noop = () => { };

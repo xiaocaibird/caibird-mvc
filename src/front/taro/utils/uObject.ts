@@ -1,6 +1,6 @@
 /**
- * @Creater cmZhou
- * @Desc obj工具
+ * @Owners cmZhou
+ * @Title obj工具
  */
 import base from '../../@common/utils/uObject';
 

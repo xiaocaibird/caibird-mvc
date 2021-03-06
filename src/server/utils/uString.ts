@@ -1,6 +1,6 @@
 /**
- * @Creater cmZhou
- * @Desc string工具
+ * @Owners cmZhou
+ * @Title string工具
  */
 import base from '../../public/utils/uString';
 

@@ -1,6 +1,6 @@
 /**
- * @Creater cmZhou
- * @Desc request 常用类型
+ * @Owners cmZhou
+ * @Title request 常用类型
  */
 declare namespace dRequest {
     namespace F {

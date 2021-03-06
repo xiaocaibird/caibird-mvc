@@ -1,6 +1,6 @@
 /**
- * @Creater cmZhou
- * @Desc platform 常用枚举
+ * @Owners cmZhou
+ * @Title platform 常用枚举
  */
 declare namespace ePlatform {
     namespace F {

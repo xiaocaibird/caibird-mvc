@@ -1,6 +1,6 @@
 /**
- * @Creater cmZhou
- * @Desc 函数工具
+ * @Owners cmZhou
+ * @Title 函数工具
  */
 import base from '../../public/utils/uFunction';
 

@@ -1,6 +1,6 @@
 /**
- * @Creater cmZhou
- * @Desc platform 工具
+ * @Owners cmZhou
+ * @Title platform 工具
  */
 import compareVersions, { CompareOperator } from 'compare-versions';
 

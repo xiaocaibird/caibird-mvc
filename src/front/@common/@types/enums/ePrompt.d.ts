@@ -1,6 +1,6 @@
 /**
- * @Creater cmZhou
- * @Desc prompt 常用枚举
+ * @Owners cmZhou
+ * @Title prompt 常用枚举
  */
 declare namespace ePrompt {
     namespace F {

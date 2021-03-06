@@ -1,6 +1,6 @@
 /**
- * @Creater cmZhou
- * @Desc report常用类型
+ * @Owners cmZhou
+ * @Title report常用类型
  */
 declare namespace dReport {
     type InitOptions = {

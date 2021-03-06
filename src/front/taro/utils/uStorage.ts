@@ -1,6 +1,6 @@
 /**
- * @Creater cmZhou
- * @Desc storage 工具
+ * @Owners cmZhou
+ * @Title storage 工具
  */
 import base from '../../@common/utils/uStorage';
 

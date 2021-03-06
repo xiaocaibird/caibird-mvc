@@ -1,6 +1,6 @@
 /**
- * @Creater cmZhou
- * @Desc uuid util
+ * @Owners cmZhou
+ * @Title uuid util
  */
 import { v1, v4, v5 } from 'uuid';
 

@@ -1,6 +1,6 @@
 /**
- * @Creater cmZhou
- * @Desc react helper
+ * @Owners cmZhou
+ * @Title react helper
  */
 import { HReact as base } from '../../@common/helpers/hReact';
 

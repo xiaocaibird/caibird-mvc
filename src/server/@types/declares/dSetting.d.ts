@@ -1,6 +1,6 @@
 /**
- * @Creater cmZhou
- * @Desc setting 常用类型
+ * @Owners cmZhou
+ * @Title setting 常用类型
  */
 declare namespace dSetting {
     namespace S {

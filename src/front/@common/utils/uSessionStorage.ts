@@ -1,6 +1,6 @@
 /**
- * @Creater cmZhou
- * @Desc sessionStorage 工具
+ * @Owners cmZhou
+ * @Title sessionStorage 工具
  */
 import { uObject } from './uObject';
 export namespace uSessionStorage {

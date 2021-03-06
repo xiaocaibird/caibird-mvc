@@ -1,6 +1,6 @@
 /**
- * @Creater cmZhou
- * @Desc 通信常用类型
+ * @Owners cmZhou
+ * @Title 通信常用类型
  */
 declare namespace dFetch {
     // eslint-disable-next-line @typescript-eslint/ban-types

@@ -1,6 +1,6 @@
 /**
- * @Creater cmZhou
- * @Desc 公共的常用类型
+ * @Owners cmZhou
+ * @Title 公共的常用类型
  */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 declare namespace dp {

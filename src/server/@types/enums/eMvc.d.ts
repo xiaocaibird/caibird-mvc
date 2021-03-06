@@ -1,6 +1,6 @@
 /**
- * @Creater cmZhou
- * @Desc mvc常用枚举
+ * @Owners cmZhou
+ * @Title mvc常用枚举
  */
 declare namespace eMvc {
     namespace S {

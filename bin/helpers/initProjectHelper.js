@@ -1,6 +1,6 @@
 /**
- * @Creater cmZhou
- * @Desc 安装一些工程必备的依赖
+ * @Owners cmZhou
+ * @Title 安装一些工程必备的依赖
  */
 const {
     execStdout,

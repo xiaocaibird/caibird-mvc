@@ -1,6 +1,6 @@
 /**
- * @Creater cmZhou
- * @Desc mvc常用类型
+ * @Owners cmZhou
+ * @Title mvc常用类型
  */
 import BaseKoa from 'koa';
 import KoaSend from 'koa-send';

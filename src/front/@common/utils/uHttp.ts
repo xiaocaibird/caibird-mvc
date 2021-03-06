@@ -1,6 +1,6 @@
 /**
- * @Creater cmZhou
- * @Desc http工具
+ * @Owners cmZhou
+ * @Title http工具
  */
 import base from '../../../public/utils/uHttp';
 

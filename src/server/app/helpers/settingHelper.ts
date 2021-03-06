@@ -1,6 +1,6 @@
 /**
- * @Creater cmZhou
- * @Desc app settingHelper
+ * @Owners cmZhou
+ * @Title app settingHelper
  */
 import fs from 'fs';
 import path from 'path';

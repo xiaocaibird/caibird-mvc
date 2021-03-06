@@ -1,6 +1,6 @@
 /**
- * @Creater cmZhou
- * @Desc file 常用类型
+ * @Owners cmZhou
+ * @Title file 常用类型
  */
 declare namespace dFile {
     namespace F {

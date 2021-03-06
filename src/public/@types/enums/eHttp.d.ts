@@ -1,6 +1,6 @@
 /**
- * @Creater cmZhou
- * @Desc http常用枚举
+ * @Owners cmZhou
+ * @Title http常用枚举
  */
 declare namespace eHttp {
     const enum StatusCode {

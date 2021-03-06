@@ -1,6 +1,6 @@
 /**
- * @Creater cmZhou
- * @Desc buffer 工具
+ * @Owners cmZhou
+ * @Title buffer 工具
  */
 import { uObject } from './uObject';
 

@@ -1,6 +1,6 @@
 /**
- * @Creater cmZhou
- * @Desc db 常用类型
+ * @Owners cmZhou
+ * @Title db 常用类型
  */
 declare namespace dDb {
     namespace S {

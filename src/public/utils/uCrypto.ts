@@ -1,6 +1,6 @@
 /**
- * @Creater cmZhou
- * @Desc public 加密工具
+ * @Owners cmZhou
+ * @Title public 加密工具
  */
 import crypto, { HashOptions } from 'crypto';
 
