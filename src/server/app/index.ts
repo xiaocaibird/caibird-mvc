@@ -554,7 +554,14 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
                 formParams = uObject.parseJson(body[formRequestKey] as string);
             }
 
-            const actionReturn = await Action.bind(controllerObj)({ ...ctx.query, ...body, ...formParams }) as dMvc.S.BufferActionReturn | dMvc.S.FileActionReturn | dMvc.S.JsonActionReturn<dp.Obj> | dMvc.S.RedirectActionReturn | dMvc.S.RenderActionReturn<dp.Obj> | dMvc.S.XmlActionReturn | null | undefined;
+            const actionReturn = await Action.bind(controllerObj)({ ...ctx.query, ...body, ...formParams }) as
+                dMvc.S.BufferActionReturn |
+                dMvc.S.FileActionReturn |
+                dMvc.S.JsonActionReturn<dp.Obj> |
+                dMvc.S.RedirectActionReturn |
+                dMvc.S.RenderActionReturn<dp.Obj> |
+                dMvc.S.XmlActionReturn |
+                null | undefined;
 
             contextHelper.addTamp(`${controllerName}_${actionName}_end`);
 

@@ -4,7 +4,6 @@
   "private": false,
   "scripts": {
     "prepare": "husky install",
-
     "init-project": "npm i rimraf -g && rimraf node_modules && npm i && husky install && node bin/initProject",
     "update-package": "rimraf node_modules package-lock.json && npm i shelljs@latest --save-dev && node bin/updatePackage",
     "clear:tsc": "rimraf .tsc",
@@ -12,7 +11,8 @@
     "eslint-no-cache": "rimraf .eslint/cache && npm run eslint",
     "eslint-fix": "eslint --cache --cache-location \"./.eslint/cache\" -f codeframe --ext .ts,.tsx,.js,.jsx ./ --fix",
     "tsc": "npm run clear:tsc && tsc -v && tsc -p src/tsconfig.json",
-    "check-tsc": "npm run eslint && npm run tsc"
+    "check-tsc": "npm run eslint && npm run tsc",
+    "check-tsc-no-cache": "npm run eslint-no-cache && npm run tsc"
   },
   "author": "cmZhou",
   "description": "",
