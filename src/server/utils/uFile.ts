@@ -3,7 +3,7 @@
  * @Desc file工具
  */
 import fs from 'fs';
-import type Koa from 'koa'
+import type Koa from 'koa' 
 
 export namespace uFile {
     export const checkGzip = (path: string, ctx: Koa.Context) => {
