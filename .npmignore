@@ -16,4 +16,5 @@ npm-debug.log
 /tsconfig.json
 /tslint.json
 /src/**/tslint.json
+/src/tsconfig.json
 /bin/tslint.json
