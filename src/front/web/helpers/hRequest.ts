@@ -290,7 +290,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
         };
     };
 
-    public readonly fetchJson = async <T>(type: eHttp.MethodType, url: string, req?: dp.Obj | FormData | string | null, opt: dRequest.F.WEB.Options & Partial<TCustomOpt> = {}) => {
+    public readonly fetchJson = async <T>(type: eHttp.MethodType, url: string, req?: unknown, opt: dRequest.F.WEB.Options & Partial<TCustomOpt> = {}) => {
         let data;
         let xhr;
 
@@ -327,7 +327,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
 
     public readonly getLocalUrl = (url: string) => (this.options.prefix ?? '') + url;
 
-    public readonly fetch = async (type: eHttp.MethodType, oriUrl: string, req?: dp.Obj | FormData | string | null, opt: dRequest.F.WEB.Options = {}) => {
+    public readonly fetch = async (type: eHttp.MethodType, oriUrl: string, req?: unknown, opt: dRequest.F.WEB.Options = {}) => {
         let url = oriUrl.trim();
         if (!url.startsWith('http://') && !url.startsWith('https://')) {
             url = this.getLocalUrl(url);
