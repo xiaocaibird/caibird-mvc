@@ -22,9 +22,9 @@ declare namespace dp {
         [k in K]: T;
     };
 
-    type Func<P extends any[] = any[], T = any> = (...p: P) => T;
+    type Func<P extends any[] = any[], T = unknown> = (...p: P) => T;
 
-    type Class<P extends any[] = any[], T = any> = new (...p: P) => T;
+    type Class<P extends any[] = any[], T = unknown> = new (...p: P) => T;
 
     type MapType<K, V> = Map<K, V>;
 
@@ -32,7 +32,7 @@ declare namespace dp {
 
     type GetFuncParams<T extends Func> = T extends Func<infer P> ? P : never;
 
-    type PromiseFunc<P extends any[] = any[], T = any> = (...p: P) => Promise<T>;
+    type PromiseFunc<P extends any[] = any[], T = unknown> = (...p: P) => Promise<T>;
 
     type PromiseOrSelf<T> = Promise<T> | T;
 
