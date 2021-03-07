@@ -100,7 +100,8 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
         const defaultConfig = this.options.controllerDefaultConfig as TControllerDefaultConfig;
 
         const View = {
-            Json: <TData extends dp.Obj | null = null, TOther extends Omit<dFetch.JsonBody, 'code' | 'version'> | undefined = undefined>(data: TData = (null as unknown as TData), other?: TOther): dMvc.S.JsonActionReturn<TData> => ({
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            Json: <TData extends dp.Obj<any> | null = null, TOther extends Omit<dFetch.JsonBody, 'code' | 'version'> | undefined = undefined>(data: TData = (null as unknown as TData), other?: TOther): dMvc.S.JsonActionReturn<TData> => ({
                 type: 'json',
                 result: {
                     code: eFetch.JsonSuccessCode.Success,

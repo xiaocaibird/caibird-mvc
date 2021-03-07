@@ -2,6 +2,7 @@
  * @Owners cmZhou
  * @Title 通信常用类型
  */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 declare namespace dFetch {
     // eslint-disable-next-line @typescript-eslint/ban-types
     type BaseControllers = dp.Obj<Function>;
@@ -12,7 +13,7 @@ declare namespace dFetch {
                 TControllers[C]['prototype'][A] extends () => unknown ? never :
                 TControllers[C]['prototype'][A] extends (req: dp.Obj) => unknown ?
                 TControllers[C]['prototype'][A] extends (req: dMvc.S.ActionReq<infer Req>) => unknown ? Req extends dp.Obj ? Req : never : never : never,
-                TControllers[C]['prototype'][A] extends ((...p: unknown[]) => Promise<infer Rsp>) ? Rsp extends dMvc.S.JsonActionReturn<infer R> ? R : never : never
+                TControllers[C]['prototype'][A] extends ((...p: any[]) => Promise<infer Rsp>) ? Rsp extends dMvc.S.JsonActionReturn<infer R> ? R : never : never
             >;
         };
     };
@@ -23,9 +24,9 @@ declare namespace dFetch {
                 TControllers[C]['prototype'][A] extends () => unknown ? never :
                 TControllers[C]['prototype'][A] extends (req: dMvc.S.ActionReq<infer Req>) => unknown ? Req :
                 TControllers[C]['prototype'][A] extends (req: infer Req) => unknown ? Req : never,
-                TControllers[C]['prototype'][A] extends (...p: unknown[]) => Promise<infer Rsp> ? Rsp extends dMvc.S.JsonActionReturn<infer R> ? R :
+                TControllers[C]['prototype'][A] extends (...p: any[]) => Promise<infer Rsp> ? Rsp extends dMvc.S.JsonActionReturn<infer R> ? R :
                 Rsp extends dMvc.S.ActionReturn<unknown> ? never : Rsp :
-                TControllers[C]['prototype'][A] extends (...p: unknown[]) => infer Rsp ? Rsp : never
+                TControllers[C]['prototype'][A] extends (...p: any[]) => infer Rsp ? Rsp : never
             >;
         };
     };

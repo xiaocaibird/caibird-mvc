@@ -26,7 +26,7 @@ declare global {
 
             type ActionReq<T extends dp.Obj> = Partial<T>;
 
-            type BaseController<TState, TCustom> = new (ctx: Ctx<TState, TCustom>) => dp.Obj;
+            type BaseController<TState, TCustom> = new (ctx: Ctx<TState, TCustom>) => unknown;
 
             type ControllerProps<TRules, TState, TCustom> = {
                 __actions__: dp.Obj<Action<TRules, TState, TCustom>>,
@@ -72,7 +72,8 @@ declare global {
                 result: T,
             };
 
-            interface JsonActionReturn<T extends dp.Obj | null> extends ActionReturn<dFetch.SuccessJsonBody<T>> {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            interface JsonActionReturn<T extends dp.Obj<any> | null> extends ActionReturn<dFetch.SuccessJsonBody<T>> {
                 type: 'json',
             }
 

@@ -322,7 +322,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
                 opt,
             },
             msg: '网络异常！请稍后再试',
-        };
+        }; // TODO
     };
 
     public readonly getLocalUrl = (url: string) => (this.options.prefix ?? '') + url;

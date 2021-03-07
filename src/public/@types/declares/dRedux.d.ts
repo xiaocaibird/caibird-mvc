@@ -20,7 +20,7 @@ declare global {
             { type: K }
         };
 
-        type Reducers<TActions, TState extends dp.Obj> = {
+        type Reducers<TActions, TState> = {
             [K in keyof TState]: {
                 defaultState: TState[K],
                 handlers: ReducerHandlers<TActions, TState[K]>,

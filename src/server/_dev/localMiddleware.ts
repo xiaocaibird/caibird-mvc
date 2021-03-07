@@ -7,7 +7,8 @@ import koaWebpack from 'koa-webpack';
 import webpack from 'webpack';
 import webpackHot from 'webpack-hot-middleware';
 
-export default async <T extends Koa<unknown, unknown>>(koa: T, options: {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default async <T extends Koa<any, any>>(koa: T, options: {
     webpackConfig: webpack.Configuration,
     publicPath: string,
 }) => {
