@@ -1,6 +1,5 @@
 {
     "compilerOptions": {
-        "noEmit": false,
         "rootDir": ".",
         "outDir": "../.tsc"
     },

@@ -112,7 +112,7 @@
         "inlineSourceMap": false, //将输出的map文件合并到代码文件中。
         "inlineSources": false, //将代码信息输出到sourcemaps信息中，要求设置了--inlineSourceMap或 --sourceMap属性。
         //"mapRoot": "", //指定map文件路径。该路径用于代码文件查找map文件
-        "noEmit": true, //不生成输出文件。
+        "noEmit": false, //不生成输出文件。
         "noEmitOnError": true, //报错时不生成输出文件。
         //"outDir": ".tsc", //输出目录。
         //"outFile": "", //将输出文件合并为一个文件。合并的顺序是根据传入编译器的文件顺序和 ///<reference``>和 import的文件顺序决定的。用于AMD 和 System
