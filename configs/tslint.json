@@ -56,7 +56,7 @@
         //禁止 for in（没必要禁用）
         "no-for-in": false,
         //不允许副作用的import
-        "no-import-side-effect": true,
+        "no-import-side-effect": false,
         //对于初始化为数字，字符串或布尔值的变量或参数，禁止显式类型声明。
         "no-inferrable-types": true,
         //禁止内部module，用namespace代替
@@ -74,11 +74,11 @@
         //禁止无意义的类型断言。【编译时检查】
         "no-unnecessary-type-assertion": true,
         //禁用reuqire
-        "no-var-requires": true,
+        "no-var-requires": false,
         //禁用非箭头函数(很多时候还是需要用到常规函数)
         "only-arrow-functions": false,
         //当不需要使用索引时，只能使用for-of来循环
-        "prefer-for-of": true,
+        "prefer-for-of": false,
         //返回promise时必需加上async。【编译时检查】
         "promise-function-async": false,
         //必需申明类型(有时候不是必需的)
@@ -128,7 +128,7 @@
         //没用awiat或返回值时不能用async(暂时没必要)
         "no-async-without-await": false,
         //禁止位运算符
-        "no-bitwise": true,
+        "no-bitwise": false,
         //禁止在条件语句中赋值
         "no-conditional-assignment": true,
         //禁用console方法(console很常用)
@@ -197,7 +197,7 @@
         //throw不能直接抛出字符
         "no-string-throw": true,
         //禁止导入子模块的模块列表(暂时没有模块禁止使用子模块)
-        "no-submodule-imports": true,
+        "no-submodule-imports": false,
         //当case没有break或return时报错(ts本身已经检查了)
         "no-switch-case-fall-through": false,
         //禁止对两个相同的字面量进行比较
@@ -536,27 +536,7 @@
         //函数调用时与()之间是否允许有空格
         "ter-func-call-spacing": [true, "never"],
         //控制缩进
-        "ter-indent": [true, 4, {
-            "SwitchCase": 1,
-            "VariableDeclarator": {
-                "var": 1,
-                "let": 1,
-                "const": 1
-            },
-            "outerIIFEBody": 1,
-            "MemberExpression": 1,
-            "FunctionDeclaration": {
-                "body": 1,
-                "parameters": 1
-            },
-            "FunctionExpression": {
-                "body": 1,
-                "parameters": 1
-            },
-            "CallExpression": {
-                "arguments": 1
-            }
-        }],
+        "ter-indent": false,
         //控制每行的长度(暂时没必要限制)
         "ter-max-len": false,
         //定义变量后是否必需空出一行(不需要，因为有时候变量在最后一行)
