@@ -4,6 +4,8 @@ node_modules/
 .awcache/
 .tsc/
 .vscode/
+.eslint/
+.husky/
 
 assets/bundle/
 dist/
@@ -15,6 +17,7 @@ npm-debug.log
 
 /tsconfig.json
 /tslint.json
+/.eslintrc.json
 /src/**/tslint.json
 /src/tsconfig.json
 /bin/tslint.json
