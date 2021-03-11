@@ -6,6 +6,8 @@ const fs = require('fs');
 const path = require('path');
 const OSS = require('ali-oss');
 
+const buildConfig = require('../../src/build/config');
+
 const {
     printf,
     ColorsEnum,
@@ -49,21 +51,14 @@ const upload = async ({ ossConfig }) => {
 module.exports = async opt => {
     const { baseCommitId } = opt;
 
-    const production = 'production';
+    const envMap = buildConfig.RUN_ENV;
 
     const projectName = process.argv[2];
-    const env = process.argv[3] || production;
+    const env = process.argv[3] || envMap.PRODUCTION;
 
-    const envMap = {
-        production,
-        exp: 'expProduction',
-        test: 'test',
-        dev: 'dev',
-    };
-
-    const isDev = env === envMap.dev;
-    const isTest = env === envMap.test;
-    const isExp = env === envMap.exp;
+    const isDev = env === envMap.DEV_TEST;
+    const isTest = env === envMap.TEST;
+    const isExp = env === envMap.EXP_PRODUCTION;
     const isPro = !isDev && !isTest && !isExp;
 
     const confirmRelease = await readline(`确认发布项目【${projectName}】到${isDev ? '【开发】环境' : isTest ? '【测试】环境' : isExp ? '【体验】环境' : '【正式】环境'}？确认请输入"Y":`);
