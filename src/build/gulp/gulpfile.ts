@@ -37,7 +37,7 @@ export default (babelOptions: BabelOptions) => {
         'front',
     ];
 
-    gulp.task('dist', async () => {
+    gulp.task('dist', () => {
         projectList.forEach(projectName => {
             if (rootFileList.includes(projectName)) {
                 gulp.src([`${rootDir}.tsc/src/${projectName}`])

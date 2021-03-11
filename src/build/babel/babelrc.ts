@@ -1,5 +1,5 @@
 /**
- * @Owners jin
+ * @Owners cmZhou
  * @Title base babel 配置
  */
 import ini from '../ini';

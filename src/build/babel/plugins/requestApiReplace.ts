@@ -2,8 +2,8 @@
  * @Owners cmZhou
  * @Title babelrc plugin hRequest-api-replace
  */
-import { Visitor } from '@babel/core';
-import * as Types from '@babel/types';
+import type { Visitor } from '@babel/core';
+import type * as Types from '@babel/types';
 
 export default (opt: { types: typeof Types }): { name: string, visitor: Visitor } => {
     const { types: { identifier, stringLiteral, isIdentifier, isStringLiteral } } = opt;

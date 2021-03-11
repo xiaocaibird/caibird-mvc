@@ -17,7 +17,9 @@
             "lintFile": "./configs/tslint.json"
         }],
 
-        "import/order": "off"
+        "import/order": "off",
+        "@typescript-eslint/consistent-indexed-object-style": "off",
+        "@typescript-eslint/no-unsafe-assignment": "off"
     },
     "overrides": [{
         "files": ["bin/**"],

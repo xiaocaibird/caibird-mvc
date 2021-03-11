@@ -1,5 +1,5 @@
 /**
- * @Owners jin
+ * @Owners cmZhou
  * @Title webpack base 文件
  */
 import cssnano from 'cssnano';

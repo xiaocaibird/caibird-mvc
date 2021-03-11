@@ -1,5 +1,5 @@
 /**
- * @Owners jin
+ * @Owners cmZhou
  * @Title FrontPathResolveTool 配置
  */
 import find from 'find';
