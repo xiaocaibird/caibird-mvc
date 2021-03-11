@@ -15,10 +15,12 @@
         }],
         "@typescript-eslint/tslint/config": ["error", {
             "lintFile": "./configs/tslint.json"
-        }]
+        }],
+
+        "import/order": "off"
     },
     "overrides": [{
-        "files": ["./bin/**"],
+        "files": ["bin/**"],
         "rules": {
             "@typescript-eslint/no-require-imports": "off",
             "@typescript-eslint/no-var-requires": "off",
@@ -29,7 +31,16 @@
             "@typescript-eslint/no-unsafe-return": "off",
             "@typescript-eslint/no-implicit-any-catch": "off",
             "@typescript-eslint/no-magic-numbers": "off",
-            "@typescript-eslint/prefer-optional-chain": "off"
+            "@typescript-eslint/prefer-optional-chain": "off",
+
+            "@typescript-eslint/no-unused-vars": ["error", {
+                "argsIgnorePattern": "^_"
+            }],
+            "@typescript-eslint/no-use-before-define": ["error"],
+            "no-dupe-args": ["error"],
+            "no-unreachable": ["error"],
+            "no-dupe-keys": ["error"],
+            "valid-typeof": ["error"]
         }
     }]
 }
