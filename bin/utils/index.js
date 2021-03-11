@@ -4,10 +4,12 @@
  */
 const shelljs = require('shelljs');
 
-process.on('unhandledRejection', _err => {
+process.on('unhandledRejection', err => {
+    console.error(err);
     process.exit(1);
 });
-process.on('uncaughtException', _err => {
+process.on('uncaughtException', err => {
+    console.error(err);
     process.exit(1);
 });
 

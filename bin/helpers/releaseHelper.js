@@ -124,9 +124,7 @@ module.exports = async opt => {
 
         if (num !== '1' && num !== '2') {
             printf('迭代编号输入错误', ColorsEnum.RED);
-            execStdout(`git checkout ${nowBranch}`);
             process.exit(1);
-
             return;
         }
 
@@ -150,9 +148,7 @@ module.exports = async opt => {
 
         if (!version) {
             printf('tag版本号不能为空！', ColorsEnum.RED);
-            execStdout(`git checkout ${nowBranch}`);
             process.exit(1);
-
             return;
         }
 
@@ -223,10 +219,11 @@ module.exports = async opt => {
         } else {
             printf(`发布失败！！！ exit code: ${result2.code}`, ColorsEnum.RED);
         }
+        process.exit(0);
     } catch (e) {
         console.error(e);
+        process.exit(1);
     } finally {
         execStdout(`git checkout ${nowBranch}`);
-        process.exit(0);
     }
 };
