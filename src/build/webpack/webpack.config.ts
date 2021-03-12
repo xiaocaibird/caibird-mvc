@@ -19,11 +19,11 @@ import utils from './utils';
 
 type WebpackOptions = {
     projectName: string,
-    projectConfig: {
-        PROJECT_TITLE: string,
-        BUNDLE_PATH: string,
-        BUNDLE_OUTPUT_PATH: string,
-        PUBLIC_BUNDLE_PATH: string,
+    projectTitle: string,
+    outputConfig: {
+        bundlePath: string,
+        jsBundlePath: string,
+        publicPath: string,
     },
     unionProjectNames?: string[],
     tsImportPluginConfig?: {
@@ -66,7 +66,7 @@ const getSplitChunks = (list: string[]) => {
 };
 
 export default (webpackOptions: WebpackOptions, webpackConfig: webpack.Configuration = {}): webpack.Configuration => {
-    const { projectName, unionProjectNames, projectConfig, tsImportPluginConfig, useMoment, htmlWebpackPluginConfig, addPlugins } = webpackOptions;
+    const { projectName, projectTitle, unionProjectNames, outputConfig, tsImportPluginConfig, useMoment, htmlWebpackPluginConfig, addPlugins } = webpackOptions;
 
     const tsConfig = path.join(process.cwd(), `src/${projectName}/tsconfig.webpack.json`);
 
@@ -75,10 +75,10 @@ export default (webpackOptions: WebpackOptions, webpackConfig: webpack.Configura
     });
 
     const getOutput = (): webpack.Output => ({
-        path: path.join(process.cwd(), projectConfig.BUNDLE_OUTPUT_PATH),
+        path: path.join(process.cwd(), outputConfig.jsBundlePath),
         filename: `[name].bundle${utils.filenameBase}`,
         chunkFilename: `[name].chunk${utils.filenameBase}`,
-        publicPath: `${projectConfig.PUBLIC_BUNDLE_PATH}/`,
+        publicPath: `${outputConfig.publicPath}${outputConfig.publicPath.endsWith('/') ? '' : '/'}`,
         crossOriginLoading: 'anonymous',
     });
 
@@ -199,8 +199,8 @@ export default (webpackOptions: WebpackOptions, webpackConfig: webpack.Configura
         }
 
         plugins.push(new HtmlWebpackPlugin({
-            title: projectConfig.PROJECT_TITLE,
-            filename: `${process.cwd()}${projectConfig.BUNDLE_PATH}/index.html`,
+            title: projectTitle,
+            filename: `${process.cwd()}${outputConfig.bundlePath}/index.html`,
             inject: 'body',
             ...htmlWebpackPluginConfig,
         }));

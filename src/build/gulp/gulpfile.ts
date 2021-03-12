@@ -27,7 +27,7 @@ export default (babelOptions: BabelOptions) => {
         'serverEntry.js',
     ];
 
-    const dirList = [
+    const fileList = [
         'build/babel',
         'build/ini',
         'build/webpack',
@@ -35,6 +35,8 @@ export default (babelOptions: BabelOptions) => {
         'public',
         'server',
         'front',
+
+        'config.js',
     ];
 
     gulp.task('dist', () => {
@@ -44,10 +46,16 @@ export default (babelOptions: BabelOptions) => {
                     .pipe(babel(babelrc))
                     .pipe(gulp.dest(`${rootDir}dist`));
             } else {
-                dirList.forEach(dir => {
-                    gulp.src([`${rootDir}.tsc/src/${projectName}/${dir}/**/*.js`])
-                        .pipe(babel(babelrc))
-                        .pipe(gulp.dest(`${rootDir}dist/${projectName}/${dir}`));
+                fileList.forEach(file => {
+                    if (file.endsWith('.js')) {
+                        gulp.src([`${rootDir}.tsc/src/${projectName}/${file}`])
+                            .pipe(babel(babelrc))
+                            .pipe(gulp.dest(`${rootDir}dist/${projectName}`));
+                    } else {
+                        gulp.src([`${rootDir}.tsc/src/${projectName}/${file}/**/*.js`])
+                            .pipe(babel(babelrc))
+                            .pipe(gulp.dest(`${rootDir}dist/${projectName}/${file}`));
+                    }
                 });
             }
         });
