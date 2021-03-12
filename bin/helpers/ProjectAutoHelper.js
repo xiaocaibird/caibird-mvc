@@ -15,7 +15,7 @@ const {
 
 const {
     nodeEnvValues,
-    envs,
+    envValues,
     runEnvArgs,
 } = require('../../src/build/config');
 
@@ -55,11 +55,11 @@ class ProjectAutoHelper {
     };
 
     getEnv = () => {
-        const env = process.argv[4] || envs.production;
+        const env = process.argv[4] || envValues.production;
 
-        if (envs[env]) return env;
+        if (envValues[env]) return env;
 
-        printf(`Error: please enter correct env (${Object.keys(envs).join(', ')})`, ColorsEnum.RED);
+        printf(`Error: please enter correct env (${Object.keys(envValues).join(', ')})`, ColorsEnum.RED);
         process.exit(1);
     };
 
@@ -147,7 +147,7 @@ class ProjectAutoHelper {
                     cross-env NODE_ENV=${isReal ? nodeEnvValues.PRODUCTION : nodeEnvValues.DEVELOPMENT} node node_modules/caibird-mvc/bin/_/taro build --type weapp --watch ${projectName}`);
                 process.exit(result.code);
             } else {
-                const result = exec(`npm run kill-port && npm run dist ${projectName} ${envs.local} && cross-env NODE_ENV=${nodeEnvValues.DEVELOPMENT} node app`);
+                const result = exec(`npm run kill-port && npm run dist ${projectName} ${envValues.local} && cross-env NODE_ENV=${nodeEnvValues.DEVELOPMENT} node app`);
                 process.exit(result.code);
             }
         } else {

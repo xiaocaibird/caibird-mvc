@@ -51,7 +51,7 @@ const upload = async ({ ossConfig }) => {
 module.exports = async opt => {
     const { baseCommitId, projectName, env } = opt;
 
-    const { envs, envTitles, envBranchs } = buildConfig;
+    const { envValues, envTitles, envBranchs } = buildConfig;
 
     const confirmRelease = await readline(`确认发布项目【${projectName}】到${envTitles[env]}？确认请输入"Y":`);
 
@@ -69,7 +69,7 @@ module.exports = async opt => {
     let otherBranch = '';
     let isTagMode = false;
 
-    if (env !== envs.production) {
+    if (env !== envValues.production) {
         const mode = await readline('发布模式，输入1或2(1代表基于【基础分支】发布，2代表发布【指定tag】)：');
 
         isTagMode = mode === '2';
@@ -174,7 +174,7 @@ module.exports = async opt => {
             return;
         }
 
-        if (env === envs.production || env === envs.exp) {
+        if (env === envValues.production || env === envValues.exp) {
             await upload({ ossConfig: opt.ossConfig });
         }
 
@@ -190,7 +190,7 @@ module.exports = async opt => {
           git commit -m ${tag} &&
           git tag -a ${buildTag} -m ${buildTag} &&
           git tag -a ${tag} -m ${tag} &&
-          ${env === envs.production && !tagAttribute ? `git tag -a release-${projectName}-v${fullVersion} -m release-${projectName}-v${fullVersion} && git push origin release-${projectName}-v${fullVersion} &&` : ''}
+          ${env === envValues.production && !tagAttribute ? `git tag -a release-${projectName}-v${fullVersion} -m release-${projectName}-v${fullVersion} && git push origin release-${projectName}-v${fullVersion} &&` : ''}
           git push origin ${buildTag} ${tag} -f && echo will complete...`);
 
         if (result2.code === 0 || result2.code === 128 || result2.code === 127) {

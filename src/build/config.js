@@ -27,7 +27,7 @@ const isDevTest = NOW_RUN_ENV === runEnvArgs.dev; // 仅开发环境
 const isTest = NOW_RUN_ENV === runEnvArgs.test || isDevTest || isLocalTest; // 本地调试或开发环境或测试环境
 
 module.exports = {
-    envs: {
+    envValues: {
         production: 'production',
         exp: 'exp',
 
