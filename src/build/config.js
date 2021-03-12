@@ -12,11 +12,9 @@ const runEnvArgs = {
     local: 'localTest',
 };
 
-const envValues = {
-    NODE_ENV: {
-        PRODUCTION: 'production',
-        DEVELOPMENT: 'development',
-    },
+const nodeEnvValues = {
+    PRODUCTION: 'production',
+    DEVELOPMENT: 'development',
 };
 
 const NOW_RUN_ENV = process.env._CAIBIRD_RUN_ENV;
@@ -55,7 +53,7 @@ module.exports = {
         local: '',
     },
 
-    envValues,
+    nodeEnvValues,
 
     runStatus: {
         isProduction,

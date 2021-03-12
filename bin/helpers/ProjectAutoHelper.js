@@ -14,7 +14,7 @@ const {
 } = require('./');
 
 const {
-    envValues,
+    nodeEnvValues,
     envs,
     runEnvArgs,
 } = require('../../src/build/config');
@@ -144,10 +144,10 @@ class ProjectAutoHelper {
         if (this.allowStartProjectNames.includes(projectName)) {
             if (this.taroProjectNames.includes(projectName)) {
                 const result = exec(`npm run check-tsc ${projectName} &&
-                    cross-env NODE_ENV=${isReal ? envValues.NODE_ENV.PRODUCTION : envValues.NODE_ENV.DEVELOPMENT} node node_modules/caibird-mvc/bin/_/taro build --type weapp --watch ${projectName}`);
+                    cross-env NODE_ENV=${isReal ? nodeEnvValues.PRODUCTION : nodeEnvValues.DEVELOPMENT} node node_modules/caibird-mvc/bin/_/taro build --type weapp --watch ${projectName}`);
                 process.exit(result.code);
             } else {
-                const result = exec(`npm run kill-port && npm run dist ${projectName} ${envs.local} && cross-env NODE_ENV=${envValues.NODE_ENV.DEVELOPMENT} node app`);
+                const result = exec(`npm run kill-port && npm run dist ${projectName} ${envs.local} && cross-env NODE_ENV=${nodeEnvValues.DEVELOPMENT} node app`);
                 process.exit(result.code);
             }
         } else {
