@@ -96,7 +96,7 @@ class ProjectAutoHelper {
         const projectName = this.getProjectName();
         const runEnv = this.getRunEnv();
 
-        const result = exec(`npm run clear:bundle && npm run check-tsc ${projectName} && cross-env RUN_ENV=${runEnv} PROJECT_NAME=${projectName} npm run gulp ${projectName}`);
+        const result = exec(`rimraf assets/bundle && npm run check-tsc ${projectName} && cross-env _CAIBIRD_RUN_ENV=${runEnv} npm run gulp ${projectName}`);
         process.exit(result.code);
     };
 
@@ -196,7 +196,7 @@ class ProjectAutoHelper {
         const projectName = this.getProjectName();
 
         if (this.hasWebpackProjectNames.includes(projectName)) {
-            const result = exec(`npm run clear:bundle && node node_modules/webpack/bin/webpack.js --config dist/${projectName}/build/webpack/webpack.config`);
+            const result = exec(`rimraf assets/bundle && node node_modules/webpack/bin/webpack.js --config dist/${projectName}/build/webpack/webpack.config`);
             process.exit(result.code);
         } else {
             printf(`Error: the project 【${projectName}】 no has webpack`, ColorsEnum.RED);
