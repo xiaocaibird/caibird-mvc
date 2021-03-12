@@ -2,7 +2,7 @@
  * @Owners cmZhou
  * @Title 项目自动化构建助手
  */
- const {
+const {
     printf,
     exec,
     ColorsEnum,
@@ -19,7 +19,7 @@ const {
     runEnvArgs,
 } = require('../../src/build/config');
 
-class ProjectAutoHelper {
+class ProjectAuto {
     constructor(opt) {
         const { projectsConfig = {} } = opt;
 
@@ -176,4 +176,23 @@ class ProjectAutoHelper {
     };
 }
 
-module.exports = ProjectAutoHelper;
+const allowCommand = ['build', 'checkTsc', 'createDbEntity', 'dist', 'eslint', 'gulp', 'release', 'start', 'tsc', 'webpack'];
+
+const projectAutoHelper = (opt, commandOpts) => {
+    const auto = new ProjectAuto(opt);
+
+    const command = process.argv[3];
+
+    if (allowCommand.includes(command)) {
+        auto[command](commandOpts[command]);
+    } else {
+        if (command) {
+            printf(`Error: the command 【${command}】 is incorrect`, ColorsEnum.RED);
+        } else {
+            printf('Error: please enter command', ColorsEnum.RED);
+        }
+        process.exit(1);
+    }
+};
+
+module.exports = projectAutoHelper;

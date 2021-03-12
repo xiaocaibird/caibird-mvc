@@ -8,4 +8,5 @@ module.exports = {
     initProjectHelper: require('./initProjectHelper'),
     releaseHelper: require('./releaseHelper'),
     updatePackageHelper: require('./updatePackageHelper'),
+    projectAutoHelper: require('./projectAutoHelper'),
 };
