@@ -114,7 +114,7 @@ class ProjectAutoHelper {
         const projectName = this.getProjectName();
 
         if (this.hasGulpProjectNames.includes(projectName)) {
-            const result = exec(`npm run clear:dist && node node_modules/gulp/bin/gulp.js dist --gulpfile .tsc/src/${projectName}/build/gulp/gulpfile.js`);
+            const result = exec(`rimraf dist && gulp dist --gulpfile .tsc/src/${projectName}/build/gulp/gulpfile.js`);
             process.exit(result.code);
         } else {
             printf(`Error: the project 【${projectName}】 no has gulpfile`, ColorsEnum.RED);
