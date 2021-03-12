@@ -27,12 +27,14 @@ const envValues = {
     },
 };
 
-const isExpProduction = process.env.RUN_ENV === envValues.RUN_ENV.EXP_PRODUCTION; // 仅体验环境
-const isProduction = process.env.RUN_ENV === envValues.RUN_ENV.PRODUCTION || isExpProduction; // 正式环境或体验环境
+const NOW_RUN_ENV = process.env._CAIBIRD_RUN_ENV;
 
-const isLocalTest = !process.env.RUN_ENV || process.env.RUN_ENV === envValues.RUN_ENV.LOCAL_TEST; // 仅本地调试
-const isDevTest = process.env.RUN_ENV === envValues.RUN_ENV.DEV_TEST; // 仅开发环境
-const isTest = process.env.RUN_ENV === envValues.RUN_ENV.TEST || isDevTest || isLocalTest; // 本地调试或开发环境或测试环境
+const isExpProduction = NOW_RUN_ENV === envValues.RUN_ENV.EXP_PRODUCTION; // 仅体验环境
+const isProduction = NOW_RUN_ENV === envValues.RUN_ENV.PRODUCTION || isExpProduction; // 正式环境或体验环境
+
+const isLocalTest = !NOW_RUN_ENV || NOW_RUN_ENV === envValues.RUN_ENV.LOCAL_TEST; // 仅本地调试
+const isDevTest = NOW_RUN_ENV === envValues.RUN_ENV.DEV_TEST; // 仅开发环境
+const isTest = NOW_RUN_ENV === envValues.RUN_ENV.TEST || isDevTest || isLocalTest; // 本地调试或开发环境或测试环境
 
 module.exports = {
     envs: {
