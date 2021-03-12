@@ -122,33 +122,15 @@ class ProjectAutoHelper {
         }
     };
 
-    release = () => {
+    release = opt => {
         const projectName = this.getProjectName();
+        const env = this.getEnv();
 
         if (this.allowReleaseProjectNames.includes(projectName)) {
-            const region = 'shenzhen';
-
             releaseHelper({
-                baseCommitId: '6604a8a67f6e144aa47dd730a28ece26604ecd23',
-                ossConfig: {
-                    region: `oss-cn-${region}`,
-                    bucket: 'zhitu-api',
-                    dir: 'operations-sys/jsbundle', // TODO,
-                    jsBundleDir: path.join(process.cwd(), 'assets/bundle/js'),
-                    getOssOptions: () => {
-                        const secret = require(
-                            path.relative(__dirname,
-                                path.join(process.cwd(), `/dist/${projectName}/server/_dev/setting/secret/global`))).default;
-
-                        const accessKeyId = secret.publicOssConfig.accessKeyId;
-                        const accessKeySecret = secret.publicOssConfig.accessKeySecret;
-
-                        return {
-                            accessKeyId,
-                            accessKeySecret,
-                        };
-                    },
-                },
+                projectName,
+                env,
+                ...opt,
             });
         } else {
             printf(`Error: the project 【${projectName}】 no allow release`, ColorsEnum.RED);

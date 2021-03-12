@@ -49,12 +49,9 @@ const upload = async ({ ossConfig }) => {
 };
 
 module.exports = async opt => {
-    const { baseCommitId } = opt;
+    const { baseCommitId, projectName, env } = opt;
 
     const { envs, envTitles, envBranchs } = buildConfig;
-
-    const projectName = process.argv[2]; // TODO
-    const env = process.argv[3] || envs.production; // TODO
 
     const confirmRelease = await readline(`确认发布项目【${projectName}】到${envTitles[env]}？确认请输入"Y":`);
 
