@@ -11,15 +11,18 @@ import getBabelrc, { BabelOptions } from '../babel/babelrc';
 
 const rootDir = '../../../../../';
 
-export default (babelOptions: BabelOptions) => {
-    process.env.PROJECT_VERSION = v4().replace(/-/g, '');
+export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
+    const projectVersion = v4().replace(/-/g, '');
 
     if (!fs.existsSync(`${rootDir}.log`)) {
         fs.mkdirSync(`${rootDir}.log`);
     }
-    fs.writeFileSync(`${rootDir}.log/build.json`, JSON.stringify({ version: process.env.PROJECT_VERSION }, null, 2));
+    fs.writeFileSync(`${rootDir}.log/build.json`, JSON.stringify({ version: projectVersion }, null, 2));
 
-    const babelrc = getBabelrc(babelOptions);
+    const babelrc = getBabelrc({
+        ...babelOptions,
+        projectVersion,
+    });
 
     const projectList = fs.readdirSync(`${rootDir}.tsc/src`);
 

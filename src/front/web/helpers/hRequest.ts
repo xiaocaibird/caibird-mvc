@@ -201,7 +201,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
                 });
         }
 
-        if (!disableVersionCheck && rsp.version && rsp.version !== process.env.PROJECT_VERSION) {
+        if (!disableVersionCheck && rsp.version && rsp.version !== CaibirdEnv.PROJECT_VERSION) {
             this.onVersionMismatch();
         }
 

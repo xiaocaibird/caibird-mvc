@@ -22,6 +22,7 @@ const platformsPathResolve: dp.StrictObj<Platform, (dirName: string) => string> 
 export type BabelOptions = {
     runPlatform: Platform,
     projectName: string,
+    projectVersion: string,
 
     distPlatforms?: Platform[],
     unionProjectNames?: string[],
@@ -30,7 +31,7 @@ export type BabelOptions = {
 
 export default (options: BabelOptions) => {
     const { NODE_ENV_VALUE, isProduction, isExpProduction, isTest, isDevTest, isLocalTest } = ini;
-    const { runPlatform, projectName, unionProjectNames = [], distPlatforms = [], useRequestApiReplace } = options;
+    const { runPlatform, projectName, unionProjectNames = [], distPlatforms = [], useRequestApiReplace, projectVersion } = options;
 
     const isWeb = runPlatform === 'web';
     const isServer = runPlatform === 'server';
@@ -43,9 +44,9 @@ export default (options: BabelOptions) => {
     const env: dp.CaibirdEnv = {
         RUN_ENV: process.env._CAIBIRD_RUN_ENV,
 
-        PROJECT_NAME: process.env._CAIBIRD_PROJECT_NAME,
+        PROJECT_NAME: projectName,
 
-        PROJECT_VERSION: process.env._CAIBIRD_PROJECT_VERSION,
+        PROJECT_VERSION: projectVersion,
 
         NODE_ENV_VALUE,
 
