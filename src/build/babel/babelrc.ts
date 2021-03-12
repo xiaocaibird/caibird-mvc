@@ -40,14 +40,12 @@ export default (options: BabelOptions) => {
 
     useRequestApiReplace && plugins.push(requestApiReplace);
 
-    const env: dp.CustomProcessEnv = {
-        PROJECT_NAME: process.env.PROJECT_NAME,
+    const env: dp.CaibirdEnv = {
+        RUN_ENV: process.env._CAIBIRD_RUN_ENV,
 
-        RUN_ENV: process.env.RUN_ENV,
+        PROJECT_NAME: process.env._CAIBIRD_PROJECT_NAME,
 
-        PROJECT_VERSION: process.env.PROJECT_VERSION,
-
-        TAG_NAME: process.env.TAG_NAME,
+        PROJECT_VERSION: process.env._CAIBIRD_PROJECT_VERSION,
 
         NODE_ENV_VALUE,
 
@@ -60,7 +58,7 @@ export default (options: BabelOptions) => {
     };
 
     const defineEnv = Object.keys(env).reduce<dp.Obj>((obj, key) => {
-        obj[`process.env.${key}`] = env[key as keyof typeof env];
+        obj[`CaibirdEnv.${key}`] = env[key as keyof typeof env];
         return obj;
     }, {});
 

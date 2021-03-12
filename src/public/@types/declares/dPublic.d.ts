@@ -2,7 +2,6 @@
  * @Owners cmZhou
  * @Title 公共的常用类型
  */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 declare namespace dp {
     type AllowNon<T> = T | null | undefined;
 
@@ -22,8 +21,10 @@ declare namespace dp {
         [k in K]: T;
     };
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     type Func<P extends any[] = any[], T = unknown> = (...p: P) => T;
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     type Class<P extends any[] = any[], T = unknown> = new (...p: P) => T;
 
     type MapType<K, V> = Map<K, V>;
@@ -32,6 +33,7 @@ declare namespace dp {
 
     type GetFuncParams<T extends Func> = T extends Func<infer P> ? P : never;
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     type PromiseFunc<P extends any[] = any[], T = unknown> = (...p: P) => Promise<T>;
 
     type PromiseOrSelf<T> = Promise<T> | T;
@@ -44,7 +46,7 @@ declare namespace dp {
 
     type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
-    type ObjectPartial<T> = T extends unknown[] ? T: Partial<T>;
+    type ObjectPartial<T> = T extends unknown[] ? T : Partial<T>;
 
     type DeepReadonly<T> =
         T extends Func ? T :
@@ -83,22 +85,34 @@ declare namespace dp {
     type PromiseFuncPropNames<T> = { [K in keyof T]: T[K] extends PromiseFunc ? K : never }[keyof T];
 
     interface CustomProcessEnv {
-        RUN_ENV: any,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        _CAIBIRD_RUN_ENV: any,
 
-        PROJECT_VERSION: any,
-        PROJECT_NAME: any,
-        TAG_NAME: any,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        _CAIBIRD_PROJECT_NAME: any,
 
-        NODE_ENV_VALUE: any,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        _CAIBIRD_PROJECT_VERSION: any,
+    }
 
-        IS_PRODUCTION: any,
-        IS_EXP_PRODUCTION: any,
+    interface CaibirdEnv {
+        RUN_ENV: string,
 
-        IS_TEST: any,
-        IS_DEV_TEST: any,
-        IS_LOCAL_TEST: any,
+        PROJECT_VERSION: string,
+        PROJECT_NAME: string,
+
+        NODE_ENV_VALUE: string,
+
+        IS_PRODUCTION: boolean,
+        IS_EXP_PRODUCTION: boolean,
+
+        IS_TEST: boolean,
+        IS_DEV_TEST: boolean,
+        IS_LOCAL_TEST: boolean,
     }
 }
+
+declare const CaibirdEnv: dp.CaibirdEnv;
 
 interface Window {
     __REDUX_DEVTOOLS_EXTENSION__?(): import('redux').StoreEnhancer,
