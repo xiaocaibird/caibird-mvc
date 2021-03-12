@@ -70,15 +70,15 @@ class ProjectAutoHelper {
         const projectName = this.getProjectName();
         const env = this.getEnv();
 
-        const rsp = exec(`npm run dist ${projectName} ${env} && npm run webpack ${projectName}`);
-        process.exit(rsp.code);
+        const result = exec(`npm run dist ${projectName} ${env} && npm run webpack ${projectName}`);
+        process.exit(result.code);
     };
 
     checkTsc = () => {
         const projectName = this.getProjectName();
 
-        const rsp = exec(`npm run eslint ${projectName} && npm run tsc ${projectName}`);
-        process.exit(rsp.code);
+        const result = exec(`npm run eslint ${projectName} && npm run tsc ${projectName}`);
+        process.exit(result.code);
     };
 
     createDbEntity = () => {
@@ -96,8 +96,8 @@ class ProjectAutoHelper {
         const projectName = this.getProjectName();
         const runEnv = this.getRunEnv();
 
-        const rsp = exec(`npm run clear:bundle && npm run check-tsc ${projectName} && cross-env RUN_ENV=${runEnv} PROJECT_NAME=${projectName} npm run gulp ${projectName}`);
-        process.exit(rsp.code);
+        const result = exec(`npm run clear:bundle && npm run check-tsc ${projectName} && cross-env RUN_ENV=${runEnv} PROJECT_NAME=${projectName} npm run gulp ${projectName}`);
+        process.exit(result.code);
     };
 
     eslint = () => {
@@ -105,16 +105,16 @@ class ProjectAutoHelper {
         const unionProjectNames = this.getUnionProjectNames(projectName);
 
         // TODO ./src/serverEntry.ts
-        const rsp = exec(`eslint -c ./src/${projectName}/.eslintrc.json --cache --cache-location \"./.eslint/${projectName}-cache\" -f codeframe --ext .ts,.tsx,.js,.jsx ./src/${projectName} ${unionProjectNames.map(item => `./src/${item}`).join(' ')} ./src/@common ${process.argv.includes('fix') ? ' --fix' : ''}`);
-        process.exit(rsp.code);
+        const result = exec(`eslint -c ./src/${projectName}/.eslintrc.json --cache --cache-location \"./.eslint/${projectName}-cache\" -f codeframe --ext .ts,.tsx,.js,.jsx ./src/${projectName} ${unionProjectNames.map(item => `./src/${item}`).join(' ')} ./src/@common ${process.argv.includes('fix') ? ' --fix' : ''}`);
+        process.exit(result.code);
     };
 
     gulp = () => {
         const projectName = this.getProjectName();
 
         if (this.hasGulpProjectNames.includes(projectName)) {
-            const rsp = exec(`npm run clear:dist && node node_modules/gulp/bin/gulp.js dist --gulpfile .tsc/src/${projectName}/build/gulp/gulpfile.js`);
-            process.exit(rsp.code);
+            const result = exec(`npm run clear:dist && node node_modules/gulp/bin/gulp.js dist --gulpfile .tsc/src/${projectName}/build/gulp/gulpfile.js`);
+            process.exit(result.code);
         } else {
             printf(`Error: the project 【${projectName}】 no has gulpfile`, ColorsEnum.RED);
             process.exit(1);
@@ -161,11 +161,11 @@ class ProjectAutoHelper {
 
         if (this.allowStartProjectNames.includes(projectName)) {
             if (this.taroProjectNames.includes(projectName)) {
-                const rsp = exec(`npm run check-tsc ${projectName} && cross-env NODE_ENV=${isReal ? 'production' : 'development'} node bin/taro build --type weapp --watch ${projectName}`);
-                process.exit(rsp.code);
+                const result = exec(`npm run check-tsc ${projectName} && cross-env NODE_ENV=${isReal ? 'production' : 'development'} node bin/taro build --type weapp --watch ${projectName}`);
+                process.exit(result.code);
             } else {
-                const rsp = exec(`npm run kill-port && npm run dist ${projectName} local && node app`);
-                process.exit(rsp.code);
+                const result = exec(`npm run kill-port && npm run dist ${projectName} local && node app`);
+                process.exit(result.code);
             }
         } else {
             printf(`Error: the project 【${projectName}】 no allow start`, ColorsEnum.RED);
@@ -188,16 +188,16 @@ class ProjectAutoHelper {
     tsc = () => {
         const projectName = this.getProjectName();
 
-        const rsp = exec(`npm run clear:tsc && node node_modules/typescript/bin/tsc -p src/${projectName}/tsconfig.json`);
-        process.exit(rsp.code);
+        const result = exec(`npm run clear:tsc && node node_modules/typescript/bin/tsc -p src/${projectName}/tsconfig.json`);
+        process.exit(result.code);
     };
 
     webpack = () => {
         const projectName = this.getProjectName();
 
         if (this.hasWebpackProjectNames.includes(projectName)) {
-            const rsp = exec(`npm run clear:bundle && node node_modules/webpack/bin/webpack.js --config dist/${projectName}/build/webpack/webpack.config`);
-            process.exit(rsp.code);
+            const result = exec(`npm run clear:bundle && node node_modules/webpack/bin/webpack.js --config dist/${projectName}/build/webpack/webpack.config`);
+            process.exit(result.code);
         } else {
             printf(`Error: the project 【${projectName}】 no has webpack`, ColorsEnum.RED);
             process.exit(1);
