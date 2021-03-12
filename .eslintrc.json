@@ -40,6 +40,9 @@
                 "argsIgnorePattern": "^_"
             }],
             "@typescript-eslint/no-use-before-define": ["error"],
+            "no-undef": ["error", {
+                "typeof": false
+            }],
             "no-dupe-args": ["error"],
             "no-unreachable": ["error"],
             "no-dupe-keys": ["error"],

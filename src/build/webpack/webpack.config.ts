@@ -38,7 +38,7 @@ type WebpackOptions = {
     addPlugins?(iniValues: typeof ini): webpack.Plugin[],
 };
 
-const { isProduction, isTest, isLocalTest } = ini;
+const { isProduction, isTest, isLocalTest, envValues } = ini;
 
 const getProjectIncludeList = (projectList: string[], dirList: string[]) => {
     const pathList: string[] = [];
@@ -235,7 +235,7 @@ export default (webpackOptions: WebpackOptions, webpackConfig: webpack.Configura
     };
 
     return {
-        mode: isProduction ? 'production' : 'development',
+        mode: isProduction ? envValues.NODE_ENV.PRODUCTION : envValues.NODE_ENV.DEVELOPMENT,
         entry: getEntry(),
         output: getOutput(),
         module: {
