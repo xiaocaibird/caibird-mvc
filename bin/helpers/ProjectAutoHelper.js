@@ -159,7 +159,7 @@ class ProjectAutoHelper {
     tsc = () => {
         const projectName = this.getProjectName();
 
-        const result = exec(`npm run clear:tsc && node node_modules/typescript/bin/tsc -p src/${projectName}/tsconfig.json`);
+        const result = exec(`rimraf .tsc && tsc -p src/${projectName}/tsconfig.json`);
         process.exit(result.code);
     };
 
