@@ -104,8 +104,9 @@ class ProjectAutoHelper {
         const projectName = this.getProjectName();
         const unionProjectNames = this.getUnionProjectNames(projectName);
 
-        // TODO ./src/serverEntry.ts
-        const result = exec(`eslint -c ./src/${projectName}/.eslintrc.json --cache --cache-location \"./.eslint/${projectName}-cache\" -f codeframe --ext .ts,.tsx,.js,.jsx ./src/${projectName} ${unionProjectNames.map(item => `./src/${item}`).join(' ')} ./src/@common ${process.argv.includes('fix') ? ' --fix' : ''}`);
+        const hasServer = this.hasServerProjectNames.includes(projectName);
+
+        const result = exec(`eslint -c ./src/${projectName}/.eslintrc.json --cache --cache-location \"./.eslint/${projectName}-cache\" -f codeframe --ext .ts,.tsx,.js,.jsx ./src/${projectName} ${unionProjectNames.map(item => `./src/${item}`).join(' ')} ./src/@common ${hasServer ? './src/serverEntry.ts' : ''} ${process.argv.includes('fix') ? ' --fix' : ''}`);
         process.exit(result.code);
     };
 
