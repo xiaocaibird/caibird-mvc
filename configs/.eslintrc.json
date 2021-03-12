@@ -55,7 +55,7 @@
         // 禁止不统一的array type定义
         "@typescript-eslint/array-type": ["error", {
             "default": "array",
-            "readonly": "generic"
+            "readonly": "array"
         }],
         // 禁止对非promise的值用await
         "@typescript-eslint/await-thenable": ["error"],

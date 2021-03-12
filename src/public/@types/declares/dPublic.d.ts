@@ -52,8 +52,8 @@ declare namespace dp {
         T extends ReadonlyMap<infer K, infer V> ? ReadonlyMap<K, DeepReadonly<V>> :
         T extends Set<infer V> ? ReadonlySet<DeepReadonly<V>> :
         T extends ReadonlySet<infer V> ? ReadonlySet<DeepReadonly<V>> :
-        T extends unknown[] ? ReadonlyArray<DeepReadonly<T[number]>> :
-        T extends ReadonlyArray<infer V> ? ReadonlyArray<DeepReadonly<V>> :
+        T extends unknown[] ? readonly DeepReadonly<T[number]>[] :
+        T extends readonly (infer V)[] ? readonly DeepReadonly<V>[] :
         T extends Obj ? { readonly [P in keyof T]: DeepReadonly<T[P]>; } : T;
 
     type DeepWritable<T> =
@@ -63,7 +63,7 @@ declare namespace dp {
         T extends Set<infer V> ? Set<DeepWritable<V>> :
         T extends ReadonlySet<infer V> ? Set<DeepWritable<V>> :
         T extends unknown[] ? DeepWritable<T[number]>[] :
-        T extends ReadonlyArray<infer V> ? DeepWritable<V>[] :
+        T extends readonly (infer V)[] ? DeepWritable<V>[] :
         T extends Obj ? { -readonly [P in keyof T]: DeepWritable<T[P]>; } : T;
 
     type DeepPartial<T> =
@@ -73,7 +73,7 @@ declare namespace dp {
         T extends Set<infer V> ? Set<DeepPartial<V>> :
         T extends ReadonlySet<infer V> ? ReadonlySet<DeepPartial<V>> :
         T extends unknown[] ? DeepPartial<T[number]>[] :
-        T extends ReadonlyArray<infer V> ? ReadonlyArray<DeepPartial<V>> :
+        T extends readonly (infer V)[] ? readonly DeepPartial<V>[] :
         T extends Obj ? { [P in keyof T]?: DeepPartial<T[P]>; } : T;
 
     type NonFuncProp<T> = Pick<T, NonFuncPropNames<T>>;
