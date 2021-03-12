@@ -485,7 +485,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
 
                 const isHttps = ctx.get('x-forwarded-proto') === 'https' || ctx.protocol === 'https';
 
-                if (process.env.IS_LOCAL_TEST || this.options.allowHttp || isHttps) {
+                if (CaibirdEnv.IS_LOCAL_TEST || this.options.allowHttp || isHttps) {
                     onRequestBegin && await onRequestBegin(ctx, next, this);
                     await next();
                     onRequestEnd && await onRequestEnd(ctx, next, this);

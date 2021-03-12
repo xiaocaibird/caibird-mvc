@@ -54,7 +54,7 @@ export abstract class HRedux<TState, TActions extends dRedux.BaseActions = dRedu
         }, {});
         const Reducer = combineReducers<TState>(reducers);
 
-        return createStore(Reducer, initState, process.env.IS_LOCAL_TEST && window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : undefined);
+        return createStore(Reducer, initState, CaibirdEnv.IS_LOCAL_TEST && window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : undefined);
     }
 
     protected getReducer<T>({ defaultState, handlers }: { defaultState: T, handlers: dp.Obj<dp.Func | undefined> }) {

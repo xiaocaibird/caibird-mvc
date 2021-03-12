@@ -242,7 +242,7 @@ class ReportHelper {
     public readonly log = (opt: dReport.LogOptions, ctx = contextHelper.getOrNull()) => {
         if (this.options.useConsoleLog) {
             console.log(opt);
-        } else if (process.env.IS_LOCAL_TEST) {
+        } else if (CaibirdEnv.IS_LOCAL_TEST) {
             if (opt.type && (opt.type.includes('error') || opt.type.includes('Error'))) {
                 console.log(opt);
             }

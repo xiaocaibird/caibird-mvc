@@ -89,7 +89,7 @@ export default (webpackOptions: WebpackOptions, webpackConfig: webpack.Configura
                 loader: 'babel-loader',
                 options: {
                     babelrc: false,
-                    ...getBabelrc({ projectName, runPlatform: 'web', unionProjectNames, useRequestApiReplace: true }),
+                    ...getBabelrc({ projectName, runPlatform: 'web', unionProjectNames, useRequestApiReplace: true, projectVersion: CaibirdEnv.PROJECT_VERSION }),
                 },
             }, {
                 loader: 'ts-loader',
@@ -123,12 +123,12 @@ export default (webpackOptions: WebpackOptions, webpackConfig: webpack.Configura
             ],
         },
         // 该段代码是为了让node_modules里的es6语法兼容低版本浏览器，本地调试为了提高启动速度默认不启用，如需启用请自行放开，但切勿提交
-        ...(isLocalTest && !process.env.LOCAL_BABEL_TRANSFORM_ALL ? [] : [{
+        ...(isLocalTest && !process.env._CAIBIRD_BABEL_TRANSFORM_ALL ? [] : [{
             test: /\.jsx?$/,
             use: [{
                 loader: 'babel-loader',
                 options: {
-                    ...getBabelrc({ projectName, runPlatform: 'web' }),
+                    ...getBabelrc({ projectName, runPlatform: 'web', projectVersion: CaibirdEnv.PROJECT_VERSION }),
                     sourceType: 'unambiguous',
                 },
             }],
