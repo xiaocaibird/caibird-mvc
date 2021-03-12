@@ -2,7 +2,10 @@
  * @Owners cmZhou
  * @Title 项目自动化构建助手
  */
-const utils = require('../utils');
+const {
+    printf,
+    ColorsEnum,
+} = require('../utils');
 
 const {
     envs,
@@ -37,9 +40,9 @@ class ProjectAutoHelper {
         if (this.allProjectNames.includes(projectName)) return projectName;
 
         if (projectName) {
-            utils.printf(`Error: No Found project 【${projectName}】`, utils.ColorsEnum.RED);
+            printf(`Error: No Found project 【${projectName}】`, ColorsEnum.RED);
         } else {
-            utils.printf('Error: please enter projectName', utils.ColorsEnum.RED);
+            printf('Error: please enter projectName', ColorsEnum.RED);
         }
         process.exit(1);
     };
@@ -49,7 +52,7 @@ class ProjectAutoHelper {
 
         if (envs[env]) return env;
 
-        utils.printf(`Error: please enter correct env (${Object.keys(envs).join(', ')})`, utils.ColorsEnum.RED);
+        printf(`Error: please enter correct env (${Object.keys(envs).join(', ')})`, ColorsEnum.RED);
         process.exit(1);
     };
 
