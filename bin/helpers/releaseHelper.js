@@ -51,17 +51,12 @@ const upload = async ({ ossConfig }) => {
 module.exports = async opt => {
     const { baseCommitId } = opt;
 
-    const runEnvArgs = buildConfig.runEnvArgs;
+    const { envs, envTitles, envBranchs } = buildConfig;
 
-    const projectName = process.argv[2];
-    const env = process.argv[3] || runEnvArgs.production;
+    const projectName = process.argv[2]; // TODO
+    const env = process.argv[3] || envs.production; // TODO
 
-    const isDev = env === runEnvArgs.dev;
-    const isTest = env === runEnvArgs.test;
-    const isExp = env === runEnvArgs.exp;
-    const isPro = !isDev && !isTest && !isExp;
-
-    const confirmRelease = await readline(`确认发布项目【${projectName}】到${isDev ? '【开发】环境' : isTest ? '【测试】环境' : isExp ? '【体验】环境' : '【正式】环境'}？确认请输入"Y":`);
+    const confirmRelease = await readline(`确认发布项目【${projectName}】到${envTitles[env]}？确认请输入"Y":`);
 
     if (confirmRelease !== 'Y') {
         printf('退出发布!', ColorsEnum.RED);
@@ -72,12 +67,12 @@ module.exports = async opt => {
     const nowBranch = execStdout('git symbolic-ref --short -q HEAD', false);
 
     const releaseBranch = `release-build-${projectName}`;
-    const baseBranch = isDev ? 'dev' : isTest ? 'test' : isExp ? 'exp' : 'master';
+    const baseBranch = envBranchs[env];
 
     let otherBranch = '';
     let isTagMode = false;
 
-    if (isDev || isTest || isExp) {
+    if (env !== envs.production) {
         const mode = await readline('发布模式，输入1或2(1代表基于【基础分支】发布，2代表发布【指定tag】)：');
 
         isTagMode = mode === '2';
@@ -127,7 +122,7 @@ module.exports = async opt => {
 
         const tagAttribute = await readline('请输入tag特征值，通常用于服务构建时做特殊处理，不需要可【回车】跳过:');
 
-        const tagEnv = `${isDev ? 'dev' : isTest ? 'test' : isExp ? 'exp' : 'production'}${tagAttribute ? `#${tagAttribute}` : ''}`;
+        const tagEnv = `${env}${tagAttribute ? `#${tagAttribute}` : ''}`;
         const tagBase = `${projectName}-${time}V${num}-${tagEnv}`;
         const buildTag = `build-${projectName}-${tagEnv}`;
 
@@ -182,7 +177,7 @@ module.exports = async opt => {
             return;
         }
 
-        if (!isDev && !isTest) {
+        if (env === envs.production || env === envs.exp) {
             await upload({ ossConfig: opt.ossConfig });
         }
 
@@ -198,7 +193,7 @@ module.exports = async opt => {
           git commit -m ${tag} &&
           git tag -a ${buildTag} -m ${buildTag} &&
           git tag -a ${tag} -m ${tag} &&
-          ${isPro && !tagAttribute ? `git tag -a release-${projectName}-v${fullVersion} -m release-${projectName}-v${fullVersion} && git push origin release-${projectName}-v${fullVersion} &&` : ''}
+          ${env === envs.production && !tagAttribute ? `git tag -a release-${projectName}-v${fullVersion} -m release-${projectName}-v${fullVersion} && git push origin release-${projectName}-v${fullVersion} &&` : ''}
           git push origin ${buildTag} ${tag} -f && echo will complete...`);
 
         if (result2.code === 0 || result2.code === 128 || result2.code === 127) {
