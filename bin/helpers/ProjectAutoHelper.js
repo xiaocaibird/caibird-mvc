@@ -157,7 +157,7 @@ class ProjectAutoHelper {
 
     start = () => {
         const projectName = this.getProjectName();
-        const isReal = process.argv[3] === 'real-debug';
+        const isReal = process.argv[4] === 'real-debug';
 
         if (this.allowStartProjectNames.includes(projectName)) {
             if (this.taroProjectNames.includes(projectName)) {
