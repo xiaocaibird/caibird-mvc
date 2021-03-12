@@ -2,8 +2,6 @@
  * @Owners cmZhou
  * @Title 项目自动化构建助手
  */
-const path = require('path');
-
 const {
     printf,
     exec,
@@ -16,6 +14,7 @@ const {
 } = require('./');
 
 const {
+    envValues,
     envs,
     runEnvArgs,
 } = require('../../src/build/config');
@@ -144,28 +143,17 @@ class ProjectAutoHelper {
 
         if (this.allowStartProjectNames.includes(projectName)) {
             if (this.taroProjectNames.includes(projectName)) {
-                const result = exec(`npm run check-tsc ${projectName} && cross-env NODE_ENV=${isReal ? 'production' : 'development'} node bin/taro build --type weapp --watch ${projectName}`);
+                const result = exec(`npm run check-tsc ${projectName} &&
+                    cross-env NODE_ENV=${isReal ? envValues.NODE_ENV.PRODUCTION : envValues.NODE_ENV.DEVELOPMENT} node node_modules/caibird-mvc/bin/_/taro build --type weapp --watch ${projectName}`);
                 process.exit(result.code);
             } else {
-                const result = exec(`npm run kill-port && npm run dist ${projectName} local && node app`);
+                const result = exec(`npm run kill-port && npm run dist ${projectName} ${envs.local} && cross-env NODE_ENV=${envValues.NODE_ENV.DEVELOPMENT} node app`);
                 process.exit(result.code);
             }
         } else {
             printf(`Error: the project 【${projectName}】 no allow start`, ColorsEnum.RED);
             process.exit(1);
         }
-    };
-
-    taro = () => {
-        // eslint-disable-next-line @typescript-eslint/tslint/config
-        const { printPkgVersion } = require('@tarojs/cli/dist/util');
-        // eslint-disable-next-line @typescript-eslint/tslint/config
-        const Cli = require('@tarojs/cli/dist/cli').default;
-
-        printPkgVersion();
-
-        const cli = new Cli(path.join(process.cwd(), `src/${process.argv[process.argv.length - 1]}/front/taro`));
-        cli.run();
     };
 
     tsc = () => {
