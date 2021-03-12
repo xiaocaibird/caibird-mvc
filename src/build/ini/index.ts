@@ -2,6 +2,7 @@
  * @Owners cmZhou
  * @Title 项目构建初始化文件
  */
+// eslint-disable-next-line no-restricted-imports
 import { envValues, runStatus } from '../config';
 namespace _ini {
     export const NODE_ENV_VALUE = runStatus.isProduction ? envValues.NODE_ENV.PRODUCTION : envValues.NODE_ENV.DEVELOPMENT;

@@ -1053,7 +1053,11 @@
 
         // "no-redeclare": "off",
         // "no-regex-spaces": "error",
-        "no-restricted-imports": "off",
+        "no-restricted-imports": ["error", {
+            "patterns": [
+                "**/config"
+            ]
+        }],
         "no-restricted-syntax": ["off", "ForInStatement"],
 
         // "no-return-await": "error",
