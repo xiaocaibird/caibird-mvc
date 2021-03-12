@@ -34,11 +34,11 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
         'build/babel',
         'build/ini',
         'build/webpack',
+        'build/config.js',
 
         'public',
         'server',
         'front',
-
         'config.js',
     ];
 
@@ -51,9 +51,10 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
             } else {
                 fileList.forEach(file => {
                     if (file.endsWith('.js')) {
+                        const lastIdx = file.lastIndexOf('/');
                         gulp.src([`${rootDir}.tsc/src/${projectName}/${file}`])
                             .pipe(babel(babelrc))
-                            .pipe(gulp.dest(`${rootDir}dist/${projectName}`));
+                            .pipe(gulp.dest(`${rootDir}dist/${projectName}${lastIdx >= 0 ? `/${file.slice(0, lastIdx)}` : ''}`));
                     } else {
                         gulp.src([`${rootDir}.tsc/src/${projectName}/${file}/**/*.js`])
                             .pipe(babel(babelrc))
