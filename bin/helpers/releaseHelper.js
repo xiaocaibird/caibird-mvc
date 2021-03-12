@@ -51,14 +51,14 @@ const upload = async ({ ossConfig }) => {
 module.exports = async opt => {
     const { baseCommitId } = opt;
 
-    const envMap = buildConfig.RUN_ENV;
+    const runEnvArgs = buildConfig.runEnvArgs;
 
     const projectName = process.argv[2];
-    const env = process.argv[3] || envMap.PRODUCTION;
+    const env = process.argv[3] || runEnvArgs.production;
 
-    const isDev = env === envMap.DEV_TEST;
-    const isTest = env === envMap.TEST;
-    const isExp = env === envMap.EXP_PRODUCTION;
+    const isDev = env === runEnvArgs.dev;
+    const isTest = env === runEnvArgs.test;
+    const isExp = env === runEnvArgs.exp;
     const isPro = !isDev && !isTest && !isExp;
 
     const confirmRelease = await readline(`确认发布项目【${projectName}】到${isDev ? '【开发】环境' : isTest ? '【测试】环境' : isExp ? '【体验】环境' : '【正式】环境'}？确认请输入"Y":`);

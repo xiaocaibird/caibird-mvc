@@ -2,18 +2,28 @@
  * @Owners cmZhou
  * @Title build config
  */
-
 module.exports = {
-    NODE_ENV: {
-        PRODUCTION: 'production',
-        DEVELOPMENT: 'development',
-    },
-    RUN_ENV: {
-        PRODUCTION: 'production',
-        EXP_PRODUCTION: 'expProduction',
+    runEnvArgs: {
+        production: 'production',
+        exp: 'expProduction',
 
-        TEST: 'test',
-        DEV_TEST: 'devTest',
-        LOCAL_TEST: 'localTest',
+        test: 'test',
+        dev: 'devTest',
+        local: 'localTest',
+    },
+    envKeys: {
+        production: 'production',
+        exp: 'exp',
+
+        test: 'test',
+        dev: 'dev',
+        local: 'local',
+    },
+    envBranchs: {
+        production: 'master',
+        exp: 'exp',
+
+        test: 'test',
+        dev: 'dev',
     },
 };
