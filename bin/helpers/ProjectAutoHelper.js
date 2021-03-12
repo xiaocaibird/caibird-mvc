@@ -167,7 +167,7 @@ class ProjectAutoHelper {
         const projectName = this.getProjectName();
 
         if (this.hasWebpackProjectNames.includes(projectName)) {
-            const result = exec(`rimraf assets/bundle && node node_modules/webpack/bin/webpack.js --config dist/${projectName}/build/webpack/webpack.config`);
+            const result = exec(`rimraf assets/bundle && webpack --config dist/${projectName}/build/webpack/webpack.config`);
             process.exit(result.code);
         } else {
             printf(`Error: the project 【${projectName}】 no has webpack`, ColorsEnum.RED);
