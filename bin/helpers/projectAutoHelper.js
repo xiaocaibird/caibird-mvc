@@ -178,10 +178,12 @@ class ProjectAuto {
 
 const allowCommand = ['build', 'checkTsc', 'createDbEntity', 'dist', 'eslint', 'gulp', 'release', 'start', 'tsc', 'webpack'];
 
-const projectAutoHelper = (opt, commandOpts) => {
+const projectAutoHelper = (opt, getCommandOpts) => {
     const auto = new ProjectAuto(opt);
 
     const command = process.argv[3];
+
+    const commandOpts = typeof getCommandOpts === 'function' ? getCommandOpts(auto) : getCommandOpts;
 
     if (allowCommand.includes(command)) {
         auto[command](commandOpts[command]);
