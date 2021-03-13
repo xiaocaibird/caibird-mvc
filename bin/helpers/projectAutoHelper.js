@@ -181,7 +181,7 @@ const allowCommands = ['build', 'checkTsc', 'createDbEntity', 'dist', 'eslint', 
 const projectAutoHelper = (opt, getCommandOpts) => {
     const auto = new ProjectAuto(opt);
 
-    const command = process.argv[3];
+    const command = process.argv[2];
 
     const commandOpts = typeof getCommandOpts === 'function' ? getCommandOpts(auto) : getCommandOpts;
 
