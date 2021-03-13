@@ -8,10 +8,8 @@ const {
     ColorsEnum,
 } = require('../utils');
 
-const {
-    createDbEntityHelper,
-    releaseHelper,
-} = require('.');
+const createDbEntityHelper = require('./createDbEntityHelper');
+const releaseHelper = require('./releaseHelper');
 
 const {
     nodeEnvValues,
@@ -27,17 +25,17 @@ class ProjectAuto {
 
         this.allProjectNames = Object.keys(projectsConfig);
 
-        this.hasServerProjectNames = Object.keys(projectsConfig).filter(projectName => !projectsConfig[projectName].noServer);
+        this.hasServerProjectNames = Object.keys(projectsConfig).filter(projectName => !projectsConfig[projectName].props.noServer);
 
-        this.hasGulpProjectNames = Object.keys(projectsConfig).filter(projectName => !projectsConfig[projectName].noGulp);
+        this.hasGulpProjectNames = Object.keys(projectsConfig).filter(projectName => !projectsConfig[projectName].props.noGulp);
 
-        this.hasWebpackProjectNames = Object.keys(projectsConfig).filter(projectName => !projectsConfig[projectName].noWebpack);
+        this.hasWebpackProjectNames = Object.keys(projectsConfig).filter(projectName => !projectsConfig[projectName].props.noWebpack);
 
-        this.taroProjectNames = Object.keys(projectsConfig).filter(projectName => projectsConfig[projectName].isTaro);
+        this.taroProjectNames = Object.keys(projectsConfig).filter(projectName => projectsConfig[projectName].props.isTaro);
 
-        this.allowReleaseProjectNames = Object.keys(projectsConfig).filter(projectName => !projectsConfig[projectName].noRelease);
+        this.allowReleaseProjectNames = Object.keys(projectsConfig).filter(projectName => !projectsConfig[projectName].props.noRelease);
 
-        this.allowStartProjectNames = Object.keys(projectsConfig).filter(projectName => !projectsConfig[projectName].noStart);
+        this.allowStartProjectNames = Object.keys(projectsConfig).filter(projectName => !projectsConfig[projectName].props.noStart);
     }
 
     getUnionProjectNames = pName => this.projectsConfig[pName] && this.projectsConfig[pName].unionProjectNames || [];
