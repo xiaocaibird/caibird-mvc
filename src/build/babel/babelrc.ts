@@ -66,6 +66,8 @@ export default (options: BabelOptions) => {
     if (isWeb) {
         defineEnv['process.env.NODE_ENV'] = NODE_ENV_VALUE;
     }
+    defineEnv['process.env._CAIBIRD_RUN_ENV'] = process.env._CAIBIRD_RUN_ENV;
+    defineEnv['process.env._CAIBIRD_BABEL_TRANSFORM_ALL'] = process.env._CAIBIRD_BABEL_TRANSFORM_ALL;
 
     plugins.push(['transform-define', defineEnv]);
 

@@ -176,15 +176,14 @@ class ProjectAuto {
 
 const allowCommands = ['build', 'checkTsc', 'createDbEntity', 'dist', 'eslint', 'gulp', 'release', 'start', 'tsc', 'webpack'];
 
-const projectAutoHelper = (opt, getCommandOpts) => {
+const projectAutoHelper = (opt, commandOpts) => {
     const auto = new ProjectAuto(opt);
-
     const command = process.argv[2];
 
-    const commandOpts = typeof getCommandOpts === 'function' ? getCommandOpts(auto) : getCommandOpts;
-
     if (allowCommands.includes(command)) {
-        auto[command](commandOpts[command]);
+        let commandOpt = commandOpts[command];
+        commandOpt = typeof commandOpt === 'function' ? commandOpt(auto) : commandOpt;
+        auto[command](commandOpt);
     } else {
         if (command) {
             printf(`Error: the command 【${command}】 is incorrect`, ColorsEnum.RED);
