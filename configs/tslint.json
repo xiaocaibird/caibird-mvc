@@ -197,7 +197,7 @@
         //throw不能直接抛出字符
         "no-string-throw": true,
         //禁止导入子模块的模块列表(暂时没有模块禁止使用子模块)
-        "no-submodule-imports": true,
+        "no-submodule-imports": false,
         //当case没有break或return时报错(ts本身已经检查了)
         "no-switch-case-fall-through": false,
         //禁止对两个相同的字面量进行比较
