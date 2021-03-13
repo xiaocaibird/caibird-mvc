@@ -157,7 +157,7 @@ class ProjectAuto {
     tsc = () => {
         const projectName = this.getProjectName();
 
-        const result = exec(`rimraf .tsc && tsc -p src/${projectName}/tsconfig.json`);
+        const result = exec(`rimraf .tsc && tsc -v && tsc -p src/${projectName}/tsconfig.json`);
         process.exit(result.code);
     };
 
