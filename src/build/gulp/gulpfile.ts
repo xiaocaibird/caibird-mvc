@@ -34,7 +34,6 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
         'build/babel',
         'build/ini',
         'build/webpack',
-        'build/config.js',
 
         'public',
         'server',
@@ -42,7 +41,7 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
         'config.js',
     ];
 
-    gulp.task('dist', () => {
+    gulp.task('dist', async () => {
         projectList.forEach(projectName => {
             if (rootFileList.includes(projectName)) {
                 gulp.src([`${rootDir}.tsc/src/${projectName}`])
@@ -68,5 +67,7 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
         gulp.src(nodeModulesFiles)
             .pipe(babel(babelrc))
             .pipe(gulp.dest(`${rootDir}dist/@modules`));
+
+        return Promise.resolve();
     });
 };
