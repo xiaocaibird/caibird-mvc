@@ -176,7 +176,7 @@ class ProjectAuto {
     };
 }
 
-const allowCommand = ['build', 'checkTsc', 'createDbEntity', 'dist', 'eslint', 'gulp', 'release', 'start', 'tsc', 'webpack'];
+const allowCommands = ['build', 'checkTsc', 'createDbEntity', 'dist', 'eslint', 'gulp', 'release', 'start', 'tsc', 'webpack'];
 
 const projectAutoHelper = (opt, getCommandOpts) => {
     const auto = new ProjectAuto(opt);
@@ -185,7 +185,7 @@ const projectAutoHelper = (opt, getCommandOpts) => {
 
     const commandOpts = typeof getCommandOpts === 'function' ? getCommandOpts(auto) : getCommandOpts;
 
-    if (allowCommand.includes(command)) {
+    if (allowCommands.includes(command)) {
         auto[command](commandOpts[command]);
     } else {
         if (command) {
