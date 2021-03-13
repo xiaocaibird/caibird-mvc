@@ -23,7 +23,7 @@
         "import/no-internal-modules": "off"
     },
     "overrides": [{
-        "files": ["bin/**"],
+        "files": ["./bin/**"],
         "rules": {
             "@typescript-eslint/no-require-imports": "off",
             "@typescript-eslint/no-var-requires": "off",
