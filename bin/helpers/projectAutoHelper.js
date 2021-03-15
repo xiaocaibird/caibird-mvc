@@ -140,7 +140,6 @@ class ProjectAuto {
     start = () => {
         const projectName = this.getProjectName();
         const isReal = process.argv[4] === 'real-debug';
-        const runEnv = this.getRunEnv();
 
         const nodeEnv = isReal ? nodeEnvValues.PRODUCTION : nodeEnvValues.DEVELOPMENT;
 
@@ -152,7 +151,7 @@ class ProjectAuto {
                     `npm run kill-port && npm run dist ${projectName} ${envValues.local} &&
                      ${isMac ? 'open -a Terminal.app node_modules/caibird-mvc/bin/_/macNodeApp.sh' : 'start cmd /c node app'} &&` :
                     `npm run check-tsc ${projectName} &&`}
-                    cross-env NODE_ENV=${nodeEnv} _CAIBIRD_RUN_ENV=${runEnv} node node_modules/caibird-mvc/bin/_/taro build --type weapp --watch ${projectName}`);
+                    cross-env NODE_ENV=${nodeEnv} _CAIBIRD_RUN_ENV=${envValues.local} node node_modules/caibird-mvc/bin/_/taro build --type weapp --watch ${projectName}`);
                 process.exit(result.code);
             } else {
                 const result = exec(`npm run kill-port && npm run dist ${projectName} ${envValues.local} && cross-env NODE_ENV=${nodeEnvValues.DEVELOPMENT} node app`);
