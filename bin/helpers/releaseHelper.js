@@ -58,7 +58,6 @@ module.exports = async opt => {
     if (confirmRelease !== 'Y') {
         printf('退出发布!', ColorsEnum.RED);
         process.exit(0);
-        return;
     }
 
     const nowBranch = execStdout('git symbolic-ref --short -q HEAD', false);
@@ -79,9 +78,7 @@ module.exports = async opt => {
         if (isTagMode) {
             otherBranch = await readline('请输入要发布的指定tag:');
             if (!otherBranch) {
-                printf('tag名不能为空!', ColorsEnum.RED);
-                process.exit(1);
-                return;
+                throw new Error('tag名不能为空!');
             }
         } else {
             otherBranch = await readline('除基础分支外，若要附带其它分支请输入分支名，多个分支用空格分割:');
@@ -110,9 +107,7 @@ module.exports = async opt => {
         const num = await readline('请输入当前迭代编号(1 or 2):');
 
         if (num !== '1' && num !== '2') {
-            printf('迭代编号输入错误', ColorsEnum.RED);
-            process.exit(1);
-            return;
+            throw new Error('迭代编号输入错误');
         }
 
         execStdout('git fetch --tags');
@@ -134,9 +129,7 @@ module.exports = async opt => {
         const version = await readline('请输入tag版本号(如:1.x，2.x):');
 
         if (!version) {
-            printf('tag版本号不能为空！', ColorsEnum.RED);
-            process.exit(1);
-            return;
+            throw new Error('tag版本号不能为空！');
         }
 
         const fullVersion = `${getTime()}-${num}-${version}`;
@@ -155,8 +148,7 @@ module.exports = async opt => {
             const res = exec(`git checkout ${otherBranch}`);
             if (res.code !== 0) {
                 printf(res.stderr, ColorsEnum.RED);
-                process.exit(1);
-                return;
+                throw new Error(res.stderr);
             }
         }
         execStdout(`git branch -D ${releaseBranch}`);
@@ -170,9 +162,7 @@ module.exports = async opt => {
           npm run build ${projectName} ${env}`);
 
         if (!(result1.code === 0 || result1.code === 128 || result1.code === 127)) {
-            printf(`发布失败！！！ exit code: ${result1.code}`, ColorsEnum.RED);
-            process.exit(1);
-            return;
+            throw new Error(`发布失败！！！ exit code: ${result1.code}`);
         }
 
         if (env === envValues.production || env === envValues.exp) {
@@ -207,11 +197,11 @@ module.exports = async opt => {
         } else {
             printf(`发布失败！！！ exit code: ${result2.code}`, ColorsEnum.RED);
         }
+        execStdout(`git checkout ${nowBranch}`);
         process.exit(0);
     } catch (e) {
-        console.error(e);
-        process.exit(1);
-    } finally {
+        printf(e && e.message, ColorsEnum.RED);
         execStdout(`git checkout ${nowBranch}`);
+        process.exit(1);
     }
 };
