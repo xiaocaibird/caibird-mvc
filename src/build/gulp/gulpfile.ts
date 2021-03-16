@@ -38,7 +38,7 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
         'public',
         'server',
         'front',
-        'config.js',
+        '_config.js',
     ];
 
     gulp.task('dist', async () => {
