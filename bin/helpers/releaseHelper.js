@@ -6,7 +6,7 @@ const fs = require('fs');
 const path = require('path');
 const OSS = require('ali-oss');
 
-const buildConfig = require('../../src/build/config');
+const buildConfig = require('../../src/build/_config');
 
 const {
     printf,

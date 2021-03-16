@@ -1055,7 +1055,7 @@
         // "no-regex-spaces": "error",
         "no-restricted-imports": ["error", {
             "patterns": [
-                "**/config"
+                "**/_config"
             ]
         }],
         "no-restricted-syntax": ["off", "ForInStatement"],

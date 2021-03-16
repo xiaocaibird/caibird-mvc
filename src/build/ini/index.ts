@@ -3,7 +3,7 @@
  * @Title 项目构建初始化文件
  */
 // eslint-disable-next-line no-restricted-imports
-import { nodeEnvValues, runStatus } from '../config';
+import { nodeEnvValues, runStatus } from '../_config';
 namespace _ini {
     export const NODE_ENV_VALUE = runStatus.isProduction ? nodeEnvValues.PRODUCTION : nodeEnvValues.DEVELOPMENT;
 }
