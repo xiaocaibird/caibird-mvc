@@ -151,7 +151,7 @@ class ProjectAuto {
                     `npm run kill-port && npm run dist ${projectName} ${envValues.local} &&
                      ${isMac ? 'open -a Terminal.app node_modules/caibird-mvc/bin/_/macNodeApp.sh' : `start cmd /c cross-env NODE_ENV=${nodeEnvValues.DEVELOPMENT} node app`} &&` :
                     `npm run check-tsc ${projectName} &&`}
-                    cross-env NODE_ENV=${nodeEnv} _CAIBIRD_RUN_ENV=${envValues.local} _CAIBIRD_PROJECT_NAME=${projectName} node node_modules/caibird-mvc/bin/_/taro build --type weapp --watch ${projectName}`);
+                    cross-env NODE_ENV=${nodeEnv} _CAIBIRD_RUN_ENV=${runEnvArgs.local} _CAIBIRD_PROJECT_NAME=${projectName} node node_modules/caibird-mvc/bin/_/taro build --type weapp --watch ${projectName}`);
                 process.exit(result.code);
             } else {
                 const result = exec(`npm run kill-port && npm run dist ${projectName} ${envValues.local} && cross-env NODE_ENV=${nodeEnvValues.DEVELOPMENT} node app`);
