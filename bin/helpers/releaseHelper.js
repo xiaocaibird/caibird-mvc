@@ -39,7 +39,6 @@ const upload = async ({ ossConfig }) => {
             const rsp = await client.put(`${ossDir}/${file}`, `${jsBundleDir}/${file}`);
 
             if (!(rsp.url && rsp.res.status === 200)) {
-                printf(`上传${file}失败!`, ColorsEnum.RED);
                 throw new Error(`上传${file}失败!`);
             }
         }
@@ -68,24 +67,24 @@ module.exports = async opt => {
     let otherBranch = '';
     let isTagMode = false;
 
-    if (env !== envValues.production) {
-        const mode = await readline('发布模式，输入1或2(1代表基于【基础分支】发布，2代表发布【指定tag】)：');
-
-        isTagMode = mode === '2';
-
-        printf(`已选择【${isTagMode ? '指定tag模式' : '基础分支模式'}】`, ColorsEnum.RED);
-
-        if (isTagMode) {
-            otherBranch = await readline('请输入要发布的指定tag:');
-            if (!otherBranch) {
-                throw new Error('tag名不能为空!');
-            }
-        } else {
-            otherBranch = await readline('除基础分支外，若要附带其它分支请输入分支名，多个分支用空格分割:');
-        }
-    }
-
     try {
+        if (env !== envValues.production) {
+            const mode = await readline('发布模式，1或[空值]或[2以外的任意值]代表基于【基础分支】发布，2代表发布【指定tag】：');
+
+            isTagMode = mode === '2';
+
+            printf(`已选择【${isTagMode ? '指定tag模式' : '基础分支模式'}】`, ColorsEnum.RED);
+
+            if (isTagMode) {
+                otherBranch = await readline('请输入要发布的指定tag:');
+                if (!otherBranch) {
+                    throw new Error('tag名不能为空!');
+                }
+            } else {
+                otherBranch = await readline('除基础分支外，若要附带其它分支请输入分支名，多个分支用空格分割:');
+            }
+        }
+
         if (isTagMode) {
             printf(`即将发布 ${otherBranch} TAG，发布成功后自动切换回当前工作分支，有未提交的修改会自动stash`, ColorsEnum.CYAN);
         } else {
@@ -147,7 +146,6 @@ module.exports = async opt => {
         } else {
             const res = exec(`git checkout ${otherBranch}`);
             if (res.code !== 0) {
-                printf(res.stderr, ColorsEnum.RED);
                 throw new Error(res.stderr);
             }
         }
