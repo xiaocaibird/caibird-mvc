@@ -1,6 +1,6 @@
 {
   "name": "caibird-mvc",
-  "version": "2.2.5",
+  "version": "2.2.6",
   "private": false,
   "scripts": {
     "prepare": "git config core.ignorecase false && husky install",
