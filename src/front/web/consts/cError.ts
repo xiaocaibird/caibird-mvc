@@ -2,7 +2,7 @@
  * @Owners cmZhou
  * @Title 常用异常类
  */
-import base, { setCompatible } from '../../@common/consts/cError';
+import base, { setCompatible } from '../../@com/consts/cError';
 
 type ErrJson = {
     _compatible_key_: string,

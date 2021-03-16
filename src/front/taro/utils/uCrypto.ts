@@ -2,7 +2,7 @@
  * @Owners cmZhou
  * @Title crypto util
  */
-import base from '../../@common/utils/uCrypto';
+import base from '../../@com/utils/uCrypto';
 
 export const uCrypto = base;
 export default uCrypto;

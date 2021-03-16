@@ -2,7 +2,7 @@
  * @Owners cmZhou
  * @Title html工具
  */
-import base from '../../@common/utils/uHtml';
+import base from '../../@com/utils/uHtml';
 
 namespace _uHtml {
     export const getTextWidth = (text: string, opt?: {

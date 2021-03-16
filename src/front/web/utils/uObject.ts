@@ -2,7 +2,7 @@
  * @Owners cmZhou
  * @Title obj工具
  */
-import base from '../../@common/utils/uObject';
+import base from '../../@com/utils/uObject';
 
 export const uObject = base;
 export default uObject;
