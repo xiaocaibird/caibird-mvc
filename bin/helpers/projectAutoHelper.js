@@ -95,7 +95,7 @@ class ProjectAuto {
         const projectName = this.getProjectName();
         const runEnv = this.getRunEnv();
 
-        const result = exec(`rimraf assets/bundle && npm run check-tsc ${projectName} && cross-env _CAIBIRD_RUN_ENV=${runEnv} npm run gulp ${projectName}`);
+        const result = exec(`rimraf assets/bundle && npm run check-tsc ${projectName} && cross-env _CAIBIRD_RUN_ENV=${runEnv} _CAIBIRD_PROJECT_NAME=${projectName} npm run gulp ${projectName}`);
         process.exit(result.code);
     };
 
@@ -149,9 +149,9 @@ class ProjectAuto {
             if (this.taroProjectNames.includes(projectName)) {
                 const result = exec(`${this.hasServerProjectNames.includes(projectName) ?
                     `npm run kill-port && npm run dist ${projectName} ${envValues.local} &&
-                     ${isMac ? 'open -a Terminal.app node_modules/caibird-mvc/bin/_/macNodeApp.sh' : 'start cmd /c node app'} &&` :
+                     ${isMac ? 'open -a Terminal.app node_modules/caibird-mvc/bin/_/macNodeApp.sh' : `start cmd /c cross-env NODE_ENV=${nodeEnvValues.DEVELOPMENT} node app`} &&` :
                     `npm run check-tsc ${projectName} &&`}
-                    cross-env NODE_ENV=${nodeEnv} _CAIBIRD_RUN_ENV=${envValues.local} node node_modules/caibird-mvc/bin/_/taro build --type weapp --watch ${projectName}`);
+                    cross-env NODE_ENV=${nodeEnv} _CAIBIRD_RUN_ENV=${envValues.local} _CAIBIRD_PROJECT_NAME=${projectName} node node_modules/caibird-mvc/bin/_/taro build --type weapp --watch ${projectName}`);
                 process.exit(result.code);
             } else {
                 const result = exec(`npm run kill-port && npm run dist ${projectName} ${envValues.local} && cross-env NODE_ENV=${nodeEnvValues.DEVELOPMENT} node app`);

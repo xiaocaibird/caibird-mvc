@@ -116,7 +116,7 @@ export default (webpackOptions: WebpackOptions, webpackConfig: webpack.Configura
                 },
             }],
             include: [
-                ...(getProjectIncludeList([projectName, ...(unionProjectNames || [])], ['front/@common', 'front/web', 'public', 'config.js'])),
+                ...(getProjectIncludeList([projectName, ...(unionProjectNames || [])], ['front/@common', 'front/web', 'public', 'config.ts'])),
                 path.join(process.cwd(), 'src/@common'),
                 path.join(process.cwd(), 'node_modules/caibird-mvc/src/public'),
                 path.join(process.cwd(), 'node_modules/caibird-mvc/src/front'),
