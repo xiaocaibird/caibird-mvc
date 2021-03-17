@@ -17,7 +17,7 @@ import ini from '../ini';
 
 import utils from './utils';
 
-type WebpackOptions = {
+export type WebpackOptions = {
     projectName: string,
     projectTitle: string,
     outputConfig: {

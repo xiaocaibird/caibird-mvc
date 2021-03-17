@@ -11,7 +11,7 @@ import { v4 } from 'uuid';
 import getBabelrc, { BabelOptions } from '../babel/babelrc';
 import ini from '../ini';
 
-const rootDir = '../../../../../';
+const rootDir = './';
 
 export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
     const projectVersion = v4().replace(/-/g, '');
@@ -36,6 +36,7 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
         'build/babel',
         'build/ini',
         'build/webpack',
+        'build/_config.js',
 
         'public',
         'server',
@@ -51,6 +52,9 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
                     .pipe(gulp.dest(`${rootDir}dist`));
             } else {
                 fileList.forEach(file => {
+                    if (file === 'build/_config.js' && projectName !== '@common') {
+                        return;
+                    }
                     if (file.endsWith('.js')) {
                         const lastIdx = file.lastIndexOf('/');
                         gulp.src([`${rootDir}.tsc/src/${projectName}/${file}`])
@@ -74,16 +78,16 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
     });
 
     if (ini.isLocalTest) {
-        shelljs.exec(`start cmd /c cross-env NODE_ENV=${ini.NODE_ENV_VALUE} node app`, {
-            env: {
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                ...(process.env as any),
-                FORCE_COLOR: true,
-            },
-        });
-
         const watcher = gulp.watch([`${rootDir}.tsc/src/${babelOptions.projectName}/server/**/*.js`], done => {
             done();
+            shelljs.exec(`start cmd /k cross-env NODE_ENV=${ini.NODE_ENV_VALUE} node ${rootDir}app`, {
+                async: true,
+                env: {
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    ...(process.env as any),
+                    FORCE_COLOR: true,
+                },
+            });
         });
         watcher.on('change', async (_path, _stats) => {
             gulp.src([`${rootDir}.tsc/src/${babelOptions.projectName}/server/**/*.js`])

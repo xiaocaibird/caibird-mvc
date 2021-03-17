@@ -97,7 +97,7 @@ class ProjectAuto {
         const runEnv = this.getRunEnv();
 
         const result = exec(`rimraf assets/bundle && npm run check-tsc ${projectName} &&
-                            ${runStatus.isLocalTest ? `start cmd /c node tsc -w -p src/${projectName}/tsconfig.json &&` : ''}
+                            ${runStatus.isLocalTest ? `start cmd /k tsc -w -p src/${projectName}/tsconfig.json &&` : ''}
                              cross-env _CAIBIRD_RUN_ENV=${runEnv} _CAIBIRD_PROJECT_NAME=${projectName} npm run gulp ${projectName}`);
         process.exit(result.code);
     };
@@ -118,7 +118,7 @@ class ProjectAuto {
         const projectName = this.getProjectName();
 
         if (this.hasGulpProjectNames.includes(projectName)) {
-            const result = exec(`rimraf dist && gulp dist --gulpfile .tsc/src/${projectName}/build/gulp/gulpfile.js`);
+            const result = exec(`rimraf dist && gulp dist --gulpfile .tsc/src/${projectName}/build/gulp/gulpfile.js --cwd ./`);
             process.exit(result.code);
         } else {
             printf(`Error: the project 【${projectName}】 no has gulpfile`, ColorsEnum.RED);
@@ -154,7 +154,7 @@ class ProjectAuto {
             if (this.taroProjectNames.includes(projectName)) {
                 const result = exec(`${this.hasServerProjectNames.includes(projectName) ?
                     `npm run kill-port && npm run dist ${projectName} ${envValues.local} &&
-                     ${isMac ? 'open -a Terminal.app node_modules/caibird-mvc/bin/_/macNodeApp.sh' : `start cmd /c cross-env NODE_ENV=${nodeEnvValues.DEVELOPMENT} node app`} &&` :
+                     ${isMac ? 'open -a Terminal.app node_modules/caibird-mvc/bin/_/macNodeApp.sh' : `start cmd /k cross-env NODE_ENV=${nodeEnvValues.DEVELOPMENT} node app`} &&` :
                     `npm run check-tsc ${projectName} &&`}
                     cross-env NODE_ENV=${nodeEnv} _CAIBIRD_RUN_ENV=${runEnvArgs.local} _CAIBIRD_PROJECT_NAME=${projectName} node node_modules/caibird-mvc/bin/_/taro build --type weapp --watch ${projectName}`);
                 process.exit(result.code);

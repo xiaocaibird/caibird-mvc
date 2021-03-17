@@ -111,9 +111,10 @@ export default (options: BabelOptions) => {
         });
 
         plugins.push(['module-resolver', {
-            cwd: '../../',
+            cwd: `./.tsc/src/${projectName}/`,
             alias: {
                 ...alias,
+                'caibird-mvc/src': '../@modules/caibird-mvc/src',
                 'caibird-mvc': '../@modules/caibird-mvc/src',
             },
         }]);

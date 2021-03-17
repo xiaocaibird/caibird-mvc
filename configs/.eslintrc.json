@@ -41,7 +41,9 @@
         // "plugin:@typescript-eslint/all", 
         // "plugin:react/all" 
     ],
-    "globals": {},
+    "globals": {
+        "CaibirdEnv": "readonly"
+    },
     // "processor": "",
     "overrides": [],
     "ignorePatterns": ["**/dist/**", "**/node_modules/**", "**/lib/**", "**/bundle/**", "**/.tsc/**", "**/assets/**", "**/server/models/**"],

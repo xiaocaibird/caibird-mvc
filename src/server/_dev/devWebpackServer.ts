@@ -31,6 +31,8 @@ export default (options: Options) => {
         disableHostCheck: true,
         open: true,
         publicPath,
+        host: nodeServerConfig.host,
+        port: nodeServerConfig.port,
         // bonjour: true,
         // port: 3003,
         // contentBase: '',
@@ -50,7 +52,7 @@ export default (options: Options) => {
         },
         // progress: true,
         watchOptions: {
-            ignored: ['node_modules', ...watchIgnores],
+            ignored: ['**/node_modules/**', ...watchIgnores],
             aggregateTimeout: 1000,
             poll: 1000,
         },

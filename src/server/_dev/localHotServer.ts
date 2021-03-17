@@ -16,7 +16,7 @@ export default (opt: {
     const { projectName, delay, devWebpackServerOptions } = opt;
 
     nodemon({
-        script: `require('./${projectName}/server').default()`,
+        script: `./dist/${projectName}/server/index.js`,
         ext: 'js',
         watch: [`./dist/${projectName}/server`],
         delay: delay ?? DEFAULT_DELAY,
