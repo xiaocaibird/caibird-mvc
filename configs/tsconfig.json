@@ -71,6 +71,7 @@
         "noImplicitAny": true, //在表达式和声明上有隐含的any类型时报错。
         "noImplicitReturns": true, //不是函数的所有返回路径都有返回值时报错。
         "noImplicitThis": true, //当this表达式的值为any类型的时候，生成一个错误。
+        "noPropertyAccessFromIndexSignature": false, // 禁止在索引类型中直接读取props
         "noStrictGenericChecks": false, //禁用在函数类型里对泛型签名进行严格检查。
         "noUncheckedIndexedAccess": false, // 开启后会强制所有索引类型为可空类型
         "noUnusedLocals": true, //若有未使用的局部变量则抛错。
