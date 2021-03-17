@@ -35,6 +35,10 @@ type WebpackOptions = {
         templateContent: string,
         disableScriptExtHtmlWebpackPlugin?: boolean,
     },
+    devServerConfig?: {
+        host: string,
+        port: number,
+    },
     addPlugins?(iniValues: typeof ini): webpack.Plugin[],
 };
 
@@ -66,12 +70,12 @@ const getSplitChunks = (list: string[]) => {
 };
 
 export default (webpackOptions: WebpackOptions, webpackConfig: webpack.Configuration = {}): webpack.Configuration => {
-    const { projectName, projectTitle, unionProjectNames, outputConfig, tsImportPluginConfig, useMoment, htmlWebpackPluginConfig, addPlugins } = webpackOptions;
+    const { projectName, projectTitle, unionProjectNames, outputConfig, tsImportPluginConfig, useMoment, htmlWebpackPluginConfig, addPlugins, devServerConfig } = webpackOptions;
 
     const tsConfig = path.join(process.cwd(), `src/${projectName}/tsconfig.webpack.json`);
 
     const getEntry = (): webpack.Configuration['entry'] => ({
-        [utils.entryPointsNames.entry]: (isLocalTest ? ['webpack-hot-middleware/client?reload=true'] : []).concat(`./src/${projectName}/front/web/index`),
+        [utils.entryPointsNames.entry]: (isLocalTest ? [`webpack-dev-server/client?${devServerConfig ? `http://${devServerConfig.host}:${devServerConfig.port}` : ''}`] : []).concat(`./src/${projectName}/front/web/index`),
     });
 
     const getOutput = (): webpack.Output => ({
@@ -196,6 +200,10 @@ export default (webpackOptions: WebpackOptions, webpackConfig: webpack.Configura
 
         if (useMoment) {
             plugins.push(new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /zh-cn/));
+        }
+
+        if (isLocalTest) {
+            plugins.push(new webpack.HotModuleReplacementPlugin());
         }
 
         plugins.push(new HtmlWebpackPlugin({

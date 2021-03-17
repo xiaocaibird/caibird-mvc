@@ -5,9 +5,11 @@
 import fs from 'fs';
 import gulp from 'gulp';
 import babel from 'gulp-babel';
+import shelljs from 'shelljs';
 import { v4 } from 'uuid';
 
 import getBabelrc, { BabelOptions } from '../babel/babelrc';
+import ini from '../ini';
 
 const rootDir = '../../../../../';
 
@@ -70,4 +72,24 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
 
         return Promise.resolve();
     });
+
+    if (ini.isLocalTest) {
+        shelljs.exec(`start cmd /c cross-env NODE_ENV=${ini.NODE_ENV_VALUE} node app`, {
+            env: {
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                ...(process.env as any),
+                FORCE_COLOR: true,
+            },
+        });
+
+        const watcher = gulp.watch([`${rootDir}.tsc/src/${babelOptions.projectName}/server/**/*.js`], done => {
+            done();
+        });
+        watcher.on('change', async (_path, _stats) => {
+            gulp.src([`${rootDir}.tsc/src/${babelOptions.projectName}/server/**/*.js`])
+                .pipe(babel(babelrc))
+                .pipe(gulp.dest(`${rootDir}dist/${babelOptions.projectName}/server`));
+            return Promise.resolve();
+        });
+    }
 };
