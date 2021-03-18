@@ -5,11 +5,13 @@
 import webpack from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
 
+import { uArray } from '../utils/uArray';
+
 export type Options = {
     webpackConfig: webpack.Configuration,
     publicPath: string,
 
-    watchIgnores?: string[],
+    watchIgnores?: webpack.Options.WatchOptions['ignored'],
 
     nodeServerConfig: {
         host: string,
@@ -52,7 +54,7 @@ export default (options: Options) => {
         },
         // progress: true,
         watchOptions: {
-            ignored: ['**/node_modules/**', ...watchIgnores],
+            ignored: [/node_modules\/(?!caibird-mvc)/, ...(uArray.check(watchIgnores) ? watchIgnores : [watchIgnores])],
             aggregateTimeout: 1000,
             poll: 1000,
         },

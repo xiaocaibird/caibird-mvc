@@ -18,7 +18,18 @@ export default (opt: {
     nodemon({
         script: `./dist/${projectName}/server/index.js`,
         ext: 'js',
-        watch: [`./dist/${projectName}/server`],
+        watch: [
+            './dist/@modules/caibird-mvc/src/public',
+            './dist/@modules/caibird-mvc/src/server',
+
+            './dist/@common/_config.js',
+            './dist/@common/public',
+            './dist/@common/server',
+
+            `./dist/${projectName}/_config.js`,
+            `./dist/${projectName}/public`,
+            `./dist/${projectName}/server`,
+        ],
         delay: delay ?? DEFAULT_DELAY,
         ignore: [
             'node_modules',

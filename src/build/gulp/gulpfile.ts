@@ -80,21 +80,38 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
 
     gulp.task('last', async () => {
         if (ini.isLocalTest) {
-            shelljs.exec(`start cmd /k cross-env NODE_ENV=${ini.NODE_ENV_VALUE} node ${rootDir}app`, {
-                async: true,
-                env: {
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    ...(process.env as any),
-                    FORCE_COLOR: true,
-                },
-            });
+            let isStart = false;
+            const watcher = gulp.watch([
+                `${rootDir}.tsc/node_modules/caibird-mvc/src/server/**/*.js`,
+                `${rootDir}.tsc/node_modules/caibird-mvc/src/public/**/*.js`,
 
-            const watcher = gulp.watch([`${rootDir}.tsc/src/${babelOptions.projectName}/server/**/*.js`], done => {
+                `${rootDir}.tsc/src/@common/_config.js`,
+                `${rootDir}.tsc/src/@common/server/**/*.js`,
+                `${rootDir}.tsc/src/@common/public/**/*.js`,
+
+                `${rootDir}.tsc/src/${babelOptions.projectName}/_config.js`,
+                `${rootDir}.tsc/src/${babelOptions.projectName}/server/**/*.js`,
+                `${rootDir}.tsc/src/${babelOptions.projectName}/public/**/*.js`,
+            ], done => {
                 done();
+                if (!isStart) {
+                    isStart = true;
+                    shelljs.exec(`start cmd /k cross-env NODE_ENV=${ini.NODE_ENV_VALUE} node ${rootDir}app`, {
+                        async: true,
+                        env: {
+                            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                            ...(process.env as any),
+                            FORCE_COLOR: true,
+                        },
+                    });
+                }
             });
             watcher.on('change', (path, _stats) => {
-                const toPath = path.replace('.tsc\\src\\', 'dist\\');
+                const toPath = path.replace(/\//g, '\\').replace('.tsc\\node_modules\\', 'dist\\@modules\\').replace('.tsc\\src\\', 'dist\\');
                 const lastIdx = toPath.lastIndexOf('\\');
+
+                console.log('watch:', ` ${path} => ${toPath}`);
+
                 gulp.src([path])
                     .pipe(babel(babelrc))
                     .pipe(gulpRename({ dirname: '' }))
