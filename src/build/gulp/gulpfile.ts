@@ -6,7 +6,6 @@ import fs from 'fs';
 import gulp from 'gulp';
 import babel from 'gulp-babel';
 import gulpRename from 'gulp-rename';
-import shelljs from 'shelljs';
 import { v4 } from 'uuid';
 
 import getBabelrc, { BabelOptions } from '../babel/babelrc';
@@ -45,7 +44,7 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
         '_config.js',
     ];
 
-    gulp.task('babel', async () => {
+    gulp.task('dist', async () => {
         projectList.forEach(projectName => {
             if (rootFileList.includes(projectName)) {
                 gulp.src([`${rootDir}.tsc/src/${projectName}`])
@@ -78,9 +77,8 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
         return Promise.resolve();
     });
 
-    gulp.task('last', async () => {
+    gulp.task('watch', async () => {
         if (ini.isLocalTest) {
-            let isStart = false;
             const watcher = gulp.watch([
                 `${rootDir}.tsc/node_modules/caibird-mvc/src/server/**/*.js`,
                 `${rootDir}.tsc/node_modules/caibird-mvc/src/public/**/*.js`,
@@ -94,17 +92,6 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
                 `${rootDir}.tsc/src/${babelOptions.projectName}/public/**/*.js`,
             ], done => {
                 done();
-                if (!isStart) {
-                    isStart = true;
-                    shelljs.exec(`start cmd /k cross-env NODE_ENV=${ini.NODE_ENV_VALUE} node ${rootDir}app`, {
-                        async: true,
-                        env: {
-                            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                            ...(process.env as any),
-                            FORCE_COLOR: true,
-                        },
-                    });
-                }
             });
             watcher.on('change', (path, _stats) => {
                 const toPath = path.replace(/\//g, '\\').replace('.tsc\\node_modules\\', 'dist\\@modules\\').replace('.tsc\\src\\', 'dist\\');
@@ -120,6 +107,4 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
         }
         return Promise.resolve();
     });
-
-    gulp.task('dist', gulp.series('babel', 'last'));
 };

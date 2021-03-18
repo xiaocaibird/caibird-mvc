@@ -8,7 +8,7 @@ const {
     ColorsEnum,
 } = require('../utils');
 
-const defaultGlobalList = ['sequelize-auto-xiaocaibird-fork', 'kill-port', 'cross-env', 'shx'];
+const defaultGlobalList = [];
 
 module.exports = ({
     globalList,

@@ -5,7 +5,7 @@
 import webpack from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
 
-import { uArray } from '../utils/uArray';
+import { uArray } from '../../public/utils/uArray';
 
 export type Options = {
     webpackConfig: webpack.Configuration,

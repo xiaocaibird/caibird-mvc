@@ -4,16 +4,13 @@
  */
 import nodemon from 'nodemon';
 
-import devWebpackServer, { Options } from './devWebpackServer';
-
 const DEFAULT_DELAY = 1000;
 
 export default (opt: {
     projectName: string,
     delay?: number,
-    devWebpackServerOptions: Options,
 }) => {
-    const { projectName, delay, devWebpackServerOptions } = opt;
+    const { projectName, delay } = opt;
 
     nodemon({
         script: `./dist/${projectName}/server/index.js`,
@@ -35,8 +32,6 @@ export default (opt: {
             'node_modules',
         ],
     });
-
-    devWebpackServer(devWebpackServerOptions);
 
     nodemon.on('start', () => {
     }).on('quit', () => {
