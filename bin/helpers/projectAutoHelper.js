@@ -259,6 +259,7 @@ class ProjectAuto {
                         path.join(process.cwd(), `/dist/${projectName}/build/webpack/webpackDevServer`))).default();
             } catch (e) {
                 printf(`Error: ${e?.message || 'webpackDevServer 启动失败！！！'}`, ColorsEnum.RED);
+                process.exit(1);
             }
         } else {
             printf(`Error: the project 【${projectName}】 no has webpack`, ColorsEnum.RED);
