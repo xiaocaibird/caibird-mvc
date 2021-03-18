@@ -78,16 +78,20 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
     });
 
     if (ini.isLocalTest) {
+        let isStart = false;
         const watcher = gulp.watch([`${rootDir}.tsc/src/${babelOptions.projectName}/server/**/*.js`], done => {
             done();
-            shelljs.exec(`start cmd /k cross-env NODE_ENV=${ini.NODE_ENV_VALUE} node ${rootDir}app`, {
-                async: true,
-                env: {
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    ...(process.env as any),
-                    FORCE_COLOR: true,
-                },
-            });
+            if (!isStart) {
+                isStart = true;
+                shelljs.exec(`start cmd /k cross-env NODE_ENV=${ini.NODE_ENV_VALUE} node ${rootDir}app`, {
+                    async: true,
+                    env: {
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                        ...(process.env as any),
+                        FORCE_COLOR: true,
+                    },
+                });
+            }
         });
         watcher.on('change', async (_path, _stats) => {
             gulp.src([`${rootDir}.tsc/src/${babelOptions.projectName}/server/**/*.js`])
