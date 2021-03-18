@@ -99,6 +99,9 @@ declare namespace dp {
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         _CAIBIRD_PORT: any,
+
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        _CAIBIRD_PROJECT_VERSION: any,
     }
 
     interface CaibirdEnv {

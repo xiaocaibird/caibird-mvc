@@ -14,7 +14,7 @@ import ini from '../ini';
 const rootDir = './';
 
 export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
-    const projectVersion = v4().replace(/-/g, '');
+    const projectVersion = process.env._CAIBIRD_PROJECT_VERSION || v4().replace(/-/g, '');
 
     if (!fs.existsSync(`${rootDir}.log`)) {
         fs.mkdirSync(`${rootDir}.log`);
@@ -79,6 +79,7 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
 
     gulp.task('watch', async () => {
         if (ini.isLocalTest) {
+            let isDone = false;
             const watcher = gulp.watch([
                 `${rootDir}.tsc/node_modules/caibird-mvc/src/server/**/*.js`,
                 `${rootDir}.tsc/node_modules/caibird-mvc/src/public/**/*.js`,
@@ -92,12 +93,15 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
                 `${rootDir}.tsc/src/${babelOptions.projectName}/public/**/*.js`,
             ], done => {
                 done();
+                setTimeout(() => {
+                    isDone = true;
+                }, eDate.MsCount.TenSec);
             });
             watcher.on('change', (path, _stats) => {
                 const toPath = path.replace(/\//g, '\\').replace('.tsc\\node_modules\\', 'dist\\@modules\\').replace('.tsc\\src\\', 'dist\\');
                 const lastIdx = toPath.lastIndexOf('\\');
 
-                console.log('watch:', `${path} => ${toPath}`);
+                isDone && console.log('watch:', `${path} => ${toPath}`);
 
                 gulp.src([path])
                     .pipe(babel(babelrc))

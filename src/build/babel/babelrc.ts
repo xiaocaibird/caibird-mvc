@@ -76,6 +76,8 @@ export default (options: BabelOptions) => {
         _CAIBIRD_HOST: process.env._CAIBIRD_HOST,
 
         _CAIBIRD_PORT: process.env._CAIBIRD_PORT,
+
+        _CAIBIRD_PROJECT_VERSION: process.env._CAIBIRD_PROJECT_VERSION,
     };
 
     const defineProcessEnvs = Object.keys(processEnvs).reduce<dp.Obj>((obj, key) => {

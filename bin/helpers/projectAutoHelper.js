@@ -3,6 +3,7 @@
  * @Title 项目自动化构建助手
  */
 const path = require('path');
+const { v4 } = require('uuid');
 
 const {
     printf,
@@ -189,7 +190,7 @@ class ProjectAuto {
         const gulpCommandPrefix = `cross-env _CAIBIRD_RUN_ENV=${runEnvArgs.local} _CAIBIRD_PROJECT_NAME=${projectName} _CAIBIRD_HOST=${startConfig.host} _CAIBIRD_PORT=${startConfig.port}`;
 
         const result = exec(
-            `concurrently -n "server,tsc" -c "blue.bold,magenta.bold"
+            `concurrently -n "main,tsc" -c "blue.bold,magenta.bold"
             "kill-port ${startConfig.port} &&
              concurrently -n "node,${allowWebpack ? 'webpack,' : ''}node-watch" -c "cyan.bold,${allowWebpack ? 'yellow.bold,' : ''}green.bold"
                                       \\"cross-env NODE_ENV=${nodeEnvValues.DEVELOPMENT} node app\\"
@@ -205,6 +206,7 @@ class ProjectAuto {
         const isReal = process.argv[4] === 'real-debug';
 
         const nodeEnv = isReal ? nodeEnvValues.PRODUCTION : nodeEnvValues.DEVELOPMENT;
+        const projectVersion = v4().replace(/-/g, '');
 
         if (this.allowStartProjectNames.includes(projectName)) {
             const taroCommand = `cross-env NODE_ENV=${nodeEnv} _CAIBIRD_RUN_ENV=${runEnvArgs.local} _CAIBIRD_PROJECT_NAME=${projectName} node node_modules/caibird-mvc/bin/_/taro build --type weapp --watch ${projectName}`;
@@ -213,12 +215,13 @@ class ProjectAuto {
                 const allowServer = this.hasServerProjectNames.includes(projectName);
                 const result = exec(
                     allowServer ?
-                        `npm run dist ${projectName} ${envValues.local} && concurrently -p "【{name}】" -n "SERVER,TARO" "npm run start-server ${projectName}" "${taroCommand}"` :
+                        `cross-env _CAIBIRD_PROJECT_VERSION=${projectVersion} npm run dist ${projectName} ${envValues.local} &&
+                         concurrently -p "【{name}】" -n "SERVER,TARO" "cross-env _CAIBIRD_PROJECT_VERSION=${projectVersion} npm run start-server ${projectName}" "${taroCommand}"` :
                         `npm run check-tsc ${projectName} && ${taroCommand}`,
                 );
                 process.exit(result.code);
             } else {
-                const result = exec(`npm run dist ${projectName} ${envValues.local} && npm run start-server ${projectName}`);
+                const result = exec(`cross-env _CAIBIRD_PROJECT_VERSION=${projectVersion} npm run dist ${projectName} ${envValues.local} && cross-env _CAIBIRD_PROJECT_VERSION=${projectVersion} npm run start-server ${projectName}`);
                 process.exit(result.code);
             }
         } else {
