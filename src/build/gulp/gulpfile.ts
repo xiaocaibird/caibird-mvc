@@ -45,7 +45,7 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
         '_config.js',
     ];
 
-    gulp.task('dist', async () => {
+    gulp.task('babel', async () => {
         projectList.forEach(projectName => {
             if (rootFileList.includes(projectName)) {
                 gulp.src([`${rootDir}.tsc/src/${projectName}`])
@@ -78,30 +78,31 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
         return Promise.resolve();
     });
 
-    if (ini.isLocalTest) {
-        let isStart = false;
-        const watcher = gulp.watch([`${rootDir}.tsc/src/${babelOptions.projectName}/server/**/*.js`], done => {
-            done();
-            if (!isStart) {
-                isStart = true;
-                shelljs.exec(`start cmd /k cross-env NODE_ENV=${ini.NODE_ENV_VALUE} node ${rootDir}app`, {
-                    async: true,
-                    env: {
-                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                        ...(process.env as any),
-                        FORCE_COLOR: true,
-                    },
-                });
-            }
-        });
-        watcher.on('change', async (path, _stats) => {
-            const toPath = path.replace('.tsc\\src\\', 'dist\\');
-            const lastIdx = toPath.lastIndexOf('\\');
-            gulp.src([path])
-                .pipe(babel(babelrc))
-                .pipe(gulpRename({ dirname: '' }))
-                .pipe(gulp.dest(toPath.slice(0, lastIdx)));
-            return Promise.resolve();
-        });
-    }
+    gulp.task('last', async () => {
+        if (ini.isLocalTest) {
+            shelljs.exec(`start cmd /k cross-env NODE_ENV=${ini.NODE_ENV_VALUE} node ${rootDir}app`, {
+                async: true,
+                env: {
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    ...(process.env as any),
+                    FORCE_COLOR: true,
+                },
+            });
+
+            const watcher = gulp.watch([`${rootDir}.tsc/src/${babelOptions.projectName}/server/**/*.js`], done => {
+                done();
+            });
+            watcher.on('change', (path, _stats) => {
+                const toPath = path.replace('.tsc\\src\\', 'dist\\');
+                const lastIdx = toPath.lastIndexOf('\\');
+                gulp.src([path])
+                    .pipe(babel(babelrc))
+                    .pipe(gulpRename({ dirname: '' }))
+                    .pipe(gulp.dest(toPath.slice(0, lastIdx)));
+            });
+        }
+        return Promise.resolve();
+    });
+
+    gulp.task('dist', gulp.series('babel', 'last'));
 };
