@@ -51,7 +51,7 @@ export default (options: BabelOptions) => {
         NODE_ENV_VALUE,
 
         HOST: process.env._CAIBIRD_HOST,
-        PORT: process.env._CAIBIRD_PORT,
+        PORT: parseInt(process.env._CAIBIRD_PORT),
 
         IS_PRODUCTION: isProduction, // 正式环境或体验环境
         IS_EXP_PRODUCTION: isExpProduction, // 仅体验环境

@@ -110,7 +110,7 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
                 const toPath = path.replace(/\//g, '\\').replace('.tsc\\node_modules\\', 'dist\\@modules\\').replace('.tsc\\src\\', 'dist\\');
                 const lastIdx = toPath.lastIndexOf('\\');
 
-                console.log('watch:', ` ${path} => ${toPath}`);
+                console.log('watch:', `${path} => ${toPath}`);
 
                 gulp.src([path])
                     .pipe(babel(babelrc))

@@ -240,14 +240,6 @@ class ReportHelper {
     };
 
     public readonly log = (opt: dReport.LogOptions, ctx = contextHelper.getOrNull()) => {
-        if (this.options.useConsoleLog) {
-            console.log(opt);
-        } else if (CaibirdEnv.IS_LOCAL_TEST) {
-            if (opt.type && (opt.type.includes('error') || opt.type.includes('Error'))) {
-                console.log(opt);
-            }
-        }
-
         try {
             const { alwaysLog, pathIgnoreList = [], pathWhiteList = [], whiteListCtxKeys = [], whiteListCtxValues = [], dbLogPathWhiteListWhenAlways = [] } = this.options;
 
@@ -300,8 +292,6 @@ class ReportHelper {
                 isWriteLog = true;
             }
 
-            if (!isWriteLog) return;
-
             if (opt.type == null) {
                 opt.type = eReport.LogType.Log;
             }
@@ -315,12 +305,19 @@ class ReportHelper {
             if (opt.type.includes('error') || opt.type.includes('Error')) {
                 opt.level = 'error';
                 const logInfo = this.getLogInfo(opt, new LogStack().stack ?? '', ctx);
-
-                logger.error(uObject.safeStringify(logInfo));
+                if (this.options.useConsoleLog) {
+                    console.log(logInfo);
+                } else if (CaibirdEnv.IS_LOCAL_TEST && ctx?.path !== '/sockjs-node') {
+                    console.log(logInfo);
+                }
+                isWriteLog && logger.error(uObject.safeStringify(logInfo));
             } else {
                 opt.level = 'info';
                 const logInfo = this.getLogInfo(opt, new LogStack().stack ?? '', ctx);
-                logger.info(uObject.safeStringify(logInfo));
+                if (this.options.useConsoleLog) {
+                    console.log(logInfo);
+                }
+                isWriteLog && logger.info(uObject.safeStringify(logInfo));
             }
         } catch (e: unknown) {
             console.error('writeLog:', e);

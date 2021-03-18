@@ -70,6 +70,5 @@ export default (options: Options) => {
     const port = nodeServerConfig.port + 1;
     devServer.listen(port, nodeServerConfig.host, err => {
         if (err) console.error(err, 'err');
-        else console.log(`webpack run: http://${nodeServerConfig.host}:${port}`);
     });
 };
