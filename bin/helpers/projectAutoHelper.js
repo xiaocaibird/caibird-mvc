@@ -2,7 +2,6 @@
  * @Owners cmZhou
  * @Title 项目自动化构建助手
  */
-const os = require('os');
 const path = require('path');
 
 const {
@@ -67,6 +66,30 @@ class ProjectAuto {
 
     getRunEnv = () => runEnvArgs[this.getEnv()];
 
+    getStartConfig = () => {
+        let startConfig = {};
+
+        try {
+            startConfig = require(
+                path.relative(__dirname,
+                    path.join(process.cwd(), '/.local/startConfig')));
+
+            startConfig = startConfig ?? {};
+        } catch { }
+
+        const localPort = 3000;
+        const releasePort = 8080;
+
+        const host = runStatus.isLocalTest ? (startConfig.host || 'localhost') : '0.0.0.0';
+        const port = runStatus.isLocalTest ? (startConfig.port ?? localPort) : releasePort;
+
+        return {
+            ...startConfig,
+            host,
+            port,
+        };
+    };
+
     build = () => {
         const projectName = this.getProjectName();
         const env = this.getEnv();
@@ -96,26 +119,12 @@ class ProjectAuto {
     dist = () => {
         const projectName = this.getProjectName();
         const runEnv = this.getRunEnv();
+        const startConfig = this.getStartConfig();
 
-        let startConfig = {};
+        const result = exec(`rimraf assets/bundle &&
+                             npm run check-tsc ${projectName} &&
+                             cross-env _CAIBIRD_RUN_ENV=${runEnv} _CAIBIRD_PROJECT_NAME=${projectName} _CAIBIRD_HOST=${startConfig.host} _CAIBIRD_PORT=${startConfig.port} npm run gulp:dist ${projectName}`);
 
-        try {
-            startConfig = require(
-                path.relative(__dirname,
-                    path.join(process.cwd(), '/.local/startConfig')));
-
-            startConfig = startConfig ?? {};
-        } catch { }
-
-        const localPort = 3000;
-        const releasePort = 8080;
-
-        const host = runStatus.isLocalTest ? (startConfig.host || 'localhost') : '0.0.0.0';
-        const port = runStatus.isLocalTest ? (startConfig.port ?? localPort) : releasePort;
-
-        const result = exec(`rimraf assets/bundle && npm run check-tsc ${projectName} &&
-                        ${runStatus.isLocalTest ? `start cmd /k tsc -w -p src/${projectName}/tsconfig.json &&` : ''}
-                        cross-env _CAIBIRD_RUN_ENV=${runEnv} _CAIBIRD_PROJECT_NAME=${projectName} _CAIBIRD_HOST=${host} _CAIBIRD_PORT=${port} npm run gulp ${projectName}`);
         process.exit(result.code);
     };
 
@@ -131,11 +140,23 @@ class ProjectAuto {
         process.exit(result.code);
     };
 
-    gulp = () => {
+    gulpDist = () => {
         const projectName = this.getProjectName();
 
         if (this.hasGulpProjectNames.includes(projectName)) {
             const result = exec(`rimraf dist && gulp dist --gulpfile .tsc/src/${projectName}/build/gulp/gulpfile.js --cwd ./`);
+            process.exit(result.code);
+        } else {
+            printf(`Error: the project 【${projectName}】 no has gulpfile`, ColorsEnum.RED);
+            process.exit(1);
+        }
+    };
+
+    gulpWatch = () => {
+        const projectName = this.getProjectName();
+
+        if (this.hasGulpProjectNames.includes(projectName)) {
+            const result = exec(`gulp watch --gulpfile .tsc/src/${projectName}/build/gulp/gulpfile.js --cwd ./`);
             process.exit(result.code);
         } else {
             printf(`Error: the project 【${projectName}】 no has gulpfile`, ColorsEnum.RED);
@@ -159,24 +180,45 @@ class ProjectAuto {
         }
     };
 
+    startServer = () => {
+        const projectName = this.getProjectName();
+
+        const allowWebpack = this.hasWebpackProjectNames.includes(projectName);
+        const startConfig = this.getStartConfig();
+
+        const gulpCommandPrefix = `cross-env _CAIBIRD_RUN_ENV=${runEnvArgs.local} _CAIBIRD_PROJECT_NAME=${projectName} _CAIBIRD_HOST=${startConfig.host} _CAIBIRD_PORT=${startConfig.port}`;
+
+        const result = exec(
+            `concurrently -n "server,tsc" -c "blue.bold,magenta.bold"
+            "kill-port ${startConfig.port} &&
+             concurrently -n "node,${allowWebpack ? 'webpack,' : ''}node-watch" -c "cyan.bold,${allowWebpack ? 'yellow.bold,' : ''}green.bold"
+                                      \\"cross-env NODE_ENV=${nodeEnvValues.DEVELOPMENT} node app\\"
+                    ${allowWebpack ? `\\"npm run webpack-dev-server ${projectName}\\"` : ''}
+                                      \\"${gulpCommandPrefix} npm run gulp:watch ${projectName}\\""
+            "tsc -w -p src/${projectName}/tsconfig.json"`,
+        );
+        process.exit(result.code);
+    };
+
     start = () => {
         const projectName = this.getProjectName();
         const isReal = process.argv[4] === 'real-debug';
 
         const nodeEnv = isReal ? nodeEnvValues.PRODUCTION : nodeEnvValues.DEVELOPMENT;
 
-        const isMac = os.type() === 'Darwin';
-
         if (this.allowStartProjectNames.includes(projectName)) {
+            const taroCommand = `cross-env NODE_ENV=${nodeEnv} _CAIBIRD_RUN_ENV=${runEnvArgs.local} _CAIBIRD_PROJECT_NAME=${projectName} node node_modules/caibird-mvc/bin/_/taro build --type weapp --watch ${projectName}`;
+
             if (this.taroProjectNames.includes(projectName)) {
-                const result = exec(`${this.hasServerProjectNames.includes(projectName) ?
-                    `npm run kill-port && npm run dist ${projectName} ${envValues.local} &&
-                     ${isMac ? 'open -a Terminal.app node_modules/caibird-mvc/bin/_/macNodeApp.sh' : `start cmd /k cross-env NODE_ENV=${nodeEnvValues.DEVELOPMENT} node app`} &&` :
-                    `npm run check-tsc ${projectName} &&`}
-                    cross-env NODE_ENV=${nodeEnv} _CAIBIRD_RUN_ENV=${runEnvArgs.local} _CAIBIRD_PROJECT_NAME=${projectName} node node_modules/caibird-mvc/bin/_/taro build --type weapp --watch ${projectName}`);
+                const allowServer = this.hasServerProjectNames.includes(projectName);
+                const result = exec(
+                    allowServer ?
+                        `npm run dist ${projectName} ${envValues.local} && concurrently -p "【{name}】" -n "SERVER,TARO" "npm run start-server" "${taroCommand}"` :
+                        `npm run check-tsc ${projectName} && ${taroCommand}`,
+                );
                 process.exit(result.code);
             } else {
-                const result = exec(`npm run kill-port && npm run dist ${projectName} ${envValues.local}`);
+                const result = exec(`npm run dist ${projectName} ${envValues.local} && npm run start-server`);
                 process.exit(result.code);
             }
         } else {
@@ -203,9 +245,27 @@ class ProjectAuto {
             process.exit(1);
         }
     };
+
+    webpackDevServer = () => {
+        const projectName = this.getProjectName();
+
+        if (this.hasWebpackProjectNames.includes(projectName)) {
+            try {
+                require(
+                    path.relative(__dirname,
+                        path.join(process.cwd(), `/dist/${projectName}/build/webpack/webpackDevServer`))).default();
+            } catch (e) {
+                printf(`Error: ${e?.message || 'webpackDevServer 启动失败！！！'}`, ColorsEnum.RED);
+            }
+        } else {
+            printf(`Error: the project 【${projectName}】 no has webpack`, ColorsEnum.RED);
+            process.exit(1);
+        }
+    };
 }
 
-const allowCommands = ['build', 'checkTsc', 'createDbEntity', 'dist', 'eslint', 'gulp', 'release', 'start', 'tsc', 'webpack'];
+const allowCommands = ['build', 'checkTsc', 'createDbEntity', 'dist', 'eslint',
+    'gulpDist', 'gulpWatch', 'release', 'start', 'tsc', 'webpack', 'webpackDevServer'];
 
 const projectAutoHelper = (opt, commandOpts) => {
     const auto = new ProjectAuto(opt);
