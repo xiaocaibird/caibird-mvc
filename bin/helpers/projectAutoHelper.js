@@ -3,6 +3,7 @@
  * @Title 项目自动化构建助手
  */
 const os = require('os');
+const path = require('path');
 
 const {
     printf,
@@ -96,9 +97,25 @@ class ProjectAuto {
         const projectName = this.getProjectName();
         const runEnv = this.getRunEnv();
 
+        let startConfig = {};
+
+        try {
+            startConfig = require(
+                path.relative(__dirname,
+                    path.join(process.cwd(), '/.local/startConfig')));
+
+            startConfig = startConfig ?? {};
+        } catch { }
+
+        const localPort = 3000;
+        const releasePort = 8080;
+
+        const host = runStatus.isLocalTest ? (startConfig.host || 'localhost') : '0.0.0.0';
+        const port = runStatus.isLocalTest ? (startConfig.port ?? localPort) : releasePort;
+
         const result = exec(`rimraf assets/bundle && npm run check-tsc ${projectName} &&
-                            ${runStatus.isLocalTest ? `start cmd /k tsc -w -p src/${projectName}/tsconfig.json &&` : ''}
-                             cross-env _CAIBIRD_RUN_ENV=${runEnv} _CAIBIRD_PROJECT_NAME=${projectName} npm run gulp ${projectName}`);
+                        ${runStatus.isLocalTest ? `start cmd /k tsc -w -p src/${projectName}/tsconfig.json &&` : ''}
+                        cross-env _CAIBIRD_RUN_ENV=${runEnv} _CAIBIRD_PROJECT_NAME=${projectName} _CAIBIRD_HOST=${host} _CAIBIRD_PORT=${port} npm run gulp ${projectName}`);
         process.exit(result.code);
     };
 

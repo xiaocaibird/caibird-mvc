@@ -5,6 +5,7 @@
 import fs from 'fs';
 import gulp from 'gulp';
 import babel from 'gulp-babel';
+import gulpRename from 'gulp-rename';
 import shelljs from 'shelljs';
 import { v4 } from 'uuid';
 
@@ -93,10 +94,13 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
                 });
             }
         });
-        watcher.on('change', async (_path, _stats) => {
-            gulp.src([`${rootDir}.tsc/src/${babelOptions.projectName}/server/**/*.js`])
+        watcher.on('change', async (path, _stats) => {
+            const toPath = path.replace('.tsc\\src\\', 'dist\\');
+            const lastIdx = toPath.lastIndexOf('\\');
+            gulp.src([path])
                 .pipe(babel(babelrc))
-                .pipe(gulp.dest(`${rootDir}dist/${babelOptions.projectName}/server`));
+                .pipe(gulpRename({ dirname: '' }))
+                .pipe(gulp.dest(toPath.slice(0, lastIdx)));
             return Promise.resolve();
         });
     }

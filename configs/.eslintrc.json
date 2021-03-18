@@ -42,7 +42,6 @@
         // "plugin:react/all" 
     ],
     "globals": {
-        "CaibirdEnv": "readonly"
     },
     // "processor": "",
     "overrides": [],

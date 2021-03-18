@@ -93,6 +93,12 @@ declare namespace dp {
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         _CAIBIRD_PROJECT_NAME: any,
+
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        _CAIBIRD_HOST: any,
+
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        _CAIBIRD_PORT: any,
     }
 
     interface CaibirdEnv {
@@ -102,6 +108,9 @@ declare namespace dp {
         PROJECT_NAME: string,
 
         NODE_ENV_VALUE: string,
+
+        HOST: string,
+        PORT: number,
 
         IS_PRODUCTION: boolean,
         IS_EXP_PRODUCTION: boolean,

@@ -50,6 +50,9 @@ export default (options: BabelOptions) => {
 
         NODE_ENV_VALUE,
 
+        HOST: process.env._CAIBIRD_HOST,
+        PORT: process.env._CAIBIRD_PORT,
+
         IS_PRODUCTION: isProduction, // 正式环境或体验环境
         IS_EXP_PRODUCTION: isExpProduction, // 仅体验环境
 
@@ -58,19 +61,33 @@ export default (options: BabelOptions) => {
         IS_LOCAL_TEST: isLocalTest, // 仅本地调试
     };
 
-    const defineEnvs = Object.keys(caibirdEnvs).reduce<dp.Obj>((obj, key) => {
+    const defineCaibirdEnvs = Object.keys(caibirdEnvs).reduce<dp.Obj>((obj, key) => {
         obj[`CaibirdEnv.${key}`] = caibirdEnvs[key as keyof typeof caibirdEnvs];
         return obj;
     }, {});
 
-    if (isWeb) {
-        defineEnvs['process.env.NODE_ENV'] = NODE_ENV_VALUE;
-    }
-    defineEnvs['process.env._CAIBIRD_RUN_ENV'] = process.env._CAIBIRD_RUN_ENV;
-    defineEnvs['process.env._CAIBIRD_BABEL_TRANSFORM_ALL'] = process.env._CAIBIRD_BABEL_TRANSFORM_ALL;
-    defineEnvs['process.env._CAIBIRD_PROJECT_NAME'] = process.env._CAIBIRD_PROJECT_NAME;
+    const processEnvs: dp.CustomProcessEnv = {
+        _CAIBIRD_RUN_ENV: process.env._CAIBIRD_RUN_ENV,
 
-    plugins.push(['transform-define', defineEnvs]);
+        _CAIBIRD_BABEL_TRANSFORM_ALL: process.env._CAIBIRD_BABEL_TRANSFORM_ALL,
+
+        _CAIBIRD_PROJECT_NAME: process.env._CAIBIRD_PROJECT_NAME,
+
+        _CAIBIRD_HOST: process.env._CAIBIRD_HOST,
+
+        _CAIBIRD_PORT: process.env._CAIBIRD_PORT,
+    };
+
+    const defineProcessEnvs = Object.keys(processEnvs).reduce<dp.Obj>((obj, key) => {
+        obj[`process.env.${key}`] = processEnvs[key as keyof typeof processEnvs];
+        return obj;
+    }, {});
+
+    if (isWeb) {
+        defineProcessEnvs['process.env.NODE_ENV'] = NODE_ENV_VALUE;
+    }
+
+    plugins.push(['transform-define', { ...defineCaibirdEnvs, ...defineProcessEnvs }]);
 
     if (isWeb) {
         plugins.push('@babel/plugin-syntax-dynamic-import');
