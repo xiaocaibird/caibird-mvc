@@ -213,12 +213,12 @@ class ProjectAuto {
                 const allowServer = this.hasServerProjectNames.includes(projectName);
                 const result = exec(
                     allowServer ?
-                        `npm run dist ${projectName} ${envValues.local} && concurrently -p "【{name}】" -n "SERVER,TARO" "npm run start-server" "${taroCommand}"` :
+                        `npm run dist ${projectName} ${envValues.local} && concurrently -p "【{name}】" -n "SERVER,TARO" "npm run start-server ${projectName}" "${taroCommand}"` :
                         `npm run check-tsc ${projectName} && ${taroCommand}`,
                 );
                 process.exit(result.code);
             } else {
-                const result = exec(`npm run dist ${projectName} ${envValues.local} && npm run start-server`);
+                const result = exec(`npm run dist ${projectName} ${envValues.local} && npm run start-server ${projectName}`);
                 process.exit(result.code);
             }
         } else {
@@ -265,7 +265,7 @@ class ProjectAuto {
 }
 
 const allowCommands = ['build', 'checkTsc', 'createDbEntity', 'dist', 'eslint',
-    'gulpDist', 'gulpWatch', 'release', 'start', 'tsc', 'webpack', 'webpackDevServer'];
+    'gulpDist', 'gulpWatch', 'release', 'start', 'startServer', 'tsc', 'webpack', 'webpackDevServer'];
 
 const projectAutoHelper = (opt, commandOpts) => {
     const auto = new ProjectAuto(opt);
