@@ -18,7 +18,6 @@ const {
     nodeEnvValues,
     envValues,
     runEnvArgs,
-    runStatus,
 } = require('../../src/build/_config');
 
 class ProjectAuto {
@@ -69,6 +68,7 @@ class ProjectAuto {
 
     getStartConfig = () => {
         let startConfig = {};
+        const runEnv = this.getRunEnv();
 
         try {
             startConfig = require(
@@ -81,8 +81,8 @@ class ProjectAuto {
         const localPort = 3000;
         const releasePort = 8080;
 
-        const host = runStatus.isLocalTest ? (startConfig.host || 'localhost') : '0.0.0.0';
-        const port = runStatus.isLocalTest ? (startConfig.port ?? localPort) : releasePort;
+        const host = runEnv === runEnvArgs.local ? (startConfig.host || 'localhost') : '0.0.0.0';
+        const port = runEnv === runEnvArgs.local ? (startConfig.port ?? localPort) : releasePort;
 
         return {
             ...startConfig,

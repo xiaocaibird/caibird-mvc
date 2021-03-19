@@ -17,15 +17,6 @@ const nodeEnvValues = {
     DEVELOPMENT: 'development',
 };
 
-const NOW_RUN_ENV = process.env._CAIBIRD_RUN_ENV;
-
-const isExpProduction = NOW_RUN_ENV === runEnvArgs.exp; // 仅体验环境
-const isProduction = NOW_RUN_ENV === runEnvArgs.production || isExpProduction; // 正式环境或体验环境
-
-const isLocalTest = !NOW_RUN_ENV || NOW_RUN_ENV === runEnvArgs.local; // 仅本地调试
-const isDevTest = NOW_RUN_ENV === runEnvArgs.dev; // 仅开发环境
-const isTest = NOW_RUN_ENV === runEnvArgs.test || isDevTest || isLocalTest; // 本地调试或开发环境或测试环境
-
 module.exports = {
     envValues: {
         production: 'production',
@@ -54,13 +45,4 @@ module.exports = {
     },
 
     nodeEnvValues,
-
-    runStatus: {
-        isProduction,
-        isExpProduction,
-
-        isTest,
-        isDevTest,
-        isLocalTest,
-    },
 };
