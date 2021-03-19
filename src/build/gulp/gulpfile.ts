@@ -98,8 +98,8 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
                 }, eDate.MsCount.TenSec);
             });
             watcher.on('change', (path, _stats) => {
-                const toPath = path.replace(/\//g, '\\').replace('.tsc\\node_modules\\', 'dist\\@modules\\').replace('.tsc\\src\\', 'dist\\');
-                const lastIdx = toPath.lastIndexOf('\\');
+                const toPath = path.replace(/\\/g, '/').replace('.tsc/node_modules/', 'dist/@modules/').replace('.tsc/src/', 'dist/');
+                const lastIdx = toPath.lastIndexOf('/');
 
                 isDone && console.log('watch:', `${path} => ${toPath}`);
 
