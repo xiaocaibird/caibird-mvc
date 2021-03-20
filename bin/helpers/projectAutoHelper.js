@@ -66,7 +66,7 @@ class ProjectAuto {
 
     getRunEnv = () => runEnvArgs[this.getEnv()];
 
-    getStartConfig = () => {
+    getStartConfig = isLocal => {
         let startConfig = {};
         const runEnv = this.getRunEnv();
 
@@ -81,8 +81,8 @@ class ProjectAuto {
         const localPort = 3000;
         const releasePort = 8080;
 
-        const host = runEnv === runEnvArgs.local ? (startConfig.host || 'localhost') : '0.0.0.0';
-        const port = runEnv === runEnvArgs.local ? (startConfig.port ?? localPort) : releasePort;
+        const host = isLocal || runEnv === runEnvArgs.local ? (startConfig.host || 'localhost') : '0.0.0.0';
+        const port = isLocal || runEnv === runEnvArgs.local ? (startConfig.port ?? localPort) : releasePort;
 
         return {
             ...startConfig,
@@ -185,7 +185,7 @@ class ProjectAuto {
         const projectName = this.getProjectName();
 
         const allowWebpack = this.hasWebpackProjectNames.includes(projectName);
-        const startConfig = this.getStartConfig();
+        const startConfig = this.getStartConfig(true);
 
         const gulpCommandPrefix = `cross-env _CAIBIRD_RUN_ENV=${runEnvArgs.local} _CAIBIRD_PROJECT_NAME=${projectName} _CAIBIRD_HOST=${startConfig.host} _CAIBIRD_PORT=${startConfig.port}`;
 
