@@ -4,7 +4,7 @@
  */
 import http from 'http';
 import jaegerClient from 'jaeger-client';
-import Koa, { Middleware } from 'koa';
+import Koa from 'koa';
 import koaBody from 'koa-body';
 import KoaRouter from 'koa-router';
 import type KoaSend from 'koa-send';
