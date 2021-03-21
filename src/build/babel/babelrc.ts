@@ -134,7 +134,7 @@ export default (options: BabelOptions) => {
             alias: {
                 ...alias,
                 'caibird/src': '../@modules/caibird/src',
-                'caibird': '../@modules/caibird/src',
+                caibird: '../@modules/caibird/src',
             },
         }]);
 
