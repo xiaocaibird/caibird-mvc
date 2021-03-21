@@ -22,7 +22,7 @@ export namespace uCrypto {
 
     // 加密
     const strCipher = (data: string, k: crypto.CipherKey, iv: crypto.BinaryLike | null,
-        alg: string, input_encoding: crypto.Utf8AsciiBinaryEncoding, output_encoding: crypto.HexBase64BinaryEncoding, options?: import('stream').TransformOptions) => {
+        alg: string, input_encoding: crypto.Encoding, output_encoding: crypto.BinaryToTextEncoding, options?: import('stream').TransformOptions) => {
         const cip = crypto.createCipheriv(alg, k, iv, options);
         let encrypted = cip.update(data, input_encoding, output_encoding);
         encrypted += cip.final(output_encoding);
@@ -31,7 +31,7 @@ export namespace uCrypto {
 
     // 解密
     const strDecipher = (encrypted: string, k: crypto.CipherKey, iv: crypto.BinaryLike | null,
-        alg: string, input_encoding: crypto.HexBase64BinaryEncoding, output_encoding: crypto.Utf8AsciiBinaryEncoding, options?: import('stream').TransformOptions) => {
+        alg: string, input_encoding: crypto.BinaryToTextEncoding, output_encoding: crypto.Encoding, options?: import('stream').TransformOptions) => {
         const decip = crypto.createDecipheriv(alg, k, iv, options);
         let decrypted = decip.update(encrypted, input_encoding, output_encoding);
         decrypted += decip.final(output_encoding);
@@ -40,8 +40,8 @@ export namespace uCrypto {
 
     export const getStringCipher = (key: crypto.CipherKey = 'caibird_default_key', iv: crypto.BinaryLike = 'caibird_default_iv1', params: {
         algorithm?: string,
-        encryptInputEncoding?: crypto.Utf8AsciiBinaryEncoding,
-        encryptOutputEncoding?: crypto.HexBase64BinaryEncoding,
+        encryptInputEncoding?: crypto.Encoding,
+        encryptOutputEncoding?: crypto.BinaryToTextEncoding,
         options?: import('stream').TransformOptions,
     } = {}) => {
         const {

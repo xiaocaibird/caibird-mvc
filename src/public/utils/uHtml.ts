@@ -2,14 +2,14 @@
  * @Owners cmZhou
  * @Title public html工具
  */
-import htmlCode from 'html-entities';
+import { decode as htmlDecode, encode as htmlEncode } from 'html-entities';
 
 export namespace uHtml {
     export const clear = (html: string) => html.replace(/<\/?[^>]*>/g, '');
 
-    export const encode = (html: string) => new htmlCode.AllHtmlEntities().encode(html);
+    export const encode = htmlEncode;
 
-    export const decode = (str: string) => new htmlCode.AllHtmlEntities().decode(str);
+    export const decode = htmlDecode;
 }
 
 export default uHtml;

@@ -618,7 +618,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
         this.koa.use(this.entryMiddleware);
         if (renderConfig) {
             responseHelper.setInitRender();
-            this.koa.use(koaViews(renderConfig.dir, renderConfig.opt) as Middleware);
+            this.koa.use(koaViews(renderConfig.dir, renderConfig.opt));
         }
         onPreUseKoaBody && await onPreUseKoaBody(this.koa, this);
         this.koa.use(koaBody({ strict: false, ...bodyOptions }));
