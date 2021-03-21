@@ -29,7 +29,7 @@ export namespace uStorage {
         }
     };
 
-    const objectKey = '__caibird-mvc_custom_storage_obj___';
+    const objectKey = '__caibird_custom_storage_obj___';
 
     export const getObjectValue = <T>(key: string) => {
         const objStr = getValue(objectKey);

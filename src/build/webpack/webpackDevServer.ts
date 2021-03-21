@@ -54,7 +54,7 @@ export default (options: Options) => {
         },
         // progress: true,
         watchOptions: {
-            ignored: [/node_modules\/(?!caibird-mvc)/, ...(uArray.check(watchIgnores) ? watchIgnores : [watchIgnores])],
+            ignored: [/node_modules\/(?!caibird)/, ...(uArray.check(watchIgnores) ? watchIgnores : [watchIgnores])],
             aggregateTimeout: 1000,
             poll: 1000,
         },

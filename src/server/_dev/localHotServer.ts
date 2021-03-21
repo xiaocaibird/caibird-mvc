@@ -16,8 +16,8 @@ export default (opt: {
         script: `./dist/${projectName}/server/index.js`,
         ext: 'js',
         watch: [
-            './dist/@modules/caibird-mvc/src/public',
-            './dist/@modules/caibird-mvc/src/server',
+            './dist/@modules/caibird/src/public',
+            './dist/@modules/caibird/src/server',
 
             './dist/@common/_config.js',
             './dist/@common/public',

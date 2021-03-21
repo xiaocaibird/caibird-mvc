@@ -81,8 +81,8 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
         if (ini.isLocalTest) {
             let isDone = false;
             const watcher = gulp.watch([
-                `${rootDir}.tsc/node_modules/caibird-mvc/src/server/**/*.js`,
-                `${rootDir}.tsc/node_modules/caibird-mvc/src/public/**/*.js`,
+                `${rootDir}.tsc/node_modules/caibird/src/server/**/*.js`,
+                `${rootDir}.tsc/node_modules/caibird/src/public/**/*.js`,
 
                 `${rootDir}.tsc/src/@common/_config.js`,
                 `${rootDir}.tsc/src/@common/server/**/*.js`,

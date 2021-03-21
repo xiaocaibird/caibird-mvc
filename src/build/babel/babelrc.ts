@@ -133,8 +133,8 @@ export default (options: BabelOptions) => {
             cwd: `./.tsc/src/${projectName}/`,
             alias: {
                 ...alias,
-                'caibird-mvc/src': '../@modules/caibird-mvc/src',
-                'caibird-mvc': '../@modules/caibird-mvc/src',
+                'caibird/src': '../@modules/caibird/src',
+                'caibird': '../@modules/caibird/src',
             },
         }]);
 

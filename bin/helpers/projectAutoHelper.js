@@ -209,7 +209,7 @@ class ProjectAuto {
         const projectVersion = v4().replace(/-/g, '');
 
         if (this.allowStartProjectNames.includes(projectName)) {
-            const taroCommand = `cross-env NODE_ENV=${nodeEnv} _CAIBIRD_RUN_ENV=${runEnvArgs.local} _CAIBIRD_PROJECT_NAME=${projectName} node node_modules/caibird-mvc/bin/_/taro build --type weapp --watch ${projectName}`;
+            const taroCommand = `cross-env NODE_ENV=${nodeEnv} _CAIBIRD_RUN_ENV=${runEnvArgs.local} _CAIBIRD_PROJECT_NAME=${projectName} node node_modules/caibird/bin/_/taro build --type weapp --watch ${projectName}`;
 
             if (this.taroProjectNames.includes(projectName)) {
                 const allowServer = this.hasServerProjectNames.includes(projectName);

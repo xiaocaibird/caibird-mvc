@@ -38,7 +38,7 @@ export namespace uCrypto {
         return decrypted;
     };
 
-    export const getStringCipher = (key: crypto.CipherKey = 'caibird-mvc_default_key', iv: crypto.BinaryLike = 'caibird-mvc_default_iv1', params: {
+    export const getStringCipher = (key: crypto.CipherKey = 'caibird_default_key', iv: crypto.BinaryLike = 'caibird_default_iv1', params: {
         algorithm?: string,
         encryptInputEncoding?: crypto.Utf8AsciiBinaryEncoding,
         encryptOutputEncoding?: crypto.HexBase64BinaryEncoding,

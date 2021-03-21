@@ -122,8 +122,8 @@ export default (webpackOptions: WebpackOptions, webpackConfig: webpack.Configura
             include: [
                 ...(getProjectIncludeList([projectName, ...(unionProjectNames || [])], ['front/@com', 'front/web', 'public', '_config.ts'])),
                 path.join(process.cwd(), 'src/@common'),
-                path.join(process.cwd(), 'node_modules/caibird-mvc/src/public'),
-                path.join(process.cwd(), 'node_modules/caibird-mvc/src/front'),
+                path.join(process.cwd(), 'node_modules/caibird/src/public'),
+                path.join(process.cwd(), 'node_modules/caibird/src/front'),
             ],
         },
         // 该段代码是为了让node_modules里的es6语法兼容低版本浏览器，本地调试为了提高启动速度默认不启用，如需启用请自行放开，但切勿提交
@@ -140,7 +140,7 @@ export default (webpackOptions: WebpackOptions, webpackConfig: webpack.Configura
                 path.join(process.cwd(), 'node_modules'),
             ],
             exclude: [
-                path.join(process.cwd(), 'node_modules/caibird-mvc'),
+                path.join(process.cwd(), 'node_modules/caibird'),
             ],
         }]),
         isLocalTest ? {
