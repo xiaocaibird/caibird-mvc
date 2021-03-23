@@ -176,7 +176,7 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
 
             watcher.on('change', func('change'));
             watcher.on('add', func('add'));
-            watcher.on('unlink', func('delete'));
+            // watcher.on('unlink', func('delete'));
             watcher.on('error', err => console.log('watch error', err));
         }
         return Promise.resolve();
