@@ -11,7 +11,7 @@ const fs = require('fs');
 const path = require('path');
 const OSS = require('ali-oss');
 
-const buildConfig = require('../../src/build/_config').default;
+const buildConfig = require('../../src/build/_config');
 
 const {
     printf,
