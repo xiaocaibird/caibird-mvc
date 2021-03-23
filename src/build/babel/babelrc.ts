@@ -7,6 +7,7 @@ import ini from '../ini';
 import requestApiReplace from './plugins/requestApiReplace';
 import FrontPathResolveTool from './utils/FrontPathResolveTool';
 
+type Target = 'dist' | 'webpack';
 type Platform = 'server' | 'taro' | 'web';
 const platformsPathResolveDir: dp.StrictObj<Platform, string[]> = {
     web: ['helpers', 'utils', 'consts', 'components'],
@@ -21,7 +22,7 @@ const platformsPathResolve: dp.StrictObj<Platform, (dirName: string) => string> 
 };
 
 export type BabelOptions = {
-    runPlatform: Platform,
+    target: Target,
     projectName: string,
     projectVersion: string,
 
@@ -32,11 +33,10 @@ export type BabelOptions = {
 
 export default (options: BabelOptions) => {
     const { NODE_ENV_VALUE, isProduction, isExpProduction, isTest, isDevTest, isLocalTest } = ini;
-    const { runPlatform, projectName, unionProjectNames = [], distPlatforms = [], useRequestApiReplace, projectVersion } = options;
+    const { target, projectName, unionProjectNames = [], distPlatforms = [], useRequestApiReplace, projectVersion } = options;
 
-    const isWeb = runPlatform === 'web';
-    const isServer = runPlatform === 'server';
-    const isTaro = runPlatform === 'taro';
+    const isWebpack = target === 'webpack';
+    const isDist = target === 'dist';
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const plugins: any[] = [];
@@ -87,13 +87,13 @@ export default (options: BabelOptions) => {
         return obj;
     }, {});
 
-    if (isWeb || isTaro) {
+    if (isWebpack) {
         defineProcessEnvs['process.env.NODE_ENV'] = NODE_ENV_VALUE;
     }
 
     plugins.push(['transform-define', { ...defineCaibirdEnvs, ...defineProcessEnvs }]);
 
-    if (isWeb) {
+    if (isWebpack) {
         plugins.push('@babel/plugin-syntax-dynamic-import');
 
         const importPluginTool = new FrontPathResolveTool({
@@ -113,12 +113,7 @@ export default (options: BabelOptions) => {
         }
     }
 
-    if (isTaro) {
-        plugins.push('@babel/plugin-syntax-dynamic-import');
-        plugins.push('@babel/plugin-transform-runtime');
-    }
-
-    if (isServer || isTaro) {
+    if (isDist) {
         const alias: dp.Obj<string> = {};
 
         const setAlias = (platform: Platform, dirName: string, dependentProjectName?: string) => {
@@ -149,9 +144,9 @@ export default (options: BabelOptions) => {
     }
 
     return {
-        retainLines: isWeb || isTaro ? undefined : true,
+        retainLines: isWebpack ? undefined : true,
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        presets: [['@babel/preset-env', { modules: false, targets: isWeb || isTaro ? { /* browsers: ['Chrome >= 60'] */ } : { node: '14' } }]] as any[],
+        presets: [['@babel/preset-env', { modules: false, targets: isWebpack ? { /* browsers: ['Chrome >= 60'] */ } : { node: '14' } }]] as any[],
         plugins,
     };
 };
