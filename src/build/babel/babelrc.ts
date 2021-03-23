@@ -144,9 +144,7 @@ export default (options: BabelOptions) => {
                 caibird: '../@modules/caibird/src',
             },
         }]);
-    }
 
-    if (isServer) {
         plugins.push('minify-dead-code-elimination');
     }
 
