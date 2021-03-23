@@ -36,7 +36,7 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
         'build/babel',
         'build/ini',
         'build/webpack',
-        'build/_config.js',
+        'build/_config.ts',
 
         'public',
         'server',
@@ -52,7 +52,7 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
                     .pipe(gulp.dest(`${rootDir}dist`));
             } else {
                 fileList.forEach(file => {
-                    if (file === 'build/_config.js' && projectName !== '@common') {
+                    if (file === 'build/_config.ts' && projectName !== '@common') {
                         return;
                     }
                     if (file.endsWith('.js')) {

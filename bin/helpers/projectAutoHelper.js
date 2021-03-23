@@ -18,7 +18,7 @@ const {
     nodeEnvValues,
     envValues,
     runEnvArgs,
-} = require('../../src/build/_config');
+} = require('../../src/build/_config').default;
 
 class ProjectAuto {
     constructor(opt) {

@@ -17,7 +17,7 @@ const nodeEnvValues = {
     DEVELOPMENT: 'development',
 };
 
-module.exports = {
+export default {
     envValues: {
         production: 'production',
         exp: 'exp',
