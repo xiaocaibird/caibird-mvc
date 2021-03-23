@@ -20,6 +20,9 @@
   "homepage": "https://github.com/xiaocaibird/caibird-mvc",
   "devDependencies": {
     "@babel/core": "^7.13.10",
+    "@babel/preset-env": "^7.13.12",
+    "@babel/preset-typescript": "^7.13.0",
+    "@babel/register": "^7.13.8",
     "@babel/types": "^7.13.0",
     "@types/ali-oss": "^6.0.7",
     "@types/babel__core": "^7.1.14",

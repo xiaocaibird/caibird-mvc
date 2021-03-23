@@ -3,7 +3,9 @@
  * @Title 项目构建初始化文件
  */
 // eslint-disable-next-line no-restricted-imports
-import { nodeEnvValues, runEnvArgs } from '../_config';
+import config from '../_config';
+
+const { nodeEnvValues, runEnvArgs } = config;
 namespace _ini {
     const NOW_RUN_ENV = process.env._CAIBIRD_RUN_ENV;
 
