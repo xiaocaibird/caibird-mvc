@@ -181,7 +181,7 @@ class ProjectAuto {
         }
     };
 
-    startServer = () => {
+    startWatch = () => {
         const projectName = this.getProjectName();
 
         const allowWebpack = this.hasWebpackProjectNames.includes(projectName);
@@ -192,7 +192,7 @@ class ProjectAuto {
         const result = exec(
             `concurrently -n "main,tsc" -c "blue.bold,magenta.bold"
             "kill-port ${startConfig.port} &&
-             concurrently -n "node,${allowWebpack ? 'webpack,' : ''}node-watch" -c "cyan.bold,${allowWebpack ? 'yellow.bold,' : ''}green.bold"
+             concurrently -n "node,${allowWebpack ? 'webpack,' : ''}gulp-watch" -c "cyan.bold,${allowWebpack ? 'yellow.bold,' : ''}green.bold"
                                       \\"cross-env NODE_ENV=${nodeEnvValues.DEVELOPMENT} node app\\"
                     ${allowWebpack ? `\\"npm run webpack-dev-server ${projectName}\\"` : ''}
                                       \\"${gulpCommandPrefix} npm run gulp:watch ${projectName}\\""
@@ -212,16 +212,13 @@ class ProjectAuto {
             const taroCommand = `cross-env NODE_ENV=${nodeEnv} _CAIBIRD_RUN_ENV=${runEnvArgs.local} _CAIBIRD_PROJECT_NAME=${projectName} node node_modules/caibird/bin/_/taro build --type weapp --watch ${projectName}`;
 
             if (this.taroProjectNames.includes(projectName)) {
-                const allowServer = this.hasServerProjectNames.includes(projectName);
                 const result = exec(
-                    allowServer ?
-                        `cross-env _CAIBIRD_PROJECT_VERSION=${projectVersion} npm run dist ${projectName} ${envValues.local} &&
-                         concurrently -p "【{name}】" -n "SERVER,TARO" "cross-env _CAIBIRD_PROJECT_VERSION=${projectVersion} npm run start-server ${projectName}" "${taroCommand}"` :
-                        `npm run check-tsc ${projectName} && ${taroCommand}`,
+                    `cross-env _CAIBIRD_PROJECT_VERSION=${projectVersion} npm run dist ${projectName} ${envValues.local} &&
+                         concurrently -p "【{name}】" -n "WATCH,TARO" "cross-env _CAIBIRD_PROJECT_VERSION=${projectVersion} npm run start-watch ${projectName}" "${taroCommand}"`,
                 );
                 process.exit(result.code);
             } else {
-                const result = exec(`cross-env _CAIBIRD_PROJECT_VERSION=${projectVersion} npm run dist ${projectName} ${envValues.local} && cross-env _CAIBIRD_PROJECT_VERSION=${projectVersion} npm run start-server ${projectName}`);
+                const result = exec(`cross-env _CAIBIRD_PROJECT_VERSION=${projectVersion} npm run dist ${projectName} ${envValues.local} && cross-env _CAIBIRD_PROJECT_VERSION=${projectVersion} npm run start-watch ${projectName}`);
                 process.exit(result.code);
             }
         } else {
@@ -269,7 +266,7 @@ class ProjectAuto {
 }
 
 const allowCommands = ['build', 'checkTsc', 'createDbEntity', 'dist', 'eslint',
-    'gulpDist', 'gulpWatch', 'release', 'start', 'startServer', 'tsc', 'webpack', 'webpackDevServer'];
+    'gulpDist', 'gulpWatch', 'release', 'start', 'startWatch', 'tsc', 'webpack', 'webpackDevServer'];
 
 const projectAutoHelper = (opt, commandOpts) => {
     const auto = new ProjectAuto(opt);

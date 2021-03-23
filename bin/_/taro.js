@@ -8,5 +8,5 @@ const Cli = require('@tarojs/cli/dist/cli').default;
 
 printPkgVersion();
 
-const cli = new Cli(path.join(process.cwd(), `src/${process.argv[process.argv.length - 1]}/front/taro`));
+const cli = new Cli(path.join(process.cwd(), `dist/${process.argv[process.argv.length - 1]}/front/taro`));
 cli.run();

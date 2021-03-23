@@ -7,15 +7,16 @@ import ini from '../ini';
 import requestApiReplace from './plugins/requestApiReplace';
 import FrontPathResolveTool from './utils/FrontPathResolveTool';
 
-type Platform = 'server' | 'web'; // | 'taro';
-
+type Platform = 'server' | 'taro' | 'web';
 const platformsPathResolveDir: dp.StrictObj<Platform, string[]> = {
     web: ['helpers', 'utils', 'consts', 'components'],
+    taro: ['helpers', 'utils', 'consts', 'components'],
     server: ['helpers', 'utils', 'consts'],
 };
 
 const platformsPathResolve: dp.StrictObj<Platform, (dirName: string) => string> = {
     web: (dirName: string) => dirName === 'components' ? 'front/web/pages/@components' : `front/web/${dirName}`,
+    taro: (dirName: string) => dirName === 'components' ? 'front/taro/pages/@component' : `front/taro/${dirName}`,
     server: (dirName: string) => `server/${dirName}`,
 };
 
@@ -35,6 +36,7 @@ export default (options: BabelOptions) => {
 
     const isWeb = runPlatform === 'web';
     const isServer = runPlatform === 'server';
+    const isTaro = runPlatform === 'taro';
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const plugins: any[] = [];
@@ -85,7 +87,7 @@ export default (options: BabelOptions) => {
         return obj;
     }, {});
 
-    if (isWeb) {
+    if (isWeb || isTaro) {
         defineProcessEnvs['process.env.NODE_ENV'] = NODE_ENV_VALUE;
     }
 
@@ -111,7 +113,12 @@ export default (options: BabelOptions) => {
         }
     }
 
-    if (isServer) {
+    if (isTaro) {
+        plugins.push('@babel/plugin-syntax-dynamic-import');
+        plugins.push('@babel/plugin-transform-runtime');
+    }
+
+    if (isServer || isTaro) {
         const alias: dp.Obj<string> = {};
 
         const setAlias = (platform: Platform, dirName: string, dependentProjectName?: string) => {
@@ -137,14 +144,16 @@ export default (options: BabelOptions) => {
                 caibird: '../@modules/caibird/src',
             },
         }]);
+    }
 
+    if (isServer) {
         plugins.push('minify-dead-code-elimination');
     }
 
     return {
-        retainLines: isWeb ? undefined : true,
+        retainLines: isWeb || isTaro ? undefined : true,
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        presets: [['@babel/preset-env', { modules: false, targets: isWeb ? { /* browsers: ['Chrome >= 60'] */ } : { node: '14' } }]] as any[],
+        presets: [['@babel/preset-env', { modules: false, targets: isWeb || isTaro ? { /* browsers: ['Chrome >= 60'] */ } : { node: '14' } }]] as any[],
         plugins,
     };
 };

@@ -66,6 +66,31 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
                             .pipe(gulp.dest(`${rootDir}dist/${projectName}/${file}`));
                     }
                 });
+
+                if (projectName !== '@common') {
+                    // TODO caibird taro
+                    if (fs.existsSync(`${rootDir}src/${projectName}/front/taro/project.config.json`)) {
+                        gulp.src([`${rootDir}src/${projectName}/front/taro/project.config.json`])
+                            .pipe(gulpRename({ dirname: '' }))
+                            .pipe(gulp.dest(`${rootDir}dist/${projectName}/front/taro`));
+
+                        gulp.src([`${rootDir}src/${projectName}/front/taro/**/*.scss`])
+                            .pipe(gulp.dest(`${rootDir}dist/${projectName}/front/taro`));
+
+                        gulp.src([`${rootDir}src/${projectName}/front/taro/assets/**`])
+                            .pipe(gulp.dest(`${rootDir}dist/${projectName}/front/taro/assets`));
+
+                        gulp.src([
+                            `${rootDir}src/${projectName}/front/taro/wx-plugins/**/*.json`,
+                            `${rootDir}src/${projectName}/front/taro/wx-plugins/**/*.wxml`,
+                            `${rootDir}src/${projectName}/front/taro/wx-plugins/**/*.wxss`,
+                        ])
+                            .pipe(gulp.dest(`${rootDir}dist/${projectName}/front/taro/wx-plugins`));
+                    }
+                } else {
+                    gulp.src([`${rootDir}src/${projectName}/front/taro/**/*.scss`])
+                        .pipe(gulp.dest(`${rootDir}dist/${projectName}/front/taro`));
+                }
             }
         });
 
@@ -82,32 +107,77 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
             let isDone = false;
             const watcher = gulp.watch([
                 `${rootDir}.tsc/node_modules/caibird/src/server/**/*.js`,
+                `${rootDir}.tsc/node_modules/caibird/src/front/taro/**/*.js`,
                 `${rootDir}.tsc/node_modules/caibird/src/public/**/*.js`,
 
                 `${rootDir}.tsc/src/@common/_config.js`,
                 `${rootDir}.tsc/src/@common/server/**/*.js`,
+                `${rootDir}.tsc/src/@common/front/taro/**/*.js`,
                 `${rootDir}.tsc/src/@common/public/**/*.js`,
 
                 `${rootDir}.tsc/src/${babelOptions.projectName}/_config.js`,
                 `${rootDir}.tsc/src/${babelOptions.projectName}/server/**/*.js`,
+                `${rootDir}.tsc/src/${babelOptions.projectName}/front/taro/**/*.js`,
                 `${rootDir}.tsc/src/${babelOptions.projectName}/public/**/*.js`,
+
+                // `${rootDir}src/${babelOptions.projectName}/front/taro/project.config.json`,
+                // `${rootDir}src/${babelOptions.projectName}/front/taro/**/*.scss`,
+                // `${rootDir}src/${babelOptions.projectName}/front/taro/assets/**`,
+                // `${rootDir}src/${babelOptions.projectName}/front/taro/wx-plugins/**/*.json`,
+                // `${rootDir}src/${babelOptions.projectName}/front/taro/wx-plugins/**/*.wxml`,
+                // `${rootDir}src/${babelOptions.projectName}/front/taro/wx-plugins/**/*.wxss`,
+                // `${rootDir}src/@common/front/taro/**/*.scss`
+
+                `${rootDir}src/${babelOptions.projectName}/front/taro/**`,
+                `${rootDir}src/@common/front/taro/**`,
             ], done => {
                 done();
                 setTimeout(() => {
                     isDone = true;
                 }, eDate.MsCount.TenSec);
             });
-            watcher.on('change', (path, _stats) => {
-                const toPath = path.replace(/\\/g, '/').replace('.tsc/node_modules/', 'dist/@modules/').replace('.tsc/src/', 'dist/');
-                const lastIdx = toPath.lastIndexOf('/');
 
-                isDone && console.log('watch:', `${path} => ${toPath}`);
+            const func = (type: 'add' | 'change' | 'delete') => (path: string) => {
+                try {
+                    if (path.startsWith('src') &&
+                        (path.endsWith('.ts') || path.endsWith('.tsx') || path.endsWith('.js') || path.endsWith('.jsx'))
+                    ) {
+                        return;
+                    }
 
-                gulp.src([path])
-                    .pipe(babel(babelrc))
-                    .pipe(gulpRename({ dirname: '' }))
-                    .pipe(gulp.dest(toPath.slice(0, lastIdx)));
-            });
+                    const toPath = path
+                        .replace(/\\/g, '/')
+                        .replace(/^.tsc\/node_modules\//, 'dist/@modules/')
+                        .replace(/^.tsc\/src\//, 'dist/')
+                        .replace(/^src\//, 'dist/');
+
+                    const lastIdx = toPath.lastIndexOf('/');
+
+                    isDone && console.log(`watch ${type}:`, `${path} => ${toPath}`);
+
+                    if (type === 'delete') {
+                        fs.unlinkSync(toPath);
+                    } else {
+                        if (path.endsWith('.js')) {
+                            gulp.src([path])
+                                .pipe(babel(babelrc))
+                                .pipe(gulpRename({ dirname: '' }))
+                                .pipe(gulp.dest(toPath.slice(0, lastIdx)));
+                        } else {
+                            gulp.src([path])
+                                .pipe(gulpRename({ dirname: '' }))
+                                .pipe(gulp.dest(toPath.slice(0, lastIdx)));
+                        }
+                    }
+                } catch (e: unknown) {
+                    console.error('gulp watch callback error:', e);
+                }
+            };
+
+            watcher.on('change', func('change'));
+            watcher.on('add', func('add'));
+            watcher.on('unlink', func('delete'));
+            watcher.on('error', err => console.log('watch error', err));
         }
         return Promise.resolve();
     });
