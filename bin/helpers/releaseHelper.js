@@ -2,11 +2,6 @@
  * @Owners cmZhou
  * @Title 发布
  */
-require('@babel/register')({
-    presets: ['@babel/preset-env', '@babel/preset-typescript'],
-    extensions: ['.ts', '.js'],
-});
-
 const fs = require('fs');
 const path = require('path');
 const OSS = require('ali-oss');
