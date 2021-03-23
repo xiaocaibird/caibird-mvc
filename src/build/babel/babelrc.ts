@@ -21,7 +21,7 @@ const platformsPathResolve: dp.StrictObj<Platform, (dirName: string) => string> 
 };
 
 export type BabelOptions = {
-    runPlatform: Platform,
+    runPlatforms: Platform[],
     projectName: string,
     projectVersion: string,
 
@@ -32,11 +32,11 @@ export type BabelOptions = {
 
 export default (options: BabelOptions) => {
     const { NODE_ENV_VALUE, isProduction, isExpProduction, isTest, isDevTest, isLocalTest } = ini;
-    const { runPlatform, projectName, unionProjectNames = [], distPlatforms = [], useRequestApiReplace, projectVersion } = options;
+    const { runPlatforms, projectName, unionProjectNames = [], distPlatforms = [], useRequestApiReplace, projectVersion } = options;
 
-    const isWeb = runPlatform === 'web';
-    const isServer = runPlatform === 'server';
-    const isTaro = runPlatform === 'taro';
+    const isWeb = runPlatforms.includes('web');
+    const isServer = runPlatforms.includes('server');
+    const isTaro = runPlatforms.includes('taro');
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const plugins: any[] = [];
