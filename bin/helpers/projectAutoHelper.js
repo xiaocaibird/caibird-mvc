@@ -192,7 +192,7 @@ class ProjectAuto {
         const result = exec(
             `concurrently -n "main,tsc" -c "blue.bold,magenta.bold"
             "kill-port ${startConfig.port} &&
-             concurrently -n "node,${allowWebpack ? 'webpack,' : ''}gulp-watch" -c "cyan.bold,${allowWebpack ? 'yellow.bold,' : ''}green.bold"
+             concurrently -n "node,${allowWebpack ? 'webpack,' : ''}gulp" -c "cyan.bold,${allowWebpack ? 'yellow.bold,' : ''}green.bold"
                                       \\"cross-env NODE_ENV=${nodeEnvValues.DEVELOPMENT} node app\\"
                     ${allowWebpack ? `\\"npm run webpack-dev-server ${projectName}\\"` : ''}
                                       \\"${gulpCommandPrefix} npm run gulp:watch ${projectName}\\""
