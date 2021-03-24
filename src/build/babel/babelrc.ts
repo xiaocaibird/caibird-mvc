@@ -15,12 +15,9 @@ const platformsPathResolveDir: dp.StrictObj<Platform, string[]> = {
     server: ['helpers', 'utils', 'consts'],
 };
 
-const platformsPathResolve: dp.StrictObj<Platform, (dirName: string, projectName?: string) => string> = {
+const platformsPathResolve: dp.StrictObj<Platform, (dirName: string) => string> = {
     web: (dirName: string) => dirName === 'components' ? 'front/web/pages/@components' : `front/web/${dirName}`,
-    taro: (dirName: string, projectName?: string) =>
-        dirName === 'components' ? `front/taro/pages/@component${projectName === 'mj-dragon' ? 's' : ''}` :
-            dirName === 'ui' ? `front/taro/pages/@component${projectName === 'mj-dragon' ? 's' : ''}/@taro-ui` :
-                `front/taro/${dirName}`, // TODO delete projectName
+    taro: (dirName: string) => dirName === 'components' ? 'front/taro/pages/@components' : `front/taro/${dirName}`,
     server: (dirName: string) => `server/${dirName}`,
 };
 
@@ -121,7 +118,7 @@ export default (options: BabelOptions) => {
 
         const setAlias = (platform: Platform, dirName: string, dependentProjectName?: string) => {
             const key = `${dependentProjectName ? dependentProjectName : projectName}-${platform}-${dirName}`;
-            alias[key] = `${dependentProjectName ? '..' : '.'}/${platformsPathResolve[platform](dirName, projectName)}`;
+            alias[key] = `${dependentProjectName ? '..' : '.'}/${platformsPathResolve[platform](dirName)}`;
         };
 
         distPlatforms.forEach(pf => {
