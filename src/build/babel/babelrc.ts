@@ -17,7 +17,10 @@ const platformsPathResolveDir: dp.StrictObj<Platform, string[]> = {
 
 const platformsPathResolve: dp.StrictObj<Platform, (dirName: string) => string> = {
     web: (dirName: string) => dirName === 'components' ? 'front/web/pages/@components' : `front/web/${dirName}`,
-    taro: (dirName: string) => dirName === 'components' ? 'front/taro/pages/@components' : `front/taro/${dirName}`,
+    taro: (dirName: string) =>
+        dirName === 'components' ? 'front/taro/pages/@components' :
+            dirName === 'ui' ? 'front/taro/pages/@components/@taro-ui' :
+                `front/taro/${dirName}`,
     server: (dirName: string) => `server/${dirName}`,
 };
 

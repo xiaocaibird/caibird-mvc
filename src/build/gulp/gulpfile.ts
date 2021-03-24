@@ -43,9 +43,8 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
         '_config.js',
     ];
 
-    let hasTaro = false;
-
     gulp.task('dist', async () => {
+        let hasTaro = false;
         projectList.forEach(projectName => {
             if (rootFileList.includes(projectName)) {
                 gulp.src([`${rootDir}.tsc/src/${projectName}`])
@@ -106,6 +105,14 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
     gulp.task('watch', async () => {
         if (ini.isLocalTest) {
             let isDone = false;
+
+            let hasTaro = false;
+            projectList.forEach(projectName => {
+                if (fs.existsSync(`${rootDir}src/${projectName}/front/taro/project.config.json`)) {
+                    hasTaro = true;
+                }
+            });
+
             const watcher = gulp.watch([
                 `${rootDir}.tsc/**/*.js`,
                 ...(hasTaro ? projectList.map(projectName => `${rootDir}src/${projectName}/front/taro/**`) : []),

@@ -185,6 +185,7 @@ class ProjectAuto {
         const projectName = this.getProjectName();
 
         const allowWebpack = this.hasWebpackProjectNames.includes(projectName);
+        const allowServer = this.hasServerProjectNames.includes(projectName);
         const startConfig = this.getStartConfig();
 
         const gulpCommandPrefix = `cross-env _CAIBIRD_RUN_ENV=${runEnvArgs.local} _CAIBIRD_PROJECT_NAME=${projectName} _CAIBIRD_HOST=${startConfig.host} _CAIBIRD_PORT=${startConfig.port}`;
@@ -192,8 +193,8 @@ class ProjectAuto {
         const result = exec(
             `concurrently -n "main,tsc" -c "blue.bold,magenta.bold"
             "kill-port ${startConfig.port} &&
-             concurrently -n "node,${allowWebpack ? 'webpack,' : ''}gulp" -c "cyan.bold,${allowWebpack ? 'yellow.bold,' : ''}green.bold"
-                                      \\"cross-env NODE_ENV=${nodeEnvValues.DEVELOPMENT} node app\\"
+             concurrently -n "${allowServer ? 'node,' : ''}${allowWebpack ? 'webpack,' : ''}gulp" -c "${allowServer ? 'cyan.bold,' : ''}${allowWebpack ? 'yellow.bold,' : ''}green.bold"
+                    ${allowServer ? `\\"cross-env NODE_ENV=${nodeEnvValues.DEVELOPMENT} node app\\"` : ''}
                     ${allowWebpack ? `\\"npm run webpack-dev-server ${projectName}\\"` : ''}
                                       \\"${gulpCommandPrefix} npm run gulp:watch ${projectName}\\""
             "tsc -w -p src/${projectName}/tsconfig.json"`,
