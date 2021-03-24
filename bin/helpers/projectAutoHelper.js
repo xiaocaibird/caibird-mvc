@@ -191,12 +191,11 @@ class ProjectAuto {
         const gulpCommandPrefix = `cross-env _CAIBIRD_RUN_ENV=${runEnvArgs.local} _CAIBIRD_PROJECT_NAME=${projectName} _CAIBIRD_HOST=${startConfig.host} _CAIBIRD_PORT=${startConfig.port}`;
 
         const result = exec(
-            `concurrently -n "main,tsc" -c "blue.bold,magenta.bold"
-            "kill-port ${startConfig.port} &&
-             concurrently -n "${allowServer ? 'node,' : ''}${allowWebpack ? 'webpack,' : ''}gulp" -c "${allowServer ? 'cyan.bold,' : ''}${allowWebpack ? 'yellow.bold,' : ''}green.bold"
-                    ${allowServer ? `\\"cross-env NODE_ENV=${nodeEnvValues.DEVELOPMENT} node app\\"` : ''}
-                    ${allowWebpack ? `\\"npm run webpack-dev-server ${projectName}\\"` : ''}
-                                      \\"${gulpCommandPrefix} npm run gulp:watch ${projectName}\\""
+            `kill-port ${startConfig.port} &&
+            concurrently -n "${allowServer ? 'node,' : ''}${allowWebpack ? 'webpack,' : ''}gulp,tsc" -c "${allowServer ? 'cyan.bold,' : ''}${allowWebpack ? 'yellow.bold,' : ''}green.bold,magenta.bold"
+            ${allowServer ? `"cross-env NODE_ENV=${nodeEnvValues.DEVELOPMENT} node app"` : ''}
+            ${allowWebpack ? `"npm run webpack-dev-server ${projectName}"` : ''}
+            "${gulpCommandPrefix} npm run gulp:watch ${projectName}"
             "tsc -w -p src/${projectName}/tsconfig.json"`,
         );
         process.exit(result.code);

@@ -139,7 +139,21 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
 
                     const lastIdx = toPath.lastIndexOf('/');
 
-                    isDone && console.log(`watch ${type}:`, `${path} => ${toPath}`);
+                    const destCallback: Parameters<typeof gulp['dest']>[0] = file => {
+                        let isSame = false;
+                        try {
+                            if (file.contents?.toString() === fs.readFileSync(toPath).toString()) {
+                                isSame = true;
+                            }
+                        } catch { }
+                        if (isSame) {
+                            isDone && console.log(`[no change after dist]: ${toPath}`);
+                            return './.local/dist/rubbish';
+                        }
+
+                        console.log(`[watch ${type}]:`, `${path} => ${toPath}`);
+                        return toPath.slice(0, lastIdx);
+                    };
 
                     if (type === 'delete') {
                         fs.unlinkSync(toPath);
@@ -148,11 +162,11 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
                             gulp.src([path])
                                 .pipe(babel(babelrc))
                                 .pipe(gulpRename({ dirname: '' }))
-                                .pipe(gulp.dest(toPath.slice(0, lastIdx)));
+                                .pipe(gulp.dest(destCallback));
                         } else {
                             gulp.src([path])
                                 .pipe(gulpRename({ dirname: '' }))
-                                .pipe(gulp.dest(toPath.slice(0, lastIdx)));
+                                .pipe(gulp.dest(destCallback));
                         }
                     }
                 } catch (e: unknown) {
