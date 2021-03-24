@@ -43,6 +43,8 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
         '_config.js',
     ];
 
+    let hasTaro = false;
+
     gulp.task('dist', async () => {
         projectList.forEach(projectName => {
             if (rootFileList.includes(projectName)) {
@@ -66,6 +68,7 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
                 if (projectName !== '@common') {
                     // TODO caibird taro
                     if (fs.existsSync(`${rootDir}src/${projectName}/front/taro/project.config.json`)) {
+                        hasTaro = true;
                         gulp.src([`${rootDir}src/${projectName}/front/taro/project.config.json`])
                             .pipe(gulpRename({ dirname: '' }))
                             .pipe(gulp.dest(`${rootDir}dist/${projectName}/front/taro`));
@@ -83,12 +86,14 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
                         ])
                             .pipe(gulp.dest(`${rootDir}dist/${projectName}/front/taro/wx-plugins`));
                     }
-                } else {
-                    gulp.src([`${rootDir}src/${projectName}/front/taro/**/*.scss`])
-                        .pipe(gulp.dest(`${rootDir}dist/${projectName}/front/taro`));
                 }
             }
         });
+
+        if (hasTaro) {
+            gulp.src([`${rootDir}src/@common/front/taro/**/*.scss`])
+                .pipe(gulp.dest(`${rootDir}dist/@common/front/taro`));
+        }
 
         const nodeModulesFiles = [`${rootDir}.tsc/node_modules/**/*.js`];
         gulp.src(nodeModulesFiles)
@@ -102,30 +107,8 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
         if (ini.isLocalTest) {
             let isDone = false;
             const watcher = gulp.watch([
-                `${rootDir}.tsc/node_modules/caibird/src/server/**/*.js`,
-                `${rootDir}.tsc/node_modules/caibird/src/front/taro/**/*.js`,
-                `${rootDir}.tsc/node_modules/caibird/src/public/**/*.js`,
-
-                `${rootDir}.tsc/src/@common/_config.js`,
-                `${rootDir}.tsc/src/@common/server/**/*.js`,
-                `${rootDir}.tsc/src/@common/front/taro/**/*.js`,
-                `${rootDir}.tsc/src/@common/public/**/*.js`,
-
-                `${rootDir}.tsc/src/${babelOptions.projectName}/_config.js`,
-                `${rootDir}.tsc/src/${babelOptions.projectName}/server/**/*.js`,
-                `${rootDir}.tsc/src/${babelOptions.projectName}/front/taro/**/*.js`,
-                `${rootDir}.tsc/src/${babelOptions.projectName}/public/**/*.js`,
-
-                // `${rootDir}src/${babelOptions.projectName}/front/taro/project.config.json`,
-                // `${rootDir}src/${babelOptions.projectName}/front/taro/**/*.scss`,
-                // `${rootDir}src/${babelOptions.projectName}/front/taro/assets/**`,
-                // `${rootDir}src/${babelOptions.projectName}/front/taro/wx-plugins/**/*.json`,
-                // `${rootDir}src/${babelOptions.projectName}/front/taro/wx-plugins/**/*.wxml`,
-                // `${rootDir}src/${babelOptions.projectName}/front/taro/wx-plugins/**/*.wxss`,
-                // `${rootDir}src/@common/front/taro/**/*.scss`
-
-                `${rootDir}src/${babelOptions.projectName}/front/taro/**`,
-                `${rootDir}src/@common/front/taro/**`,
+                `${rootDir}.tsc/**/*.js`,
+                ...(hasTaro ? projectList.map(projectName => `${rootDir}src/${projectName}/front/taro/**`) : []),
             ], done => {
                 done();
                 setTimeout(() => {
