@@ -120,7 +120,7 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
                 done();
                 setTimeout(() => {
                     isDone = true;
-                }, eDate.MsCount.TenSec);
+                }, eDate.MsCount.TenSec * 2);
             });
 
             const func = (type: 'add' | 'change' | 'delete') => (path: string) => {
