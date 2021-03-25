@@ -94,9 +94,25 @@ class ProjectAuto {
     build = () => {
         const projectName = this.getProjectName();
         const env = this.getEnv();
+        const allowWebpack = this.hasWebpackProjectNames.includes(projectName);
+        const isTaro = this.taroProjectNames.includes(projectName);
 
-        const result = exec(`npm run dist ${projectName} ${env} && npm run webpack ${projectName}`);
+        const result = exec(`npm run dist ${projectName} ${env}
+                            ${allowWebpack ? `&& npm run webpack ${projectName}` : ''}
+                            ${isTaro ? `&& npm run build-taro ${projectName}` : ''}`);
         process.exit(result.code);
+    };
+
+    buildTaro = () => {
+        const projectName = this.getProjectName();
+
+        if (this.taroProjectNames.includes(projectName)) {
+            const result = exec(`rimraf .taro && cross-env NODE_ENV=${nodeEnvValues.PRODUCTION} node node_modules/caibird/bin/_/taro build --type weapp ${projectName}`);
+            process.exit(result.code);
+        } else {
+            printf(`Error: the project 【${projectName}】 no has taro`, ColorsEnum.RED);
+            process.exit(1);
+        }
     };
 
     checkTsc = () => {
@@ -124,7 +140,7 @@ class ProjectAuto {
 
         const result = exec(`rimraf assets/bundle &&
                              npm run check-tsc ${projectName} &&
-                             cross-env _CAIBIRD_RUN_ENV=${runEnv} _CAIBIRD_PROJECT_NAME=${projectName} _CAIBIRD_HOST=${startConfig.host} _CAIBIRD_PORT=${startConfig.port} npm run gulp:dist ${projectName}`);
+                             cross-env _CAIBIRD_RUN_ENV=${runEnv} _CAIBIRD_HOST=${startConfig.host} _CAIBIRD_PORT=${startConfig.port} npm run gulp:dist ${projectName}`);
 
         process.exit(result.code);
     };
@@ -181,6 +197,21 @@ class ProjectAuto {
         }
     };
 
+    startTaro = () => {
+        const projectName = this.getProjectName();
+
+        if (this.taroProjectNames.includes(projectName)) {
+            const isReal = process.argv[4] === 'real-debug';
+            const nodeEnv = isReal ? nodeEnvValues.PRODUCTION : nodeEnvValues.DEVELOPMENT;
+
+            const result = exec(`rimraf .taro && cross-env NODE_ENV=${nodeEnv} node node_modules/caibird/bin/_/taro build --type weapp --watch ${projectName}`);
+            process.exit(result.code);
+        } else {
+            printf(`Error: the project 【${projectName}】 no has taro`, ColorsEnum.RED);
+            process.exit(1);
+        }
+    };
+
     startWatch = () => {
         const projectName = this.getProjectName();
 
@@ -188,7 +219,7 @@ class ProjectAuto {
         const allowServer = this.hasServerProjectNames.includes(projectName);
         const startConfig = this.getStartConfig();
 
-        const gulpCommandPrefix = `cross-env _CAIBIRD_RUN_ENV=${runEnvArgs.local} _CAIBIRD_PROJECT_NAME=${projectName} _CAIBIRD_HOST=${startConfig.host} _CAIBIRD_PORT=${startConfig.port}`;
+        const gulpCommandPrefix = `cross-env _CAIBIRD_RUN_ENV=${runEnvArgs.local} _CAIBIRD_HOST=${startConfig.host} _CAIBIRD_PORT=${startConfig.port}`;
 
         const result = exec(
             `kill-port ${startConfig.port} &&
@@ -203,18 +234,14 @@ class ProjectAuto {
 
     start = () => {
         const projectName = this.getProjectName();
-        const isReal = process.argv[4] === 'real-debug';
 
-        const nodeEnv = isReal ? nodeEnvValues.PRODUCTION : nodeEnvValues.DEVELOPMENT;
         const projectVersion = v4().replace(/-/g, '');
 
         if (this.allowStartProjectNames.includes(projectName)) {
-            const taroCommand = `cross-env NODE_ENV=${nodeEnv} _CAIBIRD_RUN_ENV=${runEnvArgs.local} _CAIBIRD_PROJECT_NAME=${projectName} node node_modules/caibird/bin/_/taro build --type weapp --watch ${projectName}`;
-
             if (this.taroProjectNames.includes(projectName)) {
                 const result = exec(
                     `cross-env _CAIBIRD_PROJECT_VERSION=${projectVersion} npm run dist ${projectName} ${envValues.local} &&
-                         concurrently -p "【{name}】" -n "WATCH,TARO" "cross-env _CAIBIRD_PROJECT_VERSION=${projectVersion} npm run start-watch ${projectName}" "${taroCommand}"`,
+                         concurrently -p "【{name}】" -n "WATCH,TARO" "cross-env _CAIBIRD_PROJECT_VERSION=${projectVersion} npm run start-watch ${projectName}" "npm run start-taro"`,
                 );
                 process.exit(result.code);
             } else {
@@ -265,7 +292,7 @@ class ProjectAuto {
     };
 }
 
-const allowCommands = ['build', 'checkTsc', 'createDbEntity', 'dist', 'eslint',
+const allowCommands = ['build', 'checkTsc', 'createDbEntity', 'dist', 'eslint', 'startTaro', 'buildTaro',
     'gulpDist', 'gulpWatch', 'release', 'start', 'startWatch', 'tsc', 'webpack', 'webpackDevServer'];
 
 const projectAutoHelper = (opt, commandOpts) => {

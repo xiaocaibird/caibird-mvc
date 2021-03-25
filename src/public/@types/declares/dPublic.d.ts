@@ -92,9 +92,6 @@ declare namespace dp {
         _CAIBIRD_BABEL_TRANSFORM_ALL: any,
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        _CAIBIRD_PROJECT_NAME: any,
-
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         _CAIBIRD_HOST: any,
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any

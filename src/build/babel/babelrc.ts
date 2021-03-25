@@ -76,8 +76,6 @@ export default (options: BabelOptions) => {
 
         _CAIBIRD_BABEL_TRANSFORM_ALL: process.env._CAIBIRD_BABEL_TRANSFORM_ALL,
 
-        _CAIBIRD_PROJECT_NAME: process.env._CAIBIRD_PROJECT_NAME,
-
         _CAIBIRD_HOST: process.env._CAIBIRD_HOST,
 
         _CAIBIRD_PORT: process.env._CAIBIRD_PORT,
