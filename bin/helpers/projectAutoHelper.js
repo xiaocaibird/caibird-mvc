@@ -241,7 +241,7 @@ class ProjectAuto {
             if (this.taroProjectNames.includes(projectName)) {
                 const result = exec(
                     `cross-env _CAIBIRD_PROJECT_VERSION=${projectVersion} npm run dist ${projectName} ${envValues.local} &&
-                         concurrently -p "【{name}】" -n "WATCH,TARO" "cross-env _CAIBIRD_PROJECT_VERSION=${projectVersion} npm run start-watch ${projectName}" "npm run start-taro"`,
+                         concurrently -p "【{name}】" -n "WATCH,TARO" "cross-env _CAIBIRD_PROJECT_VERSION=${projectVersion} npm run start-watch ${projectName}" "npm run start-taro ${projectName}"`,
                 );
                 process.exit(result.code);
             } else {

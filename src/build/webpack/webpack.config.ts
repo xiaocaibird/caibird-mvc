@@ -75,7 +75,7 @@ export default (webpackOptions: WebpackOptions, webpackConfig: webpack.Configura
     const tsConfig = path.join(process.cwd(), `src/${projectName}/tsconfig.webpack.json`);
 
     const getEntry = (): webpack.Configuration['entry'] => ({
-        [utils.entryPointsNames.entry]: (isLocalTest ? [`webpack-dev-server/client?${devServerConfig ? `http://${devServerConfig.host}:${devServerConfig.port}` : ''}`] : []).concat(`./src/${projectName}/front/web/index`),
+        [utils.entryPointsNames.entry]: (isLocalTest ? [`webpack-dev-server/client?${devServerConfig ? `http://${devServerConfig.host}:${devServerConfig.port + 1}` : ''}`] : []).concat(`./src/${projectName}/front/web/index`),
     });
 
     const getOutput = (): webpack.Output => ({
