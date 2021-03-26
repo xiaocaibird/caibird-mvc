@@ -6,8 +6,11 @@ import fs from 'fs';
 import gulp from 'gulp';
 import babel from 'gulp-babel';
 import gulpRename from 'gulp-rename';
+import sourcemaps from 'gulp-sourcemaps';
 import { v4 } from 'uuid';
 
+// eslint-disable-next-line no-restricted-imports
+import { runEnvArgs } from '../_config';
 import getBabelrc, { BabelOptions } from '../babel/babelrc';
 import ini from '../ini';
 
@@ -58,9 +61,17 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
                             .pipe(babel(babelrc))
                             .pipe(gulp.dest(`${rootDir}dist/${projectName}${lastIdx >= 0 ? `/${file.slice(0, lastIdx)}` : ''}`));
                     } else {
-                        gulp.src([`${rootDir}.tsc/src/${projectName}/${file}/**/*.js`])
-                            .pipe(babel(babelrc))
-                            .pipe(gulp.dest(`${rootDir}dist/${projectName}/${file}`));
+                        if (process.env._CAIBIRD_RUN_ENV === runEnvArgs.local) {
+                            gulp.src([`${rootDir}.tsc/src/${projectName}/${file}/**/*.js`])
+                                .pipe(sourcemaps.init({ loadMaps: true }))
+                                .pipe(babel(babelrc))
+                                .pipe(sourcemaps.write('../src'))
+                                .pipe(gulp.dest(`${rootDir}dist/${projectName}/${file}`));
+                        } else {
+                            gulp.src([`${rootDir}.tsc/src/${projectName}/${file}/**/*.js`])
+                                .pipe(babel(babelrc))
+                                .pipe(gulp.dest(`${rootDir}dist/${projectName}/${file}`));
+                        }
                     }
                 });
 

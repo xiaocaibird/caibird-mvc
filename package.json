@@ -16,7 +16,6 @@
   },
   "author": "cmZhou",
   "description": "",
-  "dependencies": {},
   "homepage": "https://github.com/xiaocaibird/caibird-mvc",
   "devDependencies": {
     "@babel/core": "^7.13.10",
@@ -29,6 +28,7 @@
     "@types/gulp": "^4.0.8",
     "@types/gulp-babel": "^6.1.29",
     "@types/gulp-rename": "^2.0.0",
+    "@types/gulp-sourcemaps": "^0.0.34",
     "@types/history": "^4.7.8",
     "@types/jaeger-client": "^3.15.4",
     "@types/json-stringify-safe": "^5.0.0",
@@ -71,6 +71,7 @@
     "gulp": "^4.0.2",
     "gulp-babel": "^8.0.0",
     "gulp-rename": "^2.0.0",
+    "gulp-sourcemaps": "^3.0.0",
     "history": "^4.10.1",
     "html-entities": "^2.1.1",
     "html-webpack-plugin": "^4.5.2",
