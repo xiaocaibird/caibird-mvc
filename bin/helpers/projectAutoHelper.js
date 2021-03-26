@@ -107,7 +107,7 @@ class ProjectAuto {
         const projectName = this.getProjectName();
 
         if (this.taroProjectNames.includes(projectName)) {
-            const result = exec(`rimraf .taro && cross-env NODE_ENV=${nodeEnvValues.PRODUCTION} node node_modules/caibird/bin/_/taro build --type weapp ${projectName}`);
+            const result = exec(`cross-env NODE_ENV=${nodeEnvValues.PRODUCTION} node node_modules/caibird/bin/_/taro build --type weapp ${projectName}`);
             process.exit(result.code);
         } else {
             printf(`Error: the project 【${projectName}】 no has taro`, ColorsEnum.RED);
@@ -204,7 +204,7 @@ class ProjectAuto {
             const isReal = process.argv[4] === 'real-debug';
             const nodeEnv = isReal ? nodeEnvValues.PRODUCTION : nodeEnvValues.DEVELOPMENT;
 
-            const result = exec(`rimraf .taro && cross-env NODE_ENV=${nodeEnv} node node_modules/caibird/bin/_/taro build --type weapp --watch ${projectName}`);
+            const result = exec(`cross-env NODE_ENV=${nodeEnv} node node_modules/caibird/bin/_/taro build --type weapp --watch ${projectName}`);
             process.exit(result.code);
         } else {
             printf(`Error: the project 【${projectName}】 no has taro`, ColorsEnum.RED);
