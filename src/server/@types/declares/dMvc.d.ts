@@ -26,6 +26,8 @@ declare global {
 
             type ActionReq<T extends dp.Obj> = Partial<T>;
 
+            type View = typeof import('../../app').default['View'];
+
             type BaseController<TState, TCustom> = new (ctx: Ctx<TState, TCustom>) => unknown;
 
             type ControllerProps<TRules, TState, TCustom> = {

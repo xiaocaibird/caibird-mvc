@@ -33,6 +33,52 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
         },
     } as const;
 
+    public static readonly View = {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        Json: <TData extends dp.Obj<any> | null = null, TOther extends Omit<dFetch.JsonBody, 'code' | 'version'> | undefined = undefined>(data: TData = (null as unknown as TData), other?: TOther): dMvc.S.JsonActionReturn<TData> => ({
+            type: 'json',
+            result: {
+                code: eFetch.JsonSuccessCode.Success,
+                data,
+                ...other,
+            },
+        }),
+        File: (path: string, opt?: KoaSend.SendOptions): dMvc.S.FileActionReturn => ({
+            type: 'file',
+            result: {
+                path,
+                opt,
+            },
+        }),
+        Buffer: (buffer: Buffer, fileName: string, opt?: { type: eHttp.ContentDispositionType }): dMvc.S.BufferActionReturn => ({
+            type: 'buffer',
+            result: {
+                buffer,
+                fileName,
+                opt,
+            },
+        }),
+        Redirect: (url: string): dMvc.S.RedirectActionReturn => ({
+            type: 'redirect',
+            result: {
+                url,
+            },
+        }),
+        Render: <T extends dp.Obj | undefined = undefined>(view: string, params?: T): dMvc.S.RenderActionReturn<T> => ({
+            type: 'render',
+            result: {
+                view,
+                params,
+            },
+        }),
+        Xml: (xmlStr: string): dMvc.S.XmlActionReturn => ({
+            type: 'xml',
+            result: {
+                xmlStr,
+            },
+        }),
+    } as const;
+
     public constructor(public readonly options: Options<TRules, TState, TCustom, TControllerDefaultConfig>) {
         reportHelper.init(this.options.reportInitOpt);
     }
@@ -98,52 +144,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
 
     private createBaseController() {
         const defaultConfig = this.options.controllerDefaultConfig as TControllerDefaultConfig;
-
-        const View = {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            Json: <TData extends dp.Obj<any> | null = null, TOther extends Omit<dFetch.JsonBody, 'code' | 'version'> | undefined = undefined>(data: TData = (null as unknown as TData), other?: TOther): dMvc.S.JsonActionReturn<TData> => ({
-                type: 'json',
-                result: {
-                    code: eFetch.JsonSuccessCode.Success,
-                    data,
-                    ...other,
-                },
-            }),
-            File: (path: string, opt?: KoaSend.SendOptions): dMvc.S.FileActionReturn => ({
-                type: 'file',
-                result: {
-                    path,
-                    opt,
-                },
-            }),
-            Buffer: (buffer: Buffer, fileName: string, opt?: { type: eHttp.ContentDispositionType }): dMvc.S.BufferActionReturn => ({
-                type: 'buffer',
-                result: {
-                    buffer,
-                    fileName,
-                    opt,
-                },
-            }),
-            Redirect: (url: string): dMvc.S.RedirectActionReturn => ({
-                type: 'redirect',
-                result: {
-                    url,
-                },
-            }),
-            Render: <T extends dp.Obj | undefined = undefined>(view: string, params?: T): dMvc.S.RenderActionReturn<T> => ({
-                type: 'render',
-                result: {
-                    view,
-                    params,
-                },
-            }),
-            Xml: (xmlStr: string): dMvc.S.XmlActionReturn => ({
-                type: 'xml',
-                result: {
-                    xmlStr,
-                },
-            }),
-        } as const;
+        const View = App.View;
 
         return class baseController {
             public constructor(
