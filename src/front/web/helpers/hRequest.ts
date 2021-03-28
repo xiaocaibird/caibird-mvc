@@ -357,7 +357,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
                 clearTimeout(timeoutId);
             };
 
-            if (uString.equalIgnoreCase(type, eHttp.MethodType.GET)) {
+            if (uString.equalIC(type, eHttp.MethodType.GET)) {
                 xhr.open(type, uHttp.urlAddQuery(url, sendData as dp.Obj<dp.UrlParams>), true); // TODO 处理类型断言
                 Object.keys(headers).forEach(k => {
                     if (headers[k] != null) xhr.setRequestHeader(k, headers[k]);

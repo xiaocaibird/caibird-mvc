@@ -5,10 +5,10 @@
 declare namespace dDb {
     namespace S {
         type Config = {
-            username: string,
-            password: string,
-            host: string,
-            port: number,
+            username?: string,
+            password?: string,
+            host?: string,
+            port?: number,
         };
     }
 }

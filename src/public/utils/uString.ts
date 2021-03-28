@@ -5,7 +5,7 @@
 export namespace uString {
     export const check = (obj: unknown): obj is string => typeof obj === 'string';
 
-    export const equalIgnoreCase = (a: string, b: string) => a.toLowerCase() === b.toLowerCase();
+    export const equalIC = (a: string, b: string) => a.toLowerCase() === b.toLowerCase();
 
     export const subText = (params: {
         str: string,

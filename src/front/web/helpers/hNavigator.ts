@@ -22,7 +22,7 @@ export abstract class HNavigator {
 
     protected readonly checkPathChange = (route: RouterHistory.LocationDescriptor) => {
         const path = (uObject.check(route) ? route.pathname : route) ?? '';
-        if (uString.equalIgnoreCase(path, location.hash.slice(1))) {
+        if (uString.equalIC(path, location.hash.slice(1))) {
             return false;
         }
         return true;
