@@ -5,7 +5,7 @@
 import { uHttp } from './uHttp';
 
 export namespace uUrl {
-    export const ossImgProcess = (url: string, opt: { width?: number, height?: number }) => uHttp.urlAddQuery(url, {
+    export const ossImg = (url: string, opt: { width?: number, height?: number }) => uHttp.urlAddQuery(url, {
         'x-oss-process': `image/format,png,image/resize${opt.height == null ? '' : `,h_${opt.height}`}${opt.width == null ? '' : `,w_${opt.width}`}`,
     });
 }
