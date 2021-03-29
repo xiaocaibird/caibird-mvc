@@ -20,6 +20,8 @@ export namespace uCrypto {
         return h.digest('hex');
     };
 
+    // 三个函数内聚在一起，加解密和getStringCipher只导出一个getStringCipher方法
+
     // 加密
     const strCipher = (data: string, k: crypto.CipherKey, iv: crypto.BinaryLike | null,
         alg: string, input_encoding: crypto.Encoding, output_encoding: crypto.BinaryToTextEncoding, options?: import('stream').TransformOptions) => {
