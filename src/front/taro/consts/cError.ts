@@ -4,5 +4,7 @@
  */
 import base from '../../@com/consts/cError';
 
+export { setCompatible } from '../../@com/consts/cError';
+
 export const cError = base;
 export default cError;

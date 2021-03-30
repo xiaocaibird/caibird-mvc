@@ -138,6 +138,10 @@ export default (options: BabelOptions) => {
                 ...alias,
                 'caibird/src': '../@modules/caibird/src',
                 caibird: '../@modules/caibird/src',
+
+                'caibird-projects-common-taro': '../@common/front/taro',
+                'caibird-projects-common-web': '../@common/front/web',
+                'caibird-projects-common-server': '../@common/server',
             },
         }]);
 
