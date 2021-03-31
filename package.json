@@ -1,6 +1,6 @@
 {
   "name": "caibird",
-  "version": "2.5.2",
+  "version": "2.5.3",
   "private": false,
   "scripts": {
     "prepare": "husky install",

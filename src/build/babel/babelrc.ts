@@ -12,7 +12,7 @@ type Platform = 'server' | 'taro' | 'web';
 const platformsPathResolveDir: dp.StrictObj<Platform, string[]> = {
     web: ['helpers', 'utils', 'consts', 'components'],
     taro: ['helpers', 'utils', 'consts', 'components', 'ui'], // TODO delete ui
-    server: ['helpers', 'utils', 'consts'],
+    server: ['helpers', 'utils', 'consts', 'actions', 'filters'],
 };
 
 const platformsPathResolve: dp.StrictObj<Platform, (dirName: string) => string> = {
@@ -21,7 +21,11 @@ const platformsPathResolve: dp.StrictObj<Platform, (dirName: string) => string> 
         dirName === 'components' ? 'front/taro/pages/@components' :
             dirName === 'ui' ? 'front/taro/pages/@components/@taro-ui' :
                 `front/taro/${dirName}`,
-    server: (dirName: string) => `server/${dirName}`,
+    server: (dirName: string) =>
+        dirName === 'actions' ?
+            'server/controllers/@actions' :
+            dirName === 'filters' ? 'server/controllers/@filters' :
+                `server/${dirName}`,
 };
 
 export type BabelOptions = {
