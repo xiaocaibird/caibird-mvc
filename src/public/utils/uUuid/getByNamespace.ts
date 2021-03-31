@@ -1,5 +1,5 @@
 /**
- * @Owners zzh
+ * @Owners cmZhou,zzh
  * @Title uuid getByNamespace函数
  * @Details 获取version5的uuid，依据namespace，可去除分隔符
  */

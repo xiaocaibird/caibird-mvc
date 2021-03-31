@@ -1,5 +1,5 @@
 /**
- * @Owners zzh
+ * @Owners cmZhou,zzh
  * @Title public equalIC
  * @Details 检查两个字符串是否相等（忽略大小写）
  */

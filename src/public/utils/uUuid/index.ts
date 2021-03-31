@@ -1,5 +1,5 @@
 /**
- * @Owners zzh
+ * @Owners cmZhou,zzh
  * @Title uuid util
  */
 import get from './get';

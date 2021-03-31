@@ -1,5 +1,5 @@
 /**
- * @Owners zzh
+ * @Owners cmZhou,zzh
  * @Title retry函数
  * @Details 执行task函数，如果抛出异常，重新执行，支持设置重试次数和delay时间
  */

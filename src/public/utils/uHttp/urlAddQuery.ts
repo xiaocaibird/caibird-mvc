@@ -1,5 +1,5 @@
 /**
- * @Owners zzh
+ * @Owners cmZhou,zzh
  * @Title public urlAddQuery
  * @Details 给url字符串添加参数
  */

@@ -1,5 +1,5 @@
 /**
- * @Owners zzh
+ * @Owners cmZhou,zzh
  * @Title public checkInstance函数
  * @Details 检查一个对象是否是另一个参数的实例
  */

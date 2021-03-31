@@ -1,5 +1,5 @@
 /**
- * @Owners zzh
+ * @Owners cmZhou,zzh
  * @Title public stringifyQuery
  * @Details 把query对象解析为字符串
  */

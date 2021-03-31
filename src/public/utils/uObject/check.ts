@@ -1,5 +1,5 @@
 /**
- * @Owners zzh
+ * @Owners cmZhou,zzh
  * @Title public check函数
  * @Details 检查一个输入是否为object类型
  */

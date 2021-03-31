@@ -1,5 +1,5 @@
 /**
- * @Owners zzh
+ * @Owners cmZhou,zzh
  * @Title public getPath函数
  * @Details 获取一个tree结构的某个id的链路
  */

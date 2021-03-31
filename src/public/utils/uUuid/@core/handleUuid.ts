@@ -1,5 +1,5 @@
 /**
- * @Owners zzh
+ * @Owners cmZhou,zzh
  * @Title handleUuid函数
  * @Details 提供把uuid的'-'字符去除的功能
  */

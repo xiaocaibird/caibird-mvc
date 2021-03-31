@@ -1,5 +1,5 @@
 /**
- * @Owners zzh
+ * @Owners cmZhou,zzh
  * @Title public check
  * @Details 判断子类型是否继承自父类
  */

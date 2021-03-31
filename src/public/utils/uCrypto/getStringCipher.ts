@@ -1,5 +1,5 @@
 /**
- * @Owners zzh
+ * @Owners cmZhou,zzh
  * @Title public getStringCipher
  * @Details 传参获取加解密方法
  */

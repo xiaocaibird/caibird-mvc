@@ -1,5 +1,5 @@
 /**
- * @Owners zzh
+ * @Owners cmZhou,zzh
  * @Title public crypto工具
  */
 import getStringCipher from './getStringCipher';

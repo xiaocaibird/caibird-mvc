@@ -1,5 +1,5 @@
 /**
- * @Owners zzh
+ * @Owners cmZhou,zzh
  * @Title public parseUrl
  * @Details 把url字符串解析为对象
  */

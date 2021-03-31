@@ -1,5 +1,5 @@
 /**
- * @Owners zzh
+ * @Owners cmZhou,zzh
  * @Title public ossImg函数
  * @Details 给oss图片添加宽高参数
  */

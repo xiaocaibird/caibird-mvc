@@ -1,5 +1,5 @@
 /**
- * @Owners zzh
+ * @Owners cmZhou,zzh
  * @Title public hash方法
  */
 import { HashOptions, createHash } from 'crypto';

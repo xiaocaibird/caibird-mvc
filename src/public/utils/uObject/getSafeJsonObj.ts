@@ -1,5 +1,5 @@
 /**
- * @Owners zzh
+ * @Owners cmZhou,zzh
  * @Title public getSafeJsonObj
  */
 import parseJson from './parseJson';

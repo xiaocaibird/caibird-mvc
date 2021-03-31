@@ -1,5 +1,5 @@
 /**
- * @Owners zzh
+ * @Owners cmZhou,zzh
  * @Title xml parse函数
  * @Details 解析xml字符串
  */

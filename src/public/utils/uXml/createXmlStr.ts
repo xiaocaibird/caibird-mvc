@@ -1,5 +1,5 @@
 /**
- * @Owners zzh
+ * @Owners cmZhou,zzh
  * @Title xml createXmlStr函数
  * @Details 根据对象生成xml字符串
  */

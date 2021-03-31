@@ -1,5 +1,5 @@
 /**
- * @Owners zzh
+ * @Owners cmZhou,zzh
  * @Title public check
  * @Details 检查一个参数是否为函数类型
  */

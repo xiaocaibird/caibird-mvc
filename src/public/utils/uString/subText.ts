@@ -1,5 +1,5 @@
 /**
- * @Owners zzh
+ * @Owners cmZhou,zzh
  * @Title public subText
  * @Details 限定长度输出字符串，被截取内容用suffix表示
  */
