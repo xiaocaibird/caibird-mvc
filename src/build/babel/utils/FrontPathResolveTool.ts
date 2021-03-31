@@ -40,11 +40,17 @@ export default class FrontPathResolveTool {
             result = `${libraryName}/${name}`;
         } catch {
             try {
-                const caibirdPath = path.join(process.cwd(), `/dist/@modules/caibird/src/front/${this.options.platform}/${dirName}/${name}`);
-                require.resolve(caibirdPath);
-                result = `caibird/front/${this.options.platform}/${dirName}/${name}`;
+                const commonPath = path.join(process.cwd(), `/dist/@common/front/${this.options.platform}/${dirName}/${name}`);
+                require.resolve(commonPath);
+                result = `caibird-projects-common-${this.options.platform}/${dirName}/${name}`;
             } catch {
-                result = `${projectName}-public-${dirName}/${name}`; // TODO front @common
+                try {
+                    const caibirdPath = path.join(process.cwd(), `/dist/@modules/caibird/src/front/${this.options.platform}/${dirName}/${name}`);
+                    require.resolve(caibirdPath);
+                    result = `caibird/front/${this.options.platform}/${dirName}/${name}`;
+                } catch {
+                    result = `${projectName}-public-${dirName}/${name}`; // TODO front @common
+                }
             }
         }
         return this.handlePathResult(result, libraryName, name);

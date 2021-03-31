@@ -10,7 +10,6 @@ import { cError } from '../consts/cError';
 
 export abstract class HDb {
     protected readonly baseOptions: Sequelize.Options = {
-        dialect: 'mysql',
         pool: {
             max: 50,
             min: 0,
