@@ -265,7 +265,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
             // eslint-disable-next-line prefer-object-spread
             controller.filterRules = Object.assign({}, setClass.filterRules, AController.filterRules, controller.filterRules);
 
-            const controllerName = controller.displayName || controller.name;
+            const controllerName = controller.name;
             const key = this.getControllerName(controllerName);
 
             if (this.apiMap[key]) {
@@ -520,7 +520,6 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
             prefix,
         });
         router.all('/:controller?/:action?/:value*', async (ctx, next) => {
-            console.log('route=====', ctx.params);
             const { controller = defaultController, action = defaultAction } = ctx.params as { controller?: string, action?: string };
 
             const controllerName = this.getControllerName(controller);
