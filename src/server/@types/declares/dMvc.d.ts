@@ -31,6 +31,7 @@ declare global {
             type BaseController<TState, TCustom> = new (ctx: Ctx<TState, TCustom>) => unknown;
 
             type ControllerProps<TRules, TState, TCustom> = {
+                displayName?: string,
                 __actions__: dp.Obj<Action<TRules, TState, TCustom>>,
             };
 
