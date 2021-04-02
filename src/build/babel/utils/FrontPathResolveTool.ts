@@ -49,7 +49,7 @@ export default class FrontPathResolveTool {
                     require.resolve(caibirdPath);
                     result = `caibird/front/${this.options.platform}/${dirName}/${name}`;
                 } catch {
-                    result = `${projectName}-public-${dirName}/${name}`; // TODO front @common
+                    result = `${projectName}-public-${dirName}/${name}`;
                 }
             }
         }

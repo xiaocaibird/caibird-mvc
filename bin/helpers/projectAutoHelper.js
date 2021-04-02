@@ -39,6 +39,10 @@ class ProjectAuto {
         this.allowReleaseProjectNames = Object.keys(projectsConfig).filter(projectName => !projectsConfig[projectName].props.noRelease);
 
         this.allowStartProjectNames = Object.keys(projectsConfig).filter(projectName => !projectsConfig[projectName].props.noStart);
+
+        this.scene = {
+            ...projectsConfig.scene,
+        };
     }
 
     getUnionProjectNames = pName => this.projectsConfig[pName] && this.projectsConfig[pName].unionProjectNames || [];
@@ -153,7 +157,8 @@ class ProjectAuto {
         const isTaro = this.taroProjectNames.includes(projectName);
 
         const result = exec(`eslint -c ./src/${projectName}/.eslintrc.json --cache --cache-location \"./.eslint/${projectName}-cache\" -f codeframe --ext .ts,.tsx,.js,.jsx ./src/${projectName} ${unionProjectNames
-            .map(item => `./src/${item}`).join(' ')} ./src/@common/build ./src/@common/server ./src/@common/front/@com ${isTaro ? './src/@common/front/taro' : './src/@common/front/web'} ${hasServer ? './src/serverEntry.ts' : ''} ${process.argv.includes('fix') ? ' --fix' : ''}`);
+            .map(item => `./src/${item}`).join(' ')} ./src/@common/build ./src/@common/server ./src/@common/front/@com ${isTaro ? './src/@common/front/taro' : './src/@common/front/web'} ${hasServer ?
+                './src/serverEntry.ts' : ''} ${this.scene.isGeneralManageSys ? './src/@scene/GeneralManageSys' : ''} ${process.argv.includes('fix') ? ' --fix' : ''}`);
         process.exit(result.code);
     };
 

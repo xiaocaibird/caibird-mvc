@@ -121,6 +121,7 @@ export default (webpackOptions: WebpackOptions, webpackConfig: webpack.Configura
             }],
             include: [
                 ...(getProjectIncludeList([projectName, ...(unionProjectNames || [])], ['front/@com', 'front/web', 'public', '_config.ts'])),
+                path.join(process.cwd(), 'src/@scene'),
                 path.join(process.cwd(), 'src/@common/front/@com'),
                 path.join(process.cwd(), 'src/@common/front/web'),
                 path.join(process.cwd(), 'node_modules/caibird/src/public'),
