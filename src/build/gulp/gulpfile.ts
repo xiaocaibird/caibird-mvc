@@ -6,12 +6,17 @@ import fs from 'fs';
 import gulp from 'gulp';
 import babel from 'gulp-babel';
 import gulpRename from 'gulp-rename';
+import sourcemaps from 'gulp-sourcemaps';
+import through from 'through2';
 import { v4 } from 'uuid';
 
 import getBabelrc, { BabelOptions } from '../babel/babelrc';
 import ini from '../ini';
 
 const rootDir = './';
+
+const sourcemapsInit = () => ini.isLocalTest ? sourcemaps.init({ loadMaps: true }) : through.obj();
+const sourcemapsWrite = () => ini.isLocalTest ? sourcemaps.write() : through.obj();
 
 export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
     const projectVersion = process.env._CAIBIRD_PROJECT_VERSION || v4().replace(/-/g, '');
@@ -30,6 +35,7 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
 
     const rootFileList = [
         'serverEntry.js',
+        'serverEntry.js.map',
     ];
 
     const fileList = [
@@ -47,23 +53,33 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
         let hasTaro = false;
         projectList.forEach(projectName => {
             if (rootFileList.includes(projectName)) {
-                gulp.src([`${rootDir}.tsc/src/${projectName}`])
-                    .pipe(babel(babelrc))
-                    .pipe(gulp.dest(`${rootDir}dist`));
+                if (projectName.endsWith('.js')) {
+                    gulp.src([`${rootDir}.tsc/src/${projectName}`])
+                        .pipe(sourcemapsInit())
+                        .pipe(babel(babelrc))
+                        .pipe(sourcemapsWrite())
+                        .pipe(gulp.dest(`${rootDir}dist`));
+                }
             } else if (projectName === '@scenes') {
                 gulp.src([`${rootDir}.tsc/src/@scenes/**/*.js`])
+                    .pipe(sourcemapsInit())
                     .pipe(babel(babelrc))
+                    .pipe(sourcemapsWrite())
                     .pipe(gulp.dest(`${rootDir}dist/@scenes`));
             } else {
                 fileList.forEach(file => {
                     if (file.endsWith('.js')) {
                         const lastIdx = file.lastIndexOf('/');
                         gulp.src([`${rootDir}.tsc/src/${projectName}/${file}`])
+                            .pipe(sourcemapsInit())
                             .pipe(babel(babelrc))
+                            .pipe(sourcemapsWrite())
                             .pipe(gulp.dest(`${rootDir}dist/${projectName}${lastIdx >= 0 ? `/${file.slice(0, lastIdx)}` : ''}`));
                     } else {
                         gulp.src([`${rootDir}.tsc/src/${projectName}/${file}/**/*.js`])
+                            .pipe(sourcemapsInit())
                             .pipe(babel(babelrc))
+                            .pipe(sourcemapsWrite())
                             .pipe(gulp.dest(`${rootDir}dist/${projectName}/${file}`));
                     }
                 });
@@ -103,7 +119,9 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
 
         const nodeModulesFiles = [`${rootDir}.tsc/node_modules/**/*.js`];
         gulp.src(nodeModulesFiles)
+            .pipe(sourcemapsInit())
             .pipe(babel(babelrc))
+            .pipe(sourcemapsWrite())
             .pipe(gulp.dest(`${rootDir}dist/@modules`));
 
         return Promise.resolve();
@@ -167,8 +185,10 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
                     } else {
                         if (path.endsWith('.js')) {
                             gulp.src([path])
+                                .pipe(sourcemapsInit())
                                 .pipe(babel(babelrc))
                                 .pipe(gulpRename({ dirname: '' }))
+                                .pipe(sourcemapsWrite())
                                 .pipe(gulp.dest(destCallback));
                         } else {
                             gulp.src([path])
