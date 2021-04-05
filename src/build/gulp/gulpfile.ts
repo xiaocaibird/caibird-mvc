@@ -50,6 +50,10 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
                 gulp.src([`${rootDir}.tsc/src/${projectName}`])
                     .pipe(babel(babelrc))
                     .pipe(gulp.dest(`${rootDir}dist`));
+            } else if (projectName === '@scenes') {
+                gulp.src([`${rootDir}.tsc/src/@scenes/**/*.js`])
+                    .pipe(babel(babelrc))
+                    .pipe(gulp.dest(`${rootDir}dist/@scenes`));
             } else {
                 fileList.forEach(file => {
                     if (file.endsWith('.js')) {
