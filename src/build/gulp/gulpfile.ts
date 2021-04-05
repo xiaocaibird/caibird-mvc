@@ -35,7 +35,6 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
 
     const rootFileList = [
         'serverEntry.js',
-        'serverEntry.js.map',
     ];
 
     const fileList = [
@@ -53,13 +52,11 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
         let hasTaro = false;
         projectList.forEach(projectName => {
             if (rootFileList.includes(projectName)) {
-                if (projectName.endsWith('.js')) {
-                    gulp.src([`${rootDir}.tsc/src/${projectName}`])
-                        .pipe(sourcemapsInit())
-                        .pipe(babel(babelrc))
-                        .pipe(sourcemapsWrite())
-                        .pipe(gulp.dest(`${rootDir}dist`));
-                }
+                gulp.src([`${rootDir}.tsc/src/${projectName}`])
+                    .pipe(sourcemapsInit())
+                    .pipe(babel(babelrc))
+                    .pipe(sourcemapsWrite())
+                    .pipe(gulp.dest(`${rootDir}dist`));
             } else if (projectName === '@scenes') {
                 gulp.src([`${rootDir}.tsc/src/@scenes/**/*.js`])
                     .pipe(sourcemapsInit())
@@ -167,7 +164,8 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
                     const destCallback: Parameters<typeof gulp['dest']>[0] = file => {
                         let isSame = false;
                         try {
-                            if (file.contents?.toString() === fs.readFileSync(toPath).toString()) {
+                            const reg = /\n\/\/# sourceMappingURL=data:application\/json;charset=utf8;base64,.*\n$/;
+                            if (file.contents?.toString().replace(reg, '') === fs.readFileSync(toPath).toString().replace(reg, '')) {
                                 isSame = true;
                             }
                         } catch { }
