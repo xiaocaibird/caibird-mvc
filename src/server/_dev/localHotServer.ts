@@ -19,7 +19,7 @@ export default (opt: {
             './dist/@modules/caibird/src/public',
             './dist/@modules/caibird/src/server',
 
-            './dist/@scene/*/server',
+            './dist/@scenes/*/server',
 
             './dist/@common/_config.js',
             './dist/@common/public',

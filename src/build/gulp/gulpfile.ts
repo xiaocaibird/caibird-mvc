@@ -93,8 +93,8 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
             gulp.src([`${rootDir}src/@common/front/taro/**/*.scss`])
                 .pipe(gulp.dest(`${rootDir}dist/@common/front/taro`));
 
-            gulp.src([`${rootDir}src/@scene/*/front/taro/**/*.scss`])
-                .pipe(gulp.dest(`${rootDir}dist/@scene`));
+            gulp.src([`${rootDir}src/@scenes/*/front/taro/**/*.scss`])
+                .pipe(gulp.dest(`${rootDir}dist/@scenes`));
         }
 
         const nodeModulesFiles = [`${rootDir}.tsc/node_modules/**/*.js`];
@@ -118,7 +118,7 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
 
             const watcher = gulp.watch([
                 `${rootDir}.tsc/**/*.js`,
-                ...(hasTaro ? projectList.map(projectName => `${rootDir}src/${projectName === '@scene' ? `${projectName}/*` : projectName}/front/taro/**`) : []),
+                ...(hasTaro ? projectList.map(projectName => `${rootDir}src/${projectName === '@scenes' ? `${projectName}/*` : projectName}/front/taro/**`) : []),
             ], done => {
                 done();
                 setTimeout(() => {
