@@ -148,7 +148,7 @@ export default (options: BabelOptions) => {
                 'caibird-projects-common-server': '../@common/server',
 
                 'caibird-scenes-general-manage-sys-server': '../@scenes/general-manage-sys/server',
-                'caibird-scenes-general-manage-sys-web': '../@scenes/general-manage-sys/web',
+                'caibird-scenes-general-manage-sys-web': '../@scenes/general-manage-sys/front/web',
             },
         }]);
 
