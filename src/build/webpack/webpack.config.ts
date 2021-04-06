@@ -101,6 +101,7 @@ export default (webpackOptions: WebpackOptions, webpackConfig: webpack.Configura
                     configFile: tsConfig,
                     compilerOptions: {
                         sourceMap: !isProduction ? true : false,
+                        inlineSourceMap: false,
                     },
                     getCustomTransformers: () => {
                         const list = tsImportPluginConfig?.transformerList || [];
