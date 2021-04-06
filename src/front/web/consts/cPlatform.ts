@@ -24,4 +24,3 @@ namespace _cPlatform {
 }
 
 export const cPlatform: dp.DeepReadonly<typeof _cPlatform> = _cPlatform;
-export default cPlatform;

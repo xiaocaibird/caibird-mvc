@@ -2,8 +2,7 @@
  * @Owners cmZhou
  * @Title 常用异常类
  */
-import base, { setCompatible } from '../../@com/consts/cError';
-
+import { cError, setCompatible } from '../../@com/consts/cError';
 type ErrJson = {
     _compatible_key_: string,
     args: unknown[],
@@ -117,5 +116,4 @@ setCompatible((instance, args) => {
     } catch { }
 });
 
-export const cError = base;
-export default cError;
+export { cError } from '../../@com/consts/cError';

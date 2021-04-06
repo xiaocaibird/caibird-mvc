@@ -91,7 +91,6 @@ namespace _cError {
 }
 
 export const cError: dp.DeepReadonly<typeof _cError> = _cError;
-export default cError;
 
 //#region 私有类型
 type StatusInfo = {

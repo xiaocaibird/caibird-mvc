@@ -40,4 +40,3 @@ namespace _cMessage {
 }
 
 export const cMessage: dp.DeepReadonly<typeof _cMessage> = _cMessage;
-export default cMessage;
