@@ -53,4 +53,3 @@ export namespace uSessionStorage {
     };
 }
 
-export default uSessionStorage;

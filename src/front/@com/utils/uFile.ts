@@ -126,4 +126,3 @@ export namespace uFile {
     };
 }
 
-export default uFile;

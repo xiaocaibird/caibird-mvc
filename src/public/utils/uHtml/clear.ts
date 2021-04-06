@@ -5,4 +5,3 @@
  */
 export const clear = (html: string) => html.replace(/<\/?[^>]*>/g, '');
 
-export default clear;

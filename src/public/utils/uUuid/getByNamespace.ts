@@ -9,4 +9,3 @@ import handleUuid from './@core/handleUuid';
 
 export const getByNamespace = (keepSeparator = false, ...params: dp.GetFuncParams<typeof v5>) => handleUuid(v5(...params), { keepSeparator });
 
-export default getByNamespace;

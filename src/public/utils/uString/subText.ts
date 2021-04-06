@@ -33,4 +33,3 @@ export const subText = (params: {
     return str.length > maxLength ? str.slice(0, maxLength) + suffix : str;
 };
 
-export default subText;

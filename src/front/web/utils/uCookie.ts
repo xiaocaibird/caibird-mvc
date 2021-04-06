@@ -34,4 +34,3 @@ export namespace uCookie {
     };
 }
 
-export default uCookie;

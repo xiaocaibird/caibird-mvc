@@ -5,4 +5,3 @@
 import base from '../../@com/utils/uStorage';
 
 export const uStorage = base;
-export default uStorage;

@@ -53,4 +53,3 @@ export namespace uStorage {
     };
 }
 
-export default uStorage;

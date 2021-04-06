@@ -5,4 +5,3 @@
 import base from '../../@com/utils/uCrypto';
 
 export const uCrypto = base;
-export default uCrypto;

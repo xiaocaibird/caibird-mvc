@@ -40,4 +40,3 @@ export const getStringCipher = (key: CipherKey = 'caibird_default_key', iv: Bina
     };
 };
 
-export default getStringCipher;

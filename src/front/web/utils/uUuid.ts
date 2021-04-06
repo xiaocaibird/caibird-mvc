@@ -5,4 +5,3 @@
 import base from '../../@com/utils/uUuid';
 
 export const uUuid = base;
-export default uUuid;

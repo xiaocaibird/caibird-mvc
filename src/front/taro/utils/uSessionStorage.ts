@@ -5,4 +5,3 @@
 import base from '../../@com/utils/uSessionStorage';
 
 export const uSessionStorage = base;
-export default uSessionStorage;

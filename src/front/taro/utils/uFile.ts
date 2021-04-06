@@ -5,4 +5,3 @@
 import base from '../../@com/utils/uFile';
 
 export const uFile = base;
-export default uFile;

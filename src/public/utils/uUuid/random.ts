@@ -9,4 +9,3 @@ import handleUuid from './@core/handleUuid';
 
 export const random = (keepSeparator = false, ...params: dp.GetFuncParams<typeof v4>) => handleUuid(v4(...params), { keepSeparator });
 
-export default random;

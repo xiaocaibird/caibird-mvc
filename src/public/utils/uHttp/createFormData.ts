@@ -9,4 +9,3 @@ export const createFormData = (obj: dp.Obj<Blob | string>) => {
     return formData;
 };
 
-export default createFormData;

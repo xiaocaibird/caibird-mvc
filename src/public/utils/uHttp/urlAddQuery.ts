@@ -32,4 +32,3 @@ export const urlAddQuery = (
     return `${url}?${query}`;
 };
 
-export default urlAddQuery;

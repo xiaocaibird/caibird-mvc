@@ -7,4 +7,3 @@
 // eslint-disable-next-line @typescript-eslint/ban-types
 export const check = <T extends Function = Function>(fn: unknown): fn is T => typeof fn === 'function';
 
-export default check;

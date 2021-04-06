@@ -5,4 +5,3 @@
 import base from '../../@com/utils/uTree';
 
 export const uTree = base;
-export default uTree;

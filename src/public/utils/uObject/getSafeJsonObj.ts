@@ -11,4 +11,3 @@ export const getSafeJsonObj = <T extends dp.Obj>(obj: T) => {
     throw new Error('getSafeJsonObj 执行异常');
 };
 
-export default getSafeJsonObj;

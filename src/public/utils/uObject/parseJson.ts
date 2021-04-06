@@ -13,4 +13,3 @@ export const parseJson = <T>(str: dp.AllowNon<string>) => {
     }
 };
 
-export default parseJson;

@@ -5,4 +5,3 @@
 import base from '../../public/utils/uUrl';
 
 export const uUrl = base;
-export default uUrl;

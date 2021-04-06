@@ -11,4 +11,3 @@ export const uXml = {
     parse,
 };
 
-export default uXml;

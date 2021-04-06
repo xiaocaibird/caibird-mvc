@@ -5,4 +5,3 @@
 import base from '../../@com/utils/uObject';
 
 export const uObject = base;
-export default uObject;

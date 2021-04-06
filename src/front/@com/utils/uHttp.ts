@@ -5,4 +5,3 @@
 import base from '../../../public/utils/uHttp';
 
 export const uHttp = base;
-export default uHttp;

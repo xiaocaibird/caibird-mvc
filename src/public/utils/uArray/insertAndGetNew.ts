@@ -10,4 +10,3 @@ export const insertAndGetNew = <TItem>(list: TItem[], item: TItem, index = list.
     return newList;
 };
 
-export default insertAndGetNew;

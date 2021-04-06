@@ -40,4 +40,3 @@ export namespace uPlatform {
     };
 }
 
-export default uPlatform;

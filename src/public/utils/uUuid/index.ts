@@ -12,4 +12,3 @@ export const uUuid = {
     random,
 };
 
-export default uUuid;

@@ -15,4 +15,3 @@ export const uHttp = {
     createFormData,
 };
 
-export default uHttp;

@@ -6,4 +6,3 @@
 
 export const check = (obj: unknown): obj is string => typeof obj === 'string';
 
-export default check;

@@ -9,4 +9,3 @@ export const uNumber = {
     check,
     toFixed,
 };
-export default uNumber;

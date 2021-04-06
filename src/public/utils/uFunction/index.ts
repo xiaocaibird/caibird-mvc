@@ -12,4 +12,3 @@ export const uFunction = {
     noop,
 };
 
-export default uFunction;

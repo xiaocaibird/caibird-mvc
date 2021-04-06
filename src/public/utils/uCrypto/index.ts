@@ -9,4 +9,3 @@ export const uCrypto = {
     hash,
     getStringCipher,
 };
-export default uCrypto;

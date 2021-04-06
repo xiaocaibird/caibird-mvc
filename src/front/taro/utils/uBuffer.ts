@@ -5,4 +5,3 @@
 import base from '../../@com/utils/uBuffer';
 
 export const uBuffer = base;
-export default uBuffer;

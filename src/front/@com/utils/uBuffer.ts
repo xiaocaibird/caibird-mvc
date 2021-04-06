@@ -17,4 +17,3 @@ export namespace uBuffer {
     };
 }
 
-export default uBuffer;

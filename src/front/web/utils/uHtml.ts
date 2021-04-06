@@ -41,4 +41,3 @@ export const uHtml = {
     ...base,
     ..._uHtml,
 };
-export default uHtml;

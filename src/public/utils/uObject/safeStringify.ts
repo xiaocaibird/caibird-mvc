@@ -6,4 +6,3 @@
 import stringify from 'json-stringify-safe';
 
 export const safeStringify = stringify;
-export default safeStringify;

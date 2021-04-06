@@ -9,4 +9,3 @@ export const deleteKey = <T extends dp.Obj>(obj: T, key: keyof T) => {
     return obj;
 };
 
-export default deleteKey;

@@ -5,4 +5,3 @@
 import base from '../../@com/utils/uArray';
 
 export const uArray = base;
-export default uArray;

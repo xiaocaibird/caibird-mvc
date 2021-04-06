@@ -30,4 +30,3 @@ export const flatten = <TBase extends dData.Tree.Base, TKeepChildren extends boo
     list: dData.Tree.Item<TBase>[],
     opt: FlattenOption<TKeepChildren> = {}) => _flatten(list, [], opt);
 
-export default flatten;

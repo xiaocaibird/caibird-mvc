@@ -15,4 +15,3 @@ export const uArray = {
     deleteAndGetNew,
     insertAndGetNew,
 };
-export default uArray;

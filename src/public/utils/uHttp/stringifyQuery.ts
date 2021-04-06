@@ -35,4 +35,3 @@ export const stringifyQuery = (
     }
 };
 
-export default stringifyQuery;

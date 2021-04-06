@@ -8,4 +8,3 @@ import ossImg from './ossImg';
 export const uUrl = {
     ossImg,
 };
-export default uUrl;

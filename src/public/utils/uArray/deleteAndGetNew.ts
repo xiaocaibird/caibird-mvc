@@ -10,4 +10,3 @@ export const deleteAndGetNew = <TItem>(list: TItem[], index: number, length = 1)
     return newList;
 };
 
-export default deleteAndGetNew;

@@ -13,4 +13,3 @@ export const uHtml = {
     clear,
 };
 
-export default uHtml;

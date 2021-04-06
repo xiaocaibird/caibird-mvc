@@ -9,4 +9,3 @@ export const toFixed = (num: number, count = 1, type: 'ceil' | 'floor' | 'round'
     return Math[type](num * Math.pow(powBase, count)) / Math.pow(powBase, count);
 };
 
-export default toFixed;

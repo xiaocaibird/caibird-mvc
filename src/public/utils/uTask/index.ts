@@ -11,4 +11,3 @@ export const uTask = {
     sleep,
 };
 
-export default uTask;

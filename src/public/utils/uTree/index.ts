@@ -13,4 +13,3 @@ export const uTree = {
     getPath,
 };
 
-export default uTree;

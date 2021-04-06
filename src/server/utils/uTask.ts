@@ -5,4 +5,3 @@
 import base from '../../public/utils/uTask';
 
 export const uTask = base;
-export default uTask;

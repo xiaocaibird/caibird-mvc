@@ -13,4 +13,3 @@ export const uString = {
     subText,
 };
 
-export default uString;

@@ -5,4 +5,3 @@
 import base from '../../public/utils/uString';
 
 export const uString = base;
-export default uString;

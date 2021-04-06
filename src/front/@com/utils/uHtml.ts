@@ -5,4 +5,3 @@
 import base from '../../../public/utils/uHtml';
 
 export const uHtml = base;
-export default uHtml;

@@ -5,4 +5,3 @@
 import base from '../../@com/utils/uStyle';
 
 export const uStyle = base;
-export default uStyle;

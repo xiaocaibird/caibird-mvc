@@ -14,4 +14,3 @@ export const jsonParse = <T>(str: string): T[] => {
     }
 };
 
-export default jsonParse;

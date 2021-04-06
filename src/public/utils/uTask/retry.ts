@@ -30,4 +30,3 @@ export const retry = async <T extends dp.Func>(task: T, opt: {
     // eslint-disable-next-line @typescript-eslint/no-throw-literal
     throw errors;
 };
-export default retry;
