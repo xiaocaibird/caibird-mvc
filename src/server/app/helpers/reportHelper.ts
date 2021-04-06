@@ -346,4 +346,3 @@ class LogStack extends Error {
 //#endregion
 
 export const reportHelper = ReportHelper.instance;
-export default reportHelper;

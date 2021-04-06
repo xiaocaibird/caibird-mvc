@@ -78,4 +78,3 @@ class ContextHelper {
 type Tamp = { timestamp: { key: string, value: number, span: number }[] };
 
 export const contextHelper = ContextHelper.instance;
-export default contextHelper;

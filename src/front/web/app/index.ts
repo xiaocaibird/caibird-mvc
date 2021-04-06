@@ -4,7 +4,7 @@
  */
 import { setIsCompatibleHandler, setOnAppError } from '../consts/cError';
 
-import reportHelper, { setWriteLog } from './helpers/reportHelper';
+import { reportHelper, setWriteLog } from './helpers/reportHelper';
 
 export default class App {
     public static readonly staticHelpers = {

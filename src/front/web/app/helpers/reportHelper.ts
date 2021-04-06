@@ -55,5 +55,4 @@ class ReportHelper {
         this.log({ ...opt, type: eReport.LogType.WebTopError, always: true, attribute: true });
 }
 
-const reportHelper = ReportHelper.instance;
-export default reportHelper;
+export const reportHelper = ReportHelper.instance;

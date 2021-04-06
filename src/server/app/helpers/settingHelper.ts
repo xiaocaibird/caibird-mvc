@@ -58,4 +58,3 @@ class SettingHelper {
 }
 
 export const settingHelper = SettingHelper.instance;
-export default settingHelper;

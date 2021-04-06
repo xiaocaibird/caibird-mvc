@@ -116,4 +116,3 @@ class ResponseHelper {
 }
 
 export const responseHelper = ResponseHelper.instance;
-export default responseHelper;
