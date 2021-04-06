@@ -91,6 +91,7 @@ export default class FrontPathResolveTool {
             libraryName,
             libraryDirectory: '',
             camel2DashComponentName: false,
+            transformToDefaultImport: false,
             customName,
         }, libraryName];
     };
