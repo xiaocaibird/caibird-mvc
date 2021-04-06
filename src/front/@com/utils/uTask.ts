@@ -2,6 +2,4 @@
  * @Owners cmZhou
  * @Title task工具
  */
-import base from '../../../public/utils/uTask';
-
-export const uTask = base;
+export { uTask } from '../../../public/utils/uTask';

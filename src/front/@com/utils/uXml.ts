@@ -2,6 +2,4 @@
  * @Owners cmZhou
  * @Title xml工具
  */
-import base from '../../../public/utils/uXml';
-
-export const uXml = base;
+export { uXml } from '../../../public/utils/uXml';
