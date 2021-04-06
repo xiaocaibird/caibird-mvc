@@ -4,8 +4,8 @@
  */
 import { throttle } from 'lodash';
 
-import cError from '../consts/cError';
-import cKey from '../consts/cKey';
+import { cError } from '../consts/cError';
+import { cKey } from '../consts/cKey';
 import { uHttp } from '../utils/uHttp';
 import { uObject } from '../utils/uObject';
 import { uString } from '../utils/uString';
