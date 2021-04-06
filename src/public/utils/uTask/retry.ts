@@ -4,7 +4,7 @@
  * @Details 执行task函数，如果抛出异常，重新执行，支持设置重试次数和delay时间
  */
 
-import sleep from './sleep';
+import { sleep } from './sleep';
 
 export const retry = async <T extends dp.Func>(task: T, opt: {
     maxRunTimes?: number,

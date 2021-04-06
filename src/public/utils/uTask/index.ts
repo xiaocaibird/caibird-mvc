@@ -3,8 +3,8 @@
  * @Title task util
  */
 
-import retry from './retry';
-import sleep from './sleep';
+import { retry } from './retry';
+import { sleep } from './sleep';
 
 export const uTask = {
     retry,

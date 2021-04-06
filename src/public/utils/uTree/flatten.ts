@@ -3,7 +3,7 @@
  * @Title public flatten函数
  * @Details 打平树结构
  */
-import uObject from '../uObject';
+import { uObject } from '../uObject';
 
 type FlattenOption<TKeepChildren extends boolean | undefined> = { keepChildren?: TKeepChildren };
 const _flatten = <TBase extends dData.Tree.Base, TKeepChildren extends boolean | undefined>(

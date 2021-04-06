@@ -3,10 +3,10 @@
  * @Title public urlAddQuery
  * @Details 给url字符串添加参数
  */
-import uString from '../uString';
+import { uString } from '../uString';
 
-import parseUrl from './parseUrl';
-import stringifyQuery from './stringifyQuery';
+import { parseUrl } from './parseUrl';
+import { stringifyQuery } from './stringifyQuery';
 
 export const urlAddQuery = (
     url: string,

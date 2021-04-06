@@ -2,7 +2,7 @@
  * @Owners cmZhou,zzh
  * @Title public array jsonParse方法
  */
-import check from './check';
+import { check } from './check';
 
 export const jsonParse = <T>(str: string): T[] => {
     const dft: T[] = [];

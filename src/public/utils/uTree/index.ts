@@ -3,9 +3,9 @@
  * @Title public tree工具
  */
 
-import create from './create';
-import flatten from './flatten';
-import getPath from './getPath';
+import { create } from './create';
+import { flatten } from './flatten';
+import { getPath } from './getPath';
 
 export const uTree = {
     create,
