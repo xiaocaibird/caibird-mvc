@@ -13,4 +13,3 @@ export const jsonParse = <T>(str: string): T[] => {
         return dft;
     }
 };
-

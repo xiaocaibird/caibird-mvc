@@ -12,4 +12,3 @@ export const uHtml = {
     encode,
     clear,
 };
-

@@ -52,4 +52,3 @@ export namespace uStorage {
         setValue(objectKey, uObject.safeStringify(obj));
     };
 }
-

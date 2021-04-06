@@ -39,4 +39,3 @@ export namespace uPlatform {
         return compareVersions.compare(OSVersion, version, compare as CompareOperator);
     };
 }
-

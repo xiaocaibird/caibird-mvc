@@ -39,4 +39,3 @@ export const getStringCipher = (key: CipherKey = 'caibird_default_key', iv: Bina
         decrypt: (encrypted: string) => strDecipher(encrypted, key, iv, algorithm, encryptOutputEncoding, encryptInputEncoding),
     };
 };
-

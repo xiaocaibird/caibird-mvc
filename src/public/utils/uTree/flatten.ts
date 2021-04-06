@@ -29,4 +29,3 @@ const _flatten = <TBase extends dData.Tree.Base, TKeepChildren extends boolean |
 export const flatten = <TBase extends dData.Tree.Base, TKeepChildren extends boolean | undefined = undefined>(
     list: dData.Tree.Item<TBase>[],
     opt: FlattenOption<TKeepChildren> = {}) => _flatten(list, [], opt);
-

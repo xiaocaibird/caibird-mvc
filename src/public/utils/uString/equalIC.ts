@@ -5,4 +5,3 @@
  */
 
 export const equalIC = (a: string, b: string) => a.toLowerCase() === b.toLowerCase();
-

@@ -13,4 +13,3 @@ export const create = <TBase extends dData.Tree.Base, TId extends dData.Tree.Id>
         }
         return item;
     });
-

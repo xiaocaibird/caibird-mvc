@@ -11,4 +11,3 @@ export const uUuid = {
     getByNamespace,
     random,
 };
-

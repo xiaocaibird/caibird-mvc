@@ -6,4 +6,3 @@
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export const check = (obj: unknown): obj is object => typeof obj === 'object';
-

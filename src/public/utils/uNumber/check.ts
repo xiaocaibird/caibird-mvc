@@ -5,4 +5,3 @@
  */
 
 export const check = (num: unknown): num is number => typeof num === 'number';
-

@@ -21,4 +21,3 @@ export const updateAndGetNew = <TItem extends dp.Obj<any> | null | undefined>(li
 
     return newList;
 };
-

@@ -8,4 +8,3 @@ export const deleteKey = <T extends dp.Obj>(obj: T, key: keyof T) => {
     delete obj[key];
     return obj;
 };
-

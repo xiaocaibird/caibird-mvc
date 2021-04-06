@@ -20,4 +20,3 @@ export const uObject = {
     removeUndefinedProp,
     safeStringify,
 };
-

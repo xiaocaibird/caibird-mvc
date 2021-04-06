@@ -10,4 +10,3 @@ export const getSafeJsonObj = <T extends dp.Obj>(obj: T) => {
     if (res) return res;
     throw new Error('getSafeJsonObj 执行异常');
 };
-

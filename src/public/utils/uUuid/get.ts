@@ -8,4 +8,3 @@ import { v1 } from 'uuid';
 import handleUuid from './@core/handleUuid';
 
 export const get = (keepSeparator = false, ...params: dp.GetFuncParams<typeof v1>) => handleUuid(v1(...params), { keepSeparator });
-

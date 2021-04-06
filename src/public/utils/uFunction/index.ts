@@ -11,4 +11,3 @@ export const uFunction = {
     checkExtendsClass,
     noop,
 };
-

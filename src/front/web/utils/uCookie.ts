@@ -33,4 +33,3 @@ export namespace uCookie {
         setValue(name, '', -1);
     };
 }
-

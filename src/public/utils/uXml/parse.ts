@@ -21,4 +21,3 @@ export const parse = async <T extends dp.Obj>(xmlStr: string, options: OptionsV2
     });
     setTimeout(() => { reject(new XmlError('解析xml超时')); }, timeout);
 });
-

@@ -7,4 +7,3 @@
 // eslint-disable-next-line @typescript-eslint/ban-types
 export const checkExtendsClass = <T extends Function>(sonClass: dp.AllowNon<Function>, fatherClass: T): sonClass is T =>
   sonClass ? Object.isPrototypeOf.call(fatherClass.prototype, sonClass.prototype as dp.Obj) : false;
-

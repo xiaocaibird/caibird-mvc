@@ -5,4 +5,3 @@
 import { encode as htmlEncode } from 'html-entities';
 
 export const encode = htmlEncode;
-

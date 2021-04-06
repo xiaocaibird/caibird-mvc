@@ -5,4 +5,3 @@
 import { decode as htmlDecode } from 'html-entities';
 
 export const decode = htmlDecode;
-

@@ -16,4 +16,3 @@ export const handleUuid = (uuid: string, opt: HandleOpt = {}) => {
 
     return uuid.replace(/-/g, '');
 };
-

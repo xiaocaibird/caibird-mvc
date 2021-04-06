@@ -8,4 +8,3 @@ export const createFormData = (obj: dp.Obj<Blob | string>) => {
     Object.keys(obj).forEach(item => formData.append(item, obj[item]));
     return formData;
 };
-

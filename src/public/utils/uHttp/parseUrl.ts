@@ -19,4 +19,3 @@ export const parseUrl = (url: dp.AllowNon<string>) => {
     }
     return result;
 };
-

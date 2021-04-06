@@ -4,4 +4,3 @@
  * @Details 去除<>,</>标签
  */
 export const clear = (html: string) => html.replace(/<\/?[^>]*>/g, '');
-

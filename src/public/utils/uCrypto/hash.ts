@@ -17,4 +17,3 @@ export const hash = (data: Buffer | string, algorithm: string, opt: HashOptions 
     }
     return h.digest('hex');
 };
-

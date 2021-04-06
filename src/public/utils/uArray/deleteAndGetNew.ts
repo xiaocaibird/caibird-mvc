@@ -9,4 +9,3 @@ export const deleteAndGetNew = <TItem>(list: TItem[], index: number, length = 1)
     newList.splice(index, length);
     return newList;
 };
-

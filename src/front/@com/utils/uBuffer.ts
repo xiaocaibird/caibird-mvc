@@ -16,4 +16,3 @@ export namespace uBuffer {
         return btoa(binary);
     };
 }
-

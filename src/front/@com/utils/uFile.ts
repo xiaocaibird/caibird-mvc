@@ -125,4 +125,3 @@ export namespace uFile {
         return new Blob([u8arr], { type: mime ?? '' });
     };
 }
-

@@ -16,4 +16,3 @@ export const removeUndefinedProp = <T extends dp.Obj>(value: T) => {
 
     return result;
 };
-

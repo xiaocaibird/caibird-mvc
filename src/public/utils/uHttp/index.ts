@@ -14,4 +14,3 @@ export const uHttp = {
     stringifyQuery,
     createFormData,
 };
-

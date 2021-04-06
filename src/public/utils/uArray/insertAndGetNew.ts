@@ -9,4 +9,3 @@ export const insertAndGetNew = <TItem>(list: TItem[], item: TItem, index = list.
     newList.splice(index, 0, item);
     return newList;
 };
-

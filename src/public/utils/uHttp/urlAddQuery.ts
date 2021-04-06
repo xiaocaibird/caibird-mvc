@@ -31,4 +31,3 @@ export const urlAddQuery = (
     }
     return `${url}?${query}`;
 };
-

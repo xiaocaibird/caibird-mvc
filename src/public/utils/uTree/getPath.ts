@@ -14,4 +14,3 @@ const _getPath = <TBase extends dData.Tree.Base, TId extends dData.Tree.Id>(id: 
     return result;
 };
 export const getPath = <TBase extends dData.Tree.Base, TId extends dData.Tree.Id>(id: TId, treeList: dData.Tree.Item<TBase>[]) => _getPath(id, flatten(treeList), []);
-
