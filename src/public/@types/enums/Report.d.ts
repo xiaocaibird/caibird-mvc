@@ -2,7 +2,7 @@
  * @Owners cmZhou
  * @Title 日志常用枚举
  */
-declare namespace eReport {
+declare namespace eCaibird.Report {
     const enum LogType {
         Log = 'log',
         Error = 'error',

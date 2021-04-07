@@ -5,7 +5,7 @@
 export namespace dReport {
     type InitOptions = {
         maxLogSize?: {
-            [k in eReport.LogType]?: number;
+            [k in eCaibird.Report.LogType]?: number;
         },
 
         alwaysLog?: boolean,
@@ -30,12 +30,12 @@ export namespace dReport {
         source?: dCaibird.Obj | Partial<Error>,
         attribute?: boolean,
         always?: boolean,
-        type?: eReport.LogType,
+        type?: eCaibird.Report.LogType,
         level?: 'error' | 'info',
     };
 
     type LogInfo = {
-        type: eReport.LogType,
+        type: eCaibird.Report.LogType,
         level: 'error' | 'info',
         key: unknown,
         date: unknown,

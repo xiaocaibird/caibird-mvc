@@ -43,16 +43,16 @@ class ReportHelper {
     };
 
     public readonly webLog = (opt: Omit<dReport.LogOptions, 'type'>) =>
-        this.log({ ...opt, type: eReport.LogType.WebLog });
+        this.log({ ...opt, type: eCaibird.Report.LogType.WebLog });
 
     public readonly webError = (opt: Omit<dReport.LogOptions, 'type'>) =>
-        this.log({ ...opt, type: eReport.LogType.WebError });
+        this.log({ ...opt, type: eCaibird.Report.LogType.WebError });
 
     public readonly webReactError = (opt: Omit<dReport.LogOptions, 'always' | 'attribute' | 'type'>) =>
-        this.log({ ...opt, type: eReport.LogType.WebReactError, always: true, attribute: true });
+        this.log({ ...opt, type: eCaibird.Report.LogType.WebReactError, always: true, attribute: true });
 
     public readonly webTopError = (opt: Omit<dReport.LogOptions, 'always' | 'attribute' | 'type'>) =>
-        this.log({ ...opt, type: eReport.LogType.WebTopError, always: true, attribute: true });
+        this.log({ ...opt, type: eCaibird.Report.LogType.WebTopError, always: true, attribute: true });
 }
 
 export const reportHelper = ReportHelper.instance;
