@@ -12,4 +12,4 @@ namespace _cKey {
     };
 }
 
-export const cKey: dp.DeepReadonly<typeof _cKey> = _cKey;
+export const cKey: dCaibird.DeepReadonly<typeof _cKey> = _cKey;

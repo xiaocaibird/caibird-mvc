@@ -10,7 +10,7 @@ import { stringifyQuery } from './stringifyQuery';
 
 export const urlAddQuery = (
     url: string,
-    params?: dp.Obj<dp.UrlParams> | string | null,
+    params?: dCaibird.Obj<dCaibird.UrlParams> | string | null,
     opt: {
         isClear?: boolean,
         isSort?: boolean,

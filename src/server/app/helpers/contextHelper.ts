@@ -20,7 +20,7 @@ class ContextHelper {
 
     private readonly zone = createNamespace(this.ZONE_NAME);
 
-    public readonly run = async <TState, TCustom>(ctx: dMvc.S.Ctx<TState, TCustom>, fn: () => dp.PromiseOrSelf<void>) =>
+    public readonly run = async <TState, TCustom>(ctx: dMvc.S.Ctx<TState, TCustom>, fn: () => dCaibird.PromiseOrSelf<void>) =>
         this.zone.runPromise(async () => {
             try {
                 this.zone.set(this.CTX_KEY, ctx);
@@ -33,13 +33,13 @@ class ContextHelper {
             }
         });
 
-    public readonly get = <TState = unknown, TCustom = dp.Obj>() => {
+    public readonly get = <TState = unknown, TCustom = dCaibird.Obj>() => {
         const ctx = this.zone.get(this.CTX_KEY) as dMvc.S.Ctx<TState, TCustom> | null;
         if (ctx) return ctx;
         throw new cError.Status({ status: eHttp.StatusCode.ServerError, msg: 'No Found Context' }, { key: 'NO_FOUND_CTX' });
     };
 
-    public readonly getOrNull = <TState = unknown, TCustom = dp.Obj>() => {
+    public readonly getOrNull = <TState = unknown, TCustom = dCaibird.Obj>() => {
         const ctx = this.zone.get(this.CTX_KEY) as dMvc.S.Ctx<TState, TCustom> | null;
         if (ctx) return ctx;
         return null;

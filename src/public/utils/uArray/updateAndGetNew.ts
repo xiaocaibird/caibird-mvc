@@ -5,7 +5,7 @@
  */
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const updateAndGetNew = <TItem extends dp.Obj<any> | null | undefined>(list: TItem[], value: Partial<TItem>, index: number) => {
+export const updateAndGetNew = <TItem extends dCaibird.Obj<any> | null | undefined>(list: TItem[], value: Partial<TItem>, index: number) => {
     const newList = list.slice();
 
     if (index < 0 || index >= newList.length) return newList;

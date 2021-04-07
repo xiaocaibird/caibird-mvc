@@ -10,8 +10,8 @@ type ErrJson = {
     message?: string,
 };
 
-let onAppError: ((err: unknown) => dp.PromiseOrSelf<void>) | undefined;
-export const setOnAppError = (fn: (err: unknown) => dp.PromiseOrSelf<void>) => onAppError = fn;
+let onAppError: ((err: unknown) => dCaibird.PromiseOrSelf<void>) | undefined;
+export const setOnAppError = (fn: (err: unknown) => dCaibird.PromiseOrSelf<void>) => onAppError = fn;
 
 const getErrInfo = (message: string) => {
     let name;
@@ -50,7 +50,7 @@ window.addEventListener('error', async evt => {
                     if (errName && errJson) {
                         const ErrClass = cError[errName];
 
-                        error = new (ErrClass as unknown as dp.Class)(...errJson.args) as Error;
+                        error = new (ErrClass as unknown as dCaibird.Class)(...errJson.args) as Error;
                         error.stack = errJson.stack || `${evt.filename} | lineno: ${evt.lineno} | colno: ${evt.colno}`;
                         error.message = errJson.message ?? '';
                     } else {
@@ -58,7 +58,7 @@ window.addEventListener('error', async evt => {
                     }
                 } catch {
                     try {
-                        error = new (window as unknown as dp.Obj<dp.Class>)[errName ?? '']() as Error;
+                        error = new (window as unknown as dCaibird.Obj<dCaibird.Class>)[errName ?? '']() as Error;
                     } catch {
                         error = new Error();
                     }

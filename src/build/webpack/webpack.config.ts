@@ -55,7 +55,7 @@ const getProjectIncludeList = (projectList: string[], dirList: string[]) => {
 };
 
 const getSplitChunks = (list: string[]) => {
-    const splitChunks: { [key: string]: dp.Obj } = {};
+    const splitChunks: { [key: string]: dCaibird.Obj } = {};
     list.forEach(item => {
         splitChunks[`async-vendor-${item}`] = {
             test: new RegExp(`/${item}/`),

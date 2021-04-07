@@ -3,12 +3,12 @@
  * @Title redux 常用类型
  */
 export namespace dRedux {
-    type BaseActions = dp.Obj<dp.Func>;
+    type BaseActions = dCaibird.Obj<dCaibird.Func>;
 
     type TransformActions<TActions extends BaseActions> = {
         [K in keyof TActions]:
         TActions[K] extends (payload?: infer Value) => unknown ?
-        (payload?: Value extends dp.Obj | boolean | number | string | symbol ? Value : undefined) => ActionResult<TActions>[K] :
+        (payload?: Value extends dCaibird.Obj | boolean | number | string | symbol ? Value : undefined) => ActionResult<TActions>[K] :
         TActions[K] extends (payload: infer Value) => unknown ?
         (payload: Value) => ActionResult<TActions>[K] : never;
     };

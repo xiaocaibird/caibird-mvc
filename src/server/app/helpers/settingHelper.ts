@@ -23,28 +23,28 @@ class SettingHelper {
 
     public readonly getValue = <T extends dSetting.S.CustomConfig | dSetting.S.CustomSecret | dSetting.S.GlobalConfig | dSetting.S.GlobalSecret, TKey extends keyof T>(
         key: TKey, filename: string, dft?: T[TKey],
-    ): dp.DeepPartial<T[TKey]> | undefined => {
+    ): dCaibird.DeepPartial<T[TKey]> | undefined => {
         try {
             if (CaibirdEnv.IS_LOCAL_TEST) {
                 const relativePath = path.relative(__dirname, path.join(process.cwd(), `/dist/${this.projectName}/server/_dev/setting/${filename}`)).replace(/\\/g, '/');
                 // eslint-disable-next-line @typescript-eslint/no-var-requires,@typescript-eslint/no-require-imports
                 const obj = (require(relativePath) as { default: T }).default;
-                return (obj[key] || dft) as dp.DeepPartial<T[TKey]>;
+                return (obj[key] || dft) as dCaibird.DeepPartial<T[TKey]>;
             }
             const jsonStr = fs.readFileSync(`/etc/my-setting/${filename}/${key.toString()}`, 'utf-8');
 
             try {
                 const obj: unknown = JSON.parse(jsonStr);
                 if (obj && typeof obj === 'object') {
-                    return obj as dp.DeepPartial<T[TKey]>;
+                    return obj as dCaibird.DeepPartial<T[TKey]>;
                 }
 
-                return jsonStr as unknown as dp.DeepPartial<T[TKey]>;
+                return jsonStr as unknown as dCaibird.DeepPartial<T[TKey]>;
             } catch {
-                return jsonStr as unknown as dp.DeepPartial<T[TKey]>;
+                return jsonStr as unknown as dCaibird.DeepPartial<T[TKey]>;
             }
         } catch {
-            return dft as dp.DeepPartial<T[TKey]>;
+            return dft as dCaibird.DeepPartial<T[TKey]>;
         }
     };
 

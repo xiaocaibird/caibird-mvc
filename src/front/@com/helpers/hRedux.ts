@@ -57,7 +57,7 @@ export abstract class HRedux<TState, TActions extends dRedux.BaseActions = dRedu
         return createStore(Reducer, initState, CaibirdEnv.IS_LOCAL_TEST && window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : undefined);
     }
 
-    protected getReducer<T>({ defaultState, handlers }: { defaultState: T, handlers: dp.Obj<dp.Func | undefined> }) {
+    protected getReducer<T>({ defaultState, handlers }: { defaultState: T, handlers: dCaibird.Obj<dCaibird.Func | undefined> }) {
         return (state = cloneDeep(defaultState), actionResult: { type: string, payload: unknown }) => {
             const handler = handlers[actionResult.type];
             if (handler) {

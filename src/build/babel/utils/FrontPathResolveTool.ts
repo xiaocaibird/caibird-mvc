@@ -11,7 +11,7 @@ export default class FrontPathResolveTool {
     }) {
     }
 
-    private readonly pathMap: dp.Obj<dp.Obj<string | undefined>> = {};
+    private readonly pathMap: dCaibird.Obj<dCaibird.Obj<string | undefined>> = {};
 
     private readonly getPath = (library: string, name: string) => {
         if (!this.pathMap[library]) {

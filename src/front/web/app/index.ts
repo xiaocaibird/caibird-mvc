@@ -42,9 +42,9 @@ type Options = {
     allowOpenInIframe?: boolean,
     isCompatibleAppErrorHandler?: boolean,
     writeLog?: Parameters<typeof setWriteLog>[0],
-    onAppError?(err: unknown): dp.PromiseOrSelf<void>,
-    preRender?(app: App): dp.PromiseOrSelf<void>,
-    postRender?(app: App): dp.PromiseOrSelf<void>,
+    onAppError?(err: unknown): dCaibird.PromiseOrSelf<void>,
+    preRender?(app: App): dCaibird.PromiseOrSelf<void>,
+    postRender?(app: App): dCaibird.PromiseOrSelf<void>,
 };
 
 type StartOpt = {

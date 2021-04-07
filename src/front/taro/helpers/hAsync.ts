@@ -4,6 +4,6 @@
  */
 import { HAsync as base } from '../../@com/helpers/hAsync';
 
-export abstract class HAsync<TCustomRunOpt extends dp.Obj = dp.Obj> extends base<TCustomRunOpt> {
+export abstract class HAsync<TCustomRunOpt extends dCaibird.Obj = dCaibird.Obj> extends base<TCustomRunOpt> {
 
 }

@@ -109,4 +109,4 @@ namespace _cError {
     }
 }
 
-export const cError: dp.DeepReadonly<typeof _cError> = _cError;
+export const cError: dCaibird.DeepReadonly<typeof _cError> = _cError;

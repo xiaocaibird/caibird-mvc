@@ -39,4 +39,4 @@ namespace _cMessage {
     };
 }
 
-export const cMessage: dp.DeepReadonly<typeof _cMessage> = _cMessage;
+export const cMessage: dCaibird.DeepReadonly<typeof _cMessage> = _cMessage;

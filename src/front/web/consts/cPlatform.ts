@@ -23,4 +23,4 @@ namespace _cPlatform {
     export const isPC = isWindows || isMacOS || isLinux;
 }
 
-export const cPlatform: dp.DeepReadonly<typeof _cPlatform> = _cPlatform;
+export const cPlatform: dCaibird.DeepReadonly<typeof _cPlatform> = _cPlatform;

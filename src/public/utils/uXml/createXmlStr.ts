@@ -4,7 +4,7 @@
  * @Details 根据对象生成xml字符串
  */
 
-export const createXmlStr = (params: dp.Obj<string>) => {
+export const createXmlStr = (params: dCaibird.Obj<string>) => {
     let xmlStr = '<xml>';
 
     Object.keys(params).forEach(key => {

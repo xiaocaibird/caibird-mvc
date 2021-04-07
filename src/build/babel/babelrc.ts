@@ -9,13 +9,13 @@ import FrontPathResolveTool from './utils/FrontPathResolveTool';
 
 type Target = 'dist' | 'webpack';
 type Platform = 'server' | 'taro' | 'web';
-const platformsPathResolveDir: dp.StrictObj<Platform, string[]> = {
+const platformsPathResolveDir: dCaibird.StrictObj<Platform, string[]> = {
     web: ['helpers', 'utils', 'consts', 'components'],
     taro: ['helpers', 'utils', 'consts', 'components', 'ui'], // TODO delete ui
     server: ['helpers', 'utils', 'consts', 'actions', 'filters'],
 };
 
-const platformsPathResolve: dp.StrictObj<Platform, (dirName: string) => string> = {
+const platformsPathResolve: dCaibird.StrictObj<Platform, (dirName: string) => string> = {
     web: (dirName: string) => dirName === 'components' ? 'front/web/pages/@components' : `front/web/${dirName}`,
     taro: (dirName: string) =>
         dirName === 'components' ? 'front/taro/pages/@components' :
@@ -50,7 +50,7 @@ export default (options: BabelOptions) => {
 
     useRequestApiReplace && plugins.push(requestApiReplace);
 
-    const caibirdEnvs: dp.CaibirdEnv = {
+    const caibirdEnvs: dCaibird.CaibirdEnv = {
         RUN_ENV: process.env._CAIBIRD_RUN_ENV,
 
         PROJECT_NAME: projectName,
@@ -70,12 +70,12 @@ export default (options: BabelOptions) => {
         IS_LOCAL_TEST: isLocalTest, // 仅本地调试
     };
 
-    const defineCaibirdEnvs = Object.keys(caibirdEnvs).reduce<dp.Obj>((obj, key) => {
+    const defineCaibirdEnvs = Object.keys(caibirdEnvs).reduce<dCaibird.Obj>((obj, key) => {
         obj[`CaibirdEnv.${key}`] = caibirdEnvs[key as keyof typeof caibirdEnvs];
         return obj;
     }, {});
 
-    const processEnvs: dp.CustomProcessEnv = {
+    const processEnvs: dCaibird.CustomProcessEnv = {
         _CAIBIRD_RUN_ENV: process.env._CAIBIRD_RUN_ENV,
 
         _CAIBIRD_BABEL_TRANSFORM_ALL: process.env._CAIBIRD_BABEL_TRANSFORM_ALL,
@@ -87,7 +87,7 @@ export default (options: BabelOptions) => {
         _CAIBIRD_PROJECT_VERSION: process.env._CAIBIRD_PROJECT_VERSION,
     };
 
-    const defineProcessEnvs = Object.keys(processEnvs).reduce<dp.Obj>((obj, key) => {
+    const defineProcessEnvs = Object.keys(processEnvs).reduce<dCaibird.Obj>((obj, key) => {
         obj[`process.env.${key}`] = processEnvs[key as keyof typeof processEnvs];
         return obj;
     }, {});
@@ -119,7 +119,7 @@ export default (options: BabelOptions) => {
     }
 
     if (isDist) {
-        const alias: dp.Obj<string> = {};
+        const alias: dCaibird.Obj<string> = {};
 
         const setAlias = (platform: Platform, dirName: string, dependentProjectName?: string) => {
             const key = `${dependentProjectName ? dependentProjectName : projectName}-${platform}-${dirName}`;

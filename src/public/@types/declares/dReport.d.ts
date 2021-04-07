@@ -25,9 +25,9 @@ export namespace dReport {
     type LogOptions = {
         key: string,
         msg?: string,
-        details?: dp.Obj | Partial<Error>,
-        error?: dp.Obj | Partial<Error>,
-        source?: dp.Obj | Partial<Error>,
+        details?: dCaibird.Obj | Partial<Error>,
+        error?: dCaibird.Obj | Partial<Error>,
+        source?: dCaibird.Obj | Partial<Error>,
         attribute?: boolean,
         always?: boolean,
         type?: eReport.LogType,

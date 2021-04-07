@@ -7,9 +7,9 @@ declare namespace dServer {
         type AppClass = typeof import('../../app').default;
 
         type App<
-            TRules extends dp.Obj = dp.Obj,
-            TState extends dp.Obj = dp.Obj,
-            TCustom extends dp.Obj = dp.Obj,
-            TControllerDefaultConfig extends dp.Obj | undefined = dp.Obj | undefined> = import('../../app').default<TRules, TState, TCustom, TControllerDefaultConfig>;
+            TRules extends dCaibird.Obj = dCaibird.Obj,
+            TState extends dCaibird.Obj = dCaibird.Obj,
+            TCustom extends dCaibird.Obj = dCaibird.Obj,
+            TControllerDefaultConfig extends dCaibird.Obj | undefined = dCaibird.Obj | undefined> = import('../../app').default<TRules, TState, TCustom, TControllerDefaultConfig>;
     }
 }

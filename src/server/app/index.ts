@@ -23,7 +23,7 @@ import { uUuid } from '../utils/uUuid';
 
 import { contextHelper, reportHelper, responseHelper, settingHelper } from './helpers';
 
-export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom extends dp.Obj, TControllerDefaultConfig extends dp.Obj | undefined> {
+export default class App<TRules extends dCaibird.Obj, TState extends dCaibird.Obj, TCustom extends dCaibird.Obj, TControllerDefaultConfig extends dCaibird.Obj | undefined> {
     public static readonly staticHelpers = {
         report: {
             ...reportHelper,
@@ -35,7 +35,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
 
     public static readonly View = {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        Json: <TData extends dp.Obj<any> | null = null, TOther extends Omit<dFetch.JsonBody, 'code' | 'version'> | undefined = undefined>(data: TData = (null as unknown as TData), other?: TOther): dMvc.S.JsonActionReturn<TData> => ({
+        Json: <TData extends dCaibird.Obj<any> | null = null, TOther extends Omit<dFetch.JsonBody, 'code' | 'version'> | undefined = undefined>(data: TData = (null as unknown as TData), other?: TOther): dMvc.S.JsonActionReturn<TData> => ({
             type: 'json',
             result: {
                 code: eFetch.JsonSuccessCode.Success,
@@ -64,7 +64,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
                 url,
             },
         }),
-        Render: <T extends dp.Obj | undefined = undefined>(view: string, params?: T): dMvc.S.RenderActionReturn<T> => ({
+        Render: <T extends dCaibird.Obj | undefined = undefined>(view: string, params?: T): dMvc.S.RenderActionReturn<T> => ({
             type: 'render',
             result: {
                 view,
@@ -125,7 +125,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
 
     public readonly server = http.createServer(this.koa.callback());
 
-    public readonly apiMap: dp.Obj<dMvc.S.Controller<TRules, TState, TCustom>> = {};
+    public readonly apiMap: dCaibird.Obj<dMvc.S.Controller<TRules, TState, TCustom>> = {};
 
     public readonly helpers = {
         mvc: {
@@ -177,7 +177,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
             actionDes.writable = false;
         }
 
-        const ACtrl = Object.getPrototypeOf(target) as dp.Func & Partial<dMvc.S.CommonProps<TRules, TState, TCustom>>;
+        const ACtrl = Object.getPrototypeOf(target) as dCaibird.Func & Partial<dMvc.S.CommonProps<TRules, TState, TCustom>>;
 
         if (isController && Function.prototype !== ACtrl && target.filterInfo === ACtrl.filterInfo || !target.filterInfo) {
             target.filterInfo = {};
@@ -204,26 +204,26 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
         target.filterList.push(filter);
         target.filterOrderList[order].push(filter);
 
-        return target as T extends dp.Func ? dMvc.S.BaseController<TState, TCustom> & dMvc.S.CommonProps<TRules, TState, TCustom> & dMvc.S.ControllerProps<TRules, TState, TCustom> : dMvc.S.BaseAction & dMvc.S.CommonProps<TRules, TState, TCustom>;
+        return target as T extends dCaibird.Func ? dMvc.S.BaseController<TState, TCustom> & dMvc.S.CommonProps<TRules, TState, TCustom> & dMvc.S.ControllerProps<TRules, TState, TCustom> : dMvc.S.BaseAction & dMvc.S.CommonProps<TRules, TState, TCustom>;
     };
 
     private readonly initController = (startOpt: StartOpt<TRules, TState, TCustom>) => {
         const { controllers, defaultFilters = [] } = startOpt;
 
-        const baseController: dp.Class & Partial<dMvc.S.CommonProps<TRules, TState, TCustom>> = this.baseController;
+        const baseController: dCaibird.Class & Partial<dMvc.S.CommonProps<TRules, TState, TCustom>> = this.baseController;
 
         // eslint-disable-next-line @typescript-eslint/no-extraneous-class
-        const setClass: dp.Class & Partial<dMvc.S.CommonProps<TRules, TState, TCustom>> = class SetClass { };
+        const setClass: dCaibird.Class & Partial<dMvc.S.CommonProps<TRules, TState, TCustom>> = class SetClass { };
         defaultFilters.forEach(filter => filter(setClass));
 
         for (const target of Object.values(controllers)) {
             const controller = target as dMvc.S.InitController<TRules, TState, TCustom>;
 
             if (!uFunction.checkExtendsClass(controller, baseController)) {
-                throw new Error(`${(controller as unknown as dp.Class).name} controller 没有继承 baseController！`);
+                throw new Error(`${(controller as unknown as dCaibird.Class).name} controller 没有继承 baseController！`);
             }
 
-            const AController = Object.getPrototypeOf(target) as dp.Class & Partial<dMvc.S.CommonProps<TRules, TState, TCustom>>;
+            const AController = Object.getPrototypeOf(target) as dCaibird.Class & Partial<dMvc.S.CommonProps<TRules, TState, TCustom>>;
 
             if (!controller.filterList) {
                 controller.filterList = [];
@@ -282,7 +282,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
                     throw new Error(`${controllerName}下有相同名称的action。注：action名不区分大小写。`);
                 }
 
-                const actionFunc = (controller.prototype as dp.Obj<dMvc.S.InitAction<TRules, TState, TCustom>>)[action];
+                const actionFunc = (controller.prototype as dCaibird.Obj<dMvc.S.InitAction<TRules, TState, TCustom>>)[action];
                 if (!actionFunc.filterRules) actionFunc.filterRules = {};
                 if (!actionFunc.filterOrderList) actionFunc.filterOrderList = {};
                 if (!actionFunc.filterList) actionFunc.filterList = [];
@@ -548,9 +548,9 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
 
             contextHelper.addTamp(`${controllerName}_${actionName}_begin`);
 
-            let formParams: dp.Obj | null = null;
+            let formParams: dCaibird.Obj | null = null;
 
-            const body = ctx.request.body as dp.Obj;
+            const body = ctx.request.body as dCaibird.Obj;
 
             if (body[formRequestKey]) {
                 formParams = uObject.parseJson(body[formRequestKey] as string);
@@ -559,9 +559,9 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
             const actionReturn = await Action.bind(controllerObj)({ ...ctx.query, ...body, ...formParams }) as
                 dMvc.S.BufferActionReturn |
                 dMvc.S.FileActionReturn |
-                dMvc.S.JsonActionReturn<dp.Obj> |
+                dMvc.S.JsonActionReturn<dCaibird.Obj> |
                 dMvc.S.RedirectActionReturn |
-                dMvc.S.RenderActionReturn<dp.Obj> |
+                dMvc.S.RenderActionReturn<dCaibird.Obj> |
                 dMvc.S.XmlActionReturn |
                 null | undefined;
 
@@ -634,7 +634,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
 
     private filterCreater<TOption = undefined>(
         name: string,
-        handler: (target: dMvc.S.CommonProps<TRules, TState, TCustom> & dp.Func, option?: TOption) => void,
+        handler: (target: dMvc.S.CommonProps<TRules, TState, TCustom> & dCaibird.Func, option?: TOption) => void,
         props?: Omit<dMvc.S.FilterProps<TRules, TState, TCustom>, 'filterName'>,
     ) {
         const filter = (option?: TOption, order = 0): dMvc.S.Decorator<TRules, TState, TCustom> =>
@@ -659,7 +659,7 @@ export default class App<TRules extends dp.Obj, TState extends dp.Obj, TCustom e
     };
 }
 
-type Options<TRules extends dp.Obj, TState extends dp.Obj, TCustom extends dp.Obj, TControllerDefaultConfig extends dp.Obj | undefined> = (TControllerDefaultConfig extends undefined ? { controllerDefaultConfig?: undefined } : { controllerDefaultConfig: TControllerDefaultConfig }) & {
+type Options<TRules extends dCaibird.Obj, TState extends dCaibird.Obj, TCustom extends dCaibird.Obj, TControllerDefaultConfig extends dCaibird.Obj | undefined> = (TControllerDefaultConfig extends undefined ? { controllerDefaultConfig?: undefined } : { controllerDefaultConfig: TControllerDefaultConfig }) & {
     host: string,
     port: number,
     appKeys: string[],
@@ -691,17 +691,17 @@ type Options<TRules extends dp.Obj, TState extends dp.Obj, TCustom extends dp.Ob
         opt?: Parameters<typeof koaViews>[1],
     },
 
-    onPreUseKoaBody?(koa: dMvc.S.Koa<TState, TCustom>, app: App<TRules, TState, TCustom, TControllerDefaultConfig>): dp.PromiseOrSelf<void>,
-    onPreUseMvc?(koa: dMvc.S.Koa<TState, TCustom>, app: App<TRules, TState, TCustom, TControllerDefaultConfig>): dp.PromiseOrSelf<void>,
-    onPostUseMvc?(koa: dMvc.S.Koa<TState, TCustom>, app: App<TRules, TState, TCustom, TControllerDefaultConfig>): dp.PromiseOrSelf<void>,
+    onPreUseKoaBody?(koa: dMvc.S.Koa<TState, TCustom>, app: App<TRules, TState, TCustom, TControllerDefaultConfig>): dCaibird.PromiseOrSelf<void>,
+    onPreUseMvc?(koa: dMvc.S.Koa<TState, TCustom>, app: App<TRules, TState, TCustom, TControllerDefaultConfig>): dCaibird.PromiseOrSelf<void>,
+    onPostUseMvc?(koa: dMvc.S.Koa<TState, TCustom>, app: App<TRules, TState, TCustom, TControllerDefaultConfig>): dCaibird.PromiseOrSelf<void>,
 
-    onPreInit?(app: App<TRules, TState, TCustom, TControllerDefaultConfig>): dp.PromiseOrSelf<void>,
-    onPostInit?(app: App<TRules, TState, TCustom, TControllerDefaultConfig>): dp.PromiseOrSelf<void>,
-    onEnd?(app: App<TRules, TState, TCustom, TControllerDefaultConfig>): dp.PromiseOrSelf<void>,
+    onPreInit?(app: App<TRules, TState, TCustom, TControllerDefaultConfig>): dCaibird.PromiseOrSelf<void>,
+    onPostInit?(app: App<TRules, TState, TCustom, TControllerDefaultConfig>): dCaibird.PromiseOrSelf<void>,
+    onEnd?(app: App<TRules, TState, TCustom, TControllerDefaultConfig>): dCaibird.PromiseOrSelf<void>,
 
-    onRequestBegin?(ctx: dMvc.S.Ctx<TState, TCustom>, next: dp.PromiseFunc, app: App<TRules, TState, TCustom, TControllerDefaultConfig>): dp.PromiseOrSelf<void>,
-    onRequestEnd?(ctx: dMvc.S.Ctx<TState, TCustom>, next: dp.PromiseFunc, app: App<TRules, TState, TCustom, TControllerDefaultConfig>): dp.PromiseOrSelf<void>,
-    onRequestError?(error: unknown, ctx: dMvc.S.Ctx<TState, TCustom>, app: App<TRules, TState, TCustom, TControllerDefaultConfig>): dp.PromiseOrSelf<void>,
+    onRequestBegin?(ctx: dMvc.S.Ctx<TState, TCustom>, next: dCaibird.PromiseFunc, app: App<TRules, TState, TCustom, TControllerDefaultConfig>): dCaibird.PromiseOrSelf<void>,
+    onRequestEnd?(ctx: dMvc.S.Ctx<TState, TCustom>, next: dCaibird.PromiseFunc, app: App<TRules, TState, TCustom, TControllerDefaultConfig>): dCaibird.PromiseOrSelf<void>,
+    onRequestError?(error: unknown, ctx: dMvc.S.Ctx<TState, TCustom>, app: App<TRules, TState, TCustom, TControllerDefaultConfig>): dCaibird.PromiseOrSelf<void>,
 
     onAppError?(error: unknown, ctx: dMvc.S.Ctx<TState, TCustom> | null, app: App<TRules, TState, TCustom, TControllerDefaultConfig>): void,
     unhandledRejection?(error: unknown, promise: Promise<unknown>, app: App<TRules, TState, TCustom, TControllerDefaultConfig>): void,
@@ -709,6 +709,6 @@ type Options<TRules extends dp.Obj, TState extends dp.Obj, TCustom extends dp.Ob
 };
 
 type StartOpt<TRules, TState, TCustom> = {
-    controllers: dp.Obj<dp.Class>,
+    controllers: dCaibird.Obj<dCaibird.Class>,
     defaultFilters?: dMvc.S.Decorator<TRules, TState, TCustom>[],
 };

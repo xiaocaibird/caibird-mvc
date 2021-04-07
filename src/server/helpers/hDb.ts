@@ -22,12 +22,12 @@ export abstract class HDb {
             updatedAt: false,
         },
         logging: (...p: unknown[]) => {
-            const details = (p.length === 1 ? p[0] : p) as dp.Obj;
+            const details = (p.length === 1 ? p[0] : p) as dCaibird.Obj;
             reportHelper.dbLog({ key: 'sequelize_logging', msg: 'Sequelize logging', details });
         },
     };
 
-    public readonly Op: dp.DeepReadonly<typeof Sequelize.Op> = Sequelize.Op;
+    public readonly Op: dCaibird.DeepReadonly<typeof Sequelize.Op> = Sequelize.Op;
 
     // eslint-disable-next-line no-control-regex
     public readonly clearIllegalChar = (text: string) => text.replace(/[^\u0000-\uFFFF]/g, '');

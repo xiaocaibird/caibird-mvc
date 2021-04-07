@@ -2,7 +2,7 @@
  * @Owners cmZhou
  * @Title 公共的常用类型
  */
-declare namespace dp {
+declare namespace dCaibird {
     type Nullable<T> = T | null | undefined;
 
     type NullableProps<T extends Obj> = {
@@ -113,7 +113,7 @@ declare namespace dp {
     }
 }
 
-declare const CaibirdEnv: dp.CaibirdEnv;
+declare const CaibirdEnv: dCaibird.CaibirdEnv;
 
 interface Window {
     __REDUX_DEVTOOLS_EXTENSION__?(): import('redux').StoreEnhancer,

@@ -4,7 +4,7 @@
  */
 declare namespace dRequest {
     namespace F {
-        type Options<TNoHandle extends boolean | undefined = undefined, TFormFetch extends boolean | undefined = undefined, TCustom extends dp.Obj = dp.Obj> = Partial<TCustom> & {
+        type Options<TNoHandle extends boolean | undefined = undefined, TFormFetch extends boolean | undefined = undefined, TCustom extends dCaibird.Obj = dCaibird.Obj> = Partial<TCustom> & {
             noHandle?: TNoHandle,
             timeout?: number,
             contentType?: string | null,
@@ -19,14 +19,14 @@ declare namespace dRequest {
             errorPrompt?: ePrompt.F.Type,
             errorPromptStyle?: ePrompt.F.StyleType,
             retryTimes?: number,
-            headers?: dp.Obj<string>,
+            headers?: dCaibird.Obj<string>,
             shouldRetry?(opt: {
                 error: unknown,
                 nowRetryTimes: number,
-            }): dp.PromiseOrSelf<boolean>,
+            }): dCaibird.PromiseOrSelf<boolean>,
         };
 
-        type DetailsOptions<TNoHandle extends boolean | undefined = undefined, TFormFetch extends boolean | undefined = undefined, TCustom extends dp.Obj = dp.Obj> =
+        type DetailsOptions<TNoHandle extends boolean | undefined = undefined, TFormFetch extends boolean | undefined = undefined, TCustom extends dCaibird.Obj = dCaibird.Obj> =
             Options<TNoHandle, TFormFetch, TCustom> & {
                 checkLoginWhenNoHandle?: boolean,
             };
@@ -36,7 +36,7 @@ declare namespace dRequest {
 
         type Details<T> = dFetch.ErrorJsonBody | dFetch.SuccessJsonBody<T>;
 
-        type Api<TControllers extends dFetch.BaseControllers, TCustom extends dp.Obj> = {
+        type Api<TControllers extends dFetch.BaseControllers, TCustom extends dCaibird.Obj> = {
             readonly [C in keyof dFetch.StandardApi<TControllers>]: {
                 readonly [A in keyof dFetch.StandardApi<TControllers>[C]]: GetReq<dFetch.StandardApi<TControllers>[C][A]> extends never ?
                 <TNoHandle extends boolean | undefined = undefined, TFormFetch extends boolean | undefined = undefined>

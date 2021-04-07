@@ -9,9 +9,9 @@ declare namespace dError {
             msg?: string,
             showPrompt?: ePrompt.F.Type | false,
             promptStyleType?: ePrompt.F.StyleType,
-            onOk?: dp.Func<[], void>,
-            onCancel?: dp.Func<[], void>,
-            onEnd?: dp.Func<[], void>,
+            onOk?: dCaibird.Func<[], void>,
+            onCancel?: dCaibird.Func<[], void>,
+            onEnd?: dCaibird.Func<[], void>,
         };
     }
 }

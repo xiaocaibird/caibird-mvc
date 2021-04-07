@@ -14,7 +14,7 @@ export abstract class HReact<TRootContext> {
     public readonly rootContext = createContext(this.options.defaultContext);
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    public readonly withAsync = <T extends React.ComponentType<any>>(importComponent: dp.PromiseFunc<unknown[], T>, displayName?: string) => {
+    public readonly withAsync = <T extends React.ComponentType<any>>(importComponent: dCaibird.PromiseFunc<unknown[], T>, displayName?: string) => {
         const createHocDisplayName = this.createHocDisplayName;
 
         const With = class extends React.PureComponent<dReact.GetProps<T> & { onAsyncInnerDidMount?(opt: { innerRef: React.RefObject<React.ReactInstance> }): void }, { Component?: T, isClassComponent?: boolean }> {
