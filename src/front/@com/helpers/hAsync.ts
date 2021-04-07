@@ -9,8 +9,8 @@ import { uObject } from '../utils/uObject';
 export abstract class HAsync<TCustomRunOpt extends dp.Obj = dp.Obj> {
     protected constructor() { }
 
-    protected abstract readonly onRunBegin?: (...p: dp.GetFuncParams<HAsync<TCustomRunOpt>['run']>) => dp.PromiseOrSelf<void>;
-    protected abstract readonly onRunEnd?: (status: eAsync.F.Status, ...p: dp.GetFuncParams<HAsync<TCustomRunOpt>['run']>) => dp.PromiseOrSelf<void>;
+    protected abstract readonly onRunBegin?: (...p: Parameters<HAsync<TCustomRunOpt>['run']>) => dp.PromiseOrSelf<void>;
+    protected abstract readonly onRunEnd?: (status: eAsync.F.Status, ...p: Parameters<HAsync<TCustomRunOpt>['run']>) => dp.PromiseOrSelf<void>;
 
     protected readonly map: dp.Obj<dp.Obj<{
         status: eAsync.F.Status,

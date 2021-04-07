@@ -3,7 +3,7 @@
  * @Title public parseUrl
  * @Details 把url字符串解析为对象
  */
-export const parseUrl = (url: dp.AllowNon<string>) => {
+export const parseUrl = (url: dp.Nullable<string>) => {
     const result: dp.Obj<string> = {};
     if (!url) return result;
     try {

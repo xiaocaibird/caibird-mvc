@@ -688,7 +688,7 @@ type Options<TRules extends dp.Obj, TState extends dp.Obj, TCustom extends dp.Ob
     bodyOptions?: koaBody.IKoaBodyOptions,
     renderConfig?: {
         dir: string,
-        opt?: dp.GetFuncParams<typeof koaViews>[1],
+        opt?: Parameters<typeof koaViews>[1],
     },
 
     onPreUseKoaBody?(koa: dMvc.S.Koa<TState, TCustom>, app: App<TRules, TState, TCustom, TControllerDefaultConfig>): dp.PromiseOrSelf<void>,

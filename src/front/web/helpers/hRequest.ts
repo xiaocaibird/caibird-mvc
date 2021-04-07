@@ -378,7 +378,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
                         xhr.send(JSON.stringify(sendData));
                     } else if (contentType === eHttp.ContentType.FORM) {
                         xhr.setRequestHeader('Content-Type', eHttp.ContentType.FORM);
-                        xhr.send(uString.check(sendData) ? sendData : uHttp.stringifyQuery(sendData as dp.AllowNon<dp.Obj<dp.UrlParams>>)); // TODO 处理类型断言
+                        xhr.send(uString.check(sendData) ? sendData : uHttp.stringifyQuery(sendData as dp.Nullable<dp.Obj<dp.UrlParams>>)); // TODO 处理类型断言
                     } else {
                         xhr.send(JSON.stringify(sendData));
                     }

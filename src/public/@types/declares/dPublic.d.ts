@@ -3,13 +3,13 @@
  * @Title 公共的常用类型
  */
 declare namespace dp {
-    type AllowNon<T> = T | null | undefined;
+    type Nullable<T> = T | null | undefined;
 
-    type AllowValueNon<T extends Obj> = {
+    type NullableProps<T extends Obj> = {
         [P in keyof T]?: T[P] | null;
     };
 
-    type UrlParams = boolean | number | string | null | undefined;
+    type UrlParams = Nullable<boolean | number | string>;
 
     type Keys = number | string;
 
@@ -27,12 +27,6 @@ declare namespace dp {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     type Class<P extends any[] = any[], T = unknown> = new (...p: P) => T;
 
-    type MapType<K, V> = Map<K, V>;
-
-    type GetClassParams<T extends Class> = T extends Class<infer P> ? P : never;
-
-    type GetFuncParams<T extends Func> = T extends Func<infer P> ? P : never;
-
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     type PromiseFunc<P extends any[] = any[], T = unknown> = (...p: P) => Promise<T>;
 
@@ -44,9 +38,7 @@ declare namespace dp {
 
     type StrictKeys<T extends Record<K, unknown> & { [p in Exclude<keyof T, K>]: never }, K extends string> = T;
 
-    type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-
-    type ObjectPartial<T> = T extends unknown[] ? T : Partial<T>;
+    type PartialExcludeArr<T> = T extends unknown[] ? T : Partial<T>;
 
     type DeepReadonly<T> =
         T extends Func ? T :

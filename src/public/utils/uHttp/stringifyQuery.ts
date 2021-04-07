@@ -4,7 +4,7 @@
  * @Details 把query对象解析为字符串
  */
 export const stringifyQuery = (
-    obj: dp.AllowNon<dp.Obj<dp.UrlParams>>,
+    obj: dp.Nullable<dp.Obj<dp.UrlParams>>,
     opt: {
         isSort?: boolean,
         sortFn?(a: string, b: string): number,
