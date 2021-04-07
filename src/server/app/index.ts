@@ -38,7 +38,7 @@ export default class App<TRules extends dCaibird.Obj, TState extends dCaibird.Ob
         Json: <TData extends dCaibird.Obj<any> | null = null, TOther extends Omit<dFetch.JsonBody, 'code' | 'version'> | undefined = undefined>(data: TData = (null as unknown as TData), other?: TOther): dMvc.S.JsonActionReturn<TData> => ({
             type: 'json',
             result: {
-                code: eFetch.JsonSuccessCode.Success,
+                code: eCaibird.Fetch.JsonSuccessCode.Success,
                 data,
                 ...other,
             },
@@ -429,7 +429,7 @@ export default class App<TRules extends dCaibird.Obj, TState extends dCaibird.Ob
                     },
                 );
             } else if (uObject.checkInstance(error, Sequelize.Error)) {
-                responseHelper.json({ code: eFetch.JsonErrorCode.DbError, msg: error.message });
+                responseHelper.json({ code: eCaibird.Fetch.JsonErrorCode.DbError, msg: error.message });
                 reportHelper.dbError({
                     key: `${key}_db`,
                     msg: error.message,

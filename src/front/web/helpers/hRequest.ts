@@ -177,7 +177,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
                 });
         }
 
-        if (rsp?.data !== undefined && rsp.code === eFetch.JsonSuccessCode.Success) {
+        if (rsp?.data !== undefined && rsp.code === eCaibird.Fetch.JsonSuccessCode.Success) {
             return rsp.data;
         }
         if (!(!this.onGetResultError ? true : await this.onGetResultError(null, opt, info))) throw new cError.Noop();
@@ -207,10 +207,10 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
 
         const code = rsp.code;
 
-        if (code === eFetch.JsonErrorCode.NoLogin ||
-            code === eFetch.JsonErrorCode.LoginInvalid ||
-            code === eFetch.JsonErrorCode.LoginExpired ||
-            code === eFetch.JsonErrorCode.IllegalLoginUser
+        if (code === eCaibird.Fetch.JsonErrorCode.NoLogin ||
+            code === eCaibird.Fetch.JsonErrorCode.LoginInvalid ||
+            code === eCaibird.Fetch.JsonErrorCode.LoginExpired ||
+            code === eCaibird.Fetch.JsonErrorCode.IllegalLoginUser
         ) {
             throw new cError.LoginError(
                 {
@@ -257,7 +257,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
 
             const msg = error && (error.msg || error.message) || defaultMsg;
             return {
-                code: eFetch.JsonErrorCode.FetchError,
+                code: eCaibird.Fetch.JsonErrorCode.FetchError,
                 msg,
             };
         }
@@ -267,10 +267,10 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
         this.preGetNoHandleResult && await this.preGetNoHandleResult(rsp, opt, info);
 
         if (checkLoginWhenNoHandle) {
-            if (code === eFetch.JsonErrorCode.NoLogin ||
-                code === eFetch.JsonErrorCode.LoginInvalid ||
-                code === eFetch.JsonErrorCode.LoginExpired ||
-                code === eFetch.JsonErrorCode.IllegalLoginUser
+            if (code === eCaibird.Fetch.JsonErrorCode.NoLogin ||
+                code === eCaibird.Fetch.JsonErrorCode.LoginInvalid ||
+                code === eCaibird.Fetch.JsonErrorCode.LoginExpired ||
+                code === eCaibird.Fetch.JsonErrorCode.IllegalLoginUser
             ) {
                 throw new cError.LoginError(
                     {

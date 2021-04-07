@@ -3,30 +3,30 @@
  * @Title 常用消息
  */
 namespace _cMessage {
-    export const jsonError: { [K in eFetch.JsonErrorCode]?: string; } = {
-        [eFetch.JsonErrorCode.CommonFail]: '请求失败！请稍后再试！',
-        [eFetch.JsonErrorCode.ParameterError]: '参数错误！请核对参数！',
-        [eFetch.JsonErrorCode.FetchError]: '请求失败！请稍后再试！',
-        [eFetch.JsonErrorCode.WebLogicError]: '页面过期！请刷新',
-        [eFetch.JsonErrorCode.Timeout]: '请求超时！',
-        [eFetch.JsonErrorCode.Maintenancing]: '系统维护中！请稍后再试！',
-        [eFetch.JsonErrorCode.LoginFail]: '登录失败！',
+    export const jsonError: { [K in eCaibird.Fetch.JsonErrorCode]?: string; } = {
+        [eCaibird.Fetch.JsonErrorCode.CommonFail]: '请求失败！请稍后再试！',
+        [eCaibird.Fetch.JsonErrorCode.ParameterError]: '参数错误！请核对参数！',
+        [eCaibird.Fetch.JsonErrorCode.FetchError]: '请求失败！请稍后再试！',
+        [eCaibird.Fetch.JsonErrorCode.WebLogicError]: '页面过期！请刷新',
+        [eCaibird.Fetch.JsonErrorCode.Timeout]: '请求超时！',
+        [eCaibird.Fetch.JsonErrorCode.Maintenancing]: '系统维护中！请稍后再试！',
+        [eCaibird.Fetch.JsonErrorCode.LoginFail]: '登录失败！',
 
-        [eFetch.JsonErrorCode.NoLogin]: '未登录！',
-        [eFetch.JsonErrorCode.LoginInvalid]: '登录失效！您的账号已经在别的地方登录！',
-        [eFetch.JsonErrorCode.LoginExpired]: '登录过期！',
-        [eFetch.JsonErrorCode.IllegalLoginUser]: '非法的登录用户！',
+        [eCaibird.Fetch.JsonErrorCode.NoLogin]: '未登录！',
+        [eCaibird.Fetch.JsonErrorCode.LoginInvalid]: '登录失效！您的账号已经在别的地方登录！',
+        [eCaibird.Fetch.JsonErrorCode.LoginExpired]: '登录过期！',
+        [eCaibird.Fetch.JsonErrorCode.IllegalLoginUser]: '非法的登录用户！',
 
-        [eFetch.JsonErrorCode.PermissionDenied]: '未授权！请先申请权限',
+        [eCaibird.Fetch.JsonErrorCode.PermissionDenied]: '未授权！请先申请权限',
 
-        [eFetch.JsonErrorCode.DbError]: '数据库请求失败！请稍后再试！',
+        [eCaibird.Fetch.JsonErrorCode.DbError]: '数据库请求失败！请稍后再试！',
 
-        [eFetch.JsonErrorCode.UploadRequestError]: '上传失败！请稍后再试！',
-        [eFetch.JsonErrorCode.UploadFileSizeError]: '文件大小超过限制！',
-        [eFetch.JsonErrorCode.UploadFileIsEmpty]: '上传失败！文件为空！',
-        [eFetch.JsonErrorCode.UploadFileInitFail]: '文件初始化失败！',
+        [eCaibird.Fetch.JsonErrorCode.UploadRequestError]: '上传失败！请稍后再试！',
+        [eCaibird.Fetch.JsonErrorCode.UploadFileSizeError]: '文件大小超过限制！',
+        [eCaibird.Fetch.JsonErrorCode.UploadFileIsEmpty]: '上传失败！文件为空！',
+        [eCaibird.Fetch.JsonErrorCode.UploadFileInitFail]: '文件初始化失败！',
 
-        [eFetch.JsonErrorCode.RedisError]: 'Redis请求失败！请稍后再试！',
+        [eCaibird.Fetch.JsonErrorCode.RedisError]: 'Redis请求失败！请稍后再试！',
     };
 
     export const httpStatus: { [K in eHttp.StatusCode]?: string } = {

@@ -20,10 +20,10 @@ namespace _cError {
 
     export class ParameterJson extends Base {
         public constructor(
-            msg = cMessage.jsonError[eFetch.JsonErrorCode.ParameterError],
+            msg = cMessage.jsonError[eCaibird.Fetch.JsonErrorCode.ParameterError],
             logOptions: dReport.ErrorLogOptions = {},
         ) {
-            super({ code: eFetch.JsonErrorCode.ParameterError, msg }, logOptions);
+            super({ code: eCaibird.Fetch.JsonErrorCode.ParameterError, msg }, logOptions);
         }
 
         public readonly name = 'ParameterJsonError';
@@ -34,7 +34,7 @@ namespace _cError {
             info: Partial<dFetch.ErrorJsonBody> | string = {},
             logOptions: dReport.ErrorLogOptions = {},
         ) {
-            super({ code: eFetch.JsonErrorCode.CommonFail, ...(uObject.check(info) ? info : { msg: info }) }, logOptions);
+            super({ code: eCaibird.Fetch.JsonErrorCode.CommonFail, ...(uObject.check(info) ? info : { msg: info }) }, logOptions);
         }
 
         public readonly name: string = 'JsonError';
@@ -42,10 +42,10 @@ namespace _cError {
 
     export class TimeoutJson extends Json {
         public constructor(
-            msg = cMessage.jsonError[eFetch.JsonErrorCode.Timeout],
+            msg = cMessage.jsonError[eCaibird.Fetch.JsonErrorCode.Timeout],
             logOptions: dReport.ErrorLogOptions = {},
         ) {
-            super({ code: eFetch.JsonErrorCode.Timeout, msg }, logOptions);
+            super({ code: eCaibird.Fetch.JsonErrorCode.Timeout, msg }, logOptions);
         }
 
         public readonly name = 'TimeoutJsonError';
@@ -80,10 +80,10 @@ namespace _cError {
 
     export class Redis extends Base {
         public constructor(
-            msg = cMessage.jsonError[eFetch.JsonErrorCode.RedisError],
+            msg = cMessage.jsonError[eCaibird.Fetch.JsonErrorCode.RedisError],
             logOptions: dReport.ErrorLogOptions = {},
         ) {
-            super({ code: eFetch.JsonErrorCode.RedisError, msg }, logOptions);
+            super({ code: eCaibird.Fetch.JsonErrorCode.RedisError, msg }, logOptions);
         }
 
         public readonly name = 'ReidsError';
