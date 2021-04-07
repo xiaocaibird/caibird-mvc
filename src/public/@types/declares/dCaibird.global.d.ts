@@ -93,7 +93,7 @@ declare namespace dCaibird {
         _CAIBIRD_PROJECT_VERSION: any,
     }
 
-    interface CaibirdEnv {
+    interface Env {
         RUN_ENV: string,
 
         PROJECT_VERSION: string,
@@ -113,7 +113,7 @@ declare namespace dCaibird {
     }
 }
 
-declare const CaibirdEnv: dCaibird.CaibirdEnv;
+declare const CaibirdEnv: dCaibird.Env;
 
 interface Window {
     __REDUX_DEVTOOLS_EXTENSION__?(): import('redux').StoreEnhancer,

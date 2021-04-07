@@ -50,7 +50,7 @@ export default (options: BabelOptions) => {
 
     useRequestApiReplace && plugins.push(requestApiReplace);
 
-    const caibirdEnvs: dCaibird.CaibirdEnv = {
+    const caibirdEnvs: dCaibird.Env = {
         RUN_ENV: process.env._CAIBIRD_RUN_ENV,
 
         PROJECT_NAME: projectName,
