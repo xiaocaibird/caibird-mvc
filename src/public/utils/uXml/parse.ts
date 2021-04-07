@@ -8,7 +8,7 @@ import { OptionsV2, parseString } from 'xml2js';
 class XmlError extends Error {}
 
 export const parse = async <T extends dCaibird.Obj>(xmlStr: string, options: OptionsV2 & { timeout?: number } = {}) => new Promise<T>((resolve, reject) => {
-    const { timeout = eDate.MsTimespan.PromiseTimeout } = options;
+    const { timeout = eCaibird.Date.MsTimespan.PromiseTimeout } = options;
 
     if (options.explicitArray === undefined) {
         options.explicitArray = false;

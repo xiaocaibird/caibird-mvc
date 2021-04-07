@@ -32,7 +32,7 @@ export namespace uFile {
                     fileReader: fr,
                 });
                 fr.abort();
-            }, eDate.MsTimespan.PromiseTimeout * eNumber.Common.Ten);
+            }, eCaibird.Date.MsTimespan.PromiseTimeout * eNumber.Common.Ten);
 
             if (type === eFile.F.FileReaderResultDateType.Binary) {
                 fr.readAsBinaryString(file);
@@ -62,7 +62,7 @@ export namespace uFile {
         const timeout = setTimeout(() => {
             reject(new cError.CommonError({ key: 'readFileAsText_timeout', msg: 'readFileAsText timeout' }));
             reader.abort();
-        }, eDate.MsTimespan.PromiseTimeout * eNumber.Common.Ten);
+        }, eCaibird.Date.MsTimespan.PromiseTimeout * eNumber.Common.Ten);
     });
 
     export const getBinaryString = async (file: File) =>
@@ -105,7 +105,7 @@ export namespace uFile {
                 image.onerror = () => {
                     resolve(imageInfo);
                 };
-                setTimeout(() => { resolve(imageInfo); }, eDate.MsTimespan.PromiseTimeout);
+                setTimeout(() => { resolve(imageInfo); }, eCaibird.Date.MsTimespan.PromiseTimeout);
             }
         });
     };

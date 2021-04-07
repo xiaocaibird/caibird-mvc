@@ -16,7 +16,7 @@ class ContextHelper {
 
     private defaultTimestamp = true;
 
-    private clearTimeout = eDate.MsCount.OneSec;
+    private clearTimeout = eCaibird.Date.MsCount.OneSec;
 
     private readonly zone = createNamespace(this.ZONE_NAME);
 

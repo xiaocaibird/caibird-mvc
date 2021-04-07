@@ -2,7 +2,7 @@
  * @Owners cmZhou
  * @Title date常用枚举
  */
-declare namespace eDate {
+declare namespace eCaibird.Date {
     const enum Format {
         Default_YMD = 'YYYY-MM-DD',
         Default_YMD_Hm = 'YYYY-MM-DD HH:mm',

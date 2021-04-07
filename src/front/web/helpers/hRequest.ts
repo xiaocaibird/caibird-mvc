@@ -98,7 +98,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
     };
 
     protected readonly jsonpFetch = async <T>(url: string, req: dCaibird.Obj, opt: dRequest.F.Options = {}) => {
-        const { timeout = this.options.timeout == null ? eDate.MsTimespan.RequestTimeout : this.options.timeout, jsonpCallbackParamName = 'callback', jsonpCallbackFuncName } = opt;
+        const { timeout = this.options.timeout == null ? eCaibird.Date.MsTimespan.RequestTimeout : this.options.timeout, jsonpCallbackParamName = 'callback', jsonpCallbackFuncName } = opt;
 
         return new Promise<T>((resolve, reject) => {
             const script = document.createElement('script');
@@ -335,7 +335,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
 
         const sendData = req ?? {};
         const p = new Promise<XMLHttpRequest>((resolve, reject) => {
-            const { timeout = this.options.timeout == null ? eDate.MsTimespan.RequestTimeout : this.options.timeout,
+            const { timeout = this.options.timeout == null ? eCaibird.Date.MsTimespan.RequestTimeout : this.options.timeout,
                 contentType, headers = {}, withCredentials, requestedWith = eHttp.RequestedWith.XMLHttpRequest } = opt;
             const xhr = new XMLHttpRequest();
             xhr.responseType = 'text';

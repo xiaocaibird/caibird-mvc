@@ -478,7 +478,7 @@ export default class App<TRules extends dCaibird.Obj, TState extends dCaibird.Ob
                 const UUID = ctx.cookies.get(cKey.cookie.UUID);
                 if (!UUID) {
                     const newUuid = uUuid.get();
-                    ctx.cookies.set(cKey.cookie.UUID, newUuid, { expires: new Date(Date.now() + eDate.MsCount.Chiliad), signed: false, httpOnly: false });
+                    ctx.cookies.set(cKey.cookie.UUID, newUuid, { expires: new Date(Date.now() + eCaibird.Date.MsCount.Chiliad), signed: false, httpOnly: false });
                     span?.log({ event: 'uuid', value: newUuid });
                 } else {
                     span?.log({ event: 'uuid', value: UUID });

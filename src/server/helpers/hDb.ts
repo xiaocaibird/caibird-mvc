@@ -92,6 +92,6 @@ export abstract class HDb {
         dbSeq.removeHook('beforeDefine', this.createSubTable.name);
         setTimeout(() => {
             reject(new cError.TimeoutJson());
-        }, eDate.MsTimespan.PromiseTimeout);
+        }, eCaibird.Date.MsTimespan.PromiseTimeout);
     });
 }
