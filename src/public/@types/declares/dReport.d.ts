@@ -2,7 +2,7 @@
  * @Owners cmZhou
  * @Title report常用类型
  */
-declare namespace dReport {
+export namespace dReport {
     type InitOptions = {
         maxLogSize?: {
             [k in eReport.LogType]?: number;

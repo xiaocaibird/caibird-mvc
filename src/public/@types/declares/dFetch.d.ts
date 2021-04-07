@@ -3,7 +3,7 @@
  * @Title 通信常用类型
  */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-declare namespace dFetch {
+export namespace dFetch {
     // eslint-disable-next-line @typescript-eslint/ban-types
     type BaseControllers = dp.Obj<Function>;
 
