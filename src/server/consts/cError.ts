@@ -64,13 +64,13 @@ namespace _cError {
 
     export class Status extends Base {
         public constructor(
-            info: eHttp.StatusCode | StatusInfo,
+            info: eCaibird.Http.StatusCode | StatusInfo,
             logOptions: Omit<dReport.ErrorLogOptions, 'type'> = {},
         ) {
             super(info, {
                 type: eReport.LogType.StatusError,
-                always: (uObject.check(info) ? info.status : info) === eHttp.StatusCode.ServerError ? true : false,
-                attribute: (uObject.check(info) ? info.status : info) === eHttp.StatusCode.ServerError ? true : false,
+                always: (uObject.check(info) ? info.status : info) === eCaibird.Http.StatusCode.ServerError ? true : false,
+                attribute: (uObject.check(info) ? info.status : info) === eCaibird.Http.StatusCode.ServerError ? true : false,
                 ...logOptions,
             });
         }
@@ -94,9 +94,9 @@ export const cError: dCaibird.DeepReadonly<typeof _cError> = _cError;
 
 //#region 私有类型
 type StatusInfo = {
-    status: eHttp.StatusCode,
+    status: eCaibird.Http.StatusCode,
     msg: string,
 };
 
-type ErrorInfo = dFetch.ErrorJsonBody | eHttp.StatusCode | StatusInfo;
+type ErrorInfo = dFetch.ErrorJsonBody | eCaibird.Http.StatusCode | StatusInfo;
 //#endregion

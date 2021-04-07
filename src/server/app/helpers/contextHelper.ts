@@ -36,7 +36,7 @@ class ContextHelper {
     public readonly get = <TState = unknown, TCustom = dCaibird.Obj>() => {
         const ctx = this.zone.get(this.CTX_KEY) as dMvc.S.Ctx<TState, TCustom> | null;
         if (ctx) return ctx;
-        throw new cError.Status({ status: eHttp.StatusCode.ServerError, msg: 'No Found Context' }, { key: 'NO_FOUND_CTX' });
+        throw new cError.Status({ status: eCaibird.Http.StatusCode.ServerError, msg: 'No Found Context' }, { key: 'NO_FOUND_CTX' });
     };
 
     public readonly getOrNull = <TState = unknown, TCustom = dCaibird.Obj>() => {

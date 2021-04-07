@@ -29,13 +29,13 @@ namespace _cMessage {
         [eCaibird.Fetch.JsonErrorCode.RedisError]: 'Redis请求失败！请稍后再试！',
     };
 
-    export const httpStatus: { [K in eHttp.StatusCode]?: string } = {
-        [eHttp.StatusCode.Ok]: 'OK',
-        [eHttp.StatusCode.TemporarilyMoved]: '302',
-        [eHttp.StatusCode.NotFound]: '您访问的地址不存在',
-        [eHttp.StatusCode.NoLogin]: '请您先登录！',
-        [eHttp.StatusCode.PermissionDenied]: '抱歉！您没有访问权限',
-        [eHttp.StatusCode.ServerError]: '服务器发生了未知错误，请稍后再试',
+    export const httpStatus: { [K in eCaibird.Http.StatusCode]?: string } = {
+        [eCaibird.Http.StatusCode.Ok]: 'OK',
+        [eCaibird.Http.StatusCode.TemporarilyMoved]: '302',
+        [eCaibird.Http.StatusCode.NotFound]: '您访问的地址不存在',
+        [eCaibird.Http.StatusCode.NoLogin]: '请您先登录！',
+        [eCaibird.Http.StatusCode.PermissionDenied]: '抱歉！您没有访问权限',
+        [eCaibird.Http.StatusCode.ServerError]: '服务器发生了未知错误，请稍后再试',
     };
 }
 

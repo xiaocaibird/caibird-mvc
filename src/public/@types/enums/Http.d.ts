@@ -2,7 +2,7 @@
  * @Owners cmZhou
  * @Title http常用枚举
  */
-declare namespace eHttp {
+declare namespace eCaibird.Http {
     const enum StatusCode {
         Ok = 200,
         TemporarilyMoved = 302,

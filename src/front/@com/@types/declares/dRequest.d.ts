@@ -14,7 +14,7 @@ declare namespace dRequest {
             isJsonpFetch?: boolean,
             jsonpCallbackParamName?: string,
             jsonpCallbackFuncName?: string,
-            type?: eHttp.MethodType,
+            type?: eCaibird.Http.MethodType,
             noReportError?: boolean,
             errorPrompt?: ePrompt.F.Type,
             errorPromptStyle?: ePrompt.F.StyleType,

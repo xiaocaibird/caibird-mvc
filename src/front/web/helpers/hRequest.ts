@@ -135,7 +135,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
 
     protected readonly getResult = async <T>(url: string, req?: dCaibird.Obj | null, opt: dRequest.F.Options & Partial<TCustomOpt> = {}): Promise<T> => {
         const { disableVersionCheck, defaultErrorPrompt, defaultErrorPromptStyle } = this.options;
-        const { type = eHttp.MethodType.POST, noReportError, errorPrompt, errorPromptStyle } = opt;
+        const { type = eCaibird.Http.MethodType.POST, noReportError, errorPrompt, errorPromptStyle } = opt;
 
         const nowShowPrompt = errorPrompt == null ? defaultErrorPrompt : errorPrompt;
         const nowPromptStyleType = errorPromptStyle == null ? defaultErrorPromptStyle : errorPromptStyle;
@@ -237,7 +237,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
     };
 
     protected readonly getNoHandleResult = async <T>(url: string, req?: dCaibird.Obj | null, opt: dRequest.F.DetailsOptions & Partial<TCustomOpt> = {}) => {
-        const { type = eHttp.MethodType.POST, checkLoginWhenNoHandle } = opt;
+        const { type = eCaibird.Http.MethodType.POST, checkLoginWhenNoHandle } = opt;
 
         const defaultMsg = '通信异常！请稍后再试！';
         const info: dRequest.F.FetchInfo = {
@@ -290,7 +290,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
         };
     };
 
-    public readonly fetchJson = async <T>(type: eHttp.MethodType, url: string, req?: unknown, opt: dRequest.F.Options & Partial<TCustomOpt> = {}) => {
+    public readonly fetchJson = async <T>(type: eCaibird.Http.MethodType, url: string, req?: unknown, opt: dRequest.F.Options & Partial<TCustomOpt> = {}) => {
         let data;
         let xhr;
 
@@ -327,7 +327,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
 
     public readonly getLocalUrl = (url: string) => (this.options.prefix ?? '') + url;
 
-    public readonly fetch = async (type: eHttp.MethodType, oriUrl: string, req?: unknown, opt: dRequest.F.Options = {}) => {
+    public readonly fetch = async (type: eCaibird.Http.MethodType, oriUrl: string, req?: unknown, opt: dRequest.F.Options = {}) => {
         let url = oriUrl.trim();
         if (!url.startsWith('http://') && !url.startsWith('https://')) {
             url = this.getLocalUrl(url);
@@ -336,7 +336,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
         const sendData = req ?? {};
         const p = new Promise<XMLHttpRequest>((resolve, reject) => {
             const { timeout = this.options.timeout == null ? eCaibird.Date.MsTimespan.RequestTimeout : this.options.timeout,
-                contentType, headers = {}, withCredentials, requestedWith = eHttp.RequestedWith.XMLHttpRequest } = opt;
+                contentType, headers = {}, withCredentials, requestedWith = eCaibird.Http.RequestedWith.XMLHttpRequest } = opt;
             const xhr = new XMLHttpRequest();
             xhr.responseType = 'text';
             if (withCredentials !== undefined) {
@@ -357,7 +357,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
                 clearTimeout(timeoutId);
             };
 
-            if (uString.equalIC(type, eHttp.MethodType.GET)) {
+            if (uString.equalIC(type, eCaibird.Http.MethodType.GET)) {
                 xhr.open(type, uHttp.urlAddQuery(url, sendData as dCaibird.Obj<dCaibird.UrlParams>), true); // TODO 处理类型断言
                 Object.keys(headers).forEach(k => {
                     if (headers[k] != null) xhr.setRequestHeader(k, headers[k]);
@@ -373,11 +373,11 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
                     contentType && xhr.setRequestHeader('Content-Type', contentType);
                     xhr.send(sendData);
                 } else {
-                    if (contentType === eHttp.ContentType.JSON || contentType === undefined) {
-                        xhr.setRequestHeader('Content-Type', eHttp.ContentType.JSON);
+                    if (contentType === eCaibird.Http.ContentType.JSON || contentType === undefined) {
+                        xhr.setRequestHeader('Content-Type', eCaibird.Http.ContentType.JSON);
                         xhr.send(JSON.stringify(sendData));
-                    } else if (contentType === eHttp.ContentType.FORM) {
-                        xhr.setRequestHeader('Content-Type', eHttp.ContentType.FORM);
+                    } else if (contentType === eCaibird.Http.ContentType.FORM) {
+                        xhr.setRequestHeader('Content-Type', eCaibird.Http.ContentType.FORM);
                         xhr.send(uString.check(sendData) ? sendData : uHttp.stringifyQuery(sendData as dCaibird.Nullable<dCaibird.Obj<dCaibird.UrlParams>>)); // TODO 处理类型断言
                     } else {
                         xhr.send(JSON.stringify(sendData));
@@ -391,7 +391,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
 
     public readonly formFetch = (url: string, req?: dCaibird.Obj, opt: dRequest.F.Options = {}) => {
         const { formRequestKey = cKey.query.FORM_REQUEST } = this.options;
-        const { type = eHttp.MethodType.POST } = opt;
+        const { type = eCaibird.Http.MethodType.POST } = opt;
 
         const iframe = document.createElement('iframe');
         iframe.setAttribute('style', 'display:none;');

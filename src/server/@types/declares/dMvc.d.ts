@@ -62,7 +62,7 @@ declare global {
             type CommonProps<TRules, TState, TCustom> = {
                 filterOrderList: dCaibird.Obj<Filter<TRules, TState, TCustom>[]>,
                 filterList: Filter<TRules, TState, TCustom>[],
-                filterRules: Partial<TRules> & { httpMethod?: eHttp.MethodType | eHttp.MethodType[] },
+                filterRules: Partial<TRules> & { httpMethod?: eCaibird.Http.MethodType | eCaibird.Http.MethodType[] },
                 filterInfo: {
                     name?: string,
                     desc?: string,
@@ -96,7 +96,7 @@ declare global {
             interface BufferActionReturn extends ActionReturn<{
                 buffer: Buffer,
                 fileName: string,
-                opt?: { type: eHttp.ContentDispositionType },
+                opt?: { type: eCaibird.Http.ContentDispositionType },
             }> {
                 type: 'buffer',
             }
