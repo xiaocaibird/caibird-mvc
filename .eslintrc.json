@@ -49,5 +49,10 @@
             "no-dupe-keys": ["error"],
             "valid-typeof": ["error"]
         }
+    }, {
+        "files": ["./src/**/utils/**"],
+        "rules": {
+            "@typescript-eslint/no-redeclare": "off"
+        }
     }]
 }
