@@ -640,7 +640,7 @@ export default class App<TRules extends dCaibird.Obj, TState extends dCaibird.Ob
 
     private filterCreater<TOption = undefined>(
         name: string,
-        handler: (target: dMvc.S.CommonProps<TRules, TState, TCustom> & dCaibird.Func, option?: TOption) => void,
+        handler: (target: dCaibird.Func & dMvc.S.CommonProps<TRules, TState, TCustom>, option?: TOption) => void,
         props?: Omit<dMvc.S.FilterProps<TRules, TState, TCustom>, 'filterName'>,
     ) {
         const filter = (option?: TOption, order = 0): dMvc.S.Decorator<TRules, TState, TCustom> =>
