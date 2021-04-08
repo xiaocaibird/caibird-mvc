@@ -2,7 +2,7 @@
  * @Owners cmZhou
  * @Title app helper 入口
  */
-export { settingHelper } from './settingHelper';
-export { contextHelper } from './contextHelper';
-export { reportHelper } from './reportHelper';
-export { responseHelper } from './responseHelper';
+export * from './settingHelper';
+export * from './contextHelper';
+export * from './reportHelper';
+export * from './responseHelper';
