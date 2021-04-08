@@ -17,7 +17,7 @@ import { uString } from '../../utils/uString';
 import { contextHelper, settingHelper } from '.';
 
 const logTypeNameMap: {
-    [k in eCaibird.Report.LogType]: string;
+    [k in Caibird.eReport.LogType]: string;
 } = {
     log: 'log',
     error: 'error',
@@ -42,13 +42,13 @@ class ReportHelper {
     private constructor() { }
 
     private readonly logs = new Proxy<Caibird.dp.Obj>({}, {
-        get: (target: Record<eCaibird.Report.LogType, log4js.Logger>, key: eCaibird.Report.LogType) => {
+        get: (target: Record<Caibird.eReport.LogType, log4js.Logger>, key: Caibird.eReport.LogType) => {
             if (!target[key]) {
                 target[key] = log4js.getLogger(key);
             }
             return target[key];
         },
-    }) as Readonly<Record<eCaibird.Report.LogType, log4js.Logger>>;
+    }) as Readonly<Record<Caibird.eReport.LogType, log4js.Logger>>;
 
     private options: dReport.InitOptions = {};
 
@@ -169,7 +169,7 @@ class ReportHelper {
         const state = ctx && ctx.state as Caibird.dp.Obj;
 
         const logInfo: dReport.LogInfo = {
-            type: opt.type ?? eCaibird.Report.LogType.Other,
+            type: opt.type ?? Caibird.eReport.LogType.Other,
             level: opt.level ?? 'info',
             key: this.handleInfo(opt.key, 100),
             date: date.format('YYYY-MM-DD'),
@@ -203,7 +203,7 @@ class ReportHelper {
                 result[item] = {
                     type: 'file',
                     filename: `log4js/${projectLogName ? projectLogName : 'default'}/${item}.log`,
-                    maxLogSize: maxLogSize[item as eCaibird.Report.LogType] ?? unitSize,
+                    maxLogSize: maxLogSize[item as Caibird.eReport.LogType] ?? unitSize,
                     compress: true,
                     keepFileExt: true,
                     layout: { type: 'dummy' },
@@ -256,7 +256,7 @@ class ReportHelper {
                 const reportConfig = settingHelper.getCustomConfig('reportConfig') ?? {};
 
                 if (alwaysLog) {
-                    if (opt.type === eCaibird.Report.LogType.DbLog) {
+                    if (opt.type === Caibird.eReport.LogType.DbLog) {
                         const dbWhiteList = getList(dbLogPathWhiteListWhenAlways, reportConfig.dbLogPathWhiteListWhenAlways);
                         isWriteLog = dbWhiteList.includes(path) ? true : false;
                     } else {
@@ -293,11 +293,11 @@ class ReportHelper {
             }
 
             if (opt.type == null) {
-                opt.type = eCaibird.Report.LogType.Log;
+                opt.type = Caibird.eReport.LogType.Log;
             }
 
             if (!Object.keys(logTypeNameMap).includes(opt.type)) {
-                opt.type = eCaibird.Report.LogType.Other;
+                opt.type = Caibird.eReport.LogType.Other;
             }
 
             const logger = this.logs[opt.type];
@@ -324,19 +324,19 @@ class ReportHelper {
         }
     };
 
-    public readonly beginLog = (opt: Omit<dReport.LogOptions, 'type'>) => this.log({ ...opt, type: eCaibird.Report.LogType.BeginLog });
+    public readonly beginLog = (opt: Omit<dReport.LogOptions, 'type'>) => this.log({ ...opt, type: Caibird.eReport.LogType.BeginLog });
 
-    public readonly endLog = (opt: Omit<dReport.LogOptions, 'type'>) => this.log({ ...opt, type: eCaibird.Report.LogType.EndLog });
+    public readonly endLog = (opt: Omit<dReport.LogOptions, 'type'>) => this.log({ ...opt, type: Caibird.eReport.LogType.EndLog });
 
-    public readonly dbError = (opt: Omit<dReport.LogOptions, 'type'>) => this.log({ ...opt, type: eCaibird.Report.LogType.DbError });
+    public readonly dbError = (opt: Omit<dReport.LogOptions, 'type'>) => this.log({ ...opt, type: Caibird.eReport.LogType.DbError });
 
-    public readonly dbLog = (opt: Omit<dReport.LogOptions, 'type'>) => this.log({ ...opt, type: eCaibird.Report.LogType.DbLog });
+    public readonly dbLog = (opt: Omit<dReport.LogOptions, 'type'>) => this.log({ ...opt, type: Caibird.eReport.LogType.DbLog });
 
     public readonly unknownError = (opt: Omit<dReport.LogOptions, 'always' | 'attribute' | 'type'>, ctx?: Koa.Context | null) =>
-        this.log({ ...opt, type: eCaibird.Report.LogType.UnknownError, always: true, attribute: true }, ctx);
+        this.log({ ...opt, type: Caibird.eReport.LogType.UnknownError, always: true, attribute: true }, ctx);
 
     public readonly appError = (opt: Omit<dReport.LogOptions, 'always' | 'attribute' | 'type'>, ctx?: Koa.Context | null) =>
-        this.log({ ...opt, type: eCaibird.Report.LogType.AppError, always: true, attribute: true }, ctx);
+        this.log({ ...opt, type: Caibird.eReport.LogType.AppError, always: true, attribute: true }, ctx);
 }
 
 //#region 私有成员

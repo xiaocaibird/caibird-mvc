@@ -175,7 +175,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
                 },
                 noReportError === true ? false : {
                     key: `${key}fetch_fail`,
-                    type: eCaibird.Report.LogType.WebTopError,
+                    type: Caibird.eReport.LogType.WebTopError,
                     details: info,
                     error,
                     always: true,
@@ -200,7 +200,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
                     msg: defaultMsg,
                 }, noReportError === true ? false : {
                     key: `${key}rsp_empty`,
-                    type: eCaibird.Report.LogType.WebTopError,
+                    type: Caibird.eReport.LogType.WebTopError,
                     details: info,
                     always: true,
                     attribute: true,

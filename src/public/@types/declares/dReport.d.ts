@@ -5,7 +5,7 @@
 declare namespace dReport {
     type InitOptions = {
         maxLogSize?: {
-            [k in eCaibird.Report.LogType]?: number;
+            [k in Caibird.eReport.LogType]?: number;
         },
 
         alwaysLog?: boolean,
@@ -30,12 +30,12 @@ declare namespace dReport {
         source?: Caibird.dp.Obj | Partial<Error>,
         attribute?: boolean,
         always?: boolean,
-        type?: eCaibird.Report.LogType,
+        type?: Caibird.eReport.LogType,
         level?: 'error' | 'info',
     };
 
     type LogInfo = {
-        type: eCaibird.Report.LogType,
+        type: Caibird.eReport.LogType,
         level: 'error' | 'info',
         key: unknown,
         date: unknown,

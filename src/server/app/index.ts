@@ -425,7 +425,7 @@ export default class App<TRules extends Caibird.dp.Obj, TState extends Caibird.d
                         ...logOptions,
                         key: logOptions.key || key,
                         msg: logOptions.msg || key,
-                        type: logOptions.type ?? eCaibird.Report.LogType.Error,
+                        type: logOptions.type ?? Caibird.eReport.LogType.Error,
                         source: error,
                     },
                 );

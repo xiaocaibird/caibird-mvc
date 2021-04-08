@@ -56,7 +56,7 @@ namespace _cError {
             info: dFetch.ErrorJsonBody,
             logOptions: Omit<dReport.ErrorLogOptions, 'always' | 'attribute' | 'type'> = {},
         ) {
-            super(info, { type: eCaibird.Report.LogType.TopError, always: true, attribute: true, ...logOptions });
+            super(info, { type: Caibird.eReport.LogType.TopError, always: true, attribute: true, ...logOptions });
         }
 
         public readonly name = 'TopJsonError';
@@ -68,7 +68,7 @@ namespace _cError {
             logOptions: Omit<dReport.ErrorLogOptions, 'type'> = {},
         ) {
             super(info, {
-                type: eCaibird.Report.LogType.StatusError,
+                type: Caibird.eReport.LogType.StatusError,
                 always: (uObject.check(info) ? info.status : info) === Caibird.eHttp.StatusCode.ServerError ? true : false,
                 attribute: (uObject.check(info) ? info.status : info) === Caibird.eHttp.StatusCode.ServerError ? true : false,
                 ...logOptions,
