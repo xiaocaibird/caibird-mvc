@@ -15,7 +15,7 @@ const _flatten = <TBase extends TreeDeclare.Base, TKeepChildren extends boolean 
     const { keepChildren } = opt;
 
     list.forEach(item => {
-        let newItem: dCaibird.Obj = {
+        let newItem: Caibird.dp.Obj = {
             ...item,
         };
 

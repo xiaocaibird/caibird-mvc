@@ -6,12 +6,12 @@ import { cloneDeep } from 'lodash';
 import Redux, { combineReducers, createStore } from 'redux';
 
 export declare namespace ReduxDeclare {
-    type BaseActions = dCaibird.Obj<dCaibird.Func>;
+    type BaseActions = Caibird.dp.Obj<Caibird.dp.Func>;
 
     type TransformActions<TActions extends BaseActions> = {
         [K in keyof TActions]:
         TActions[K] extends (payload?: infer Value) => unknown ?
-        (payload?: Value extends dCaibird.Obj | boolean | number | string | symbol ? Value : undefined) => ActionResult<TActions>[K] :
+        (payload?: Value extends Caibird.dp.Obj | boolean | number | string | symbol ? Value : undefined) => ActionResult<TActions>[K] :
         TActions[K] extends (payload: infer Value) => unknown ?
         (payload: Value) => ActionResult<TActions>[K] : never;
     };
@@ -91,7 +91,7 @@ export abstract class HRedux<TState, TActions extends ReduxDeclare.BaseActions =
         return createStore(Reducer, initState, CaibirdEnv.IS_LOCAL_TEST && window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : undefined);
     }
 
-    protected getReducer<T>({ defaultState, handlers }: { defaultState: T, handlers: dCaibird.Obj<dCaibird.Func | undefined> }) {
+    protected getReducer<T>({ defaultState, handlers }: { defaultState: T, handlers: Caibird.dp.Obj<Caibird.dp.Func | undefined> }) {
         return (state = cloneDeep(defaultState), actionResult: { type: string, payload: unknown }) => {
             const handler = handlers[actionResult.type];
             if (handler) {

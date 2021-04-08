@@ -4,7 +4,7 @@
  * @Details 输出新对象，移除了值为undefined的key
  */
 
-export const removeUndefinedProp = <T extends dCaibird.Obj>(value: T) => {
+export const removeUndefinedProp = <T extends Caibird.dp.Obj>(value: T) => {
     const result = {
         ...value,
     };

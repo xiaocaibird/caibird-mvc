@@ -3,8 +3,8 @@
  * @Title public parseUrl
  * @Details 把url字符串解析为对象
  */
-export const parseUrl = (url: dCaibird.Nullable<string>) => {
-    const result: dCaibird.Obj<string> = {};
+export const parseUrl = (url: Caibird.dp.Nullable<string>) => {
+    const result: Caibird.dp.Obj<string> = {};
     if (!url) return result;
     try {
         (!url.includes('?') ? `?${url.trim()}` : url.trim()).split('?')[1].split('&').forEach(item => {

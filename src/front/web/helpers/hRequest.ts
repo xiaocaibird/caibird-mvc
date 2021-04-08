@@ -14,7 +14,7 @@ import { uUuid } from '../utils/uUuid';
 
 import type { PromptEnum } from './hPrompt';
 
-export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCustomOpt extends dCaibird.Obj> extends base {
+export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCustomOpt extends Caibird.dp.Obj> extends base {
     protected constructor(protected readonly options: {
         prefix?: string,
         formRequestKey?: string,
@@ -36,20 +36,20 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
         throw new cError.VersionMismatch({ msg: '版本不匹配！', key: 'versionMismatch' });
     }, this.options.versionCheckInterval);
 
-    protected abstract readonly onFetchSuccess?: (opt: Partial<TCustomOpt> & RequestDeclare.Options, details: RequestDeclare.FetchInfo, xhr?: XMLHttpRequest) => dCaibird.PromiseOrSelf<void>;
-    protected abstract readonly onGetResultError?: (error: dCaibird.Obj | null, opt: Partial<TCustomOpt> & RequestDeclare.Options, details: RequestDeclare.FetchInfo) => dCaibird.PromiseOrSelf<boolean>;
-    protected abstract readonly preGetNoHandleResult?: (rsp: dFetch.ErrorJsonBody | dFetch.SuccessJsonBody<unknown> | null, opt: Partial<TCustomOpt> & RequestDeclare.DetailsOptions, details: RequestDeclare.FetchInfo) => dCaibird.PromiseOrSelf<void>;
-    protected abstract readonly onGetNoHandleResultError?: (error: unknown, opt: Partial<TCustomOpt> & RequestDeclare.DetailsOptions, details: RequestDeclare.FetchInfo) => dCaibird.PromiseOrSelf<void>;
+    protected abstract readonly onFetchSuccess?: (opt: Partial<TCustomOpt> & RequestDeclare.Options, details: RequestDeclare.FetchInfo, xhr?: XMLHttpRequest) => Caibird.dp.PromiseOrSelf<void>;
+    protected abstract readonly onGetResultError?: (error: Caibird.dp.Obj | null, opt: Partial<TCustomOpt> & RequestDeclare.Options, details: RequestDeclare.FetchInfo) => Caibird.dp.PromiseOrSelf<boolean>;
+    protected abstract readonly preGetNoHandleResult?: (rsp: dFetch.ErrorJsonBody | dFetch.SuccessJsonBody<unknown> | null, opt: Partial<TCustomOpt> & RequestDeclare.DetailsOptions, details: RequestDeclare.FetchInfo) => Caibird.dp.PromiseOrSelf<void>;
+    protected abstract readonly onGetNoHandleResultError?: (error: unknown, opt: Partial<TCustomOpt> & RequestDeclare.DetailsOptions, details: RequestDeclare.FetchInfo) => Caibird.dp.PromiseOrSelf<void>;
 
-    public readonly api = new Proxy<dCaibird.Obj>({}, {
+    public readonly api = new Proxy<Caibird.dp.Obj>({}, {
         get: (_target, controllerName) =>
             new Proxy({}, {
                 get: (_controller, actionName) =>
-                    (req?: dCaibird.Obj, opt: Partial<TCustomOpt> & RequestDeclare.Options = {}) => this.handleApi(controllerName.toString(), actionName.toString(), req, opt),
+                    (req?: Caibird.dp.Obj, opt: Partial<TCustomOpt> & RequestDeclare.Options = {}) => this.handleApi(controllerName.toString(), actionName.toString(), req, opt),
             }),
     }) as RequestDeclare.Api<TControllers, TCustomOpt>;
 
-    private readonly handleApi = (controllerName: string, actionName: string, req?: dCaibird.Obj, opt: Partial<TCustomOpt> & RequestDeclare.Options = {}) => {
+    private readonly handleApi = (controllerName: string, actionName: string, req?: Caibird.dp.Obj, opt: Partial<TCustomOpt> & RequestDeclare.Options = {}) => {
         const { isFormFetch, noHandle, retryTimes, shouldRetry } = opt;
 
         const maxRetryTimes = (retryTimes == null ? this.options.defaultRetryTimes : retryTimes) ?? 0;
@@ -103,7 +103,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
         return getResult();
     };
 
-    protected readonly jsonpFetch = async <T>(url: string, req: dCaibird.Obj, opt: RequestDeclare.Options = {}) => {
+    protected readonly jsonpFetch = async <T>(url: string, req: Caibird.dp.Obj, opt: RequestDeclare.Options = {}) => {
         const { timeout = this.options.timeout == null ? eCaibird.Date.MsTimespan.RequestTimeout : this.options.timeout, jsonpCallbackParamName = 'callback', jsonpCallbackFuncName } = opt;
 
         return new Promise<T>((resolve, reject) => {
@@ -112,7 +112,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
             const clear = () => {
                 try {
                     script.remove();
-                    delete (window as unknown as dCaibird.Obj)[funcName];
+                    delete (window as unknown as Caibird.dp.Obj)[funcName];
                     clearTimeout(timeoutId);
                 } catch { }
             };
@@ -124,9 +124,9 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
             try {
                 req[jsonpCallbackParamName] = funcName;
 
-                script.src = uHttp.urlAddQuery(url, req as dCaibird.Obj<dCaibird.UrlParams>); // TODO 处理类型断言
+                script.src = uHttp.urlAddQuery(url, req as Caibird.dp.Obj<Caibird.dp.UrlParams>); // TODO 处理类型断言
 
-                (window as unknown as dCaibird.Obj)[funcName] = (data: T) => {
+                (window as unknown as Caibird.dp.Obj)[funcName] = (data: T) => {
                     clear();
                     resolve(data);
                 };
@@ -139,7 +139,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
         });
     };
 
-    protected readonly getResult = async <T>(url: string, req?: dCaibird.Obj | null, opt: Partial<TCustomOpt> & RequestDeclare.Options = {}): Promise<T> => {
+    protected readonly getResult = async <T>(url: string, req?: Caibird.dp.Obj | null, opt: Partial<TCustomOpt> & RequestDeclare.Options = {}): Promise<T> => {
         const { disableVersionCheck, defaultErrorPrompt, defaultErrorPromptStyle } = this.options;
         const { type = eCaibird.Http.MethodType.POST, noReportError, errorPrompt, errorPromptStyle } = opt;
 
@@ -159,7 +159,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
             rsp = await this.fetchJson<dFetch.ErrorJsonBody | dFetch.SuccessJsonBody<T> | null>(type, url, req, opt);
             info.rsp = rsp;
         } catch (e: unknown) {
-            const error = e as dCaibird.Obj;
+            const error = e as Caibird.dp.Obj;
             if (!(!this.onGetResultError ? true : await this.onGetResultError(error, opt, info))) throw new cError.Noop();
 
             throw new cError.ApiFetchFail(
@@ -242,7 +242,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
             });
     };
 
-    protected readonly getNoHandleResult = async <T>(url: string, req?: dCaibird.Obj | null, opt: Partial<TCustomOpt> & RequestDeclare.DetailsOptions = {}) => {
+    protected readonly getNoHandleResult = async <T>(url: string, req?: Caibird.dp.Obj | null, opt: Partial<TCustomOpt> & RequestDeclare.DetailsOptions = {}) => {
         const { type = eCaibird.Http.MethodType.POST, checkLoginWhenNoHandle } = opt;
 
         const defaultMsg = '通信异常！请稍后再试！';
@@ -258,7 +258,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
             rsp = await this.fetchJson<dFetch.ErrorJsonBody | dFetch.SuccessJsonBody<T>>(type, url, req, opt);
             info.rsp = rsp;
         } catch (e: unknown) {
-            const error = e as dCaibird.Obj;
+            const error = e as Caibird.dp.Obj;
             this.onGetNoHandleResultError && await this.onGetNoHandleResultError(error, opt, info);
 
             const msg = error && (error.msg || error.message) || defaultMsg;
@@ -302,7 +302,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
 
         if (opt.isJsonpFetch) {
             const reqObj = uString.check(req) ? uHttp.parseUrl(req) : req;
-            data = await this.jsonpFetch<T>(url, reqObj as dCaibird.Obj || {}, opt); // TODO 处理类型断言
+            data = await this.jsonpFetch<T>(url, reqObj as Caibird.dp.Obj || {}, opt); // TODO 处理类型断言
         } else {
             xhr = await this.fetch(type, url, req, opt);
 
@@ -364,7 +364,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
             };
 
             if (uString.equalIC(type, eCaibird.Http.MethodType.GET)) {
-                xhr.open(type, uHttp.urlAddQuery(url, sendData as dCaibird.Obj<dCaibird.UrlParams>), true); // TODO 处理类型断言
+                xhr.open(type, uHttp.urlAddQuery(url, sendData as Caibird.dp.Obj<Caibird.dp.UrlParams>), true); // TODO 处理类型断言
                 Object.keys(headers).forEach(k => {
                     if (headers[k] != null) xhr.setRequestHeader(k, headers[k]);
                 });
@@ -384,7 +384,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
                         xhr.send(JSON.stringify(sendData));
                     } else if (contentType === eCaibird.Http.ContentType.FORM) {
                         xhr.setRequestHeader('Content-Type', eCaibird.Http.ContentType.FORM);
-                        xhr.send(uString.check(sendData) ? sendData : uHttp.stringifyQuery(sendData as dCaibird.Nullable<dCaibird.Obj<dCaibird.UrlParams>>)); // TODO 处理类型断言
+                        xhr.send(uString.check(sendData) ? sendData : uHttp.stringifyQuery(sendData as Caibird.dp.Nullable<Caibird.dp.Obj<Caibird.dp.UrlParams>>)); // TODO 处理类型断言
                     } else {
                         xhr.send(JSON.stringify(sendData));
                     }
@@ -395,7 +395,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
         return p;
     };
 
-    public readonly formFetch = (url: string, req?: dCaibird.Obj, opt: RequestDeclare.Options = {}) => {
+    public readonly formFetch = (url: string, req?: Caibird.dp.Obj, opt: RequestDeclare.Options = {}) => {
         const { formRequestKey = cKey.query.FORM_REQUEST } = this.options;
         const { type = eCaibird.Http.MethodType.POST } = opt;
 

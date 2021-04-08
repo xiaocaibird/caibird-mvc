@@ -41,7 +41,7 @@ class ReportHelper {
     public static readonly instance = new ReportHelper();
     private constructor() { }
 
-    private readonly logs = new Proxy<dCaibird.Obj>({}, {
+    private readonly logs = new Proxy<Caibird.dp.Obj>({}, {
         get: (target: Record<eCaibird.Report.LogType, log4js.Logger>, key: eCaibird.Report.LogType) => {
             if (!target[key]) {
                 target[key] = log4js.getLogger(key);
@@ -79,9 +79,9 @@ class ReportHelper {
                 }
                 return uObject.parseJson(json);
             } else if (uObject.check(info) && info) {
-                const obj = info as dCaibird.Obj<dCaibird.Obj | number | string | undefined>;
+                const obj = info as Caibird.dp.Obj<Caibird.dp.Obj | number | string | undefined>;
 
-                let result: dCaibird.Obj = {};
+                let result: Caibird.dp.Obj = {};
 
                 if (isError) {
                     const code = obj.code != null ? uString.subText({ str: obj.code.toString(), maxLength: 100, diffSBC: false }) : undefined;
@@ -166,7 +166,7 @@ class ReportHelper {
 
         const date = moment();
 
-        const state = ctx && ctx.state as dCaibird.Obj;
+        const state = ctx && ctx.state as Caibird.dp.Obj;
 
         const logInfo: dReport.LogInfo = {
             type: opt.type ?? eCaibird.Report.LogType.Other,
@@ -199,7 +199,7 @@ class ReportHelper {
         }, projectLogName } = opt;
 
         const getAppenders = () => {
-            const obj: dCaibird.Obj<log4js.FileAppender> = Object.keys(logTypeNameMap).reduce<dCaibird.Obj<log4js.FileAppender>>((result, item) => {
+            const obj: Caibird.dp.Obj<log4js.FileAppender> = Object.keys(logTypeNameMap).reduce<Caibird.dp.Obj<log4js.FileAppender>>((result, item) => {
                 result[item] = {
                     type: 'file',
                     filename: `log4js/${projectLogName ? projectLogName : 'default'}/${item}.log`,

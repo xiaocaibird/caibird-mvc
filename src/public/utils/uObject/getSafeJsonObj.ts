@@ -5,7 +5,7 @@
 import { parseJson } from './parseJson';
 import { safeStringify } from './safeStringify';
 
-export const getSafeJsonObj = <T extends dCaibird.Obj>(obj: T) => {
+export const getSafeJsonObj = <T extends Caibird.dp.Obj>(obj: T) => {
     const res = parseJson<T>(safeStringify(obj));
     if (res) return res;
     throw new Error('getSafeJsonObj 执行异常');

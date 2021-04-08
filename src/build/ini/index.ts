@@ -17,6 +17,6 @@ namespace _ini {
     export const NODE_ENV_VALUE = isProduction ? nodeEnvValues.PRODUCTION : nodeEnvValues.DEVELOPMENT;
 }
 
-const ini: dCaibird.DeepReadonly<typeof _ini> = _ini;
+const ini: Caibird.dp.DeepReadonly<typeof _ini> = _ini;
 
 export default ini;

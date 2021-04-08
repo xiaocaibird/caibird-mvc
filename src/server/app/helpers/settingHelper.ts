@@ -6,7 +6,7 @@ import fs from 'fs';
 import path from 'path';
 
 export declare namespace SettingDeclare {
-    type CheckType<T extends dCaibird.Obj<dCaibird.Obj | string | undefined>> = T;
+    type CheckType<T extends Caibird.dp.Obj<Caibird.dp.Obj | string | undefined>> = T;
 
     type GlobalConfig = CheckType<{
     }>;
@@ -32,7 +32,7 @@ export declare namespace SettingDeclare {
         },
     }>;
 
-    type CheckInterface<T extends dCaibird.Obj | string | undefined> = T;
+    type CheckInterface<T extends Caibird.dp.Obj | string | undefined> = T;
 
     type CheckCustomConfig = CheckInterface<CustomConfig[keyof CustomConfig]>;
     interface CustomConfig {
@@ -69,28 +69,28 @@ class SettingHelper {
 
     public readonly getValue = <T extends SettingDeclare.CustomConfig | SettingDeclare.CustomSecret | SettingDeclare.GlobalConfig | SettingDeclare.GlobalSecret, TKey extends keyof T>(
         key: TKey, filename: string, dft?: T[TKey],
-    ): dCaibird.DeepPartial<T[TKey]> | undefined => {
+    ): Caibird.dp.DeepPartial<T[TKey]> | undefined => {
         try {
             if (CaibirdEnv.IS_LOCAL_TEST) {
                 const relativePath = path.relative(__dirname, path.join(process.cwd(), `/dist/${this.projectName}/server/_dev/setting/${filename}`)).replace(/\\/g, '/');
                 // eslint-disable-next-line @typescript-eslint/no-var-requires,@typescript-eslint/no-require-imports
                 const obj = (require(relativePath) as { default: T }).default;
-                return (obj[key] || dft) as dCaibird.DeepPartial<T[TKey]>;
+                return (obj[key] || dft) as Caibird.dp.DeepPartial<T[TKey]>;
             }
             const jsonStr = fs.readFileSync(`/etc/my-setting/${filename}/${key.toString()}`, 'utf-8');
 
             try {
                 const obj: unknown = JSON.parse(jsonStr);
                 if (obj && typeof obj === 'object') {
-                    return obj as dCaibird.DeepPartial<T[TKey]>;
+                    return obj as Caibird.dp.DeepPartial<T[TKey]>;
                 }
 
-                return jsonStr as unknown as dCaibird.DeepPartial<T[TKey]>;
+                return jsonStr as unknown as Caibird.dp.DeepPartial<T[TKey]>;
             } catch {
-                return jsonStr as unknown as dCaibird.DeepPartial<T[TKey]>;
+                return jsonStr as unknown as Caibird.dp.DeepPartial<T[TKey]>;
             }
         } catch {
-            return dft as dCaibird.DeepPartial<T[TKey]>;
+            return dft as Caibird.dp.DeepPartial<T[TKey]>;
         }
     };
 

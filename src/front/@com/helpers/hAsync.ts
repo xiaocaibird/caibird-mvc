@@ -17,13 +17,13 @@ export declare namespace AsyncEnum {
     }
 }
 
-export abstract class HAsync<TCustomRunOpt extends dCaibird.Obj = dCaibird.Obj> {
+export abstract class HAsync<TCustomRunOpt extends Caibird.dp.Obj = Caibird.dp.Obj> {
     protected constructor() { }
 
-    protected abstract readonly onRunBegin?: (...p: Parameters<HAsync<TCustomRunOpt>['run']>) => dCaibird.PromiseOrSelf<void>;
-    protected abstract readonly onRunEnd?: (status: AsyncEnum.Status, ...p: Parameters<HAsync<TCustomRunOpt>['run']>) => dCaibird.PromiseOrSelf<void>;
+    protected abstract readonly onRunBegin?: (...p: Parameters<HAsync<TCustomRunOpt>['run']>) => Caibird.dp.PromiseOrSelf<void>;
+    protected abstract readonly onRunEnd?: (status: AsyncEnum.Status, ...p: Parameters<HAsync<TCustomRunOpt>['run']>) => Caibird.dp.PromiseOrSelf<void>;
 
-    protected readonly map: dCaibird.Obj<dCaibird.Obj<{
+    protected readonly map: Caibird.dp.Obj<Caibird.dp.Obj<{
         status: AsyncEnum.Status,
         task: Promise<unknown>,
     } | undefined>> = {};
@@ -49,7 +49,7 @@ export abstract class HAsync<TCustomRunOpt extends dCaibird.Obj = dCaibird.Obj> 
         return AsyncEnum.Status.Running;
     };
 
-    public readonly run = async <T = void>(task: dCaibird.PromiseFunc<unknown[], T> | Promise<T>, opt: Options & Partial<TCustomRunOpt> = {}) => {
+    public readonly run = async <T = void>(task: Caibird.dp.PromiseFunc<unknown[], T> | Promise<T>, opt: Options & Partial<TCustomRunOpt> = {}) => {
         const { action = AsyncEnum.Action.Break, key, onExecuteSuccess, onExecuteFail, onExecuteEnd } = opt;
         const promiseKey = Symbol();
 

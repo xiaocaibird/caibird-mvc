@@ -28,7 +28,7 @@ class ResponseHelper {
         const version = settingHelper.getCustomConfig('version');
         json.version = version || CaibirdEnv.PROJECT_VERSION;
         json.msg = json.msg || (json.code !== eCaibird.Fetch.JsonSuccessCode.Success && cMessage.jsonError[json.code]) || '';
-        json.fetchId = (ctx.state as dCaibird.Obj).fetchId as string;
+        json.fetchId = (ctx.state as Caibird.dp.Obj).fetchId as string;
 
         ctx.body = json;
         ctx.status = eCaibird.Http.StatusCode.Ok;

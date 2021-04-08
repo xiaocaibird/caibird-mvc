@@ -6,10 +6,10 @@
 
 import { sleep } from './sleep';
 
-export const retry = async <T extends dCaibird.Func>(task: T, opt: {
+export const retry = async <T extends Caibird.dp.Func>(task: T, opt: {
     maxRunTimes?: number,
     delay?: number,
-    shouldRetry?(params: { error: unknown, nowRunTimes: number }): dCaibird.PromiseOrSelf<boolean>,
+    shouldRetry?(params: { error: unknown, nowRunTimes: number }): Caibird.dp.PromiseOrSelf<boolean>,
 } = {}) => {
     const { maxRunTimes = 5, delay, shouldRetry } = opt;
     const errors: unknown[] = [];

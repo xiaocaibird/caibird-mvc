@@ -5,7 +5,7 @@
 import type { PromptEnum } from './hPrompt';
 
 export declare namespace RequestDeclare {
-    type Options<TNoHandle extends boolean | undefined = undefined, TFormFetch extends boolean | undefined = undefined, TCustom extends dCaibird.Obj = dCaibird.Obj> = Partial<TCustom> & {
+    type Options<TNoHandle extends boolean | undefined = undefined, TFormFetch extends boolean | undefined = undefined, TCustom extends Caibird.dp.Obj = Caibird.dp.Obj> = Partial<TCustom> & {
         noHandle?: TNoHandle,
         timeout?: number,
         contentType?: string | null,
@@ -20,14 +20,14 @@ export declare namespace RequestDeclare {
         errorPrompt?: PromptEnum.Type,
         errorPromptStyle?: PromptEnum.StyleType,
         retryTimes?: number,
-        headers?: dCaibird.Obj<string>,
+        headers?: Caibird.dp.Obj<string>,
         shouldRetry?(opt: {
             error: unknown,
             nowRetryTimes: number,
-        }): dCaibird.PromiseOrSelf<boolean>,
+        }): Caibird.dp.PromiseOrSelf<boolean>,
     };
 
-    type DetailsOptions<TNoHandle extends boolean | undefined = undefined, TFormFetch extends boolean | undefined = undefined, TCustom extends dCaibird.Obj = dCaibird.Obj> =
+    type DetailsOptions<TNoHandle extends boolean | undefined = undefined, TFormFetch extends boolean | undefined = undefined, TCustom extends Caibird.dp.Obj = Caibird.dp.Obj> =
         Options<TNoHandle, TFormFetch, TCustom> & {
             checkLoginWhenNoHandle?: boolean,
         };
@@ -37,7 +37,7 @@ export declare namespace RequestDeclare {
 
     type Details<T> = dFetch.ErrorJsonBody | dFetch.SuccessJsonBody<T>;
 
-    type Api<TControllers extends dFetch.BaseControllers, TCustom extends dCaibird.Obj> = {
+    type Api<TControllers extends dFetch.BaseControllers, TCustom extends Caibird.dp.Obj> = {
         readonly [C in keyof dFetch.StandardApi<TControllers>]: {
             readonly [A in keyof dFetch.StandardApi<TControllers>[C]]: GetReq<dFetch.StandardApi<TControllers>[C][A]> extends never ?
             <TNoHandle extends boolean | undefined = undefined, TFormFetch extends boolean | undefined = undefined>

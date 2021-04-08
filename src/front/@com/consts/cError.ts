@@ -15,9 +15,9 @@ export declare namespace ErrorDeclare {
         msg?: string,
         showPrompt?: PromptEnum.Type | false,
         promptStyleType?: PromptEnum.StyleType,
-        onOk?: dCaibird.Func<[], void>,
-        onCancel?: dCaibird.Func<[], void>,
-        onEnd?: dCaibird.Func<[], void>,
+        onOk?: Caibird.dp.Func<[], void>,
+        onCancel?: Caibird.dp.Func<[], void>,
+        onEnd?: Caibird.dp.Func<[], void>,
     };
 }
 
@@ -124,4 +124,4 @@ namespace _cError {
     }
 }
 
-export const cError: dCaibird.DeepReadonly<typeof _cError> = _cError;
+export const cError: Caibird.dp.DeepReadonly<typeof _cError> = _cError;

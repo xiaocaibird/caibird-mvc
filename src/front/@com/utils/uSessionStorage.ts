@@ -34,7 +34,7 @@ export namespace uSessionStorage {
     export const getObjectValue = <T>(key: string) => {
         const objStr = getValue(objectKey);
         try {
-            const obj = JSON.parse(objStr ?? '') as dCaibird.Obj;
+            const obj = JSON.parse(objStr ?? '') as Caibird.dp.Obj;
             return obj[key] as T;
         } catch {
             return undefined;
@@ -43,9 +43,9 @@ export namespace uSessionStorage {
 
     export const setObjectValue = (key: string, value: unknown) => {
         const objStr = getValue(objectKey);
-        let obj: dCaibird.Obj = {};
+        let obj: Caibird.dp.Obj = {};
         try {
-            obj = JSON.parse(objStr ?? '') as dCaibird.Obj;
+            obj = JSON.parse(objStr ?? '') as Caibird.dp.Obj;
         } catch {
         }
         obj[key] = value;

@@ -5,5 +5,5 @@
  */
 
 // eslint-disable-next-line @typescript-eslint/ban-types
-export const checkExtendsClass = <T extends Function>(sonClass: dCaibird.Nullable<Function>, fatherClass: T): sonClass is T =>
-  sonClass ? Object.isPrototypeOf.call(fatherClass.prototype, sonClass.prototype as dCaibird.Obj) : false;
+export const checkExtendsClass = <T extends Function>(sonClass: Caibird.dp.Nullable<Function>, fatherClass: T): sonClass is T =>
+  sonClass ? Object.isPrototypeOf.call(fatherClass.prototype, sonClass.prototype as Caibird.dp.Obj) : false;

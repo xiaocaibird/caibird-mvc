@@ -23,20 +23,20 @@ declare global {
 
         type Middleware<TState, TCustom> = BaseKoa.Middleware<CtxState<TState>, CtxCustom<TState, TCustom>>;
 
-        type ActionReq<T extends dCaibird.Obj> = Partial<T>;
+        type ActionReq<T extends Caibird.dp.Obj> = Partial<T>;
 
         type View = typeof import('../../app').default['View'];
 
         type BaseController<TState, TCustom> = new (ctx: Ctx<TState, TCustom>) => unknown;
 
         type ControllerProps<TRules, TState, TCustom> = {
-            __actions__: dCaibird.Obj<Action<TRules, TState, TCustom>>,
+            __actions__: Caibird.dp.Obj<Action<TRules, TState, TCustom>>,
         };
 
         type InitController<TRules, TState, TCustom> = BaseController<TState, TCustom> & Partial<CommonProps<TRules, TState, TCustom> & ControllerProps<TRules, TState, TCustom>>;
         type Controller<TRules, TState, TCustom> = BaseController<TState, TCustom> & CommonProps<TRules, TState, TCustom> & ControllerProps<TRules, TState, TCustom>;
 
-        type BaseAction = dCaibird.PromiseFunc;
+        type BaseAction = Caibird.dp.PromiseFunc;
 
         type InitAction<TRules, TState, TCustom> = BaseAction & Partial<CommonProps<TRules, TState, TCustom>>;
         type Action<TRules, TState, TCustom> = BaseAction & CommonProps<TRules, TState, TCustom>;
@@ -48,18 +48,18 @@ declare global {
         type FilterController<TRules, TState, TCustom> = InitController<TRules, TState, TCustom> | InstanceType<InitController<TRules, TState, TCustom>>;
         type Decorator<TRules, TState, TCustom> = (controller: FilterController<TRules, TState, TCustom>, action?: string, actionDes?: ActionPropertyDescriptor<TRules, TState, TCustom>) => void;
 
-        type Filter<TRules, TState, TCustom> = dCaibird.Func & FilterProps<TRules, TState, TCustom>;
+        type Filter<TRules, TState, TCustom> = Caibird.dp.Func & FilterProps<TRules, TState, TCustom>;
 
         type FilterProps<TRules, TState, TCustom> = {
             filterName?: string,
             defaultOrder?: number,
-            onCheckRule?(target: Action<TRules, TState, TCustom> | Controller<TRules, TState, TCustom>, options: { controller: string, action: string }, ctx: Ctx<TState, TCustom>): dCaibird.PromiseOrSelf<void>,
-            preExecute?(target: Action<TRules, TState, TCustom> | Controller<TRules, TState, TCustom>, ctx: Ctx<TState, TCustom>): dCaibird.PromiseOrSelf<void>,
-            postExecute?(target: Action<TRules, TState, TCustom> | Controller<TRules, TState, TCustom>, ctx: Ctx<TState, TCustom>): dCaibird.PromiseOrSelf<void>,
+            onCheckRule?(target: Action<TRules, TState, TCustom> | Controller<TRules, TState, TCustom>, options: { controller: string, action: string }, ctx: Ctx<TState, TCustom>): Caibird.dp.PromiseOrSelf<void>,
+            preExecute?(target: Action<TRules, TState, TCustom> | Controller<TRules, TState, TCustom>, ctx: Ctx<TState, TCustom>): Caibird.dp.PromiseOrSelf<void>,
+            postExecute?(target: Action<TRules, TState, TCustom> | Controller<TRules, TState, TCustom>, ctx: Ctx<TState, TCustom>): Caibird.dp.PromiseOrSelf<void>,
         };
 
         type CommonProps<TRules, TState, TCustom> = {
-            filterOrderList: dCaibird.Obj<Filter<TRules, TState, TCustom>[]>,
+            filterOrderList: Caibird.dp.Obj<Filter<TRules, TState, TCustom>[]>,
             filterList: Filter<TRules, TState, TCustom>[],
             filterRules: Partial<TRules> & { httpMethod?: eCaibird.Http.MethodType | eCaibird.Http.MethodType[] },
             filterInfo: {
@@ -74,7 +74,7 @@ declare global {
         };
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        interface JsonActionReturn<T extends dCaibird.Obj<any> | null> extends ActionReturn<dFetch.SuccessJsonBody<T>> {
+        interface JsonActionReturn<T extends Caibird.dp.Obj<any> | null> extends ActionReturn<dFetch.SuccessJsonBody<T>> {
             type: 'json',
         }
 
@@ -85,7 +85,7 @@ declare global {
             type: 'file',
         }
 
-        interface RenderActionReturn<T extends dCaibird.Obj | undefined> extends ActionReturn<{
+        interface RenderActionReturn<T extends Caibird.dp.Obj | undefined> extends ActionReturn<{
             view: string,
             params?: T,
         }> {

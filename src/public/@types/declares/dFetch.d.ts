@@ -5,14 +5,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 declare namespace dFetch {
     // eslint-disable-next-line @typescript-eslint/ban-types
-    type BaseControllers = dCaibird.Obj<Function>;
+    type BaseControllers = Caibird.dp.Obj<Function>;
 
     type StandardApi<TControllers extends BaseControllers> = {
         [C in keyof TControllers]: {
             [A in keyof TControllers[C]['prototype']]: ApiInfo<
                 TControllers[C]['prototype'][A] extends () => unknown ? never :
-                TControllers[C]['prototype'][A] extends (req: dCaibird.Obj) => unknown ?
-                TControllers[C]['prototype'][A] extends (req: dMvc.ActionReq<infer Req>) => unknown ? Req extends dCaibird.Obj ? Req : never : never : never,
+                TControllers[C]['prototype'][A] extends (req: Caibird.dp.Obj) => unknown ?
+                TControllers[C]['prototype'][A] extends (req: dMvc.ActionReq<infer Req>) => unknown ? Req extends Caibird.dp.Obj ? Req : never : never : never,
                 TControllers[C]['prototype'][A] extends ((...p: any[]) => Promise<infer Rsp>) ? Rsp extends dMvc.JsonActionReturn<infer R> ? R : never : never
             >;
         };

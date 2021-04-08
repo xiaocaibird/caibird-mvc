@@ -90,7 +90,7 @@ namespace _cError {
     }
 }
 
-export const cError: dCaibird.DeepReadonly<typeof _cError> = _cError;
+export const cError: Caibird.dp.DeepReadonly<typeof _cError> = _cError;
 
 //#region 私有类型
 type StatusInfo = {

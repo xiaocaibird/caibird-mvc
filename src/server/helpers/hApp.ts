@@ -8,10 +8,10 @@ export declare namespace AppDeclare {
     type AppClass = typeof _App;
 
     type App<
-        TRules extends dCaibird.Obj = dCaibird.Obj,
-        TState extends dCaibird.Obj = dCaibird.Obj,
-        TCustom extends dCaibird.Obj = dCaibird.Obj,
-        TControllerDefaultConfig extends dCaibird.Obj | undefined = dCaibird.Obj | undefined> = _App<TRules, TState, TCustom, TControllerDefaultConfig>;
+        TRules extends Caibird.dp.Obj = Caibird.dp.Obj,
+        TState extends Caibird.dp.Obj = Caibird.dp.Obj,
+        TCustom extends Caibird.dp.Obj = Caibird.dp.Obj,
+        TControllerDefaultConfig extends Caibird.dp.Obj | undefined = Caibird.dp.Obj | undefined> = _App<TRules, TState, TCustom, TControllerDefaultConfig>;
 }
 
 export declare namespace AppEnum {

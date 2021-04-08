@@ -4,7 +4,7 @@
  * @Details 把query对象解析为字符串
  */
 export const stringifyQuery = (
-    obj: dCaibird.Nullable<dCaibird.Obj<dCaibird.UrlParams>>,
+    obj: Caibird.dp.Nullable<Caibird.dp.Obj<Caibird.dp.UrlParams>>,
     opt: {
         isSort?: boolean,
         sortFn?(a: string, b: string): number,
