@@ -3,7 +3,7 @@
  * @Title 通信常用类型
  */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export namespace dFetch {
+declare namespace dFetch {
     // eslint-disable-next-line @typescript-eslint/ban-types
     type BaseControllers = dCaibird.Obj<Function>;
 

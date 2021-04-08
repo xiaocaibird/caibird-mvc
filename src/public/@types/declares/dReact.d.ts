@@ -2,7 +2,7 @@
  * @Owners cmZhou
  * @Title react 常用类型
  */
-export namespace dReact {
+declare namespace dReact {
     type State = never;
     type Props = { children?: React.ReactNode };
 

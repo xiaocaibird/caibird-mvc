@@ -2,7 +2,7 @@
  * @Owners cmZhou
  * @Title report常用类型
  */
-export namespace dReport {
+declare namespace dReport {
     type InitOptions = {
         maxLogSize?: {
             [k in eCaibird.Report.LogType]?: number;

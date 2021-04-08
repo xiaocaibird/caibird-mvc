@@ -2,7 +2,7 @@
  * @Owners cmZhou
  * @Title redux 常用类型
  */
-export namespace dRedux {
+declare namespace dRedux {
     type BaseActions = dCaibird.Obj<dCaibird.Func>;
 
     type TransformActions<TActions extends BaseActions> = {
