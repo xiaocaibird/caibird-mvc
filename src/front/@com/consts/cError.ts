@@ -2,16 +2,31 @@
  * @Owners cmZhou
  * @Title 常用异常类
  */
+import type { PromptEnum } from '../helpers/hPrompt';
+import type { RequestDeclare } from '../helpers/hRequest';
+
 let compatible: (instance: Error, args: unknown[]) => void = () => { };
 
 export const setCompatible = (fn: typeof compatible) => compatible = fn;
+
+export declare namespace ErrorDeclare {
+    type Options = {
+        key: string,
+        msg?: string,
+        showPrompt?: PromptEnum.Type | false,
+        promptStyleType?: PromptEnum.StyleType,
+        onOk?: dCaibird.Func<[], void>,
+        onCancel?: dCaibird.Func<[], void>,
+        onEnd?: dCaibird.Func<[], void>,
+    };
+}
 
 namespace _cError {
     export class BassError extends Error { }
 
     export class CommonError extends BassError {
         public constructor(
-            public readonly options: dError.F.Options,
+            public readonly options: ErrorDeclare.Options,
             public readonly logOptions: dReport.ErrorLogOptions | false = false,
             public readonly name = CommonError.name,
         ) {
@@ -26,7 +41,7 @@ namespace _cError {
                 error: Error,
                 errorInfo: React.ErrorInfo,
             },
-            public readonly options: dError.F.Options,
+            public readonly options: ErrorDeclare.Options,
             public readonly logOptions: dReport.ErrorLogOptions | false = false,
         ) {
             super(options, logOptions, ReactError.name);
@@ -38,9 +53,9 @@ namespace _cError {
         public constructor(
             public readonly details: {
                 error: unknown,
-                info: dRequest.F.FetchInfo,
+                info: RequestDeclare.FetchInfo,
             },
-            public readonly options: dError.F.Options,
+            public readonly options: ErrorDeclare.Options,
             public readonly logOptions: dReport.ErrorLogOptions | false = false,
         ) {
             super(options, logOptions, ApiFetchFail.name);
@@ -51,9 +66,9 @@ namespace _cError {
     export class ApiJsonResultEmpty extends CommonError {
         public constructor(
             public readonly details: {
-                info: dRequest.F.FetchInfo,
+                info: RequestDeclare.FetchInfo,
             },
-            public readonly options: dError.F.Options,
+            public readonly options: ErrorDeclare.Options,
             public readonly logOptions: dReport.ErrorLogOptions | false = false,
         ) {
             super(options, logOptions, ApiJsonResultEmpty.name);
@@ -65,9 +80,9 @@ namespace _cError {
         public constructor(
             public readonly details: {
                 rsp: dFetch.JsonBody,
-                info: dRequest.F.FetchInfo,
+                info: RequestDeclare.FetchInfo,
             },
-            public readonly options: dError.F.Options,
+            public readonly options: ErrorDeclare.Options,
             public readonly logOptions: dReport.ErrorLogOptions | false = false,
         ) {
             super(options, logOptions, ApiJsonResultError.name);
@@ -79,9 +94,9 @@ namespace _cError {
         public constructor(
             public readonly details: {
                 rsp: dFetch.JsonBody,
-                info: dRequest.F.FetchInfo,
+                info: RequestDeclare.FetchInfo,
             },
-            public readonly options: dError.F.Options,
+            public readonly options: ErrorDeclare.Options,
             public readonly logOptions: dReport.ErrorLogOptions | false = false,
         ) {
             super(options, logOptions, LoginError.name);
@@ -91,7 +106,7 @@ namespace _cError {
 
     export class VersionMismatch extends CommonError {
         public constructor(
-            public readonly options: dError.F.Options,
+            public readonly options: ErrorDeclare.Options,
             public readonly logOptions: dReport.ErrorLogOptions | false = false,
         ) {
             super(options, logOptions, VersionMismatch.name);
