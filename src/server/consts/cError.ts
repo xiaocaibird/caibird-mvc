@@ -2,6 +2,7 @@
  * @Owners cmZhou
  * @Title 常用异常类
  */
+import type { dReport } from '../@types/declares';
 import { uObject } from '../utils/uObject';
 
 import { cMessage } from './cMessage';
@@ -98,5 +99,5 @@ type StatusInfo = {
     msg: string,
 };
 
-type ErrorInfo = Caibird.eHttp.StatusCode | Caibird.dFetch.ErrorJsonBody | StatusInfo;
+type ErrorInfo = Caibird.dFetch.ErrorJsonBody | Caibird.eHttp.StatusCode | StatusInfo;
 //#endregion

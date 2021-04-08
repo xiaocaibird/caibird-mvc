@@ -12,6 +12,7 @@ import koaViews from 'koa-views';
 import { orderBy } from 'lodash';
 import Sequelize from 'sequelize';
 
+import type { dMvc, dReport } from '../@types/declares';
 import { cError } from '../consts/cError';
 import { cKey } from '../consts/cKey';
 import { AppEnum } from '../helpers/hApp';
@@ -36,7 +37,7 @@ export default class App<TRules extends Caibird.dp.Obj, TState extends Caibird.d
 
     public static readonly View = {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        Json: <TData extends Caibird.dp.Obj<any> | null = null, TOther extends Omit<Caibird.dFetch.JsonBody, 'code' | 'version'> | undefined = undefined>(data: TData = (null as unknown as TData), other?: TOther): dMvc.JsonActionReturn<TData> => ({
+        Json: <TData extends Caibird.dp.Obj<any> | null = null, TOther extends Omit<Caibird.dFetch.JsonBody, 'code' | 'version'> | undefined = undefined>(data: TData = (null as unknown as TData), other?: TOther): Caibird.dFetch.JsonActionReturn<TData> => ({
             type: 'json',
             result: {
                 code: Caibird.eFetch.JsonSuccessCode.Success,
@@ -44,14 +45,14 @@ export default class App<TRules extends Caibird.dp.Obj, TState extends Caibird.d
                 ...other,
             },
         }),
-        File: (path: string, opt?: KoaSend.SendOptions): dMvc.FileActionReturn => ({
+        File: (path: string, opt?: KoaSend.SendOptions): Caibird.dFetch.FileActionReturn => ({
             type: 'file',
             result: {
                 path,
                 opt,
             },
         }),
-        Buffer: (buffer: Buffer, fileName: string, opt?: { type: Caibird.eHttp.ContentDispositionType }): dMvc.BufferActionReturn => ({
+        Buffer: (buffer: Buffer, fileName: string, opt?: { type: Caibird.eHttp.ContentDispositionType }): Caibird.dFetch.BufferActionReturn => ({
             type: 'buffer',
             result: {
                 buffer,
@@ -59,20 +60,20 @@ export default class App<TRules extends Caibird.dp.Obj, TState extends Caibird.d
                 opt,
             },
         }),
-        Redirect: (url: string): dMvc.RedirectActionReturn => ({
+        Redirect: (url: string): Caibird.dFetch.RedirectActionReturn => ({
             type: 'redirect',
             result: {
                 url,
             },
         }),
-        Render: <T extends Caibird.dp.Obj | undefined = undefined>(view: string, params?: T): dMvc.RenderActionReturn<T> => ({
+        Render: <T extends Caibird.dp.Obj | undefined = undefined>(view: string, params?: T): Caibird.dFetch.RenderActionReturn<T> => ({
             type: 'render',
             result: {
                 view,
                 params,
             },
         }),
-        Xml: (xmlStr: string): dMvc.XmlActionReturn => ({
+        Xml: (xmlStr: string): Caibird.dFetch.XmlActionReturn => ({
             type: 'xml',
             result: {
                 xmlStr,
@@ -558,12 +559,12 @@ export default class App<TRules extends Caibird.dp.Obj, TState extends Caibird.d
             }
 
             const actionReturn = await Action.bind(controllerObj)({ ...ctx.query, ...body, ...formParams }) as
-                dMvc.BufferActionReturn |
-                dMvc.FileActionReturn |
-                dMvc.JsonActionReturn<Caibird.dp.Obj> |
-                dMvc.RedirectActionReturn |
-                dMvc.RenderActionReturn<Caibird.dp.Obj> |
-                dMvc.XmlActionReturn |
+                Caibird.dFetch.BufferActionReturn |
+                Caibird.dFetch.FileActionReturn |
+                Caibird.dFetch.JsonActionReturn<Caibird.dp.Obj> |
+                Caibird.dFetch.RedirectActionReturn |
+                Caibird.dFetch.RenderActionReturn<Caibird.dp.Obj> |
+                Caibird.dFetch.XmlActionReturn |
                 null | undefined;
 
             contextHelper.addTamp(`${controllerName}_${actionName}_end`);

@@ -22,8 +22,6 @@ export namespace dMvc {
 
     type Middleware<TState, TCustom> = BaseKoa.Middleware<CtxState<TState>, CtxCustom<TState, TCustom>>;
 
-    type ActionReq<T extends Caibird.dp.Obj> = Partial<T>;
-
     type View = typeof import('../../app').default['View'];
 
     type BaseController<TState, TCustom> = new (ctx: Ctx<TState, TCustom>) => unknown;
@@ -66,48 +64,4 @@ export namespace dMvc {
             desc?: string,
         },
     };
-
-    type ActionReturn<T> = {
-        type: 'buffer' | 'file' | 'json' | 'redirect' | 'render' | 'xml',
-        result: T,
-    };
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    interface JsonActionReturn<T extends Caibird.dp.Obj<any> | null> extends ActionReturn<Caibird.dFetch.SuccessJsonBody<T>> {
-        type: 'json',
-    }
-
-    interface FileActionReturn extends ActionReturn<{
-        path: string,
-        opt?: KoaSend.SendOptions,
-    }> {
-        type: 'file',
-    }
-
-    interface RenderActionReturn<T extends Caibird.dp.Obj | undefined> extends ActionReturn<{
-        view: string,
-        params?: T,
-    }> {
-        type: 'render',
-    }
-
-    interface BufferActionReturn extends ActionReturn<{
-        buffer: Buffer,
-        fileName: string,
-        opt?: { type: Caibird.eHttp.ContentDispositionType },
-    }> {
-        type: 'buffer',
-    }
-
-    interface RedirectActionReturn extends ActionReturn<{
-        url: string,
-    }> {
-        type: 'redirect',
-    }
-
-    interface XmlActionReturn extends ActionReturn<{
-        xmlStr: string,
-    }> {
-        type: 'xml',
-    }
 }

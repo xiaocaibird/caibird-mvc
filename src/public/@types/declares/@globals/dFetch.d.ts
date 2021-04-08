@@ -7,13 +7,15 @@ declare namespace Caibird.dFetch {
     // eslint-disable-next-line @typescript-eslint/ban-types
     type BaseControllers = dp.Obj<Function>;
 
+    type ActionReq<T extends dp.Obj> = Partial<T>;
+
     type StandardApi<TControllers extends BaseControllers> = {
         [C in keyof TControllers]: {
             [A in keyof TControllers[C]['prototype']]: ApiInfo<
                 TControllers[C]['prototype'][A] extends () => unknown ? never :
                 TControllers[C]['prototype'][A] extends (req: dp.Obj) => unknown ?
-                TControllers[C]['prototype'][A] extends (req: dMvc.ActionReq<infer Req>) => unknown ? Req extends dp.Obj ? Req : never : never : never,
-                TControllers[C]['prototype'][A] extends ((...p: any[]) => Promise<infer Rsp>) ? Rsp extends dMvc.JsonActionReturn<infer R> ? R : never : never
+                TControllers[C]['prototype'][A] extends (req: ActionReq<infer Req>) => unknown ? Req extends dp.Obj ? Req : never : never : never,
+                TControllers[C]['prototype'][A] extends ((...p: any[]) => Promise<infer Rsp>) ? Rsp extends JsonActionReturn<infer R> ? R : never : never
             >;
         };
     };
@@ -22,10 +24,10 @@ declare namespace Caibird.dFetch {
         [C in keyof TControllers]: {
             [A in keyof TControllers[C]['prototype']]: ApiInfo<
                 TControllers[C]['prototype'][A] extends () => unknown ? never :
-                TControllers[C]['prototype'][A] extends (req: dMvc.ActionReq<infer Req>) => unknown ? Req :
+                TControllers[C]['prototype'][A] extends (req: ActionReq<infer Req>) => unknown ? Req :
                 TControllers[C]['prototype'][A] extends (req: infer Req) => unknown ? Req : never,
-                TControllers[C]['prototype'][A] extends (...p: any[]) => Promise<infer Rsp> ? Rsp extends dMvc.JsonActionReturn<infer R> ? R :
-                Rsp extends dMvc.ActionReturn<unknown> ? never : Rsp :
+                TControllers[C]['prototype'][A] extends (...p: any[]) => Promise<infer Rsp> ? Rsp extends JsonActionReturn<infer R> ? R :
+                Rsp extends ActionReturn<unknown> ? never : Rsp :
                 TControllers[C]['prototype'][A] extends (...p: any[]) => infer Rsp ? Rsp : never
             >;
         };
@@ -53,4 +55,47 @@ declare namespace Caibird.dFetch {
         req: TReq,
         rsp: TRsp,
     };
+
+    type ActionReturn<T> = {
+        type: 'buffer' | 'file' | 'json' | 'redirect' | 'render' | 'xml',
+        result: T,
+    };
+
+    interface JsonActionReturn<T extends dp.Obj<any> | null> extends ActionReturn<SuccessJsonBody<T>> {
+        type: 'json',
+    }
+
+    interface FileActionReturn extends ActionReturn<{
+        path: string,
+        opt?: import('koa-send').SendOptions,
+    }> {
+        type: 'file',
+    }
+
+    interface RenderActionReturn<T extends dp.Obj | undefined> extends ActionReturn<{
+        view: string,
+        params?: T,
+    }> {
+        type: 'render',
+    }
+
+    interface BufferActionReturn extends ActionReturn<{
+        buffer: Buffer,
+        fileName: string,
+        opt?: { type: eHttp.ContentDispositionType },
+    }> {
+        type: 'buffer',
+    }
+
+    interface RedirectActionReturn extends ActionReturn<{
+        url: string,
+    }> {
+        type: 'redirect',
+    }
+
+    interface XmlActionReturn extends ActionReturn<{
+        xmlStr: string,
+    }> {
+        type: 'xml',
+    }
 }

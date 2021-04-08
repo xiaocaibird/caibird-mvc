@@ -2,6 +2,7 @@
  * @Owners cmZhou
  * @Title web app reportHelper
  */
+import type { dReport } from '../../@types/declares';
 import { uObject } from '../../utils/uObject';
 
 let writeLog: (opt: dReport.LogOptions) => void = () => { };

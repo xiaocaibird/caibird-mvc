@@ -2,6 +2,7 @@
  * @Owners cmZhou
  * @Title 常用异常类
  */
+import type { dReport } from '../@types/declares';
 import type { PromptEnum } from '../helpers/hPrompt';
 import type { RequestDeclare } from '../helpers/hRequest';
 

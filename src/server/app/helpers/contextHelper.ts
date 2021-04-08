@@ -4,6 +4,7 @@
  */
 import { createNamespace } from 'cls-hooked';
 
+import type { dMvc } from '../../@types/declares';
 import { cError } from '../../consts/cError';
 
 class ContextHelper {

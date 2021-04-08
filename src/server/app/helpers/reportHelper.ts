@@ -8,6 +8,7 @@ import { get } from 'lodash';
 import log4js from 'log4js';
 import moment from 'moment';
 
+import type { dReport } from '../../@types/declares';
 import { cKey } from '../../consts/cKey';
 import { uArray } from '../../utils/uArray';
 import { uNumber } from '../../utils/uNumber';
