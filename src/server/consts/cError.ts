@@ -98,5 +98,5 @@ type StatusInfo = {
     msg: string,
 };
 
-type ErrorInfo = dFetch.ErrorJsonBody | Caibird.eHttp.StatusCode | StatusInfo;
+type ErrorInfo = Caibird.eHttp.StatusCode | dFetch.ErrorJsonBody | StatusInfo;
 //#endregion
