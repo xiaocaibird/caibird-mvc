@@ -2,4 +2,4 @@
  * @Owners cmZhou
  * @Title array工具
  */
-export { uArray } from '../../../public/utils/uArray';
+export * from '../../../public/utils/uArray';

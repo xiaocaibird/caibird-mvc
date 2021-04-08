@@ -2,4 +2,4 @@
  * @Owners cmZhou
  * @Title http工具
  */
-export { uHttp } from '../../public/utils/uHttp';
+export * from '../../public/utils/uHttp';
