@@ -113,7 +113,9 @@ declare namespace Caibird.dp {
     }
 }
 
-declare const CaibirdEnv: Caibird.dp.Env;
+declare namespace Caibird {
+    const env: dp.Env;
+}
 
 interface Window {
     __REDUX_DEVTOOLS_EXTENSION__?(): import('redux').StoreEnhancer,

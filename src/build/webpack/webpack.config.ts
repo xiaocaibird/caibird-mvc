@@ -93,7 +93,7 @@ export default (webpackOptions: WebpackOptions, webpackConfig: webpack.Configura
                 loader: 'babel-loader',
                 options: {
                     babelrc: false,
-                    ...getBabelrc({ projectName, target: 'webpack', unionProjectNames, useRequestApiReplace: true, projectVersion: CaibirdEnv.PROJECT_VERSION }),
+                    ...getBabelrc({ projectName, target: 'webpack', unionProjectNames, useRequestApiReplace: true, projectVersion: Caibird.env.PROJECT_VERSION }),
                 },
             }, {
                 loader: 'ts-loader',
@@ -136,7 +136,7 @@ export default (webpackOptions: WebpackOptions, webpackConfig: webpack.Configura
             use: [{
                 loader: 'babel-loader',
                 options: {
-                    ...getBabelrc({ projectName, target: 'webpack', projectVersion: CaibirdEnv.PROJECT_VERSION }),
+                    ...getBabelrc({ projectName, target: 'webpack', projectVersion: Caibird.env.PROJECT_VERSION }),
                     sourceType: 'unambiguous',
                 },
             }],

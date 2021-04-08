@@ -71,7 +71,7 @@ export default (options: BabelOptions) => {
     };
 
     const defineCaibirdEnvs = Object.keys(caibirdEnvs).reduce<Caibird.dp.Obj>((obj, key) => {
-        obj[`CaibirdEnv.${key}`] = caibirdEnvs[key as keyof typeof caibirdEnvs];
+        obj[`Caibird.env.${key}`] = caibirdEnvs[key as keyof typeof caibirdEnvs];
         return obj;
     }, {});
 

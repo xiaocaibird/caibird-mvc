@@ -307,7 +307,7 @@ class ReportHelper {
                 const logInfo = this.getLogInfo(opt, new LogStack().stack ?? '', ctx);
                 if (this.options.useConsoleLog) {
                     console.log(logInfo);
-                } else if (CaibirdEnv.IS_LOCAL_TEST && ctx?.path !== '/sockjs-node') {
+                } else if (Caibird.env.IS_LOCAL_TEST && ctx?.path !== '/sockjs-node') {
                     console.log(logInfo);
                 }
                 isWriteLog && logger.error(uObject.safeStringify(logInfo));

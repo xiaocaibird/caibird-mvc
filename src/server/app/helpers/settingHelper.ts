@@ -71,7 +71,7 @@ class SettingHelper {
         key: TKey, filename: string, dft?: T[TKey],
     ): Caibird.dp.DeepPartial<T[TKey]> | undefined => {
         try {
-            if (CaibirdEnv.IS_LOCAL_TEST) {
+            if (Caibird.env.IS_LOCAL_TEST) {
                 const relativePath = path.relative(__dirname, path.join(process.cwd(), `/dist/${this.projectName}/server/_dev/setting/${filename}`)).replace(/\\/g, '/');
                 // eslint-disable-next-line @typescript-eslint/no-var-requires,@typescript-eslint/no-require-imports
                 const obj = (require(relativePath) as { default: T }).default;
