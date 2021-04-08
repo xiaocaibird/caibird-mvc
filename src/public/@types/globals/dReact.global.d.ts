@@ -2,7 +2,7 @@
  * @Owners cmZhou
  * @Title react 常用类型
  */
-declare namespace dReact {
+declare namespace Caibird.dReact {
     type State = never;
     type Props = { children?: React.ReactNode };
 
