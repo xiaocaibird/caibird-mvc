@@ -8,6 +8,15 @@ import Sequelize from 'sequelize';
 import { reportHelper } from '../app/helpers';
 import { cError } from '../consts/cError';
 
+export declare namespace DbDeclare {
+    type Config = {
+        username?: string,
+        password?: string,
+        host?: string,
+        port?: number,
+    };
+}
+
 export abstract class HDb {
     protected readonly baseOptions: Sequelize.Options = {
         pool: {
