@@ -5,6 +5,6 @@
  */
 import { v1 } from 'uuid';
 
-import { handleUuid } from './@core/handleUuid';
+import handleUuid from './@core/handleUuid';
 
 export const get = (keepSeparator = false, ...params: Parameters<typeof v1>) => handleUuid(v1(...params), { keepSeparator });

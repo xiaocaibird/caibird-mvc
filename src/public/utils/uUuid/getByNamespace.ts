@@ -5,6 +5,6 @@
  */
 import { v5 } from 'uuid';
 
-import { handleUuid } from './@core/handleUuid';
+import handleUuid from './@core/handleUuid';
 
 export const getByNamespace = (keepSeparator = false, ...params: Parameters<typeof v5>) => handleUuid(v5(...params), { keepSeparator });

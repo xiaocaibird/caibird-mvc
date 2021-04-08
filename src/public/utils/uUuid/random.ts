@@ -5,6 +5,6 @@
  */
 import { v4 } from 'uuid';
 
-import { handleUuid } from './@core/handleUuid';
+import handleUuid from './@core/handleUuid';
 
 export const random = (keepSeparator = false, ...params: Parameters<typeof v4>) => handleUuid(v4(...params), { keepSeparator });

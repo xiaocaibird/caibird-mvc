@@ -7,7 +7,7 @@ type HandleOpt = {
     keepSeparator?: boolean,
 };
 
-export const handleUuid = (uuid: string, opt: HandleOpt = {}) => {
+export default (uuid: string, opt: HandleOpt = {}) => {
     const { keepSeparator } = opt;
 
     if (keepSeparator) {
