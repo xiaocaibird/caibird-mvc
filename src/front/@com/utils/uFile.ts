@@ -15,9 +15,19 @@ export declare namespace FileEnum {
     }
 }
 
+export declare namespace FileDeclare {
+    type FileReaderResult<TData extends FileReader['result']> = {
+        code: FileEnum.FileReaderResultCode,
+        msg?: string,
+        data?: TData,
+        fileReader: FileReader,
+        error?: ProgressEvent,
+    };
+}
+
 export namespace uFile {
     const readFile = async <TData extends FileReader['result']>(file: File, type: FileEnum.FileReaderResultDateType) =>
-        new Promise<dFile.F.FileReaderResult<TData>>((resolve, reject) => {
+        new Promise<FileDeclare.FileReaderResult<TData>>((resolve, reject) => {
             const fr = new FileReader();
             fr.onload = () => {
                 resolve({
