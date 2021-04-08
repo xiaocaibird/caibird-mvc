@@ -336,7 +336,7 @@ export default class App<TRules extends dCaibird.Obj, TState extends dCaibird.Ob
         for (const key of orderKeys) {
             const filters = filterOrderList[key] || [];
             for (const filter of filters) {
-                if (executeType === App.FilterExecuteType.Pre) {
+                if (executeType === AppEnum.FilterExecuteType.Pre) {
                     filter.preExecute && await filter.preExecute(target, contextHelper.get());
                 } else {
                     filter.postExecute && await filter.postExecute(target, contextHelper.get());
@@ -549,8 +549,8 @@ export default class App<TRules extends dCaibird.Obj, TState extends dCaibird.Ob
             await this.onCheckRules(Controller, Action);
             contextHelper.addTamp('checkRules_end');
 
-            await this.onExecute(Controller, App.FilterExecuteType.Pre);
-            await this.onExecute(Action, App.FilterExecuteType.Pre);
+            await this.onExecute(Controller, AppEnum.FilterExecuteType.Pre);
+            await this.onExecute(Action, AppEnum.FilterExecuteType.Pre);
 
             contextHelper.addTamp(`${controllerName}_${actionName}_begin`);
 
@@ -573,8 +573,8 @@ export default class App<TRules extends dCaibird.Obj, TState extends dCaibird.Ob
 
             contextHelper.addTamp(`${controllerName}_${actionName}_end`);
 
-            await this.onExecute(Action, App.FilterExecuteType.Post);
-            await this.onExecute(Controller, App.FilterExecuteType.Post);
+            await this.onExecute(Action, AppEnum.FilterExecuteType.Post);
+            await this.onExecute(Controller, AppEnum.FilterExecuteType.Post);
 
             if (actionReturn == null) {
                 throw new cError.Status(
