@@ -3,8 +3,8 @@
   "version": "2.5.8",
   "private": false,
   "scripts": {
-    "prepare": "husky install",
-    "preinstall": "git config core.ignorecase false && rimraf .eslint/cache",
+    "preinstall": "git config core.ignorecase false & rimraf .eslint/cache &",
+    "postinstall": "husky install",
     "init-project": "npm i rimraf -g && rimraf node_modules && npm i && husky install && node bin/initProject",
     "update-package": "rimraf node_modules package-lock.json && npm i shelljs@latest --save-dev && node bin/updatePackage",
     "eslint": "eslint --cache --cache-location \"./.eslint/cache\" -f codeframe --ext .ts,.tsx,.js,.jsx ./",
