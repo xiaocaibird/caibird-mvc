@@ -3,16 +3,16 @@
  * @Title 通信常用类型
  */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-declare namespace dFetch {
+declare namespace Caibird.dFetch {
     // eslint-disable-next-line @typescript-eslint/ban-types
-    type BaseControllers = Caibird.dp.Obj<Function>;
+    type BaseControllers = dp.Obj<Function>;
 
     type StandardApi<TControllers extends BaseControllers> = {
         [C in keyof TControllers]: {
             [A in keyof TControllers[C]['prototype']]: ApiInfo<
                 TControllers[C]['prototype'][A] extends () => unknown ? never :
-                TControllers[C]['prototype'][A] extends (req: Caibird.dp.Obj) => unknown ?
-                TControllers[C]['prototype'][A] extends (req: dMvc.ActionReq<infer Req>) => unknown ? Req extends Caibird.dp.Obj ? Req : never : never : never,
+                TControllers[C]['prototype'][A] extends (req: dp.Obj) => unknown ?
+                TControllers[C]['prototype'][A] extends (req: dMvc.ActionReq<infer Req>) => unknown ? Req extends dp.Obj ? Req : never : never : never,
                 TControllers[C]['prototype'][A] extends ((...p: any[]) => Promise<infer Rsp>) ? Rsp extends dMvc.JsonActionReturn<infer R> ? R : never : never
             >;
         };
@@ -32,16 +32,16 @@ declare namespace dFetch {
     };
 
     interface SuccessJsonBody<T> extends JsonBody {
-        code: Caibird.eFetch.JsonSuccessCode.Success,
+        code: eFetch.JsonSuccessCode.Success,
         data: T,
     }
     interface ErrorJsonBody extends JsonBody {
-        code: Caibird.eFetch.JsonErrorCode,
+        code: eFetch.JsonErrorCode,
         data?: undefined,
     }
 
     type JsonBody = Partial<ExtendJsonBody> & {
-        code: Caibird.eFetch.JsonErrorCode | Caibird.eFetch.JsonSuccessCode.Success,
+        code: eFetch.JsonErrorCode | eFetch.JsonSuccessCode.Success,
         msg?: string,
         version?: string,
         fetchId?: string,

@@ -31,7 +31,7 @@ namespace _cError {
 
     export class Json extends Base {
         public constructor(
-            info: Partial<dFetch.ErrorJsonBody> | string = {},
+            info: Partial<Caibird.dFetch.ErrorJsonBody> | string = {},
             logOptions: dReport.ErrorLogOptions = {},
         ) {
             super({ code: Caibird.eFetch.JsonErrorCode.CommonFail, ...(uObject.check(info) ? info : { msg: info }) }, logOptions);
@@ -53,7 +53,7 @@ namespace _cError {
 
     export class TopJson extends Json {
         public constructor(
-            info: dFetch.ErrorJsonBody,
+            info: Caibird.dFetch.ErrorJsonBody,
             logOptions: Omit<dReport.ErrorLogOptions, 'always' | 'attribute' | 'type'> = {},
         ) {
             super(info, { type: Caibird.eReport.LogType.TopError, always: true, attribute: true, ...logOptions });
@@ -98,5 +98,5 @@ type StatusInfo = {
     msg: string,
 };
 
-type ErrorInfo = Caibird.eHttp.StatusCode | dFetch.ErrorJsonBody | StatusInfo;
+type ErrorInfo = Caibird.eHttp.StatusCode | Caibird.dFetch.ErrorJsonBody | StatusInfo;
 //#endregion

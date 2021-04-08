@@ -79,7 +79,7 @@ namespace _cError {
     export class ApiJsonResultError extends CommonError {
         public constructor(
             public readonly details: {
-                rsp: dFetch.JsonBody,
+                rsp: Caibird.dFetch.JsonBody,
                 info: RequestDeclare.FetchInfo,
             },
             public readonly options: ErrorDeclare.Options,
@@ -93,7 +93,7 @@ namespace _cError {
     export class LoginError extends CommonError {
         public constructor(
             public readonly details: {
-                rsp: dFetch.JsonBody,
+                rsp: Caibird.dFetch.JsonBody,
                 info: RequestDeclare.FetchInfo,
             },
             public readonly options: ErrorDeclare.Options,

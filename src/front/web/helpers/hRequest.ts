@@ -14,7 +14,7 @@ import { uUuid } from '../utils/uUuid';
 
 import type { PromptEnum } from './hPrompt';
 
-export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCustomOpt extends Caibird.dp.Obj> extends base {
+export abstract class HRequest<TControllers extends Caibird.dFetch.BaseControllers, TCustomOpt extends Caibird.dp.Obj> extends base {
     protected constructor(protected readonly options: {
         prefix?: string,
         formRequestKey?: string,
@@ -38,7 +38,7 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
 
     protected abstract readonly onFetchSuccess?: (opt: Partial<TCustomOpt> & RequestDeclare.Options, details: RequestDeclare.FetchInfo, xhr?: XMLHttpRequest) => Caibird.dp.PromiseOrSelf<void>;
     protected abstract readonly onGetResultError?: (error: Caibird.dp.Obj | null, opt: Partial<TCustomOpt> & RequestDeclare.Options, details: RequestDeclare.FetchInfo) => Caibird.dp.PromiseOrSelf<boolean>;
-    protected abstract readonly preGetNoHandleResult?: (rsp: dFetch.ErrorJsonBody | dFetch.SuccessJsonBody<unknown> | null, opt: Partial<TCustomOpt> & RequestDeclare.DetailsOptions, details: RequestDeclare.FetchInfo) => Caibird.dp.PromiseOrSelf<void>;
+    protected abstract readonly preGetNoHandleResult?: (rsp: Caibird.dFetch.ErrorJsonBody | Caibird.dFetch.SuccessJsonBody<unknown> | null, opt: Partial<TCustomOpt> & RequestDeclare.DetailsOptions, details: RequestDeclare.FetchInfo) => Caibird.dp.PromiseOrSelf<void>;
     protected abstract readonly onGetNoHandleResultError?: (error: unknown, opt: Partial<TCustomOpt> & RequestDeclare.DetailsOptions, details: RequestDeclare.FetchInfo) => Caibird.dp.PromiseOrSelf<void>;
 
     public readonly api = new Proxy<Caibird.dp.Obj>({}, {
@@ -154,9 +154,9 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
         };
         const key = 'hRequest_getResult_';
 
-        let rsp: dFetch.ErrorJsonBody | dFetch.SuccessJsonBody<T> | null;
+        let rsp: Caibird.dFetch.ErrorJsonBody | Caibird.dFetch.SuccessJsonBody<T> | null;
         try {
-            rsp = await this.fetchJson<dFetch.ErrorJsonBody | dFetch.SuccessJsonBody<T> | null>(type, url, req, opt);
+            rsp = await this.fetchJson<Caibird.dFetch.ErrorJsonBody | Caibird.dFetch.SuccessJsonBody<T> | null>(type, url, req, opt);
             info.rsp = rsp;
         } catch (e: unknown) {
             const error = e as Caibird.dp.Obj;
@@ -253,9 +253,9 @@ export abstract class HRequest<TControllers extends dFetch.BaseControllers, TCus
         };
         const key = 'hRequest_getNoHandleResult_';
 
-        let rsp: dFetch.ErrorJsonBody | dFetch.SuccessJsonBody<T>;
+        let rsp: Caibird.dFetch.ErrorJsonBody | Caibird.dFetch.SuccessJsonBody<T>;
         try {
-            rsp = await this.fetchJson<dFetch.ErrorJsonBody | dFetch.SuccessJsonBody<T>>(type, url, req, opt);
+            rsp = await this.fetchJson<Caibird.dFetch.ErrorJsonBody | Caibird.dFetch.SuccessJsonBody<T>>(type, url, req, opt);
             info.rsp = rsp;
         } catch (e: unknown) {
             const error = e as Caibird.dp.Obj;

@@ -74,7 +74,7 @@ declare global {
         };
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        interface JsonActionReturn<T extends Caibird.dp.Obj<any> | null> extends ActionReturn<dFetch.SuccessJsonBody<T>> {
+        interface JsonActionReturn<T extends Caibird.dp.Obj<any> | null> extends ActionReturn<Caibird.dFetch.SuccessJsonBody<T>> {
             type: 'json',
         }
 

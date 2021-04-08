@@ -17,7 +17,7 @@ class ResponseHelper {
 
     public readonly setInitRender = () => this.isInitRender = true;
 
-    public readonly json = <T>(json: dFetch.ErrorJsonBody | dFetch.SuccessJsonBody<T>, ctx = contextHelper.get()) => {
+    public readonly json = <T>(json: Caibird.dFetch.ErrorJsonBody | Caibird.dFetch.SuccessJsonBody<T>, ctx = contextHelper.get()) => {
         if (ctx.headerSent) {
             reportHelper.appError({
                 key: 'responseHelper_setJson_headerSent',

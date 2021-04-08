@@ -32,20 +32,20 @@ export declare namespace RequestDeclare {
             checkLoginWhenNoHandle?: boolean,
         };
 
-    type GetReq<T> = T extends dFetch.ApiInfo<unknown, unknown> ? T['req'] : never;
-    type GetRsp<T> = T extends dFetch.ApiInfo<unknown, unknown> ? T['rsp'] : never;
+    type GetReq<T> = T extends Caibird.dFetch.ApiInfo<unknown, unknown> ? T['req'] : never;
+    type GetRsp<T> = T extends Caibird.dFetch.ApiInfo<unknown, unknown> ? T['rsp'] : never;
 
-    type Details<T> = dFetch.ErrorJsonBody | dFetch.SuccessJsonBody<T>;
+    type Details<T> = Caibird.dFetch.ErrorJsonBody | Caibird.dFetch.SuccessJsonBody<T>;
 
-    type Api<TControllers extends dFetch.BaseControllers, TCustom extends Caibird.dp.Obj> = {
-        readonly [C in keyof dFetch.StandardApi<TControllers>]: {
-            readonly [A in keyof dFetch.StandardApi<TControllers>[C]]: GetReq<dFetch.StandardApi<TControllers>[C][A]> extends never ?
+    type Api<TControllers extends Caibird.dFetch.BaseControllers, TCustom extends Caibird.dp.Obj> = {
+        readonly [C in keyof Caibird.dFetch.StandardApi<TControllers>]: {
+            readonly [A in keyof Caibird.dFetch.StandardApi<TControllers>[C]]: GetReq<Caibird.dFetch.StandardApi<TControllers>[C][A]> extends never ?
             <TNoHandle extends boolean | undefined = undefined, TFormFetch extends boolean | undefined = undefined>
             (req?: null, opt?: TNoHandle extends true ? DetailsOptions<TNoHandle, TFormFetch, TCustom> : Options<TNoHandle, TFormFetch, TCustom>) =>
-            Promise<TFormFetch extends true ? never : TNoHandle extends true ? Details<GetRsp<dFetch.StandardApi<TControllers>[C][A]>> : GetRsp<dFetch.StandardApi<TControllers>[C][A]>> :
+            Promise<TFormFetch extends true ? never : TNoHandle extends true ? Details<GetRsp<Caibird.dFetch.StandardApi<TControllers>[C][A]>> : GetRsp<Caibird.dFetch.StandardApi<TControllers>[C][A]>> :
             <TNoHandle extends boolean | undefined = undefined, TFormFetch extends boolean | undefined = undefined>
-            (req: GetReq<dFetch.StandardApi<TControllers>[C][A]>, opt?: TNoHandle extends true ? DetailsOptions<TNoHandle, TFormFetch, TCustom> : Options<TNoHandle, TFormFetch, TCustom>) =>
-            Promise<TFormFetch extends true ? never : TNoHandle extends true ? Details<GetRsp<dFetch.StandardApi<TControllers>[C][A]>> : GetRsp<dFetch.StandardApi<TControllers>[C][A]>>
+            (req: GetReq<Caibird.dFetch.StandardApi<TControllers>[C][A]>, opt?: TNoHandle extends true ? DetailsOptions<TNoHandle, TFormFetch, TCustom> : Options<TNoHandle, TFormFetch, TCustom>) =>
+            Promise<TFormFetch extends true ? never : TNoHandle extends true ? Details<GetRsp<Caibird.dFetch.StandardApi<TControllers>[C][A]>> : GetRsp<Caibird.dFetch.StandardApi<TControllers>[C][A]>>
         }
     };
 

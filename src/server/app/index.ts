@@ -36,7 +36,7 @@ export default class App<TRules extends Caibird.dp.Obj, TState extends Caibird.d
 
     public static readonly View = {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        Json: <TData extends Caibird.dp.Obj<any> | null = null, TOther extends Omit<dFetch.JsonBody, 'code' | 'version'> | undefined = undefined>(data: TData = (null as unknown as TData), other?: TOther): dMvc.JsonActionReturn<TData> => ({
+        Json: <TData extends Caibird.dp.Obj<any> | null = null, TOther extends Omit<Caibird.dFetch.JsonBody, 'code' | 'version'> | undefined = undefined>(data: TData = (null as unknown as TData), other?: TOther): dMvc.JsonActionReturn<TData> => ({
             type: 'json',
             result: {
                 code: Caibird.eFetch.JsonSuccessCode.Success,
