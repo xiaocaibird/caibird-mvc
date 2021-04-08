@@ -23,15 +23,13 @@ import { uUuid } from '../utils/uUuid';
 
 import { contextHelper, reportHelper, responseHelper, settingHelper } from './helpers';
 
-declare namespace App {
-    namespace E {
-        const enum FilterExecuteType {
-            Pre = 0,
-            Post = 1,
-        }
+export declare namespace AppEnum {
+    const enum FilterExecuteType {
+        Pre = 0,
+        Post = 1,
     }
 }
-class App<TRules extends dCaibird.Obj, TState extends dCaibird.Obj, TCustom extends dCaibird.Obj, TControllerDefaultConfig extends dCaibird.Obj | undefined> {
+export default class App<TRules extends dCaibird.Obj, TState extends dCaibird.Obj, TCustom extends dCaibird.Obj, TControllerDefaultConfig extends dCaibird.Obj | undefined> {
     public static readonly staticHelpers = {
         report: {
             ...reportHelper,
@@ -332,13 +330,13 @@ class App<TRules extends dCaibird.Obj, TState extends dCaibird.Obj, TCustom exte
         }
     };
 
-    private readonly onExecute = async (target: dMvc.S.Action<TRules, TState, TCustom> | dMvc.S.Controller<TRules, TState, TCustom>, executeType: App.E.FilterExecuteType) => {
+    private readonly onExecute = async (target: dMvc.S.Action<TRules, TState, TCustom> | dMvc.S.Controller<TRules, TState, TCustom>, executeType: AppEnum.FilterExecuteType) => {
         const filterOrderList = target.filterOrderList;
         const orderKeys = orderBy(Object.keys(filterOrderList)).reverse();
         for (const key of orderKeys) {
             const filters = filterOrderList[key] || [];
             for (const filter of filters) {
-                if (executeType === App.E.FilterExecuteType.Pre) {
+                if (executeType === App.FilterExecuteType.Pre) {
                     filter.preExecute && await filter.preExecute(target, contextHelper.get());
                 } else {
                     filter.postExecute && await filter.postExecute(target, contextHelper.get());
@@ -551,8 +549,8 @@ class App<TRules extends dCaibird.Obj, TState extends dCaibird.Obj, TCustom exte
             await this.onCheckRules(Controller, Action);
             contextHelper.addTamp('checkRules_end');
 
-            await this.onExecute(Controller, App.E.FilterExecuteType.Pre);
-            await this.onExecute(Action, App.E.FilterExecuteType.Pre);
+            await this.onExecute(Controller, App.FilterExecuteType.Pre);
+            await this.onExecute(Action, App.FilterExecuteType.Pre);
 
             contextHelper.addTamp(`${controllerName}_${actionName}_begin`);
 
@@ -575,8 +573,8 @@ class App<TRules extends dCaibird.Obj, TState extends dCaibird.Obj, TCustom exte
 
             contextHelper.addTamp(`${controllerName}_${actionName}_end`);
 
-            await this.onExecute(Action, App.E.FilterExecuteType.Post);
-            await this.onExecute(Controller, App.E.FilterExecuteType.Post);
+            await this.onExecute(Action, App.FilterExecuteType.Post);
+            await this.onExecute(Controller, App.FilterExecuteType.Post);
 
             if (actionReturn == null) {
                 throw new cError.Status(
@@ -666,8 +664,6 @@ class App<TRules extends dCaibird.Obj, TState extends dCaibird.Obj, TCustom exte
         this.server.listen(port, host, () => console.log(`server run: http://${host}:${port}`));
     };
 }
-
-export default App;
 
 type Options<TRules extends dCaibird.Obj, TState extends dCaibird.Obj, TCustom extends dCaibird.Obj, TControllerDefaultConfig extends dCaibird.Obj | undefined> = (TControllerDefaultConfig extends undefined ? { controllerDefaultConfig?: undefined } : { controllerDefaultConfig: TControllerDefaultConfig }) & {
     host: string,

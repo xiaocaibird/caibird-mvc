@@ -3,10 +3,10 @@
  * @Title public getPath函数
  * @Details 获取一个tree结构的某个id的链路
  */
-import type { uTree } from './';
+import type { uTreeDeclare } from './';
 import { flatten } from './flatten';
 
-const _getPath = <TBase extends uTree.D.Base, TId extends uTree.D.Id>(id: TId, treeList: TBase[], result: TBase[]) => {
+const _getPath = <TBase extends uTreeDeclare.Base, TId extends uTreeDeclare.Id>(id: TId, treeList: TBase[], result: TBase[]) => {
     const item = treeList.find(one => one.id === id);
     if (item) {
         result.push(item);
@@ -14,4 +14,4 @@ const _getPath = <TBase extends uTree.D.Base, TId extends uTree.D.Id>(id: TId, t
     }
     return result;
 };
-export const getPath = <TBase extends uTree.D.Base, TId extends uTree.D.Id>(id: TId, treeList: uTree.D.Item<TBase>[]) => _getPath(id, flatten(treeList), []);
+export const getPath = <TBase extends uTreeDeclare.Base, TId extends uTreeDeclare.Id>(id: TId, treeList: uTreeDeclare.Item<TBase>[]) => _getPath(id, flatten(treeList), []);
