@@ -2,7 +2,7 @@
  * @Owners cmZhou
  * @Title db常用枚举
  */
-declare namespace eCaibird.Db {
+declare namespace Caibird.eDb {
     const enum OrderType {
         ASC = 'ASC',
         DESC = 'DESC',
