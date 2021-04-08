@@ -116,4 +116,4 @@ setCompatible((instance, args) => {
     } catch { }
 });
 
-export { cError } from '../../@com/consts/cError';
+export * from '../../@com/consts/cError';
