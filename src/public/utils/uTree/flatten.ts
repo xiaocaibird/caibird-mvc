@@ -5,12 +5,12 @@
  */
 import { uObject } from '../uObject';
 
-import type { uTreeDeclare } from './';
+import type { TreeDeclare } from './';
 
 type FlattenOption<TKeepChildren extends boolean | undefined> = { keepChildren?: TKeepChildren };
-const _flatten = <TBase extends uTreeDeclare.Base, TKeepChildren extends boolean | undefined>(
-    list: uTreeDeclare.Item<TBase>[],
-    result: (TKeepChildren extends true ? uTreeDeclare.Item<TBase> : TBase)[],
+const _flatten = <TBase extends TreeDeclare.Base, TKeepChildren extends boolean | undefined>(
+    list: TreeDeclare.Item<TBase>[],
+    result: (TKeepChildren extends true ? TreeDeclare.Item<TBase> : TBase)[],
     opt: FlattenOption<TKeepChildren> = {}) => {
     const { keepChildren } = opt;
 
@@ -21,13 +21,13 @@ const _flatten = <TBase extends uTreeDeclare.Base, TKeepChildren extends boolean
 
         newItem = keepChildren ? newItem : uObject.deleteKey(newItem, 'children');
 
-        result.push(newItem as TKeepChildren extends true ? uTreeDeclare.Item<TBase> : TBase);
+        result.push(newItem as TKeepChildren extends true ? TreeDeclare.Item<TBase> : TBase);
         if (item.children?.length) {
             _flatten(item.children, result, opt);
         }
     });
     return result;
 };
-export const flatten = <TBase extends uTreeDeclare.Base, TKeepChildren extends boolean | undefined = undefined>(
-    list: uTreeDeclare.Item<TBase>[],
+export const flatten = <TBase extends TreeDeclare.Base, TKeepChildren extends boolean | undefined = undefined>(
+    list: TreeDeclare.Item<TBase>[],
     opt: FlattenOption<TKeepChildren> = {}) => _flatten(list, [], opt);

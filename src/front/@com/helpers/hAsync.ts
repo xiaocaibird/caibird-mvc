@@ -6,7 +6,7 @@ import { cError } from '../consts/cError';
 import { uFunction } from '../utils/uFunction';
 import { uObject } from '../utils/uObject';
 
-export declare namespace hAsyncEnum {
+export declare namespace AsyncEnum {
     const enum Action {
         Break = 0, // 中断其它
         Hide = 1, // 隐藏其它
@@ -21,10 +21,10 @@ export abstract class HAsync<TCustomRunOpt extends dCaibird.Obj = dCaibird.Obj> 
     protected constructor() { }
 
     protected abstract readonly onRunBegin?: (...p: Parameters<HAsync<TCustomRunOpt>['run']>) => dCaibird.PromiseOrSelf<void>;
-    protected abstract readonly onRunEnd?: (status: hAsyncEnum.Status, ...p: Parameters<HAsync<TCustomRunOpt>['run']>) => dCaibird.PromiseOrSelf<void>;
+    protected abstract readonly onRunEnd?: (status: AsyncEnum.Status, ...p: Parameters<HAsync<TCustomRunOpt>['run']>) => dCaibird.PromiseOrSelf<void>;
 
     protected readonly map: dCaibird.Obj<dCaibird.Obj<{
-        status: hAsyncEnum.Status,
+        status: AsyncEnum.Status,
         task: Promise<unknown>,
     } | undefined>> = {};
 
@@ -38,29 +38,29 @@ export abstract class HAsync<TCustomRunOpt extends dCaibird.Obj = dCaibird.Obj> 
         if (strKey) {
             const obj = this.map[strKey][strPromiseKey];
             if (obj) {
-                if (obj.status === hAsyncEnum.Status.Running) {
-                    return hAsyncEnum.Status.Running;
-                } else if (obj.status === hAsyncEnum.Status.BeHided) {
-                    return hAsyncEnum.Status.BeHided;
+                if (obj.status === AsyncEnum.Status.Running) {
+                    return AsyncEnum.Status.Running;
+                } else if (obj.status === AsyncEnum.Status.BeHided) {
+                    return AsyncEnum.Status.BeHided;
                 }
             }
-            return hAsyncEnum.Status.BeBreaked;
+            return AsyncEnum.Status.BeBreaked;
         }
-        return hAsyncEnum.Status.Running;
+        return AsyncEnum.Status.Running;
     };
 
     public readonly run = async <T = void>(task: dCaibird.PromiseFunc<unknown[], T> | Promise<T>, opt: Options & Partial<TCustomRunOpt> = {}) => {
-        const { action = hAsyncEnum.Action.Break, key, onExecuteSuccess, onExecuteFail, onExecuteEnd } = opt;
+        const { action = AsyncEnum.Action.Break, key, onExecuteSuccess, onExecuteFail, onExecuteEnd } = opt;
         const promiseKey = Symbol();
 
         const handleStatus = (callback?: Callback, noThrow = false) => {
             const status = this.getNowState(promiseKey, key);
 
-            if (status === hAsyncEnum.Status.BeBreaked) {
+            if (status === AsyncEnum.Status.BeBreaked) {
                 if (noThrow) return status;
                 throw new cError.Noop(`break ${key?.toString() ?? ''} promise`);
             }
-            if (status === hAsyncEnum.Status.Running) {
+            if (status === AsyncEnum.Status.Running) {
                 callback?.(status);
             }
             return status;
@@ -79,15 +79,15 @@ export abstract class HAsync<TCustomRunOpt extends dCaibird.Obj = dCaibird.Obj> 
                 const strItem = item as unknown as string;
                 const promiseInfo = this.map[strKey][strItem];
                 if (promiseInfo) {
-                    if (action === hAsyncEnum.Action.Break) {
-                        promiseInfo.status = hAsyncEnum.Status.BeBreaked;
-                    } else if (action === hAsyncEnum.Action.Hide) {
-                        promiseInfo.status = hAsyncEnum.Status.BeHided;
+                    if (action === AsyncEnum.Action.Break) {
+                        promiseInfo.status = AsyncEnum.Status.BeBreaked;
+                    } else if (action === AsyncEnum.Action.Hide) {
+                        promiseInfo.status = AsyncEnum.Status.BeHided;
                     }
                 }
             });
             this.map[strKey][strPromiseKey] = {
-                status: hAsyncEnum.Status.Running,
+                status: AsyncEnum.Status.Running,
                 task: promise,
             };
         }
@@ -113,7 +113,7 @@ export abstract class HAsync<TCustomRunOpt extends dCaibird.Obj = dCaibird.Obj> 
 }
 
 //#region 私有类型
-type Callback = (status: hAsyncEnum.Status) => void;
+type Callback = (status: AsyncEnum.Status) => void;
 
 type Options = {
     onExecuteSuccess?: Callback,
@@ -121,6 +121,6 @@ type Options = {
     onExecuteEnd?: Callback,
 
     key?: symbol,
-    action?: hAsyncEnum.Action,
+    action?: AsyncEnum.Action,
 };
 //#endregion
