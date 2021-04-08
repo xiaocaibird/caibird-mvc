@@ -32,16 +32,16 @@ declare namespace dFetch {
     };
 
     interface SuccessJsonBody<T> extends JsonBody {
-        code: eCaibird.Fetch.JsonSuccessCode.Success,
+        code: Caibird.eFetch.JsonSuccessCode.Success,
         data: T,
     }
     interface ErrorJsonBody extends JsonBody {
-        code: eCaibird.Fetch.JsonErrorCode,
+        code: Caibird.eFetch.JsonErrorCode,
         data?: undefined,
     }
 
     type JsonBody = Partial<ExtendJsonBody> & {
-        code: eCaibird.Fetch.JsonErrorCode | eCaibird.Fetch.JsonSuccessCode.Success,
+        code: Caibird.eFetch.JsonErrorCode | Caibird.eFetch.JsonSuccessCode.Success,
         msg?: string,
         version?: string,
         fetchId?: string,

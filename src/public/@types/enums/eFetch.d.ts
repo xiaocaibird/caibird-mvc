@@ -2,7 +2,7 @@
  * @Owners cmZhou
  * @Title 通信常用枚举
  */
-declare namespace eCaibird.Fetch {
+declare namespace Caibird.eFetch {
     const enum JsonSuccessCode {
         Success = 0,
     }
