@@ -142,7 +142,7 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
                 done();
                 setTimeout(() => {
                     isDone = true;
-                }, eCaibird.Date.MsCount.TenSec * 2);
+                }, Caibird.eDate.MsCount.TenSec * 2);
             });
 
             const func = (type: 'add' | 'change' | 'delete') => (path: string) => {

@@ -10,7 +10,7 @@ export namespace uCookie {
         let exp: Date | null = null;
         if (days != null) {
             exp = new Date();
-            exp.setTime(exp.getTime() + (days === 'keep' ? keepDays : days) * eCaibird.Date.MsCount.OneDay);
+            exp.setTime(exp.getTime() + (days === 'keep' ? keepDays : days) * Caibird.eDate.MsCount.OneDay);
         }
 
         document.cookie = `${name}=${encodeURIComponent(value)}${exp == null ? '' : (`;expires=${exp.toUTCString()}`)}`;
