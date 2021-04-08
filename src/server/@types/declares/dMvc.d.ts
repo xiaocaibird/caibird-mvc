@@ -3,7 +3,6 @@
  * @Title mvc常用类型
  */
 import BaseKoa from 'koa';
-import KoaSend from 'koa-send';
 
 export namespace dMvc {
     type BaseCtxState = { fetchId?: string };
