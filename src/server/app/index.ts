@@ -14,6 +14,7 @@ import Sequelize from 'sequelize';
 
 import { cError } from '../consts/cError';
 import { cKey } from '../consts/cKey';
+import { AppEnum } from '../helpers/hApp';
 import { uArray } from '../utils/uArray';
 import { uFunction } from '../utils/uFunction';
 import { uNumber } from '../utils/uNumber';
@@ -23,12 +24,6 @@ import { uUuid } from '../utils/uUuid';
 
 import { contextHelper, reportHelper, responseHelper, settingHelper } from './helpers';
 
-export declare namespace AppEnum {
-    const enum FilterExecuteType {
-        Pre = 0,
-        Post = 1,
-    }
-}
 export default class App<TRules extends dCaibird.Obj, TState extends dCaibird.Obj, TCustom extends dCaibird.Obj, TControllerDefaultConfig extends dCaibird.Obj | undefined> {
     public static readonly staticHelpers = {
         report: {
