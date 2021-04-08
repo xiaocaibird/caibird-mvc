@@ -51,7 +51,7 @@ export default class App<TRules extends Caibird.dp.Obj, TState extends Caibird.d
                 opt,
             },
         }),
-        Buffer: (buffer: Buffer, fileName: string, opt?: { type: eCaibird.Http.ContentDispositionType }): dMvc.BufferActionReturn => ({
+        Buffer: (buffer: Buffer, fileName: string, opt?: { type: Caibird.eHttp.ContentDispositionType }): dMvc.BufferActionReturn => ({
             type: 'buffer',
             result: {
                 buffer,
@@ -102,7 +102,7 @@ export default class App<TRules extends Caibird.dp.Obj, TState extends Caibird.d
         ),
         httpMethodFilter: this.filterCreater(
             'httpMethodFilter',
-            (target, method: eCaibird.Http.MethodType | eCaibird.Http.MethodType[] = []) => {
+            (target, method: Caibird.eHttp.MethodType | Caibird.eHttp.MethodType[] = []) => {
                 target.filterRules.httpMethod = method;
             },
             {
@@ -112,9 +112,9 @@ export default class App<TRules extends Caibird.dp.Obj, TState extends Caibird.d
                         const method = ctx.method.toUpperCase();
                         const allowMethod = target.filterRules.httpMethod;
                         if (uArray.check(allowMethod)) {
-                            if (!allowMethod.map(item => item.toUpperCase()).includes(method)) throw new cError.Status(eCaibird.Http.StatusCode.NotFound);
+                            if (!allowMethod.map(item => item.toUpperCase()).includes(method)) throw new cError.Status(Caibird.eHttp.StatusCode.NotFound);
                         } else if (method !== allowMethod) {
-                            throw new cError.Status(eCaibird.Http.StatusCode.NotFound);
+                            throw new cError.Status(Caibird.eHttp.StatusCode.NotFound);
                         }
                     }
                 },
@@ -382,7 +382,7 @@ export default class App<TRules extends Caibird.dp.Obj, TState extends Caibird.d
                     contextHelper.run(ctx, () => {
                         // ctx有时为空
                         if (ctx) {
-                            responseHelper.status(eCaibird.Http.StatusCode.ServerError, 'Server Error', ctx);
+                            responseHelper.status(Caibird.eHttp.StatusCode.ServerError, 'Server Error', ctx);
                         }
                         reportHelper.appError({
                             key: 'app_error',
@@ -441,7 +441,7 @@ export default class App<TRules extends Caibird.dp.Obj, TState extends Caibird.d
             } else {
                 const err = (error || new Error()) as Error;
 
-                responseHelper.status(eCaibird.Http.StatusCode.ServerError, err.message);
+                responseHelper.status(Caibird.eHttp.StatusCode.ServerError, err.message);
                 reportHelper.unknownError({
                     key: `${key}_unknown`,
                     msg: err.message,
@@ -450,7 +450,7 @@ export default class App<TRules extends Caibird.dp.Obj, TState extends Caibird.d
             }
         } catch (e: unknown) {
             const err = (e || new Error()) as Error;
-            responseHelper.status(eCaibird.Http.StatusCode.ServerError, err.message);
+            responseHelper.status(Caibird.eHttp.StatusCode.ServerError, err.message);
             reportHelper.unknownError({
                 key: `${key}_error`,
                 msg: err.message,
@@ -492,7 +492,7 @@ export default class App<TRules extends Caibird.dp.Obj, TState extends Caibird.d
                     await next();
                     onRequestEnd && await onRequestEnd(ctx, next, this);
                 } else {
-                    throw new cError.Status({ msg: '请使用https访问', status: eCaibird.Http.StatusCode.NotFound }, { key: 'https_only' });
+                    throw new cError.Status({ msg: '请使用https访问', status: Caibird.eHttp.StatusCode.NotFound }, { key: 'https_only' });
                 }
             } catch (e: unknown) {
                 const err = (e || new Error()) as Error;
@@ -507,7 +507,7 @@ export default class App<TRules extends Caibird.dp.Obj, TState extends Caibird.d
     };
 
     private readonly lastMiddleware: dMvc.Middleware<TState, TCustom> = () => {
-        throw new cError.Status(eCaibird.Http.StatusCode.NotFound);
+        throw new cError.Status(Caibird.eHttp.StatusCode.NotFound);
     };
 
     private readonly getRoutes = () => {
@@ -573,7 +573,7 @@ export default class App<TRules extends Caibird.dp.Obj, TState extends Caibird.d
 
             if (actionReturn == null) {
                 throw new cError.Status(
-                    { status: eCaibird.Http.StatusCode.ServerError, msg: 'Router Return Error' },
+                    { status: Caibird.eHttp.StatusCode.ServerError, msg: 'Router Return Error' },
                     { key: `router_${controller}_${action}_actionReturn_null` },
                 );
             }
@@ -599,7 +599,7 @@ export default class App<TRules extends Caibird.dp.Obj, TState extends Caibird.d
                     break;
                 default:
                     throw new cError.Status(
-                        { status: eCaibird.Http.StatusCode.ServerError, msg: 'Router Return Error' },
+                        { status: Caibird.eHttp.StatusCode.ServerError, msg: 'Router Return Error' },
                         { key: `router_${controller}_${action}_actionReturn_typeError`, details: actionReturn },
                     );
             }

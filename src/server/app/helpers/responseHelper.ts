@@ -31,7 +31,7 @@ class ResponseHelper {
         json.fetchId = (ctx.state as Caibird.dp.Obj).fetchId as string;
 
         ctx.body = json;
-        ctx.status = eCaibird.Http.StatusCode.Ok;
+        ctx.status = Caibird.eHttp.StatusCode.Ok;
         ctx.type = 'json';
     };
 
@@ -45,11 +45,11 @@ class ResponseHelper {
         }
 
         ctx.body = xmlStr;
-        ctx.status = eCaibird.Http.StatusCode.Ok;
+        ctx.status = Caibird.eHttp.StatusCode.Ok;
         ctx.type = 'xml';
     };
 
-    public readonly status = (status: eCaibird.Http.StatusCode, msg?: string, ctx = contextHelper.get()) => {
+    public readonly status = (status: Caibird.eHttp.StatusCode, msg?: string, ctx = contextHelper.get()) => {
         if (ctx.headerSent) {
             reportHelper.appError({
                 key: 'responseHelper_setStatus_headerSent',
@@ -61,7 +61,7 @@ class ResponseHelper {
         ctx.status = status;
     };
 
-    public readonly buffer = (buffer: Buffer, fileName: string, opt: { type?: eCaibird.Http.ContentDispositionType } = {}, ctx = contextHelper.get()) => {
+    public readonly buffer = (buffer: Buffer, fileName: string, opt: { type?: Caibird.eHttp.ContentDispositionType } = {}, ctx = contextHelper.get()) => {
         if (ctx.headerSent) {
             reportHelper.appError({
                 key: 'responseHelper_sendBuffer_headerSent',
@@ -69,9 +69,9 @@ class ResponseHelper {
             });
             return;
         }
-        ctx.set('Content-Disposition', `${opt.type ?? eCaibird.Http.ContentDispositionType.Attachment};filename=${encodeURIComponent(fileName)}`);
+        ctx.set('Content-Disposition', `${opt.type ?? Caibird.eHttp.ContentDispositionType.Attachment};filename=${encodeURIComponent(fileName)}`);
         ctx.body = buffer;
-        ctx.status = eCaibird.Http.StatusCode.Ok;
+        ctx.status = Caibird.eHttp.StatusCode.Ok;
     };
 
     public readonly file = async (path: string, opt?: koaSend.SendOptions, ctx = contextHelper.get()) => {
@@ -86,7 +86,7 @@ class ResponseHelper {
             await koaSend(ctx, path, opt);
         } catch (e: unknown) {
             const error = (e || new Error()) as Error;
-            throw new cError.Status(eCaibird.Http.StatusCode.ServerError,
+            throw new cError.Status(Caibird.eHttp.StatusCode.ServerError,
                 { key: 'responseHelper_sendFile', error });
         }
     };
@@ -101,7 +101,7 @@ class ResponseHelper {
         }
         if (!this.isInitRender) {
             throw new cError.Status({
-                status: eCaibird.Http.StatusCode.ServerError,
+                status: Caibird.eHttp.StatusCode.ServerError,
                 msg: '未初始化render中间件',
             }, { key: 'responseHelper_render_noInit' });
         }
@@ -109,7 +109,7 @@ class ResponseHelper {
             await ctx.render(view, params);
         } catch (e: unknown) {
             const error = (e || new Error()) as Error;
-            throw new cError.Status(eCaibird.Http.StatusCode.ServerError,
+            throw new cError.Status(Caibird.eHttp.StatusCode.ServerError,
                 { key: 'responseHelper_render', error });
         }
     };

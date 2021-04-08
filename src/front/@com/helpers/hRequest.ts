@@ -15,7 +15,7 @@ export declare namespace RequestDeclare {
         isJsonpFetch?: boolean,
         jsonpCallbackParamName?: string,
         jsonpCallbackFuncName?: string,
-        type?: eCaibird.Http.MethodType,
+        type?: Caibird.eHttp.MethodType,
         noReportError?: boolean,
         errorPrompt?: PromptEnum.Type,
         errorPromptStyle?: PromptEnum.StyleType,
