@@ -12,8 +12,8 @@ declare namespace dFetch {
             [A in keyof TControllers[C]['prototype']]: ApiInfo<
                 TControllers[C]['prototype'][A] extends () => unknown ? never :
                 TControllers[C]['prototype'][A] extends (req: dCaibird.Obj) => unknown ?
-                TControllers[C]['prototype'][A] extends (req: dMvc.S.ActionReq<infer Req>) => unknown ? Req extends dCaibird.Obj ? Req : never : never : never,
-                TControllers[C]['prototype'][A] extends ((...p: any[]) => Promise<infer Rsp>) ? Rsp extends dMvc.S.JsonActionReturn<infer R> ? R : never : never
+                TControllers[C]['prototype'][A] extends (req: dMvc.ActionReq<infer Req>) => unknown ? Req extends dCaibird.Obj ? Req : never : never : never,
+                TControllers[C]['prototype'][A] extends ((...p: any[]) => Promise<infer Rsp>) ? Rsp extends dMvc.JsonActionReturn<infer R> ? R : never : never
             >;
         };
     };
@@ -22,10 +22,10 @@ declare namespace dFetch {
         [C in keyof TControllers]: {
             [A in keyof TControllers[C]['prototype']]: ApiInfo<
                 TControllers[C]['prototype'][A] extends () => unknown ? never :
-                TControllers[C]['prototype'][A] extends (req: dMvc.S.ActionReq<infer Req>) => unknown ? Req :
+                TControllers[C]['prototype'][A] extends (req: dMvc.ActionReq<infer Req>) => unknown ? Req :
                 TControllers[C]['prototype'][A] extends (req: infer Req) => unknown ? Req : never,
-                TControllers[C]['prototype'][A] extends (...p: any[]) => Promise<infer Rsp> ? Rsp extends dMvc.S.JsonActionReturn<infer R> ? R :
-                Rsp extends dMvc.S.ActionReturn<unknown> ? never : Rsp :
+                TControllers[C]['prototype'][A] extends (...p: any[]) => Promise<infer Rsp> ? Rsp extends dMvc.JsonActionReturn<infer R> ? R :
+                Rsp extends dMvc.ActionReturn<unknown> ? never : Rsp :
                 TControllers[C]['prototype'][A] extends (...p: any[]) => infer Rsp ? Rsp : never
             >;
         };
