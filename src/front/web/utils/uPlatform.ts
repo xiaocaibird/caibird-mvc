@@ -4,14 +4,14 @@
  */
 import compareVersions, { CompareOperator } from 'compare-versions';
 
-import { cPlatform } from '../consts/cPlatform';
+import { PlatformEnum, cPlatform } from '../consts/cPlatform';
 
 export namespace uPlatform {
     const OS_NAME_LC = cPlatform.OS_NAME.toLowerCase();
 
-    export const checkOS = (OSName: ePlatform.F.OsName) => OS_NAME_LC === OSName.toLowerCase();
+    export const checkOS = (OSName: PlatformEnum.OsName) => OS_NAME_LC === OSName.toLowerCase();
 
-    export const compareOSVersion = (OSName: ePlatform.F.OsName, compareVersion: string) => {
+    export const compareOSVersion = (OSName: PlatformEnum.OsName, compareVersion: string) => {
         const isOS = checkOS(OSName);
 
         if (!isOS) return false;

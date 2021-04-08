@@ -4,6 +4,17 @@
  */
 import platform from 'platform';
 
+export declare namespace PlatformEnum {
+    const enum OsName {
+        Windows = 'Windows',
+        MacOS = 'MacOS',
+        Linux = 'Linux',
+
+        IOS = 'IOS',
+        Android = 'Android',
+    }
+}
+
 namespace _cPlatform {
     export const MODEL = platform.product ?? '';
     export const MANUFACTURER = platform.manufacturer ?? '';
@@ -13,13 +24,13 @@ namespace _cPlatform {
 
     export const OS_VERSION = platform.os?.version ?? '';
 
-    export const isIOS = OS_NAME_LC === ePlatform.F.OsName.IOS.toLowerCase();
-    export const isAndroid = OS_NAME_LC === ePlatform.F.OsName.Android.toLowerCase();
+    export const isIOS = OS_NAME_LC === PlatformEnum.OsName.IOS.toLowerCase();
+    export const isAndroid = OS_NAME_LC === PlatformEnum.OsName.Android.toLowerCase();
     export const isMobile = isIOS || isAndroid;
 
-    export const isWindows = OS_NAME_LC === ePlatform.F.OsName.Windows.toLowerCase();
-    export const isMacOS = OS_NAME_LC === ePlatform.F.OsName.MacOS.toLowerCase();
-    export const isLinux = OS_NAME_LC === ePlatform.F.OsName.Linux.toLowerCase();
+    export const isWindows = OS_NAME_LC === PlatformEnum.OsName.Windows.toLowerCase();
+    export const isMacOS = OS_NAME_LC === PlatformEnum.OsName.MacOS.toLowerCase();
+    export const isLinux = OS_NAME_LC === PlatformEnum.OsName.Linux.toLowerCase();
     export const isPC = isWindows || isMacOS || isLinux;
 }
 
