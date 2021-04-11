@@ -72,7 +72,7 @@ class SettingHelper {
     ): Caibird.dp.DeepPartial<T[TKey]> | undefined => {
         try {
             if (Caibird.env.IS_LOCAL_TEST) {
-                const relativePath = path.relative(__dirname, path.join(process.cwd(), `/dist/${this.projectName}/server/_dev/setting/${filename}`)).replace(/\\/g, '/');
+                const relativePath = path.relative(__dirname, path.join(process.cwd(), `/dist/${this.projectName}/server/helpers/hSetting/_dev/${filename}`)).replace(/\\/g, '/');
                 // eslint-disable-next-line @typescript-eslint/no-var-requires,@typescript-eslint/no-require-imports
                 const obj = (require(relativePath) as { default: T }).default;
                 return (obj[key] || dft) as Caibird.dp.DeepPartial<T[TKey]>;
