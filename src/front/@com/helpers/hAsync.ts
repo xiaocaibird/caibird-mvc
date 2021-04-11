@@ -2,20 +2,10 @@
  * @Owners cmZhou
  * @Title async helper
  */
+import { eAsync } from '../@types/enums';
 import { cError } from '../consts/cError';
 import { uFunction } from '../utils/uFunction';
 import { uObject } from '../utils/uObject';
-
-export declare namespace eAsync {
-    const enum Action {
-        Break = 0, // 中断其它
-        Hide = 1, // 隐藏其它
-        Parallel = 2, // 并行
-    }
-    const enum Status {
-        BeBreaked = 0, BeHided = 1, Running = 2,
-    }
-}
 
 export abstract class HAsync<TCustomRunOpt extends Caibird.dp.Obj = Caibird.dp.Obj> {
     protected constructor() { }

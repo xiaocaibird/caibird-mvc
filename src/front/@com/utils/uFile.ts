@@ -2,28 +2,11 @@
  * @Owners cmZhou
  * @Title file 工具
  */
+import type { dFile } from '../@types/declares';
+import { eFile } from '../@types/enums';
 import { cError } from '../consts/cError';
 
 import { uObject } from './uObject';
-
-export declare namespace eFile {
-    const enum FileReaderResultCode {
-        Success = 0, Fail = 1, Timeout = 2,
-    }
-    const enum FileReaderResultDateType {
-        Binary = 0, ArrayBuffer = 1, DataUrl = 2,
-    }
-}
-
-export declare namespace dFile {
-    type FileReaderResult<TData extends FileReader['result']> = {
-        code: eFile.FileReaderResultCode,
-        msg?: string,
-        data?: TData,
-        fileReader: FileReader,
-        error?: ProgressEvent,
-    };
-}
 
 export namespace uFile {
     const readFile = async <TData extends FileReader['result']>(file: File, type: eFile.FileReaderResultDateType) =>

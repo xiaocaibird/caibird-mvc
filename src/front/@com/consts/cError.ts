@@ -2,26 +2,11 @@
  * @Owners cmZhou
  * @Title 常用异常类
  */
-import type { dReport } from '../@types/declares';
-import type { ePrompt } from '../helpers/hPrompt';
-import type { dRequest } from '../helpers/hRequest';
+import type { dError, dReport, dRequest } from '../@types/declares';
 
 let compatible: (instance: Error, args: unknown[]) => void = () => { };
 
 export const setCompatible = (fn: typeof compatible) => compatible = fn;
-
-export declare namespace dError {
-    type Options = {
-        key: string,
-        msg?: string,
-        showPrompt?: ePrompt.Type | false,
-        promptStyleType?: ePrompt.StyleType,
-        onOk?: Caibird.dp.Func<[], void>,
-        onCancel?: Caibird.dp.Func<[], void>,
-        onEnd?: Caibird.dp.Func<[], void>,
-    };
-}
-
 namespace _cError {
     export class BassError extends Error { }
 
