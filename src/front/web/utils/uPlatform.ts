@@ -6,6 +6,8 @@ import compareVersions, { CompareOperator } from 'compare-versions';
 
 import { PlatformEnum, cPlatform } from '../consts/cPlatform';
 
+export { PlatformEnum } from '../consts/cPlatform';
+
 export namespace uPlatform {
     const OS_NAME_LC = cPlatform.OS_NAME.toLowerCase();
 

@@ -14,6 +14,8 @@ import { uUuid } from '../utils/uUuid';
 
 import type { PromptEnum } from './hPrompt';
 
+export { RequestDeclare } from '../../@com/helpers/hRequest';
+
 export abstract class HRequest<TControllers extends Caibird.dFetch.BaseControllers, TCustomOpt extends Caibird.dp.Obj> extends base {
     protected constructor(protected readonly options: {
         prefix?: string,
