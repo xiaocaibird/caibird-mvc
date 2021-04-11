@@ -3,19 +3,19 @@
  * @Title 常用异常类
  */
 import type { dReport } from '../@types/declares';
-import type { PromptEnum } from '../helpers/hPrompt';
-import type { RequestDeclare } from '../helpers/hRequest';
+import type { ePrompt } from '../helpers/hPrompt';
+import type { dRequest } from '../helpers/hRequest';
 
 let compatible: (instance: Error, args: unknown[]) => void = () => { };
 
 export const setCompatible = (fn: typeof compatible) => compatible = fn;
 
-export declare namespace ErrorDeclare {
+export declare namespace dError {
     type Options = {
         key: string,
         msg?: string,
-        showPrompt?: PromptEnum.Type | false,
-        promptStyleType?: PromptEnum.StyleType,
+        showPrompt?: ePrompt.Type | false,
+        promptStyleType?: ePrompt.StyleType,
         onOk?: Caibird.dp.Func<[], void>,
         onCancel?: Caibird.dp.Func<[], void>,
         onEnd?: Caibird.dp.Func<[], void>,
@@ -27,7 +27,7 @@ namespace _cError {
 
     export class CommonError extends BassError {
         public constructor(
-            public readonly options: ErrorDeclare.Options,
+            public readonly options: dError.Options,
             public readonly logOptions: dReport.ErrorLogOptions | false = false,
             public readonly name = CommonError.name,
         ) {
@@ -42,7 +42,7 @@ namespace _cError {
                 error: Error,
                 errorInfo: React.ErrorInfo,
             },
-            public readonly options: ErrorDeclare.Options,
+            public readonly options: dError.Options,
             public readonly logOptions: dReport.ErrorLogOptions | false = false,
         ) {
             super(options, logOptions, ReactError.name);
@@ -54,9 +54,9 @@ namespace _cError {
         public constructor(
             public readonly details: {
                 error: unknown,
-                info: RequestDeclare.FetchInfo,
+                info: dRequest.FetchInfo,
             },
-            public readonly options: ErrorDeclare.Options,
+            public readonly options: dError.Options,
             public readonly logOptions: dReport.ErrorLogOptions | false = false,
         ) {
             super(options, logOptions, ApiFetchFail.name);
@@ -67,9 +67,9 @@ namespace _cError {
     export class ApiJsonResultEmpty extends CommonError {
         public constructor(
             public readonly details: {
-                info: RequestDeclare.FetchInfo,
+                info: dRequest.FetchInfo,
             },
-            public readonly options: ErrorDeclare.Options,
+            public readonly options: dError.Options,
             public readonly logOptions: dReport.ErrorLogOptions | false = false,
         ) {
             super(options, logOptions, ApiJsonResultEmpty.name);
@@ -81,9 +81,9 @@ namespace _cError {
         public constructor(
             public readonly details: {
                 rsp: Caibird.dFetch.JsonBody,
-                info: RequestDeclare.FetchInfo,
+                info: dRequest.FetchInfo,
             },
-            public readonly options: ErrorDeclare.Options,
+            public readonly options: dError.Options,
             public readonly logOptions: dReport.ErrorLogOptions | false = false,
         ) {
             super(options, logOptions, ApiJsonResultError.name);
@@ -95,9 +95,9 @@ namespace _cError {
         public constructor(
             public readonly details: {
                 rsp: Caibird.dFetch.JsonBody,
-                info: RequestDeclare.FetchInfo,
+                info: dRequest.FetchInfo,
             },
-            public readonly options: ErrorDeclare.Options,
+            public readonly options: dError.Options,
             public readonly logOptions: dReport.ErrorLogOptions | false = false,
         ) {
             super(options, logOptions, LoginError.name);
@@ -107,7 +107,7 @@ namespace _cError {
 
     export class VersionMismatch extends CommonError {
         public constructor(
-            public readonly options: ErrorDeclare.Options,
+            public readonly options: dError.Options,
             public readonly logOptions: dReport.ErrorLogOptions | false = false,
         ) {
             super(options, logOptions, VersionMismatch.name);

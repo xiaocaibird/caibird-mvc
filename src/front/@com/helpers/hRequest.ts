@@ -2,9 +2,9 @@
  * @Owners cmZhou
  * @Title request helper
  */
-import type { PromptEnum } from './hPrompt';
+import type { ePrompt } from './hPrompt';
 
-export declare namespace RequestDeclare {
+export declare namespace dRequest {
     type Options<TNoHandle extends boolean | undefined = undefined, TFormFetch extends boolean | undefined = undefined, TCustom extends Caibird.dp.Obj = Caibird.dp.Obj> = Partial<TCustom> & {
         noHandle?: TNoHandle,
         timeout?: number,
@@ -17,8 +17,8 @@ export declare namespace RequestDeclare {
         jsonpCallbackFuncName?: string,
         type?: Caibird.eHttp.MethodType,
         noReportError?: boolean,
-        errorPrompt?: PromptEnum.Type,
-        errorPromptStyle?: PromptEnum.StyleType,
+        errorPrompt?: ePrompt.Type,
+        errorPromptStyle?: ePrompt.StyleType,
         retryTimes?: number,
         headers?: Caibird.dp.Obj<string>,
         shouldRetry?(opt: {

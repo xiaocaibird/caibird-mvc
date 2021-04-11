@@ -15,7 +15,7 @@ import Sequelize from 'sequelize';
 import type { dMvc, dReport } from '../@types/declares';
 import { cError } from '../consts/cError';
 import { cKey } from '../consts/cKey';
-import { AppEnum } from '../helpers/hApp';
+import { eApp } from '../helpers/hApp';
 import { uArray } from '../utils/uArray';
 import { uFunction } from '../utils/uFunction';
 import { uNumber } from '../utils/uNumber';
@@ -326,13 +326,13 @@ export default class App<TRules extends Caibird.dp.Obj, TState extends Caibird.d
         }
     };
 
-    private readonly onExecute = async (target: dMvc.Action<TRules, TState, TCustom> | dMvc.Controller<TRules, TState, TCustom>, executeType: AppEnum.FilterExecuteType) => {
+    private readonly onExecute = async (target: dMvc.Action<TRules, TState, TCustom> | dMvc.Controller<TRules, TState, TCustom>, executeType: eApp.FilterExecuteType) => {
         const filterOrderList = target.filterOrderList;
         const orderKeys = orderBy(Object.keys(filterOrderList)).reverse();
         for (const key of orderKeys) {
             const filters = filterOrderList[key] || [];
             for (const filter of filters) {
-                if (executeType === AppEnum.FilterExecuteType.Pre) {
+                if (executeType === eApp.FilterExecuteType.Pre) {
                     filter.preExecute && await filter.preExecute(target, contextHelper.get());
                 } else {
                     filter.postExecute && await filter.postExecute(target, contextHelper.get());
@@ -545,8 +545,8 @@ export default class App<TRules extends Caibird.dp.Obj, TState extends Caibird.d
             await this.onCheckRules(Controller, Action);
             contextHelper.addTamp('checkRules_end');
 
-            await this.onExecute(Controller, AppEnum.FilterExecuteType.Pre);
-            await this.onExecute(Action, AppEnum.FilterExecuteType.Pre);
+            await this.onExecute(Controller, eApp.FilterExecuteType.Pre);
+            await this.onExecute(Action, eApp.FilterExecuteType.Pre);
 
             contextHelper.addTamp(`${controllerName}_${actionName}_begin`);
 
@@ -569,8 +569,8 @@ export default class App<TRules extends Caibird.dp.Obj, TState extends Caibird.d
 
             contextHelper.addTamp(`${controllerName}_${actionName}_end`);
 
-            await this.onExecute(Action, AppEnum.FilterExecuteType.Post);
-            await this.onExecute(Controller, AppEnum.FilterExecuteType.Post);
+            await this.onExecute(Action, eApp.FilterExecuteType.Post);
+            await this.onExecute(Controller, eApp.FilterExecuteType.Post);
 
             if (actionReturn == null) {
                 throw new cError.Status(

@@ -5,7 +5,7 @@
 import { cloneDeep } from 'lodash';
 import Redux, { combineReducers, createStore } from 'redux';
 
-export declare namespace ReduxDeclare {
+export declare namespace dRedux {
     type BaseActions = Caibird.dp.Obj<Caibird.dp.Func>;
 
     type TransformActions<TActions extends BaseActions> = {
@@ -33,23 +33,23 @@ export declare namespace ReduxDeclare {
     };
 }
 
-type ActionReturn<TActions extends ReduxDeclare.BaseActions> = {
+type ActionReturn<TActions extends dRedux.BaseActions> = {
     [K in keyof TActions]: ReturnType<TActions[K]>;
 };
 type ReducerHandler<TActions, S, K extends keyof TActions> = GetActionValue<TActions, K> extends never | undefined ? (state: S) => S : (state: S, payload: GetActionValue<TActions, K>) => S;
 type GetActionValue<TActions, K extends keyof TActions> = TActions[K] extends (payload: infer V) => unknown ? V : TActions[K] extends () => unknown ? never : never;
 
-export abstract class HRedux<TState, TActions extends ReduxDeclare.BaseActions = ReduxDeclare.BaseActions> {
+export abstract class HRedux<TState, TActions extends dRedux.BaseActions = dRedux.BaseActions> {
     public static readonly createReducer = <TStatePart, TActionsType>(
-        opt: { handlers: ReduxDeclare.ReducerHandlers<TActionsType, TStatePart>, defaultState: TStatePart },
+        opt: { handlers: dRedux.ReducerHandlers<TActionsType, TStatePart>, defaultState: TStatePart },
     ) => ({
         handlers: opt.handlers,
         defaultState: cloneDeep(opt.defaultState),
     });
 
     protected constructor(protected readonly options: {
-        actions: ReduxDeclare.TransformActions<TActions>,
-        reducers: ReduxDeclare.Reducers<TActions, TState>,
+        actions: dRedux.TransformActions<TActions>,
+        reducers: dRedux.Reducers<TActions, TState>,
         storageKey: string,
     }) {
         this.action = { ...options.actions };
@@ -74,7 +74,7 @@ export abstract class HRedux<TState, TActions extends ReduxDeclare.BaseActions =
     protected defaultStoreState: Partial<TState> = {};
     protected _lastState = this.Store.getState();
 
-    public readonly action: ReduxDeclare.TransformActions<TActions>;
+    public readonly action: dRedux.TransformActions<TActions>;
 
     protected storeCreater(initState?: Redux.PreloadedState<TState>) {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -101,7 +101,7 @@ export abstract class HRedux<TState, TActions extends ReduxDeclare.BaseActions =
         };
     }
 
-    public readonly dispatch = <T extends ReduxDeclare.ActionResult<TActions>[keyof ReduxDeclare.ActionResult<TActions>]>(actionResult: T) => {
+    public readonly dispatch = <T extends dRedux.ActionResult<TActions>[keyof dRedux.ActionResult<TActions>]>(actionResult: T) => {
         this.Store.dispatch(actionResult);
         this._lastState = this.Store.getState();
     };

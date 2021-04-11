@@ -4,7 +4,7 @@
  */
 import _App from '../app';
 
-export declare namespace AppDeclare {
+export declare namespace dApp {
     type AppClass = typeof _App;
 
     type App<
@@ -14,14 +14,14 @@ export declare namespace AppDeclare {
         TControllerDefaultConfig extends Caibird.dp.Obj | undefined = Caibird.dp.Obj | undefined> = _App<TRules, TState, TCustom, TControllerDefaultConfig>;
 }
 
-export declare namespace AppEnum {
+export declare namespace eApp {
     const enum FilterExecuteType {
         Pre = 0,
         Post = 1,
     }
 }
 
-export abstract class HApp<TApp extends AppDeclare.App> {
+export abstract class HApp<TApp extends dApp.App> {
     protected constructor(public readonly app: TApp) { }
 
     public readonly ctx = this.app.helpers.context;

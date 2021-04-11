@@ -6,7 +6,7 @@ import { cError } from '../consts/cError';
 import { uFunction } from '../utils/uFunction';
 import { uObject } from '../utils/uObject';
 
-export declare namespace AsyncEnum {
+export declare namespace eAsync {
     const enum Action {
         Break = 0, // 中断其它
         Hide = 1, // 隐藏其它
@@ -21,10 +21,10 @@ export abstract class HAsync<TCustomRunOpt extends Caibird.dp.Obj = Caibird.dp.O
     protected constructor() { }
 
     protected abstract readonly onRunBegin?: (...p: Parameters<HAsync<TCustomRunOpt>['run']>) => Caibird.dp.PromiseOrSelf<void>;
-    protected abstract readonly onRunEnd?: (status: AsyncEnum.Status, ...p: Parameters<HAsync<TCustomRunOpt>['run']>) => Caibird.dp.PromiseOrSelf<void>;
+    protected abstract readonly onRunEnd?: (status: eAsync.Status, ...p: Parameters<HAsync<TCustomRunOpt>['run']>) => Caibird.dp.PromiseOrSelf<void>;
 
     protected readonly map: Caibird.dp.Obj<Caibird.dp.Obj<{
-        status: AsyncEnum.Status,
+        status: eAsync.Status,
         task: Promise<unknown>,
     } | undefined>> = {};
 
@@ -38,29 +38,29 @@ export abstract class HAsync<TCustomRunOpt extends Caibird.dp.Obj = Caibird.dp.O
         if (strKey) {
             const obj = this.map[strKey][strPromiseKey];
             if (obj) {
-                if (obj.status === AsyncEnum.Status.Running) {
-                    return AsyncEnum.Status.Running;
-                } else if (obj.status === AsyncEnum.Status.BeHided) {
-                    return AsyncEnum.Status.BeHided;
+                if (obj.status === eAsync.Status.Running) {
+                    return eAsync.Status.Running;
+                } else if (obj.status === eAsync.Status.BeHided) {
+                    return eAsync.Status.BeHided;
                 }
             }
-            return AsyncEnum.Status.BeBreaked;
+            return eAsync.Status.BeBreaked;
         }
-        return AsyncEnum.Status.Running;
+        return eAsync.Status.Running;
     };
 
     public readonly run = async <T = void>(task: Caibird.dp.PromiseFunc<unknown[], T> | Promise<T>, opt: Options & Partial<TCustomRunOpt> = {}) => {
-        const { action = AsyncEnum.Action.Break, key, onExecuteSuccess, onExecuteFail, onExecuteEnd } = opt;
+        const { action = eAsync.Action.Break, key, onExecuteSuccess, onExecuteFail, onExecuteEnd } = opt;
         const promiseKey = Symbol();
 
         const handleStatus = (callback?: Callback, noThrow = false) => {
             const status = this.getNowState(promiseKey, key);
 
-            if (status === AsyncEnum.Status.BeBreaked) {
+            if (status === eAsync.Status.BeBreaked) {
                 if (noThrow) return status;
                 throw new cError.Noop(`break ${key?.toString() ?? ''} promise`);
             }
-            if (status === AsyncEnum.Status.Running) {
+            if (status === eAsync.Status.Running) {
                 callback?.(status);
             }
             return status;
@@ -79,15 +79,15 @@ export abstract class HAsync<TCustomRunOpt extends Caibird.dp.Obj = Caibird.dp.O
                 const strItem = item as unknown as string;
                 const promiseInfo = this.map[strKey][strItem];
                 if (promiseInfo) {
-                    if (action === AsyncEnum.Action.Break) {
-                        promiseInfo.status = AsyncEnum.Status.BeBreaked;
-                    } else if (action === AsyncEnum.Action.Hide) {
-                        promiseInfo.status = AsyncEnum.Status.BeHided;
+                    if (action === eAsync.Action.Break) {
+                        promiseInfo.status = eAsync.Status.BeBreaked;
+                    } else if (action === eAsync.Action.Hide) {
+                        promiseInfo.status = eAsync.Status.BeHided;
                     }
                 }
             });
             this.map[strKey][strPromiseKey] = {
-                status: AsyncEnum.Status.Running,
+                status: eAsync.Status.Running,
                 task: promise,
             };
         }
@@ -113,7 +113,7 @@ export abstract class HAsync<TCustomRunOpt extends Caibird.dp.Obj = Caibird.dp.O
 }
 
 //#region 私有类型
-type Callback = (status: AsyncEnum.Status) => void;
+type Callback = (status: eAsync.Status) => void;
 
 type Options = {
     onExecuteSuccess?: Callback,
@@ -121,6 +121,6 @@ type Options = {
     onExecuteEnd?: Callback,
 
     key?: symbol,
-    action?: AsyncEnum.Action,
+    action?: eAsync.Action,
 };
 //#endregion

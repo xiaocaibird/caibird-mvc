@@ -3,7 +3,7 @@
  * @Title prompt helper
  */
 
-export declare namespace PromptEnum {
+export declare namespace ePrompt {
     const enum Type {
         Modal = 0,
         Toast = 1,

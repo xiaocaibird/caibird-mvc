@@ -8,7 +8,7 @@ import Sequelize from 'sequelize';
 import { reportHelper } from '../app/helpers';
 import { cError } from '../consts/cError';
 
-export declare namespace DbDeclare {
+export declare namespace dDb {
     type Config = {
         username?: string,
         password?: string,
@@ -17,7 +17,7 @@ export declare namespace DbDeclare {
     };
 }
 
-export declare namespace DbEnum {
+export declare namespace eDb {
     const enum Op {
         eq = 'eq',
         ne = 'ne',

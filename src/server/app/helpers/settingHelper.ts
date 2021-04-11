@@ -5,7 +5,7 @@
 import fs from 'fs';
 import path from 'path';
 
-export declare namespace SettingDeclare {
+export declare namespace dSetting {
     type CheckType<T extends Caibird.dp.Obj<Caibird.dp.Obj | string | undefined>> = T;
 
     type GlobalConfig = CheckType<{
@@ -67,7 +67,7 @@ class SettingHelper {
 
     public readonly setProjectName = (name: string) => this.projectName = name;
 
-    public readonly getValue = <T extends SettingDeclare.CustomConfig | SettingDeclare.CustomSecret | SettingDeclare.GlobalConfig | SettingDeclare.GlobalSecret, TKey extends keyof T>(
+    public readonly getValue = <T extends dSetting.CustomConfig | dSetting.CustomSecret | dSetting.GlobalConfig | dSetting.GlobalSecret, TKey extends keyof T>(
         key: TKey, filename: string, dft?: T[TKey],
     ): Caibird.dp.DeepPartial<T[TKey]> | undefined => {
         try {
@@ -94,13 +94,13 @@ class SettingHelper {
         }
     };
 
-    public readonly getGlobalConfig = <TKey extends keyof SettingDeclare.GlobalConfig>(key: TKey, dft?: SettingDeclare.GlobalConfig[TKey]) => this.getValue<SettingDeclare.GlobalConfig, TKey>(key, this.GLOBAL_CONFIG_NAME, dft);
+    public readonly getGlobalConfig = <TKey extends keyof dSetting.GlobalConfig>(key: TKey, dft?: dSetting.GlobalConfig[TKey]) => this.getValue<dSetting.GlobalConfig, TKey>(key, this.GLOBAL_CONFIG_NAME, dft);
 
-    public readonly getGlobalSecret = <TKey extends keyof SettingDeclare.GlobalSecret>(key: TKey, dft?: SettingDeclare.GlobalSecret[TKey]) => this.getValue<SettingDeclare.GlobalSecret, TKey>(key, this.GLOBAL_SECRET_NAME, dft);
+    public readonly getGlobalSecret = <TKey extends keyof dSetting.GlobalSecret>(key: TKey, dft?: dSetting.GlobalSecret[TKey]) => this.getValue<dSetting.GlobalSecret, TKey>(key, this.GLOBAL_SECRET_NAME, dft);
 
-    public readonly getCustomConfig = <TKey extends keyof SettingDeclare.CustomConfig>(key: TKey, dft?: SettingDeclare.CustomConfig[TKey]) => this.getValue<SettingDeclare.CustomConfig, TKey>(key, this.CUSTOM_CONFIG_NAME, dft);
+    public readonly getCustomConfig = <TKey extends keyof dSetting.CustomConfig>(key: TKey, dft?: dSetting.CustomConfig[TKey]) => this.getValue<dSetting.CustomConfig, TKey>(key, this.CUSTOM_CONFIG_NAME, dft);
 
-    public readonly getCustomSecret = <TKey extends keyof SettingDeclare.CustomSecret>(key: TKey, dft?: SettingDeclare.CustomSecret[TKey]) => this.getValue<SettingDeclare.CustomSecret, TKey>(key, this.CUSTOM_SECRET_NAME, dft);
+    public readonly getCustomSecret = <TKey extends keyof dSetting.CustomSecret>(key: TKey, dft?: dSetting.CustomSecret[TKey]) => this.getValue<dSetting.CustomSecret, TKey>(key, this.CUSTOM_SECRET_NAME, dft);
 }
 
 export const settingHelper = SettingHelper.instance;
