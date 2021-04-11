@@ -4,16 +4,7 @@
  */
 import platform from 'platform';
 
-export declare namespace ePlatform {
-    const enum OsName {
-        Windows = 'Windows',
-        MacOS = 'MacOS',
-        Linux = 'Linux',
-
-        IOS = 'IOS',
-        Android = 'Android',
-    }
-}
+import { ePlatform } from '../@types/enums';
 
 namespace _cPlatform {
     export const MODEL = platform.product ?? '';
