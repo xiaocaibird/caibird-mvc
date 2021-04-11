@@ -8,57 +8,6 @@ import Sequelize from 'sequelize';
 import { reportHelper } from '../app/helpers';
 import { cError } from '../consts/cError';
 
-export declare namespace dDb {
-    type Config = {
-        username?: string,
-        password?: string,
-        host?: string,
-        port?: number,
-    };
-}
-
-export declare namespace eDb {
-    const enum Op {
-        eq = 'eq',
-        ne = 'ne',
-        gte = 'gte',
-        gt = 'gt',
-        lte = 'lte',
-        lt = 'lt',
-        not = 'not',
-        is = 'is',
-        in = 'in',
-        notIn = 'notIn',
-        like = 'like',
-        notLike = 'notLike',
-        iLike = 'iLike',
-        notILike = 'notILike',
-        regexp = 'regexp',
-        notRegexp = 'notRegexp',
-        iRegexp = 'iRegexp',
-        notIRegexp = 'notIRegexp',
-        between = 'between',
-        notBetween = 'notBetween',
-        overlap = 'overlap',
-        contains = 'contains',
-        contained = 'contained',
-        adjacent = 'adjacent',
-        strictLeft = 'strictLeft',
-        strictRight = 'strictRight',
-        noExtendRight = 'noExtendRight',
-        noExtendLeft = 'noExtendLeft',
-        and = 'and',
-        or = 'or',
-        any = 'any',
-        all = 'all',
-        values = 'values',
-        col = 'col',
-        placeholder = 'placeholder',
-        join = 'join',
-        raw = 'raw',
-    }
-}
-
 export abstract class HDb {
     protected readonly baseOptions: Sequelize.Options = {
         pool: {
