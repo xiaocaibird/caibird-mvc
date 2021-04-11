@@ -4,17 +4,15 @@
  */
 import { throttle } from 'lodash';
 
-import { HRequest as base, dRequest } from '../../@com/helpers/hRequest';
+import { HRequest as base } from '../../@com/helpers/hRequest';
+import { dRequest } from '../@types/declares';
+import { ePrompt } from '../@types/enums';
 import { cError } from '../consts/cError';
 import { cKey } from '../consts/cKey';
 import { uHttp } from '../utils/uHttp';
 import { uObject } from '../utils/uObject';
 import { uString } from '../utils/uString';
 import { uUuid } from '../utils/uUuid';
-
-import type { ePrompt } from './hPrompt';
-
-export { dRequest } from '../../@com/helpers/hRequest';
 
 export abstract class HRequest<TControllers extends Caibird.dFetch.BaseControllers, TCustomOpt extends Caibird.dp.Obj> extends base {
     protected constructor(protected readonly options: {

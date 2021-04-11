@@ -3,9 +3,8 @@
  * @Title public flatten函数
  * @Details 打平树结构
  */
+import type { dTree } from '../../@types/declares';
 import { uObject } from '../uObject';
-
-import type { dTree } from './';
 
 type FlattenOption<TKeepChildren extends boolean | undefined> = { keepChildren?: TKeepChildren };
 const _flatten = <TBase extends dTree.Base, TKeepChildren extends boolean | undefined>(

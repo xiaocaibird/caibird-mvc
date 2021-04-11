@@ -13,9 +13,9 @@ import { orderBy } from 'lodash';
 import Sequelize from 'sequelize';
 
 import type { dMvc, dReport } from '../@types/declares';
+import { eApp } from '../@types/enums';
 import { cError } from '../consts/cError';
 import { cKey } from '../consts/cKey';
-import { eApp } from '../helpers/hApp';
 import { uArray } from '../utils/uArray';
 import { uFunction } from '../utils/uFunction';
 import { uNumber } from '../utils/uNumber';

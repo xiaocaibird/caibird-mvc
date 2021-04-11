@@ -4,9 +4,8 @@
  */
 import compareVersions, { CompareOperator } from 'compare-versions';
 
-import { cPlatform, ePlatform } from '../consts/cPlatform';
-
-export { ePlatform } from '../consts/cPlatform';
+import { ePlatform } from '../@types/enums';
+import { cPlatform } from '../consts/cPlatform';
 
 export namespace uPlatform {
     const OS_NAME_LC = cPlatform.OS_NAME.toLowerCase();

@@ -3,7 +3,8 @@
  * @Title public getPath函数
  * @Details 获取一个tree结构的某个id的链路
  */
-import type { dTree } from './';
+import type { dTree } from '../../@types/declares';
+
 import { flatten } from './flatten';
 
 const _getPath = <TBase extends dTree.Base, TId extends dTree.Id>(id: TId, treeList: TBase[], result: TBase[]) => {
