@@ -8,7 +8,7 @@ const {
     ColorsEnum,
 } = require('../utils');
 
-const defaultGlobalList = [];
+const defaultGlobalList = ['rimraf'];
 
 module.exports = ({
     globalList,
