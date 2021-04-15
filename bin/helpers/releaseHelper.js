@@ -18,9 +18,9 @@ const {
 
 const upload = async ({ ossConfig }) => {
     const jsBundleDir = ossConfig.jsBundleDir;
-    const files = fs.readdirSync(jsBundleDir);
+    const files = fs.existsSync(jsBundleDir) && fs.readdirSync(jsBundleDir);
 
-    if (!files.length) {
+    if (files && !files.length) {
         return;
     }
 

@@ -1,6 +1,6 @@
 {
   "name": "caibird",
-  "version": "2.6.3",
+  "version": "2.6.4",
   "private": false,
   "scripts": {
     "preinstall": "git config core.ignorecase false & rimraf .eslint/cache &",
