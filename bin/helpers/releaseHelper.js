@@ -17,11 +17,15 @@ const {
 } = require('../utils');
 
 const upload = async ({ ossConfig }) => {
-    const ossDir = ossConfig.dir;
-    const ossOptions = ossConfig.getOssOptions && await ossConfig.getOssOptions();
-
     const jsBundleDir = ossConfig.jsBundleDir;
     const files = fs.readdirSync(jsBundleDir);
+
+    if (!files.length) {
+        return;
+    }
+
+    const ossDir = ossConfig.dir;
+    const ossOptions = ossConfig.getOssOptions && await ossConfig.getOssOptions();
 
     printf('=====开始上传=====', ColorsEnum.CYAN);
 
