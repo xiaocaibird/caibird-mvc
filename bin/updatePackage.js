@@ -7,5 +7,5 @@ const updatePackageHelper = require('./helpers/updatePackageHelper');
 updatePackageHelper({
     packageJson: require('../package.json'),
     depLockList: [],
-    devDepLockList: ['sequelize', 'webpack', 'webpack-cli', 'html-webpack-plugin', 'terser-webpack-plugin', '@types/terser-webpack-plugin', 'history', '@types/history'],
+    devDepLockList: ['tapable', 'sequelize', 'webpack', 'webpack-cli', 'html-webpack-plugin', 'terser-webpack-plugin', '@types/terser-webpack-plugin', 'history', '@types/history'],
 });
