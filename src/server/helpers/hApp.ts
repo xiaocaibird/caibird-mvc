@@ -10,4 +10,6 @@ export abstract class HApp<TApp extends dApp.App> {
     public readonly ctx: TApp['helpers']['context'] = this.app.helpers.context;
 
     public readonly mvc: TApp['helpers']['mvc'] = this.app.helpers.mvc;
+
+    public readonly baseController: TApp['helpers']['mvc']['baseController'] = this.mvc.baseController;
 }
