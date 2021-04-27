@@ -23,7 +23,7 @@ const strDecipher = (encrypted: string, k: CipherKey, iv: BinaryLike | null,
     return decrypted;
 };
 
-export const getStringCipher = (key: CipherKey = 'caibird_default_key', iv: BinaryLike = 'caibird_default_iv1', params: {
+export const getStringCipher = (key: CipherKey = 'caibird_default1', iv: BinaryLike = 'caibird_default1', params: {
     algorithm?: string,
     encryptInputEncoding?: Encoding,
     encryptOutputEncoding?: BinaryToTextEncoding,
