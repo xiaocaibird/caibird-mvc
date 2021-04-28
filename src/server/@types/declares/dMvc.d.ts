@@ -17,46 +17,46 @@ export namespace dMvc {
 
     type Ctx<TState, TCustom> = BaseKoa.ParameterizedContext<CtxState<TState>, CtxCustom<TState, TCustom>>;
 
-    type Koa<TState, TCustom> = BaseKoa<CtxState<TState>, CtxCustom<TState, TCustom>>;
+    type Koa<TCtxState, TCtxCustom> = BaseKoa<CtxState<TCtxState>, CtxCustom<TCtxState, TCtxCustom>>;
 
-    type Middleware<TState, TCustom> = BaseKoa.Middleware<CtxState<TState>, CtxCustom<TState, TCustom>>;
+    type Middleware<TCtxState, TCtxCustom> = BaseKoa.Middleware<CtxState<TCtxState>, CtxCustom<TCtxState, TCtxCustom>>;
 
     type View = typeof import('../../app').default['View'];
 
-    type BaseController<TState, TCustom> = new (ctx: Ctx<TState, TCustom>) => unknown;
+    type BaseController<TCtxState, TCtxCustom> = new (ctx: Ctx<TCtxState, TCtxCustom>) => unknown;
 
-    type ControllerProps<TRules, TState, TCustom> = {
-        __actions__: Caibird.dp.Obj<Action<TRules, TState, TCustom>>,
+    type ControllerProps<TRules, TCtxState, TCtxCustom> = {
+        __actions__: Caibird.dp.Obj<Action<TRules, TCtxState, TCtxCustom>>,
     };
 
-    type InitController<TRules, TState, TCustom> = BaseController<TState, TCustom> & Partial<CommonProps<TRules, TState, TCustom> & ControllerProps<TRules, TState, TCustom>>;
-    type Controller<TRules, TState, TCustom> = BaseController<TState, TCustom> & CommonProps<TRules, TState, TCustom> & ControllerProps<TRules, TState, TCustom>;
+    type InitController<TRules, TCtxState, TCtxCustom> = BaseController<TCtxState, TCtxCustom> & Partial<CommonProps<TRules, TCtxState, TCtxCustom> & ControllerProps<TRules, TCtxState, TCtxCustom>>;
+    type Controller<TRules, TCtxState, TCtxCustom> = BaseController<TCtxState, TCtxCustom> & CommonProps<TRules, TCtxState, TCtxCustom> & ControllerProps<TRules, TCtxState, TCtxCustom>;
 
     type BaseAction = Caibird.dp.PromiseFunc;
 
-    type InitAction<TRules, TState, TCustom> = BaseAction & Partial<CommonProps<TRules, TState, TCustom>>;
-    type Action<TRules, TState, TCustom> = BaseAction & CommonProps<TRules, TState, TCustom>;
+    type InitAction<TRules, TCtxState, TCtxCustom> = BaseAction & Partial<CommonProps<TRules, TCtxState, TCtxCustom>>;
+    type Action<TRules, TCtxState, TCtxCustom> = BaseAction & CommonProps<TRules, TCtxState, TCtxCustom>;
 
-    interface ActionPropertyDescriptor<TRules, TState, TCustom> extends PropertyDescriptor {
-        value?: InitAction<TRules, TState, TCustom>,
+    interface ActionPropertyDescriptor<TRules, TCtxState, TCtxCustom> extends PropertyDescriptor {
+        value?: InitAction<TRules, TCtxState, TCtxCustom>,
     }
 
-    type FilterController<TRules, TState, TCustom> = InitController<TRules, TState, TCustom> | InstanceType<InitController<TRules, TState, TCustom>>;
-    type Decorator<TRules, TState, TCustom> = (controller: FilterController<TRules, TState, TCustom>, action?: string, actionDes?: ActionPropertyDescriptor<TRules, TState, TCustom>) => void;
+    type FilterController<TRules, TCtxState, TCtxCustom> = InitController<TRules, TCtxState, TCtxCustom> | InstanceType<InitController<TRules, TCtxState, TCtxCustom>>;
+    type Decorator<TRules, TCtxState, TCtxCustom> = (controller: FilterController<TRules, TCtxState, TCtxCustom>, action?: string, actionDes?: ActionPropertyDescriptor<TRules, TCtxState, TCtxCustom>) => void;
 
-    type Filter<TRules, TState, TCustom> = Caibird.dp.Func & FilterProps<TRules, TState, TCustom>;
+    type Filter<TRules, TCtxState, TCtxCustom> = Caibird.dp.Func & FilterProps<TRules, TCtxState, TCtxCustom>;
 
-    type FilterProps<TRules, TState, TCustom> = {
+    type FilterProps<TRules, TCtxState, TCtxCustom> = {
         filterName?: string,
         defaultOrder?: number,
-        onCheckRule?(target: Action<TRules, TState, TCustom> | Controller<TRules, TState, TCustom>, options: { controller: string, action: string }, ctx: Ctx<TState, TCustom>): Caibird.dp.PromiseOrSelf<void>,
-        preExecute?(target: Action<TRules, TState, TCustom> | Controller<TRules, TState, TCustom>, ctx: Ctx<TState, TCustom>): Caibird.dp.PromiseOrSelf<void>,
-        postExecute?(target: Action<TRules, TState, TCustom> | Controller<TRules, TState, TCustom>, ctx: Ctx<TState, TCustom>): Caibird.dp.PromiseOrSelf<void>,
+        onCheckRule?(target: Action<TRules, TCtxState, TCtxCustom> | Controller<TRules, TCtxState, TCtxCustom>, options: { controller: string, action: string }, ctx: Ctx<TCtxState, TCtxCustom>): Caibird.dp.PromiseOrSelf<void>,
+        preExecute?(target: Action<TRules, TCtxState, TCtxCustom> | Controller<TRules, TCtxState, TCtxCustom>, ctx: Ctx<TCtxState, TCtxCustom>): Caibird.dp.PromiseOrSelf<void>,
+        postExecute?(target: Action<TRules, TCtxState, TCtxCustom> | Controller<TRules, TCtxState, TCtxCustom>, ctx: Ctx<TCtxState, TCtxCustom>): Caibird.dp.PromiseOrSelf<void>,
     };
 
-    type CommonProps<TRules, TState, TCustom> = {
-        filterOrderList: Caibird.dp.Obj<Filter<TRules, TState, TCustom>[]>,
-        filterList: Filter<TRules, TState, TCustom>[],
+    type CommonProps<TRules, TCtxState, TCtxCustom> = {
+        filterOrderList: Caibird.dp.Obj<Filter<TRules, TCtxState, TCtxCustom>[]>,
+        filterList: Filter<TRules, TCtxState, TCtxCustom>[],
         filterRules: Partial<TRules> & { httpMethod?: Caibird.eHttp.MethodType | Caibird.eHttp.MethodType[] },
         filterInfo: {
             name?: string,
