@@ -149,6 +149,13 @@ export default class App<TRules extends Caibird.dp.Obj, TCtxState extends Caibir
         const View = App.View;
 
         return class baseController {
+            // TODO 优化相关逻辑
+            public static readonly filterOrderList = {};
+            public static readonly filterList = [];
+            public static readonly filterRules = {};
+            public static readonly filterInfo = {};
+            public static readonly __actions__ = {};
+
             public constructor(
                 protected readonly ctx: dMvc.Ctx<TCtxState, TCtxCustom>,
             ) { }
