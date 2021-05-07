@@ -137,14 +137,9 @@ export default class App<TRules extends Caibird.dp.Obj, TCtxState extends Caibir
             getControllerName: this.getControllerName.bind(this),
             getActionName: this.getActionName.bind(this),
             filterCreater: this.filterCreater.bind(this),
-            registerActions: <T extends Caibird.dp.Class>(controller: T) => {
-                Object.getOwnPropertyNames(controller.prototype).forEach(key => {
-                    if (key !== 'constructor') {
-                        Reflect.defineProperty(controller.prototype as Caibird.dp.Obj, key, {
-                            enumerable: true,
-                        });
-                    }
-                });
+            registerController: <T extends Caibird.dp.Class>(controller: T) => {
+                this.initController(controller);
+                this.registerActions(controller);
 
                 return controller;
             },
@@ -200,6 +195,7 @@ export default class App<TRules extends Caibird.dp.Obj, TCtxState extends Caibir
 
         const ACtrl = Object.getPrototypeOf(target) as Caibird.dp.Func & Partial<dMvc.CommonProps<TRules, TCtxState, TCtxCustom>>;
 
+        // TODO 与initController中的逻辑有重复
         if (isController && Function.prototype !== ACtrl && target.filterInfo === ACtrl.filterInfo || !target.filterInfo) {
             target.filterInfo = {};
         }
@@ -228,7 +224,52 @@ export default class App<TRules extends Caibird.dp.Obj, TCtxState extends Caibir
         return target as T extends Caibird.dp.Func ? dMvc.BaseController<TCtxState, TCtxCustom> & dMvc.CommonProps<TRules, TCtxState, TCtxCustom> & dMvc.ControllerProps<TRules, TCtxState, TCtxCustom> : dMvc.BaseAction & dMvc.CommonProps<TRules, TCtxState, TCtxCustom>;
     };
 
-    private readonly initController = (startOpt: StartOpt<TRules, TCtxState, TCtxCustom>) => {
+    private readonly initController = (controller: dMvc.InitController<TRules, TCtxState, TCtxCustom>) => {
+        const AController = Object.getPrototypeOf(controller) as Caibird.dp.Class & Partial<dMvc.CommonProps<TRules, TCtxState, TCtxCustom>>;
+
+        if (controller.filterList === AController.filterList || !controller.filterList) {
+            controller.filterList = [];
+        }
+        if (controller.filterInfo === AController.filterInfo || !controller.filterInfo) {
+            controller.filterInfo = {};
+        }
+        if (controller.filterRules === AController.filterRules || !controller.filterRules) {
+            controller.filterRules = {};
+        }
+        if (controller.filterOrderList === AController.filterOrderList || !controller.filterOrderList) {
+            controller.filterOrderList = {};
+        }
+        if (AController.filterOrderList) {
+            for (const order in AController.filterOrderList) {
+                for (const filter of Object.values(AController.filterOrderList[order])) {
+                    if (!controller.filterList.includes(filter)) {
+                        controller.filterList.push(filter);
+                        if (!controller.filterOrderList[order]) {
+                            controller.filterOrderList[order] = [];
+                        }
+                        controller.filterOrderList[order].push(filter);
+                    }
+                }
+            }
+        }
+
+        // eslint-disable-next-line prefer-object-spread
+        controller.filterRules = Object.assign({}, AController.filterRules, controller.filterRules);
+
+        return controller as dMvc.Controller<TRules, TCtxState, TCtxCustom>;
+    };
+
+    private readonly registerActions = <T extends Caibird.dp.Class>(controller: T) => {
+        Object.getOwnPropertyNames(controller.prototype).forEach(key => {
+            if (key !== 'constructor') {
+                Reflect.defineProperty(controller.prototype as Caibird.dp.Obj, key, {
+                    enumerable: true,
+                });
+            }
+        });
+    };
+
+    private readonly registerControllers = (startOpt: StartOpt<TRules, TCtxState, TCtxCustom>) => {
         const { controllers, defaultFilters = [] } = startOpt;
 
         const baseController: Caibird.dp.Class & Partial<dMvc.CommonProps<TRules, TCtxState, TCtxCustom>> = this.baseController;
@@ -238,35 +279,10 @@ export default class App<TRules extends Caibird.dp.Obj, TCtxState extends Caibir
         defaultFilters.forEach(filter => filter(setClass));
 
         for (const target of Object.values(controllers)) {
-            const controller = target as dMvc.InitController<TRules, TCtxState, TCtxCustom>;
+            const controller = this.initController(target as dMvc.InitController<TRules, TCtxState, TCtxCustom>);
 
             if (!uFunction.checkExtendsClass(controller, baseController)) {
                 throw new Error(`${(controller as unknown as Caibird.dp.Class).name} controller 没有继承 baseController！`);
-            }
-
-            const AController = Object.getPrototypeOf(target) as Caibird.dp.Class & Partial<dMvc.CommonProps<TRules, TCtxState, TCtxCustom>>;
-
-            if (!controller.filterList) {
-                controller.filterList = [];
-            }
-            if (!controller.filterOrderList) {
-                controller.filterOrderList = {};
-            }
-            if (!controller.filterInfo) {
-                controller.filterInfo = {};
-            }
-            if (AController.filterOrderList) {
-                for (const order in AController.filterOrderList) {
-                    for (const filter of Object.values(AController.filterOrderList[order])) {
-                        if (!controller.filterList.includes(filter)) {
-                            controller.filterList.push(filter);
-                            if (!controller.filterOrderList[order]) {
-                                controller.filterOrderList[order] = [];
-                            }
-                            controller.filterOrderList[order].push(filter);
-                        }
-                    }
-                }
             }
 
             if (setClass.filterOrderList) {
@@ -284,7 +300,7 @@ export default class App<TRules extends Caibird.dp.Obj, TCtxState extends Caibir
             }
 
             // eslint-disable-next-line prefer-object-spread
-            controller.filterRules = Object.assign({}, setClass.filterRules, AController.filterRules, controller.filterRules);
+            controller.filterRules = Object.assign({}, setClass.filterRules, controller.filterRules);
 
             const controllerName = controller.name;
             const key = this.getControllerName(controllerName);
@@ -296,7 +312,7 @@ export default class App<TRules extends Caibird.dp.Obj, TCtxState extends Caibir
             controller.__actions__ = {};
             const actions = controller.__actions__;
 
-            this.helpers.mvc.registerActions(controller);
+            this.registerActions(controller);
 
             for (const action in controller.prototype as Caibird.dp.Obj) {
                 if (action === 'constructor') continue;
@@ -313,7 +329,7 @@ export default class App<TRules extends Caibird.dp.Obj, TCtxState extends Caibir
                 actions[actionKey] = actionFunc as dMvc.Action<TRules, TCtxState, TCtxCustom>;
             }
 
-            this.apiMap[key] = controller as dMvc.Controller<TRules, TCtxState, TCtxCustom>;
+            this.apiMap[key] = controller;
         }
     };
 
@@ -426,7 +442,7 @@ export default class App<TRules extends Caibird.dp.Obj, TCtxState extends Caibir
         if (disableDefaultTimestamp) {
             contextHelper.disableDefaultTimestamp();
         }
-        this.initController(startOpt);
+        this.registerControllers(startOpt);
     };
 
     private readonly defaultOnRequestError = (error: Error | InstanceType<typeof cError.Base>) => {
