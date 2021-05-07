@@ -296,7 +296,6 @@ export default class App<TRules extends Caibird.dp.Obj, TCtxState extends Caibir
             controller.__actions__ = {};
             const actions = controller.__actions__;
 
-            // eslint-disable-next-line @typescript-eslint/tslint/config
             this.helpers.mvc.registerActions(controller);
 
             for (const action in controller.prototype as Caibird.dp.Obj) {

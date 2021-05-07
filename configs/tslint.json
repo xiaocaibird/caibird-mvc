@@ -156,7 +156,7 @@
         //没有在package.json引入的模块不允许import
         "no-implicit-dependencies": false,
         //当泛型方法无法根据参数推断类型时，必需显式指定泛型的类型或设置默认类型，【编译时检查】
-        "no-inferred-empty-object-type": true,
+        "no-inferred-empty-object-type": false,
         //禁止在非字符串模板中使用${}(普通字符串中用${}时很容易知道是常规字符串，这里没必要禁用)
         "no-invalid-template-strings": false,
         //禁止在普通的函数里用this，只能在类的方法里使用(没必要)
