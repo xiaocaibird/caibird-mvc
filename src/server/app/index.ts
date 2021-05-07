@@ -8,6 +8,7 @@ import Koa from 'koa';
 import koaBody from 'koa-body';
 import KoaRouter from 'koa-router';
 import type KoaSend from 'koa-send';
+import koaSession from 'koa-session';
 import koaViews from 'koa-views';
 import { orderBy } from 'lodash';
 import Sequelize from 'sequelize';
@@ -623,6 +624,7 @@ export default class App<TRules extends Caibird.dp.Obj, TCtxState extends Caibir
             onPreUseMvc,
             onPostUseMvc,
             renderConfig,
+            sessionOptions,
         } = this.options;
 
         this.koa.use(this.entryMiddleware);
@@ -632,6 +634,12 @@ export default class App<TRules extends Caibird.dp.Obj, TCtxState extends Caibir
         }
         onPreUseKoaBody && await onPreUseKoaBody(this.koa, this);
         this.koa.use(koaBody({ strict: false, ...bodyOptions }));
+        sessionOptions !== false && this.koa.use(koaSession({
+            key: `${Caibird.env.PROJECT_NAME}_session`,
+            maxAge: Caibird.eDate.MsCount.OneDay * Caibird.eDate.DayCount.OneYear,
+            ...sessionOptions,
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        }, this.koa as any));
         onPreUseMvc && await onPreUseMvc(this.koa, this);
         this.koa.use(this.getRoutes());
         onPostUseMvc && await onPostUseMvc(this.koa, this);
@@ -699,6 +707,7 @@ type Options<TRules extends Caibird.dp.Obj, TCtxState extends Caibird.dp.Obj, TC
         dir: string,
         opt?: Parameters<typeof koaViews>[1],
     },
+    sessionOptions?: koaSession.opts | false,
 
     onPreUseKoaBody?(koa: dMvc.Koa<TCtxState, TCtxCustom>, app: App<TRules, TCtxState, TCtxCustom, TControllerDefaultConfig>): Caibird.dp.PromiseOrSelf<void>,
     onPreUseMvc?(koa: dMvc.Koa<TCtxState, TCtxCustom>, app: App<TRules, TCtxState, TCtxCustom, TControllerDefaultConfig>): Caibird.dp.PromiseOrSelf<void>,
