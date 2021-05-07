@@ -19,7 +19,7 @@ export default (opt: {
             './dist/@modules/caibird/src/public',
             './dist/@modules/caibird/src/server',
 
-            './dist/@scenes/*/server',
+            './dist/@scenes',
 
             './dist/@common/_config.js',
             './dist/@common/public',
@@ -32,6 +32,7 @@ export default (opt: {
         delay: delay ?? DEFAULT_DELAY,
         ignore: [
             'node_modules',
+            'dist/@scenes/*/front/*',
         ],
     });
 
