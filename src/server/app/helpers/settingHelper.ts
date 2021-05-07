@@ -11,8 +11,6 @@ class SettingHelper {
     public static readonly instance = new SettingHelper();
     private constructor() { }
 
-    private projectName = '';
-
     private readonly GLOBAL_CONFIG_NAME = 'config/global';
 
     private readonly GLOBAL_SECRET_NAME = 'secret/global';
@@ -20,8 +18,6 @@ class SettingHelper {
     private readonly CUSTOM_CONFIG_NAME = 'config/custom';
 
     private readonly CUSTOM_SECRET_NAME = 'secret/custom';
-
-    public readonly setProjectName = (name: string) => this.projectName = name;
 
     public readonly getValue = <T extends dSetting.CustomConfig | dSetting.CustomSecret | dSetting.GlobalConfig | dSetting.GlobalSecret, TKey extends keyof T>(
         key: TKey, filename: string, dft?: T[TKey],

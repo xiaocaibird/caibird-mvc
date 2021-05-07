@@ -137,6 +137,15 @@ export default class App<TRules extends Caibird.dp.Obj, TCtxState extends Caibir
             getControllerName: this.getControllerName.bind(this),
             getActionName: this.getActionName.bind(this),
             filterCreater: this.filterCreater.bind(this),
+            registerActions: (controller: Caibird.dp.Class) => {
+                Object.getOwnPropertyNames(controller.prototype).forEach(key => {
+                    if (key !== 'constructor') {
+                        Reflect.defineProperty(controller.prototype as Caibird.dp.Obj, key, {
+                            enumerable: true,
+                        });
+                    }
+                });
+            },
         },
         context: {
             get: () => contextHelper.get<TCtxState, TCtxCustom>(),
@@ -285,7 +294,9 @@ export default class App<TRules extends Caibird.dp.Obj, TCtxState extends Caibir
             controller.__actions__ = {};
             const actions = controller.__actions__;
 
-            for (const action of Object.getOwnPropertyNames(controller.prototype)) {
+            this.helpers.mvc.registerActions(controller);
+
+            for (const action in controller.prototype as Caibird.dp.Obj) {
                 if (action === 'constructor') continue;
                 const actionKey = this.getActionName(action);
                 if (actions[actionKey]) {
