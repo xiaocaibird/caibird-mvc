@@ -137,7 +137,7 @@ export default class App<TRules extends Caibird.dp.Obj, TCtxState extends Caibir
             getControllerName: this.getControllerName.bind(this),
             getActionName: this.getActionName.bind(this),
             filterCreater: this.filterCreater.bind(this),
-            registerActions: (controller: Caibird.dp.Class) => {
+            registerActions: <T extends Caibird.dp.Class>(controller: T) => {
                 Object.getOwnPropertyNames(controller.prototype).forEach(key => {
                     if (key !== 'constructor') {
                         Reflect.defineProperty(controller.prototype as Caibird.dp.Obj, key, {
