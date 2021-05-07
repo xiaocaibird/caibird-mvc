@@ -683,7 +683,7 @@ export default class App<TRules extends Caibird.dp.Obj, TCtxState extends Caibir
         handler: (target: Caibird.dp.Func & dMvc.CommonProps<TRules, TCtxState, TCtxCustom>, option?: TOption) => void,
         props?: Omit<dMvc.FilterProps<TRules, TCtxState, TCtxCustom>, 'filterName'>,
     ) {
-        const filter = (option?: TOption, order = 0): dMvc.Decorator<TRules, TCtxState, TCtxCustom> =>
+        const filter = (option?: TOption, order?: number): dMvc.Decorator<TRules, TCtxState, TCtxCustom> =>
             (controller, _action, actionDes) => {
                 handler(this.initFilter(controller, filter, actionDes, order), option);
             };
