@@ -7,8 +7,8 @@ import Redux, { combineReducers, createStore } from 'redux';
 
 import type { dRedux } from '../@types/declares';
 
-export abstract class HRedux<TState extends dRedux.BaseState, TActions extends dRedux.BaseActions, TRequiredActions extends dRedux.BaseActions | never> {
-    public static readonly createReducer = <TStatePart extends Caibird.dp.Obj, TActionsType extends dRedux.BaseActions, TRequiredActionsType extends dRedux.BaseActions>(
+export abstract class HRedux<TState, TActions extends dRedux.BaseActions, TRequiredActions extends dRedux.BaseActions | never> {
+    public static readonly createReducer = <TStatePart, TActionsType, TRequiredActionsType>(
         opt: { handlers: dRedux.ReducerHandlers<TActionsType, TRequiredActionsType, TStatePart>, defaultState: TStatePart },
     ) => ({
         handlers: opt.handlers,
