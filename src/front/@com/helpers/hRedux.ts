@@ -7,18 +7,17 @@ import Redux, { combineReducers, createStore } from 'redux';
 
 import type { dRedux } from '../@types/declares';
 
-export abstract class HRedux<TState, TActions extends dRedux.BaseActions = dRedux.BaseActions> {
-    public static readonly createReducer = <TStatePart, TActionsType>(
-        opt: { handlers: dRedux.ReducerHandlers<TActionsType, TStatePart>, defaultState: TStatePart },
+export abstract class HRedux<TState, TActions extends dRedux.BaseActions, TRequiredActions extends dRedux.BaseActions | never> {
+    public static readonly createReducer = <TStatePart, TActionsType, TRequiredActionsType>(
+        opt: { handlers: dRedux.ReducerHandlers<TActionsType, TRequiredActionsType, TStatePart>, defaultState: TStatePart },
     ) => ({
         handlers: opt.handlers,
         defaultState: cloneDeep(opt.defaultState),
     });
 
     protected constructor(protected readonly options: {
-        actions: dRedux.TransformActions<TActions>,
-        reducers: dRedux.Reducers<TActions, TState>,
-        storageKey: string,
+        actions: dRedux.StandardActions<TActions>,
+        reducers: dRedux.Reducers<TActions, TRequiredActions, TState>,
     }) {
         this.action = { ...options.actions };
     }
@@ -42,7 +41,7 @@ export abstract class HRedux<TState, TActions extends dRedux.BaseActions = dRedu
     protected defaultStoreState: Partial<TState> = {};
     protected _lastState = this.Store.getState();
 
-    public readonly action: dRedux.TransformActions<TActions>;
+    public readonly action: dRedux.StandardActions<TActions>;
 
     protected storeCreater(initState?: Redux.PreloadedState<TState>) {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any

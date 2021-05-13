@@ -3,9 +3,12 @@
  * @Title dRedux
  */
 export namespace dRedux {
-    type BaseActions = Caibird.dp.Obj<Caibird.dp.Func>;
+    type BaseActions = {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        [K in string]: (() => { type: K }) | ((payload?: any) => { type: K, payload: any })
+    };
 
-    type TransformActions<TActions extends BaseActions> = {
+    type StandardActions<TActions extends BaseActions> = {
         [K in keyof TActions]:
         TActions[K] extends (payload?: infer Value) => unknown ?
         (payload?: Value extends Caibird.dp.Obj | boolean | number | string | symbol ? Value : undefined) => ActionResult<TActions>[K] :
@@ -19,14 +22,16 @@ export namespace dRedux {
         { type: K }
     };
 
-    type Reducers<TActions, TState> = {
+    type Reducers<TActions, TRequiredActions, TState> = {
         [K in keyof TState]: {
             defaultState: TState[K],
-            handlers: ReducerHandlers<TActions, TState[K]>,
+            handlers: ReducerHandlers<TActions, TRequiredActions, TState[K]>,
         }
     };
-    type ReducerHandlers<TActions, TStatePart> = {
+    type ReducerHandlers<TActions, TRequiredActions, TStatePart> = {
         [K in keyof TActions]?: ReducerHandler<TActions, TStatePart, K>;
+    } & {
+        [K in keyof TRequiredActions]: ReducerHandler<TRequiredActions, TStatePart, K>;
     };
 }
 
