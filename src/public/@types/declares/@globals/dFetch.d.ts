@@ -9,6 +9,7 @@ declare namespace Caibird.dFetch {
 
     type ActionReq<T extends dp.Obj> = Partial<T>;
 
+    // TODO 支持 (req?: any) => rsp
     type StandardApi<TControllers extends BaseControllers> = {
         [C in keyof TControllers]: {
             [A in keyof TControllers[C]['prototype']]: ApiInfo<
@@ -31,6 +32,16 @@ declare namespace Caibird.dFetch {
                 TControllers[C]['prototype'][A] extends (...p: any[]) => infer Rsp ? Rsp : never
             >;
         };
+    };
+
+    // eslint-disable-next-line @typescript-eslint/ban-types
+    type GetApi<TController extends Function> = {
+        [A in keyof TController['prototype']]: ApiInfo<
+            TController['prototype'][A] extends () => unknown ? never :
+            TController['prototype'][A] extends (req: dp.Obj) => unknown ?
+            TController['prototype'][A] extends (req: ActionReq<infer Req>) => unknown ? Req extends dp.Obj ? Req : never : never : never,
+            TController['prototype'][A] extends ((...p: any[]) => Promise<infer Rsp>) ? Rsp extends JsonActionReturn<infer R> ? R : never : never
+        >;
     };
 
     interface SuccessJsonBody<T> extends JsonBody {
