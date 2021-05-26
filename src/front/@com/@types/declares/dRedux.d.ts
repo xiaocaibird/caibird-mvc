@@ -56,7 +56,7 @@ export namespace dRedux {
     };
 
     type CombineActions<TPre extends string, T extends BaseCombineActions<string>> = {
-        [k in keyof T as `${TPre}-${k & string}`]: PrefixAction<`${TPre}-${k & string}`, T[k]>
+        [k in keyof T as `${TPre}${k & string}`]: PrefixAction<`${TPre}${k & string}`, T[k]>
     };
 }
 

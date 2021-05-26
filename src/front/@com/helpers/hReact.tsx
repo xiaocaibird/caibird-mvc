@@ -6,16 +6,10 @@ import React, { createContext, createRef, memo } from 'react';
 
 import { uFunction } from '../utils/uFunction';
 
-// TODO
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type Route = { component: React.ComponentClass<any, any>, path: string, exact?: boolean };
-
 export abstract class HReact<TRootContext> {
     protected constructor(protected readonly options: {
         defaultContext: TRootContext,
     }) { }
-
-    public abstract get effectiveHomeRoutes(): Route[];
 
     public readonly rootContext = createContext(this.options.defaultContext);
 

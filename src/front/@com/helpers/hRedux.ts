@@ -19,9 +19,9 @@ export abstract class HRedux<TState, TActions extends dRedux.BaseActions, TRequi
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const newActions = Object.keys(actions).reduce<Caibird.dp.Obj<any>>((obj, key) => {
             const k = key as keyof T;
-            obj[`${pre}-${k.toString()}`] = (...p: Parameters<T[typeof k]>) => {
+            obj[`${pre}${k.toString()}`] = (...p: Parameters<T[typeof k]>) => {
                 const result = actions[k](...p);
-                result.type = `${pre}-${result.type}`;
+                result.type = `${pre}${result.type}`;
                 return result;
             };
             return obj;
