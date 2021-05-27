@@ -1115,7 +1115,7 @@
         "space-in-parens": ["error", "never"],
         "spaced-comment": ["error", "always", {
             "line": {
-                "markers": ["#region", "#endregion"]
+                "markers": ["#region", "#endregion", "/ <reference"]
             }
         }],
         "unicorn/filename-case": "off",

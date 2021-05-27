@@ -70,7 +70,7 @@
         //不允许重新给传入的参数赋值
         "no-parameter-reassignment": true,
         //禁止reference导入
-        "no-reference": true,
+        "no-reference": false,
         //禁止无意义的类型断言。【编译时检查】
         "no-unnecessary-type-assertion": true,
         //禁用reuqire
