@@ -8,17 +8,10 @@ import { uObject } from '../utils/uObject';
 import { uString } from '../utils/uString';
 
 export abstract class HNavigator {
-    protected constructor(protected readonly options: {
-        homePath?: string,
-        loginPath?: string,
-    } = {}) {
-        this.HOME_PATH = options.homePath || '/';
-        this.LOGIN_PATH = options.loginPath || '/';
+    protected constructor() {
     }
 
     protected readonly navigator = createHashHistory();
-    protected readonly HOME_PATH: string;
-    protected readonly LOGIN_PATH: string;
 
     protected readonly checkPathChange = (route: RouterHistory.LocationDescriptor) => {
         const path = (uObject.check(route) ? route.pathname : route) ?? '';
@@ -38,27 +31,6 @@ export abstract class HNavigator {
 
     public readonly back = () => {
         this.navigator.goBack();
-    };
-
-    public readonly goHome = (isReplace = true) => {
-        if (isReplace) {
-            this.replace(this.HOME_PATH);
-        } else {
-            this.push(this.HOME_PATH);
-        }
-    };
-
-    public readonly resetToHome = () => {
-        this.goHome();
-        this.reload();
-    };
-
-    public readonly goLogin = (isReplace = true) => {
-        if (isReplace) {
-            this.replace(this.LOGIN_PATH);
-        } else {
-            this.push(this.LOGIN_PATH);
-        }
     };
 
     public readonly reload = () => {
