@@ -2,16 +2,12 @@
  * @Owners cmZhou
  * @Title react helper
  */
-import React, { createContext, createRef, memo } from 'react';
+import React, { createRef, memo } from 'react';
 
 import { uFunction } from '../utils/uFunction';
 
-export abstract class HReact<TRootContext> {
-    protected constructor(protected readonly options: {
-        defaultContext: TRootContext,
-    }) { }
-
-    public readonly rootContext = createContext(this.options.defaultContext);
+export abstract class HReact {
+    protected constructor() { }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     public readonly withAsync = <T extends React.ComponentType<any>>(importComponent: Caibird.dp.PromiseFunc<unknown[], T>, displayName?: string) => {
