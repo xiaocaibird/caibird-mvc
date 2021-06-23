@@ -45,5 +45,20 @@ export namespace dSetting {
     }
 
     type CheckCustomSecret = CheckInterface<CustomSecret[keyof CustomSecret]>;
-    interface CustomSecret { }
+    interface CustomSecret {
+        publicImConfig?: {
+            /**
+             * 当前应用的key
+             */
+            appKey: string,
+            /**
+             * 对方应用的key
+             */
+            targetKey: string,
+            /**
+             * 当前应用的密钥
+             */
+            masterSecret: string,
+        },
+    }
 }
