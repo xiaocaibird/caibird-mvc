@@ -178,7 +178,7 @@ class ProjectAuto {
         const projectName = this.getProjectName();
 
         if (this.hasGulpProjectNames.includes(projectName)) {
-            const result = exec(`rimraf .local/dist/rubbish && gulp watch --gulpfile .tsc/src/${projectName}/build/gulp/gulpfile.js --cwd ./`);
+            const result = exec(`rimraf .local/dist/rubbish && gulp watchAfterTscWatchFirst --gulpfile .tsc/src/${projectName}/build/gulp/gulpfile.js --cwd ./`);
             process.exit(result.code);
         } else {
             printf(`Error: the project 【${projectName}】 no has gulpfile`, ColorsEnum.RED);
@@ -231,8 +231,9 @@ class ProjectAuto {
             concurrently -n "${allowServer ? 'node,' : ''}${allowWebpack ? 'webpack,' : ''}gulp,tsc" -c "${allowServer ? 'cyan.bold,' : ''}${allowWebpack ? 'yellow.bold,' : ''}green.bold,magenta.bold"
             ${allowServer ? `"cross-env NODE_ENV=${nodeEnvValues.DEVELOPMENT} node app"` : ''}
             ${allowWebpack ? `"npm run webpack-dev-server ${projectName}"` : ''}
-            "${gulpCommandPrefix} npm run gulp:watch ${projectName}"
-            "tsc -w -p src/${projectName}/tsconfig.json"`,
+            "tsc-watch -p src/${projectName}/tsconfig.json --onFirstSuccess '${gulpCommandPrefix} npm run gulp:watch ${projectName}'"`
+            // "${gulpCommandPrefix} npm run gulp:watch ${projectName}"
+            // "tsc -w -p src/${projectName}/tsconfig.json"`,
         );
         process.exit(result.code);
     };

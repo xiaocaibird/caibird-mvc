@@ -206,4 +206,84 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
         }
         return Promise.resolve();
     });
+
+    gulp.task('watchAfterTscWatchFirst', async () => {
+        console.log('begin watch after tsc watch first success');
+        if (ini.isLocalTest) {
+
+            let hasTaro = false;
+            projectList.forEach(projectName => {
+                if (fs.existsSync(`${rootDir}src/${projectName}/front/taro/project.config.json`)) {
+                    hasTaro = true;
+                }
+            });
+
+            const watcher = gulp.watch([
+                `${rootDir}.tsc/**/*.js`,
+                ...(hasTaro ? projectList.map(projectName => `${rootDir}src/${projectName === '@scenes' ? `${projectName}/*` : projectName}/front/taro/**`) : []),
+            ], done => {
+                done();
+            });
+
+            const func = (type: 'add' | 'change' | 'delete') => (path: string) => {
+                try {
+                    if (path.startsWith('src') &&
+                        (path.endsWith('.ts') || path.endsWith('.tsx') || path.endsWith('.js') || path.endsWith('.jsx'))
+                    ) {
+                        return;
+                    }
+
+                    const toPath = path
+                        .replace(/\\/g, '/')
+                        .replace(/^.tsc\/node_modules\//, 'dist/@modules/')
+                        .replace(/^.tsc\/src\//, 'dist/')
+                        .replace(/^src\//, 'dist/');
+
+                    const lastIdx = toPath.lastIndexOf('/');
+
+                    const destCallback: Parameters<typeof gulp['dest']>[0] = file => {
+                        let isSame = false;
+                        try {
+                            const reg = /\n\/\/# sourceMappingURL=data:application\/json;charset=utf8;base64,.*\n$/;
+                            if (file.contents?.toString().replace(reg, '') === fs.readFileSync(toPath).toString().replace(reg, '')) {
+                                isSame = true;
+                            }
+                        } catch { }
+                        if (isSame) {
+                            console.log(`[no change after dist]: ${toPath}`);
+                            return './.local/dist/rubbish';
+                        }
+
+                        console.log(`[watch ${type}]:`, `${path} => ${toPath}`);
+                        return toPath.slice(0, lastIdx);
+                    };
+
+                    if (type === 'delete') {
+                        fs.unlinkSync(toPath);
+                    } else {
+                        if (path.endsWith('.js')) {
+                            gulp.src([path])
+                                .pipe(sourcemapsInit())
+                                .pipe(babel(babelrc))
+                                .pipe(gulpRename({ dirname: '' }))
+                                .pipe(sourcemapsWrite())
+                                .pipe(gulp.dest(destCallback));
+                        } else {
+                            gulp.src([path])
+                                .pipe(gulpRename({ dirname: '' }))
+                                .pipe(gulp.dest(destCallback));
+                        }
+                    }
+                } catch (e: unknown) {
+                    console.error('gulp watch callback error:', e);
+                }
+            };
+
+            watcher.on('change', func('change'));
+            watcher.on('add', func('add'));
+            // watcher.on('unlink', func('delete'));
+            watcher.on('error', err => console.log('watch error', err));
+        }
+        return Promise.resolve();
+    });
 };

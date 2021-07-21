@@ -15,7 +15,9 @@
   },
   "author": "cmZhou",
   "description": "",
-  "dependencies": {},
+  "dependencies": {
+    "tsc-watch": "^4.4.0"
+  },
   "homepage": "https://github.com/xiaocaibird/caibird-mvc",
   "devDependencies": {
     "@babel/core": "^7.13.15",
