@@ -104,7 +104,7 @@ export abstract class HRedux<TState, TActions extends dRedux.BaseActions, TRequi
             return obj;
         }, {}));
 
-        return createStore(reducers, initState, Caibird.env.IS_LOCAL_TEST && window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : undefined);
+        return createStore(reducers, initState, Caibird.env.IS_LOCAL_TEST && typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : undefined);
     }
 
     public readonly dispatch = <T extends dRedux.ActionResult<TActions>[keyof dRedux.ActionResult<TActions>]>(actionResult: T) => {
