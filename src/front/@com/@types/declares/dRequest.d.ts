@@ -21,6 +21,10 @@ export namespace dRequest {
         errorPromptStyle?: ePrompt.StyleType,
         retryTimes?: number,
         headers?: Caibird.dp.Obj<string>,
+        cache?: boolean,
+        onSuccess?: Caibird.dp.Func,
+        onFail?: Caibird.dp.Func,
+        onComplete?: Caibird.dp.Func,
         shouldRetry?(opt: {
             error: unknown,
             nowRetryTimes: number,
