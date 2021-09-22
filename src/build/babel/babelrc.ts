@@ -149,6 +149,9 @@ export default (options: BabelOptions) => {
 
                 'caibird-scenes-general-manage-sys-server': '../@scenes/general-manage-sys/server',
                 'caibird-scenes-general-manage-sys-web': '../@scenes/general-manage-sys/front/web',
+
+                'caibird-scenes-general-mall-server': '../@scenes/general-mall/server',
+                'caibird-scenes-general-mall-taro': '../@scenes/general-mall/front/taro',
             },
         }]);
 
