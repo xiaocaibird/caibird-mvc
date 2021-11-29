@@ -5,13 +5,11 @@
 import { ePrompt } from '../enums';
 
 export namespace dRequest {
-    type Options<TNoHandle extends boolean | undefined = undefined, TFormFetch extends boolean | undefined = undefined, TCustom extends Caibird.dp.Obj = Caibird.dp.Obj> = Partial<TCustom> & {
-        noHandle?: TNoHandle,
+    type BaseOptions = {
         timeout?: number,
         contentType?: string | null,
         requestedWith?: string | null,
         withCredentials?: boolean,
-        isFormFetch?: TFormFetch,
         isJsonpFetch?: boolean,
         jsonpCallbackParamName?: string,
         jsonpCallbackFuncName?: string,
@@ -25,6 +23,11 @@ export namespace dRequest {
             error: unknown,
             nowRetryTimes: number,
         }): Caibird.dp.PromiseOrSelf<boolean>,
+    };
+
+    type Options<TNoHandle extends boolean | undefined = undefined, TFormFetch extends boolean | undefined = undefined, TCustom extends Caibird.dp.Obj = Caibird.dp.Obj> = BaseOptions & Partial<TCustom> & {
+        noHandle?: TNoHandle,
+        isFormFetch?: TFormFetch,
     };
 
     type DetailsOptions<TNoHandle extends boolean | undefined = undefined, TFormFetch extends boolean | undefined = undefined, TCustom extends Caibird.dp.Obj = Caibird.dp.Obj> =
