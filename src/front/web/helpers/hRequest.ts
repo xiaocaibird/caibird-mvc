@@ -25,6 +25,7 @@ export abstract class HRequest<TControllers extends Caibird.dFetch.BaseControlle
         defaultErrorPromptStyle?: ePrompt.StyleType,
         defaultRetryTimes?: number,
         errorProbability?: number,
+        // TODO 未覆盖整个流程
         defaultFetchOptions?: dRequest.BaseOptions,
     }) {
         super();
@@ -341,15 +342,19 @@ export abstract class HRequest<TControllers extends Caibird.dFetch.BaseControlle
         }
 
         const sendData = req ?? {};
+
+        const dftHeaders = typeof this.options.defaultFetchOptions?.headers === 'function' ? await this.options.defaultFetchOptions.headers() : this.options.defaultFetchOptions?.headers;
+        const optHeaders = typeof opt.headers === 'function' ? await opt.headers() : opt.headers;
+        const headers = {
+            ...dftHeaders,
+            ...optHeaders,
+        };
+
         const p = new Promise<XMLHttpRequest>((resolve, reject) => {
             const { timeout = this.options.timeout == null ? Caibird.eDate.MsTimespan.RequestTimeout : this.options.timeout,
-                contentType, headers = {}, withCredentials, requestedWith = Caibird.eHttp.RequestedWith.XMLHttpRequest } = {
+                contentType, withCredentials, requestedWith = Caibird.eHttp.RequestedWith.XMLHttpRequest } = {
                 ...this.options.defaultFetchOptions,
                 ...opt,
-                headers: {
-                    ...this.options.defaultFetchOptions?.headers,
-                    ...opt.headers,
-                },
             };
             const xhr = new XMLHttpRequest();
             xhr.responseType = 'text';
