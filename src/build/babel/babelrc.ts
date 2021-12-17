@@ -123,7 +123,7 @@ export default (options: BabelOptions) => {
 
         const setAlias = (platform: Platform, dirName: string, dependentProjectName?: string) => {
             const key = `${dependentProjectName ? dependentProjectName : projectName}-${platform}-${dirName}`;
-            alias[key] = `${dependentProjectName ? '..' : '.'}/${platformsPathResolve[platform](dirName)}`;
+            alias[key] = `${dependentProjectName ? `../${dependentProjectName}` : '.'}/${platformsPathResolve[platform](dirName)}`;
         };
 
         distPlatforms.forEach(pf => {
