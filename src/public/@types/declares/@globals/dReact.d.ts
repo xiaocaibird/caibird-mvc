@@ -4,9 +4,8 @@
  */
 declare namespace Caibird.dReact {
     type State = never;
-    type Props = { children?: React.ReactNode };
+    type Props = dp.Obj;
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     type GetProps<TComponent> =
         TComponent extends React.Component<infer P> ? P :
         TComponent extends React.ComponentType<infer P> ? P :
