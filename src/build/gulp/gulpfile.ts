@@ -190,7 +190,7 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
                                 .pipe(gulpRename({ dirname: '' }))
                                 .pipe(sourcemapsWrite())
                                 .pipe(gulp.dest(destCallback));
-                        } else if (path.endsWith('front/taro/project.config.json')) {
+                        } else if (path.replace(/\\/g, '/').endsWith('front/taro/project.config.json')) {
                             gulp.src([path])
                                 .pipe(stripComments())
                                 .pipe(gulpRename({ dirname: '' }))
