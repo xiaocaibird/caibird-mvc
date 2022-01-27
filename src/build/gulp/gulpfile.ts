@@ -7,6 +7,7 @@ import gulp from 'gulp';
 import babel from 'gulp-babel';
 import gulpRename from 'gulp-rename';
 import sourcemaps from 'gulp-sourcemaps';
+import stripComments from 'gulp-strip-comments';
 import through from 'through2';
 import { v4 } from 'uuid';
 
@@ -86,6 +87,7 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
                     if (fs.existsSync(`${rootDir}src/${projectName}/front/taro/project.config.json`)) {
                         hasTaro = true;
                         gulp.src([`${rootDir}src/${projectName}/front/taro/project.config.json`])
+                            .pipe(stripComments())
                             .pipe(gulpRename({ dirname: '' }))
                             .pipe(gulp.dest(`${rootDir}dist/${projectName}/front/taro`));
 
@@ -187,6 +189,11 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
                                 .pipe(babel(babelrc))
                                 .pipe(gulpRename({ dirname: '' }))
                                 .pipe(sourcemapsWrite())
+                                .pipe(gulp.dest(destCallback));
+                        } else if (path.endsWith('front/taro/project.config.json')) {
+                            gulp.src([path])
+                                .pipe(stripComments())
+                                .pipe(gulpRename({ dirname: '' }))
                                 .pipe(gulp.dest(destCallback));
                         } else {
                             gulp.src([path])
