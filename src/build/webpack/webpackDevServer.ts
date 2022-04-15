@@ -10,7 +10,7 @@ import { uArray } from '../../public/utils/uArray';
 export type Options = {
     webpackConfig: webpack.Configuration,
     publicPath: string,
-
+    contentBase?: string,
     watchIgnores?: webpack.Options.WatchOptions['ignored'],
 
     nodeServerConfig: {
@@ -22,8 +22,7 @@ export type Options = {
 };
 
 export default (options: Options) => {
-    const { webpackConfig, publicPath, watchIgnores = [], nodeServerConfig, webpackDevServerConfig } = options;
-
+    const { webpackConfig, publicPath, contentBase, watchIgnores = [], nodeServerConfig, webpackDevServerConfig } = options;
     const serverOptions: WebpackDevServer.Configuration = {
         hot: true,
         transportMode: 'ws',
@@ -37,14 +36,14 @@ export default (options: Options) => {
         port: nodeServerConfig.port,
         // bonjour: true,
         // port: 3003,
-        // contentBase: '',
+        contentBase: contentBase !== undefined ? contentBase : `${process.cwd()}/dist`,
         watchContentBase: true,
         contentBasePublicPath: publicPath,
         injectClient: false,
         // quiet: true,
         proxy: {
             '/**': {
-                target: `http://${nodeServerConfig.host}:${nodeServerConfig.port}`,
+                target: `http://${nodeServerConfig.host}:${nodeServerConfig.port - 1}`,
                 secure: false,
                 changeOrigin: true,
                 headers: {
@@ -67,7 +66,7 @@ export default (options: Options) => {
 
     const devServer = new WebpackDevServer(compiler, serverOptions);
 
-    const port = nodeServerConfig.port + 1;
+    const port = nodeServerConfig.port;
     devServer.listen(port, nodeServerConfig.host, err => {
         if (err) console.error(err, 'err');
     });
