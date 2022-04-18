@@ -2,6 +2,7 @@
  * @Owners cmZhou
  * @Title 本地调试
  */
+import path from 'path';
 import webpack from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
 
@@ -36,7 +37,7 @@ export default (options: Options) => {
         port: nodeServerConfig.port,
         // bonjour: true,
         // port: 3003,
-        contentBase: contentBase !== undefined ? contentBase : `${process.cwd()}/dist`,
+        contentBase: contentBase !== undefined ? contentBase : path.join(process.cwd(), '/dist'),
         watchContentBase: true,
         contentBasePublicPath: publicPath,
         injectClient: false,
