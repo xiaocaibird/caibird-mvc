@@ -23,6 +23,7 @@ export type Options = {
 
 export default (options: Options) => {
     const { webpackConfig, publicPath, contentBase, watchIgnores = [], nodeServerConfig, webpackDevServerConfig } = options;
+    const port = nodeServerConfig.port + 1;
     const serverOptions: WebpackDevServer.Configuration = {
         hot: true,
         transportMode: 'ws',
@@ -33,7 +34,7 @@ export default (options: Options) => {
         open: true,
         publicPath,
         host: nodeServerConfig.host,
-        port: nodeServerConfig.port,
+        port,
         // bonjour: true,
         // port: 3003,
         contentBase: contentBase !== undefined ? contentBase : `${process.cwd()}/dist`,
@@ -43,7 +44,7 @@ export default (options: Options) => {
         // quiet: true,
         proxy: {
             '/**': {
-                target: `http://${nodeServerConfig.host}:${nodeServerConfig.port - 1}`,
+                target: `http://${nodeServerConfig.host}:${nodeServerConfig.port}`,
                 secure: false,
                 changeOrigin: true,
                 headers: {
@@ -66,7 +67,6 @@ export default (options: Options) => {
 
     const devServer = new WebpackDevServer(compiler, serverOptions);
 
-    const port = nodeServerConfig.port;
     devServer.listen(port, nodeServerConfig.host, err => {
         if (err) console.error(err, 'err');
     });
