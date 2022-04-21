@@ -1,10 +1,10 @@
 /**
- * @Owners cmZhou
- * @Title base babel 配置
- */
+* @Owners cmZhou
+* @Title base babel 配置
+*/
 import ini from '../ini';
-
 import requestApiReplace from './plugins/requestApiReplace';
+import dynamicImportsRecover from './plugins/dynamicImportsRecover';
 import FrontPathResolveTool from './utils/FrontPathResolveTool';
 
 type Target = 'dist' | 'webpack';
@@ -36,11 +36,13 @@ export type BabelOptions = {
     distPlatforms?: Platform[],
     unionProjectNames?: string[],
     useRequestApiReplace?: boolean,
+
+    notTransformDynamicImports?: boolean,
 };
 
 export default (options: BabelOptions) => {
     const { NODE_ENV_VALUE, isProduction, isExpProduction, isTest, isDevTest, isLocalTest } = ini;
-    const { target, projectName, unionProjectNames = [], distPlatforms = [], useRequestApiReplace, projectVersion } = options;
+    const { target, projectName, unionProjectNames = [], distPlatforms = [], useRequestApiReplace, notTransformDynamicImports, projectVersion } = options;
 
     const isWebpack = target === 'webpack';
     const isDist = target === 'dist';
@@ -49,6 +51,7 @@ export default (options: BabelOptions) => {
     const plugins: any[] = [];
 
     useRequestApiReplace && plugins.push(requestApiReplace);
+    isLocalTest && notTransformDynamicImports && plugins.push(dynamicImportsRecover);
 
     const caibirdEnvs: Caibird.dp.Env = {
         RUN_ENV: process.env._CAIBIRD_RUN_ENV,

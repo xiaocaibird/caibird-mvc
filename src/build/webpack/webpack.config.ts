@@ -1,7 +1,7 @@
 /**
- * @Owners cmZhou
- * @Title webpack base 文件
- */
+* @Owners cmZhou
+* @Title webpack base 文件
+*/
 import cssnano from 'cssnano';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import path from 'path';
@@ -43,12 +43,13 @@ export type WebpackOptions = {
 };
 
 const { isProduction, isTest, isLocalTest } = ini;
+const entryDir = isLocalTest ? 'dist' : 'src';
 
 const getProjectIncludeList = (projectList: string[], dirList: string[]) => {
     const pathList: string[] = [];
     projectList.forEach(name => {
         dirList.forEach(filename => {
-            pathList.push(path.join(process.cwd(), `src/${name}/${filename}`));
+            pathList.push(path.join(process.cwd(), `${entryDir}/${name}/${filename}`));
         });
     });
     return pathList;
@@ -75,7 +76,7 @@ export default (webpackOptions: WebpackOptions, webpackConfig: webpack.Configura
     const tsConfig = path.join(process.cwd(), `src/${projectName}/tsconfig.webpack.json`);
 
     const getEntry = (): webpack.Configuration['entry'] => ({
-        [utils.entryPointsNames.entry]: (isLocalTest ? [`webpack-dev-server/client?${devServerConfig ? `http://${devServerConfig.host}:${devServerConfig.port}` : ''}`] : []).concat(`./src/${projectName}/front/web/index`),
+        [utils.entryPointsNames.entry]: (isLocalTest ? [`webpack-dev-server/client?${devServerConfig ? `http://${devServerConfig.host}:${devServerConfig.port}` : ''}`] : []).concat(`./${entryDir}/${projectName}/front/web/index`),
     });
 
     const getOutput = (): webpack.Output => ({
@@ -87,7 +88,21 @@ export default (webpackOptions: WebpackOptions, webpackConfig: webpack.Configura
     });
 
     const rules: webpack.Module['rules'] = [
-        {
+        isLocalTest ? {
+            test: /\.jsx?$/,
+            use: [{
+                loader: 'esbuild-loader'
+            }],
+            include: [
+                ...(getProjectIncludeList([projectName, ...(unionProjectNames || [])], ['front/@com', 'front/web', 'public', '_config.ts'])),
+                path.join(process.cwd(), 'dist/@scenes'),
+                path.join(process.cwd(), 'dist/@common/front/@com'),
+                path.join(process.cwd(), 'dist/@common/front/web'),
+                path.join(process.cwd(), 'dist/@modules/caibird/src/public'),
+                path.join(process.cwd(), 'dist/@modules/caibird/src/front/@com'),
+                path.join(process.cwd(), 'dist/@modules/caibird/src/front/web'),
+            ],
+        } : {
             test: /\.(tsx?|jsx?)$/,
             use: [{
                 loader: 'babel-loader',
@@ -158,8 +173,7 @@ export default (webpackOptions: WebpackOptions, webpackConfig: webpack.Configura
                 options: {
                     sourceMap: false,
                 },
-            },
-            ],
+            }],
         }
             : {
                 test: /\.(less|css)$/,
