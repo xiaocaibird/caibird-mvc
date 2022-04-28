@@ -1,7 +1,7 @@
 /**
-* @Owners cmZhou
-* @Title base babel 配置
-*/
+ * @Owners cmZhou
+ * @Title base babel 配置
+ */
 import ini from '../ini';
 import requestApiReplace from './plugins/requestApiReplace';
 import pathTransformation from './plugins/my-plugin-import';

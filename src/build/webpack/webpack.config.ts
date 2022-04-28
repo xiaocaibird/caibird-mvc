@@ -1,7 +1,7 @@
 /**
-* @Owners cmZhou
-* @Title webpack base 文件
-*/
+ * @Owners cmZhou
+ * @Title webpack base 文件
+ */
 import cssnano from 'cssnano';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import path from 'path';
