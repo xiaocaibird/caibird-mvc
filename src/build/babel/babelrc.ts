@@ -4,6 +4,7 @@
 */
 import ini from '../ini';
 import requestApiReplace from './plugins/requestApiReplace';
+import pathTransformation from './plugins/my-plugin-import';
 import dynamicImportsRecover from './plugins/dynamicImportsRecover';
 import FrontPathResolveTool from './utils/FrontPathResolveTool';
 
@@ -157,6 +158,8 @@ export default (options: BabelOptions) => {
                 'caibird-scenes-general-mall-taro': '../@scenes/general-mall/front/taro',
             },
         }]);
+
+        plugins.push([pathTransformation, { libraryName: 'antd', style: 'css' }, 'antd']);
 
         plugins.push('minify-dead-code-elimination');
     }

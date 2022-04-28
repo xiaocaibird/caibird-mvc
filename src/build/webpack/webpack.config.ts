@@ -43,10 +43,10 @@ export type WebpackOptions = {
 };
 
 const { isProduction, isTest, isLocalTest } = ini;
-const entryDir = isLocalTest ? 'dist' : 'src';
 
-const getProjectIncludeList = (projectList: string[], dirList: string[]) => {
+const getProjectIncludeList = (projectList: string[], dirList: string[], entryDir: string = 'src') => {
     const pathList: string[] = [];
+
     projectList.forEach(name => {
         dirList.forEach(filename => {
             pathList.push(path.join(process.cwd(), `${entryDir}/${name}/${filename}`));
@@ -70,10 +70,12 @@ const getSplitChunks = (list: string[]) => {
     return splitChunks;
 };
 
-export default (webpackOptions: WebpackOptions, webpackConfig: webpack.Configuration = {}): webpack.Configuration => {
+export default (webpackOptions: WebpackOptions, webpackConfig: webpack.Configuration = {}, complieDist?: boolean): webpack.Configuration => {
     const { projectName, projectTitle, unionProjectNames, outputConfig, tsImportPluginConfig, useMoment, htmlWebpackPluginConfig, addPlugins, devServerConfig } = webpackOptions;
 
     const tsConfig = path.join(process.cwd(), `src/${projectName}/tsconfig.webpack.json`);
+
+    const entryDir = complieDist && isLocalTest ? 'dist' : 'src';
 
     const getEntry = (): webpack.Configuration['entry'] => ({
         [utils.entryPointsNames.entry]: (isLocalTest ? [`webpack-dev-server/client?${devServerConfig ? `http://${devServerConfig.host}:${devServerConfig.port}` : ''}`] : []).concat(`./${entryDir}/${projectName}/front/web/index`),
@@ -88,13 +90,13 @@ export default (webpackOptions: WebpackOptions, webpackConfig: webpack.Configura
     });
 
     const rules: webpack.Module['rules'] = [
-        isLocalTest ? {
+        (complieDist && isLocalTest) ? {
             test: /\.jsx?$/,
             use: [{
                 loader: 'esbuild-loader'
             }],
             include: [
-                ...(getProjectIncludeList([projectName, ...(unionProjectNames || [])], ['front/@com', 'front/web', 'public', '_config.ts'])),
+                ...(getProjectIncludeList([projectName, ...(unionProjectNames || [])], ['front/@com', 'front/web', 'public', '_config.ts'], entryDir)),
                 path.join(process.cwd(), 'dist/@scenes'),
                 path.join(process.cwd(), 'dist/@common/front/@com'),
                 path.join(process.cwd(), 'dist/@common/front/web'),
