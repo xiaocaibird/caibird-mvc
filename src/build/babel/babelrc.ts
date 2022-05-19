@@ -164,7 +164,7 @@ export default (options: BabelOptions) => {
     return {
         retainLines: isWebpack ? undefined : true,
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        presets: [['@babel/preset-env', { modules: false, targets: isWebpack ? { /* browsers: ['Chrome >= 60'] */ } : { node: '14' } }]] as any[],
+        presets: [['@babel/preset-env', { modules: false, targets: isWebpack ? { /* browsers: ['Chrome >= 60'] */ } : { node: '16' } }]] as any[],
         plugins,
     };
 };

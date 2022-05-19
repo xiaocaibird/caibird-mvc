@@ -1,12 +1,12 @@
 {
     /**
      * @Owners cmZhou
-     * @version 4.2.3
+     * @version 4.6.4
      */
     "compileOnSave": false,
-    //compilerOptions总共95个配置
+    //compilerOptions总共100个配置
     "compilerOptions": {
-        //#region 基本配置
+        //#region 基本配置(7)
         "charset": "utf8",
         "disableSizeLimit": false, //禁用对工程中非TS文件的大小的限制。
         "jsx": "react-jsx", //jsx类型。
@@ -16,7 +16,7 @@
         //"plugins": [], //语言服务插件
         //#endregion
 
-        //#region 控制台
+        //#region 控制台(10)
         "diagnostics": false, //显示诊断信息。
         "extendedDiagnostics": false, //显示详细诊断信息。
         "listEmittedFiles": false, //打印出编译后生成文件的名字。
@@ -29,14 +29,14 @@
         "traceResolution": false, //生成模块解析日志信息。
         //#endregion
 
-        //#region 映射
+        //#region 映射(3)
         //"baseUrl": ".", //非相对模块的基础路径，和paths配合使用。
         "paths": {
         }, //模块名到基于baseUrl的路径映射的列表。
         //"rootDirs": [], //根（root）文件夹列表，表示运行时组合工程结构的内容。
         //#endregion
 
-        //#region 筛选
+        //#region 筛选(16)
         "allowJs": true, //是否编译js。
         "assumeChangesOnlyAffectDirectDependencies": false, //是否仅重新编译有变化的文件和直接依赖项（可提高编译速度）
         //"disableSolutionSearching": false, //在大型复合项目中可以开启，提高编译速度
@@ -55,7 +55,7 @@
         //"watch": false, //开启watch模式
         //#endregion
 
-        //#region 错误检查
+        //#region 错误检查(30)
         "allowSyntheticDefaultImports": true, //允许从没有设置默认导出的模块中默认导入，要同时开启esModuleInterop，否则仅能用于类型检查。
         "allowUmdGlobalAccess": false, // 允许将模块导出到 UMC 全局对象。
         "allowUnreachableCode": false, //不报告执行不到的代码错误。
@@ -63,17 +63,19 @@
         "checkJs": false, //检查js文件中的错误，和allowJs配合使用。
         "downlevelIteration": false, //es5和es3支持iterables。
         "esModuleInterop": true, //使commonjs的能使用es6的默认导出和导入。
+        "exactOptionalPropertyTypes": true, // 可选字段不再默认可接受undefined类型
         "experimentalDecorators": true, //是否启用es7注解。
         "forceConsistentCasingInFileNames": true, //禁止对同一个文件的不一致的引用。
-        "isolatedModules": false, //每个文件都必需是一个模块。
-        "keyofStringsOnly": false, //只允许string使用keyof。
+        "isolatedModules": true, //每个文件都必需是一个模块。
+        "keyofStringsOnly": false, // keyof 只会返回string类型而不是string | number。
         "noFallthroughCasesInSwitch": true, //报告switch语句的fallthrough错误。（即，不允许switch的case语句贯穿）。
         "noImplicitAny": true, //在表达式和声明上有隐含的any类型时报错。
+        "noImplicitOverride": true, // 禁止隐式重写类成员（必需显示用override声明）
         "noImplicitReturns": true, //不是函数的所有返回路径都有返回值时报错。
         "noImplicitThis": true, //当this表达式的值为any类型的时候，生成一个错误。
-        "noPropertyAccessFromIndexSignature": false, // 禁止在索引类型中直接读取props
+        "noPropertyAccessFromIndexSignature": true, // 禁止在索引类型中直接读取props
         "noStrictGenericChecks": false, //禁用在函数类型里对泛型签名进行严格检查。
-        "noUncheckedIndexedAccess": false, // 开启后会强制所有索引类型为可空类型
+        "noUncheckedIndexedAccess": false, // 开启后会强制所有索引类型为可空类型 // TODO
         "noUnusedLocals": true, //若有未使用的局部变量则抛错。
         "noUnusedParameters": true, //若有未使用的参数则抛错。
         "strict": true, //启用所有严格类型检查选项。启用 --strict相当于启用 --noImplicitAny, --noImplicitThis, --alwaysStrict， --strictNullChecks和 --strictFunctionTypes和--strictPropertyInitialization。
@@ -83,9 +85,10 @@
         "strictPropertyInitialization": true, //检查类成员是否被初始化，要求同时启用strictNullChecks。
         "suppressExcessPropertyErrors": false, //阻止对对象字面量的额外属性检查。ts中对象字面量会对额外属性进行检查，开启这个选项就会绕过这个检查。
         "suppressImplicitAnyIndexErrors": false, //阻止--noImplicitAny对缺少索引签名的索引对象报错。
+        "useUnknownInCatchVariables": true, // catch(e) 中e的类型默认为unknown
         //#endregion
 
-        //#region 注入
+        //#region 注入(12)
         "alwaysStrict": true, //编译后在文件头部加上use strict。与noImplicitUseStrict冲突。
         "emitBOM": false, //在输出文件的开头加入BOM头（UTF-8 Byte Order Mark）。
         "emitDecoratorMetadata": true, //给源码里的装饰器声明加上设计类型元数据。Reflect.metadata
@@ -100,7 +103,7 @@
         "removeComments": true, //刪除所有注释
         //#endregion
 
-        //#region 输出配置
+        //#region 输出配置(22)
         //"build": false, //结合references生成项目。
         "composite": false, //确保TypeScript可以找到引用项目的输出以编译项目。
         "declaration": false, //生成相应的 .d.ts文件。
@@ -117,9 +120,10 @@
         "noEmitOnError": true, //报错时不生成输出文件。
         //"outDir": ".tsc", //输出目录。
         //"outFile": "", //将输出文件合并为一个文件。合并的顺序是根据传入编译器的文件顺序和 ///<reference``>和 import的文件顺序决定的。用于AMD 和 System
+        "preserveValueImports": false, // 保留未使用的import
         "sourceMap": false, //生成相应的Map文件。
         //"sourceRoot": "", //指定原文件路径。该路径用于map文件查找原文件
-        "target": "ES2020", //指定ECMAScript目标版本 "ES3"（默认）， "ES5"， "ES6"/ "ES2015"， "ES2016"， "ES2017"或 "ESNext"。
+        "target": "ESNext", //指定ECMAScript目标版本 "ES3"（默认）， "ES5"， "ES6"/ "ES2015"， "ES2016"， "ES2017"或 "ESNext"。
         //"tsBuildInfoFile": "", //指定buildinfo文件存储路径，默认在outDir下
         "useDefineForClassFields": true //使用 Object.defineProperty 定义类属性
         //#endregion
