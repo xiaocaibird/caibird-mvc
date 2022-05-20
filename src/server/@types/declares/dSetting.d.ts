@@ -5,8 +5,8 @@
 export namespace dSetting {
     type CheckType<T extends Caibird.dp.Obj<Caibird.dp.Obj | string | undefined>> = T;
 
-    type GlobalConfig = CheckType<{
-    }>;
+    // eslint-disable-next-line @typescript-eslint/ban-types
+    type GlobalConfig = CheckType<{}>;
 
     type GlobalSecret = CheckType<{
         tracingAnalysisEndpoint?: string,

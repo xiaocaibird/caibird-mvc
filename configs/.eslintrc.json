@@ -557,7 +557,8 @@
                 "detectObjects": false,
                 "ignoreEnums": true,
                 "ignoreNumericLiteralTypes": true,
-                "ignoreReadonlyClassProperties": true
+                "ignoreReadonlyClassProperties": true,
+                "ignoreTypeIndexes": true
             }
         ],
 
