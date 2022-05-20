@@ -13,7 +13,7 @@ const defaultGlobalList = ['rimraf'];
 module.exports = ({
     globalList,
 }) => {
-    printf('请确认您安装了 Node v16 及以上版本', ColorsEnum.RED);
+    printf('请确认您安装了 Node v4 及以上版本', ColorsEnum.RED);
     printf('请自行安装tslint等插件', ColorsEnum.RED);
 
     const s = new Set(defaultGlobalList.concat(globalList || []));
