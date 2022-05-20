@@ -13,7 +13,7 @@
         "jsx": "react-jsx", //jsx类型。
         "jsxImportSource": "react", //导入jsx依赖的库
         "module": "ES2022", //模块系统。
-        "moduleResolution": "Node16", //模块解析规范。
+        "moduleResolution": "Node", //模块解析规范。 // TODO
         //"plugins": [], //语言服务插件
         //"rootDir": "src", //设置编译的根目录。所有待编译的文件都要在这个目录下。
         "target": "ES2022", //指定ECMAScript目标版本 "ES3"（默认）。
@@ -64,10 +64,10 @@
         "checkJs": false, //检查js文件中的错误，和allowJs配合使用。
         "downlevelIteration": false, //es5和es3支持iterables。
         "esModuleInterop": true, //使commonjs的能使用es6的默认导出和导入。
-        "exactOptionalPropertyTypes": true, // 可选字段不再默认可接受undefined类型
+        "exactOptionalPropertyTypes": false, // 可选字段不再默认可接受undefined类型 // TODO
         "experimentalDecorators": true, //是否启用es7注解。
         "forceConsistentCasingInFileNames": true, //禁止对同一个文件的不一致的引用。
-        "isolatedModules": true, //每个文件都必需是一个模块。
+        "isolatedModules": false, //每个文件都必需是一个模块。 // TODO
         "keyofStringsOnly": false, // keyof 只会返回string类型而不是string | number。
         "noFallthroughCasesInSwitch": true, //报告switch语句的fallthrough错误。（即，不允许switch的case语句贯穿）。
         "noImplicitAny": true, //在表达式和声明上有隐含的any类型时报错。

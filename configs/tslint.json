@@ -193,7 +193,7 @@
         //禁止稀疏数组
         "no-sparse-arrays": true,
         //禁止不必要的字符串属性访问
-        "no-string-literal": true,
+        "no-string-literal": false,
         //throw不能直接抛出字符
         "no-string-throw": true,
         //禁止导入子模块的模块列表(暂时没有模块禁止使用子模块)
