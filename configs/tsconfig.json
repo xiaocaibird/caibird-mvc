@@ -4,7 +4,7 @@
      * @version 4.6.4
      */
     "compileOnSave": false,
-    //compilerOptions总共100个配置
+    //compilerOptions总共99个配置
     "compilerOptions": {
         //#region 基本配置(7)
         "charset": "utf8",
@@ -31,8 +31,7 @@
 
         //#region 映射(3)
         //"baseUrl": ".", //非相对模块的基础路径，和paths配合使用。
-        "paths": {
-        }, //模块名到基于baseUrl的路径映射的列表。
+        "paths": {}, //模块名到基于baseUrl的路径映射的列表。
         //"rootDirs": [], //根（root）文件夹列表，表示运行时组合工程结构的内容。
         //#endregion
 
@@ -103,8 +102,7 @@
         "removeComments": true, //刪除所有注释
         //#endregion
 
-        //#region 输出配置(22)
-        //"build": false, //结合references生成项目。
+        //#region 输出配置(21)
         "composite": false, //确保TypeScript可以找到引用项目的输出以编译项目。
         "declaration": false, //生成相应的 .d.ts文件。
         //"declarationDir": "", //.d.ts文件文件输出目录。
@@ -130,21 +128,41 @@
     },
 
     //#region 其它选项
+    //"buildOptions": {},
     //"include": []
     //"extends": "",
     //"files": [],
     //"exclude": [],
     //"references": []
+    //"ts-node": {},
     //"typeAcquisition": {}
     //"watchOptions":{}
     //#endregion
 
     //#region 其它命令 
     /*
-        -h 帮助信息
-        -init 生成tsconfig.json文件
-        -p 编译指定目录下的项目。这个目录应该包含一个 tsconfig.json文件来管理编译
-        -v 查看版本号
+        --all 显示所有编译选项
+        --generateTrace 生成编译栈
+        --help,-h 显示帮助信息
+        --init 初始化ts项目
+        --listFilesOnly 仅打印参与构建的文件名
+        --locale 设置编译时的language
+        --project,-p 指定编译时的tsconfig.json
+        --showConfig 仅打印编译配置
+        --version 显示tsc版本
+        --build,-b 构建一个或多个相互依赖的项目
+        --clean 删除构建输出
+        --dry 显示将要构建的内容
+        --force 强制构建所有项目
+        --verbose,-v 开启详细日志
+
+        --excludeDirectories 设置不需要监听的目录
+        --excludeFiles 设置不需要监听的文件
+        --fallbackPolling 设置备用的监听轮询策略
+        --synchronousWatchDirectory 不支持递归监听时，启用同步监听
+        --watch,-w 启用监听
+        --watchDirectory 设置监听目录树的策略
+        --watchFile 设置监听模式的策略
     */
     //#endregion
 }
