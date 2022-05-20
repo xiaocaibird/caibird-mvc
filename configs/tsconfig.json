@@ -4,12 +4,14 @@
      * @version 4.6.4
      */
     "compileOnSave": false,
-    //compilerOptions总共99个配置
+    //compilerOptions总共105个配置
     "compilerOptions": {
-        //#region 基本配置(8)
+        //#region 基本配置(10)
         "charset": "utf8",
+        "disableReferencedProjectLoad": false, //禁用多项目自动加载
         "disableSizeLimit": false, //禁用对工程中非TS文件的大小的限制。
         "jsx": "react-jsx", //jsx类型。
+        "jsxImportSource": "react", //导入jsx依赖的库
         "module": "ES2022", //模块系统。
         "moduleResolution": "Node16", //模块解析规范。
         //"plugins": [], //语言服务插件
@@ -36,7 +38,7 @@
         //"rootDirs": [], //根（root）文件夹列表，表示运行时组合工程结构的内容。
         //#endregion
 
-        //#region 筛选(16)
+        //#region 筛选(15)
         "allowJs": true, //是否编译js。
         "assumeChangesOnlyAffectDirectDependencies": false, //是否仅重新编译有变化的文件和直接依赖项（可提高编译速度）
         //"disableSolutionSearching": false, //在大型复合项目中可以开启，提高编译速度
@@ -52,7 +54,6 @@
         "stripInternal": false, //编译时跳过 /** @internal */ 注解的代码
         //"typeRoots": [], //要包含的类型声明文件路径列表。   
         //"types": [], //要包含的类型声明文件名列表。
-        //"watch": false, //开启watch模式
         //#endregion
 
         //#region 错误检查(30)
@@ -103,7 +104,7 @@
         "removeComments": true, //刪除所有注释
         //#endregion
 
-        //#region 输出配置(20)
+        //#region 输出配置(21)
         "composite": false, //确保TypeScript可以找到引用项目的输出以编译项目。
         "declaration": false, //生成相应的 .d.ts文件。
         //"declarationDir": "", //.d.ts文件文件输出目录。
@@ -114,6 +115,7 @@
         "incremental": false, // 使用buildinfo记录上次编译信息，并优化编译速度。
         "inlineSourceMap": true, //将输出的map文件合并到代码文件中。
         "inlineSources": false, //将代码信息输出到sourcemaps信息中，要求设置了--inlineSourceMap或 --sourceMap属性。
+        "listFilesOnly": false, //仅打印参与构建的文件名
         //"mapRoot": "", //指定map文件路径。该路径用于代码文件查找map文件
         "noEmit": false, //不生成输出文件。
         "noEmitOnError": true, //报错时不生成输出文件。
@@ -124,6 +126,13 @@
         //"sourceRoot": "", //指定原文件路径。该路径用于map文件查找原文件
         //"tsBuildInfoFile": "", //指定buildinfo文件存储路径，默认在outDir下
         "useDefineForClassFields": true //使用 Object.defineProperty 定义类属性
+        //#endregion
+
+        //#region watch配置(4)
+        //"watch": false,
+        //"watchFile": "dynamicPriorityPolling",
+        //"watchDirectory": "dynamicPriorityPolling",
+        //"fallbackPolling": "dynamicPriority",
         //#endregion
     },
 
@@ -145,7 +154,6 @@
         --generateTrace 生成编译栈
         --help,-h 显示帮助信息
         --init 初始化ts项目
-        --listFilesOnly 仅打印参与构建的文件名
         --locale 设置编译时的language
         --project,-p 指定编译时的tsconfig.json
         --showConfig 仅打印编译配置
@@ -158,11 +166,7 @@
 
         --excludeDirectories 设置不需要监听的目录
         --excludeFiles 设置不需要监听的文件
-        --fallbackPolling 设置备用的监听轮询策略
         --synchronousWatchDirectory 不支持递归监听时，启用同步监听
-        --watch,-w 启用监听
-        --watchDirectory 设置监听目录树的策略
-        --watchFile 设置监听模式的策略
     */
     //#endregion
 }
