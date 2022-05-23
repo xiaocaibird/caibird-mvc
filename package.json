@@ -1,6 +1,6 @@
 {
   "name": "caibird",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "private": false,
   "scripts": {
     "preinstall": "git config core.ignorecase false & rimraf .eslint/cache &",
@@ -107,7 +107,7 @@
     "through2": "^4.0.2",
     "ts-import-plugin": "^1.6.7",
     "tsconfig-paths-webpack-plugin": "^3.5.1",
-    "tslib": "^2.2.0",
+    "tslib": "^2.4.0",
     "tslint": "^6.1.3",
     "tslint-eslint-rules": "^5.4.0",
     "tslint-react": "^5.0.0",
