@@ -94,16 +94,12 @@
                     "fixWith": "Caibird.dp.Func"
                 },
                 "Object": {
-                    "message": "The `Object` type actually means \"any non-nullish value\", so it is marginally better than `unknown`.\n- If you want a type meaning \"any object\", you probably want `Caibird.dp.Obj` instead.\n- If you want a type meaning \"any value\", you probably want `unknown` instead.",
-                    "fixWith": "Caibird.dp.Obj"
-                },
-                "{}": {
-                    "message": "`{}` actually means \"any non-nullish value\".\n- If you want a type meaning \"any object\", you probably want `Caibird.dp.Obj` instead.\n- If you want a type meaning \"any value\", you probably want `unknown` instead.",
-                    "fixWith": "Caibird.dp.Obj"
+                    "message": "Use {} instead",
+                    "fixWith": "{}"
                 },
                 "object": {
-                    "message": "The `object` type is currently hard to use ([see this issue](https://github.com/microsoft/TypeScript/issues/21732)).\nConsider using `Caibird.dp.Obj` instead, as it allows you to more easily inspect and use the keys.",
-                    "fixWith": "Caibird.dp.Obj"
+                    "message": "Use {} instead",
+                    "fixWith": "{}"
                 }
             },
             "extendDefaults": false

@@ -257,10 +257,8 @@
         //#region Maintainability
         //限制if for等循环语句在一个块内的使用次数(这个没有必需限制)
         "cyclomatic-complexity": false,
-        //使用废弃api时报错。【编译时检查】
-        "deprecation": {
-            "severity": "warn"
-        },
+        //使用废弃api时报错。【编译时检查】 
+        "deprecation": false, // TODO 有bug 寻找替代
         // 禁止在返回类型和泛型以外使用void类型(暂时没必要)
         "invalid-void": false,
         //文件最后必需有换行符
