@@ -12,11 +12,11 @@
         "disableSizeLimit": false, //禁用对工程中非TS文件的大小的限制。
         "jsx": "react-jsx", //jsx类型。
         "jsxImportSource": "react", //导入jsx依赖的库
-        "module": "ES2022", //模块系统。
+        "module": "CommonJS", //模块系统。// TODO
         "moduleResolution": "Node", //模块解析规范。 // TODO
         //"plugins": [], //语言服务插件
         //"rootDir": "src", //设置编译的根目录。所有待编译的文件都要在这个目录下。
-        "target": "ES2022", //指定ECMAScript目标版本 "ES3"（默认）。
+        "target": "ES2020", //指定ECMAScript目标版本 "ES3"（默认）。 // TODO
         //#endregion
 
         //#region 控制台(10)
