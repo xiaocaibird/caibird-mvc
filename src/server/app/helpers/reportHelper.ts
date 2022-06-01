@@ -8,7 +8,7 @@ import { get } from 'lodash';
 import log4js from 'log4js';
 import moment from 'moment';
 
-import type { dReport } from '../../@types/declares';
+import type { dMvc, dReport } from '../../@types/declares';
 import { cKey } from '../../consts/cKey';
 import { uArray } from '../../utils/uArray';
 import { uNumber } from '../../utils/uNumber';
@@ -333,10 +333,10 @@ class ReportHelper {
 
     public readonly dbLog = (opt: Omit<dReport.LogOptions, 'type'>) => this.log({ ...opt, type: Caibird.eReport.LogType.DbLog });
 
-    public readonly unknownError = (opt: Omit<dReport.LogOptions, 'always' | 'attribute' | 'type'>, ctx?: Koa.Context | null) =>
+    public readonly unknownError = (opt: Omit<dReport.LogOptions, 'always' | 'attribute' | 'type'>, ctx?: dMvc.Ctx<unknown, Caibird.dp.Obj> | null) =>
         this.log({ ...opt, type: Caibird.eReport.LogType.UnknownError, always: true, attribute: true }, ctx);
 
-    public readonly appError = (opt: Omit<dReport.LogOptions, 'always' | 'attribute' | 'type'>, ctx?: Koa.Context | null) =>
+    public readonly appError = (opt: Omit<dReport.LogOptions, 'always' | 'attribute' | 'type'>, ctx?: dMvc.Ctx<unknown, Caibird.dp.Obj> | null) =>
         this.log({ ...opt, type: Caibird.eReport.LogType.AppError, always: true, attribute: true }, ctx);
 }
 

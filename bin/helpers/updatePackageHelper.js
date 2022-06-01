@@ -19,7 +19,7 @@ const update = ({
     // 锁版本的list
     let lockList = depLockList || [];
     // 更新dependencies
-    const dependencies = packageJson.dependencies;
+    const dependencies = packageJson.dependencies || {};
     let packList = Object.keys(dependencies).filter(item => !lockList.includes(item)).filter(item => !ignoreList.includes(item));
 
     let latestStr = packList.length ? `${packList.join('@latest ')}@latest` : '';
@@ -29,7 +29,7 @@ const update = ({
 
     lockList = devDepLockList || [];
     // 更新devDependencies
-    const devDependencies = packageJson.devDependencies;
+    const devDependencies = packageJson.devDependencies || {};
     packList = Object.keys(devDependencies).filter(item => !lockList.includes(item)).filter(item => !ignoreList.includes(item));
 
     latestStr = packList.length ? `${packList.join('@latest ')}@latest` : '';
