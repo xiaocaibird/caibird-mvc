@@ -19,8 +19,8 @@ export default (opt: { types: typeof Types }): { name: string, visitor: Visitor 
                     ) {
                         const callExpression = path.findParent(p => p.node.type === 'CallExpression');
                         if (callExpression && callExpression.node.type === 'CallExpression') {
-                            const controllerParent = path.parentPath.parentPath.node;
-                            if (controllerParent.type === 'MemberExpression' && callExpression.node.callee.type === 'MemberExpression') {
+                            const controllerParent = path.parentPath?.parentPath?.node;
+                            if (controllerParent && controllerParent.type === 'MemberExpression' && callExpression.node.callee.type === 'MemberExpression') {
                                 const controller = controllerParent.property;
                                 const action = callExpression.node.callee.property;
                                 if (isIdentifier(controller) && isIdentifier(action)) {

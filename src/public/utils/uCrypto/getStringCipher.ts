@@ -23,7 +23,11 @@ const strDecipher = (encrypted: string, k: CipherKey, iv: BinaryLike | null,
     return decrypted;
 };
 
-export const getStringCipher = (key: CipherKey = 'caibird_default1', iv: BinaryLike = 'caibird_default1', params: {
+const DEFAULT_KEY = 'caibird_default1';
+const DEFAULT_IV = 'caibird_default1';
+const KEY_LEN = 16;
+
+export const getStringCipher = (key: CipherKey = DEFAULT_KEY, iv: BinaryLike = DEFAULT_IV, params: {
     algorithm?: string,
     encryptInputEncoding?: Encoding,
     encryptOutputEncoding?: BinaryToTextEncoding,
@@ -34,8 +38,12 @@ export const getStringCipher = (key: CipherKey = 'caibird_default1', iv: BinaryL
         encryptInputEncoding = 'utf8',
         encryptOutputEncoding = 'hex',
     } = params;
+
+    const innerKey = key === DEFAULT_KEY || typeof key !== 'string' ? key :
+        strCipher(key, DEFAULT_KEY, iv, algorithm, encryptInputEncoding, encryptOutputEncoding).slice(0, KEY_LEN);
+
     return {
-        encrypt: (data: string) => strCipher(data, key, iv, algorithm, encryptInputEncoding, encryptOutputEncoding),
-        decrypt: (encrypted: string) => strDecipher(encrypted, key, iv, algorithm, encryptOutputEncoding, encryptInputEncoding),
+        encrypt: (data: string) => strCipher(data, innerKey, iv, algorithm, encryptInputEncoding, encryptOutputEncoding),
+        decrypt: (encrypted: string) => strDecipher(encrypted, innerKey, iv, algorithm, encryptOutputEncoding, encryptInputEncoding),
     };
 };

@@ -173,7 +173,7 @@ export abstract class HRequest<TControllers extends Caibird.dFetch.BaseControlle
                     key: `${key}fetch_fail`,
                     showPrompt: nowShowPrompt,
                     promptStyleType: nowPromptStyleType,
-                    msg: (error && (error.msg || error.message) || defaultMsg) as string,
+                    msg: (error && (error['msg'] || error['message']) || defaultMsg) as string,
                 },
                 noReportError === true ? false : {
                     key: `${key}fetch_fail`,
@@ -263,7 +263,7 @@ export abstract class HRequest<TControllers extends Caibird.dFetch.BaseControlle
             const error = e as Caibird.dp.Obj;
             this.onGetNoHandleResultError && await this.onGetNoHandleResultError(error, opt, info);
 
-            const msg = error && (error.msg || error.message) || defaultMsg;
+            const msg = error && (error['msg'] || error['message']) || defaultMsg;
             return {
                 code: Caibird.eFetch.JsonErrorCode.FetchError,
                 msg,

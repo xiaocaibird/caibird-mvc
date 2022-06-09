@@ -404,7 +404,7 @@ export default class App<TRules extends Caibird.dp.Obj, TCtxState extends Caibir
             try {
                 !(disableAllDefaultErrorHandler || disableDefaultUnhandledRejectionHandler) && reportHelper.appError({
                     key: 'process_unhandledRejection',
-                    error: reason ?? undefined,
+                    error: (reason as Caibird.dp.Obj) ?? undefined,
                 });
 
                 unhandledRejection?.(reason, promise, this);

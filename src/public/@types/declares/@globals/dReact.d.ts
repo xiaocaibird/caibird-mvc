@@ -13,6 +13,5 @@ declare namespace Caibird.dReact {
         TComponent extends React.MemoExoticComponent<React.FunctionComponent<infer P>> ? P : never;
 
     type GetState<TComponent extends React.Component | React.ComponentClass> =
-        // eslint-disable-next-line @typescript-eslint/ban-types
         TComponent extends React.Component<{}, infer S> ? S : TComponent extends React.ComponentClass<{}, infer S> ? S : never;
 }

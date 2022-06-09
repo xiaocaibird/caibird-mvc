@@ -8,7 +8,7 @@ import { get } from 'lodash';
 import log4js from 'log4js';
 import moment from 'moment';
 
-import type { dReport } from '../../@types/declares';
+import type { dMvc, dReport } from '../../@types/declares';
 import { cKey } from '../../consts/cKey';
 import { uArray } from '../../utils/uArray';
 import { uNumber } from '../../utils/uNumber';
@@ -85,10 +85,10 @@ class ReportHelper {
                 let result: Caibird.dp.Obj = {};
 
                 if (isError) {
-                    const code = obj.code != null ? uString.subText({ str: obj.code.toString(), maxLength: 100, diffSBC: false }) : undefined;
-                    const name = uString.check(obj.name) && uString.subText({ str: obj.name, maxLength: 100, diffSBC: false }) || undefined;
-                    const message = uString.check(obj.message) && uString.subText({ str: obj.message, maxLength: 100, diffSBC: false }) || undefined;
-                    const stack = uString.check(obj.stack) && uString.subText({ str: obj.stack, maxLength: 1500, diffSBC: false }) || undefined;
+                    const code = obj['code'] != null ? uString.subText({ str: obj['code'].toString(), maxLength: 100, diffSBC: false }) : undefined;
+                    const name = uString.check(obj['name']) && uString.subText({ str: obj['name'], maxLength: 100, diffSBC: false }) || undefined;
+                    const message = uString.check(obj['message']) && uString.subText({ str: obj['message'], maxLength: 100, diffSBC: false }) || undefined;
+                    const stack = uString.check(obj['stack']) && uString.subText({ str: obj['stack'], maxLength: 1500, diffSBC: false }) || undefined;
                     result = {
                         code,
                         name,
@@ -96,10 +96,10 @@ class ReportHelper {
                         stack,
                     };
 
-                    obj.code = undefined;
-                    obj.name = undefined;
-                    obj.message = undefined;
-                    obj.stack = undefined;
+                    obj['code'] = undefined;
+                    obj['name'] = undefined;
+                    obj['message'] = undefined;
+                    obj['stack'] = undefined;
                 }
 
                 const json = uObject.safeStringify(obj);
@@ -177,7 +177,7 @@ class ReportHelper {
             time: date.format('HH:mm:ss:SSS'),
             msg: this.handleInfo(opt.msg, 500),
             uuid: this.handleInfo(uuid, 50),
-            fetchId: this.handleInfo(state?.fetchId || '', 50),
+            fetchId: this.handleInfo(state?.['fetchId'] || '', 50),
             details: this.handleInfo(opt.details, 4000),
             error: this.handleInfo(opt.error, 1000, true),
             source: this.handleInfo(opt.source, 1000, true),
@@ -225,7 +225,7 @@ class ReportHelper {
                 return result;
             }, {});
 
-            obj.default = {
+            obj['default'] = {
                 appenders: ['log'],
                 level: 'info',
                 enableCallStack: true,
@@ -333,16 +333,16 @@ class ReportHelper {
 
     public readonly dbLog = (opt: Omit<dReport.LogOptions, 'type'>) => this.log({ ...opt, type: Caibird.eReport.LogType.DbLog });
 
-    public readonly unknownError = (opt: Omit<dReport.LogOptions, 'always' | 'attribute' | 'type'>, ctx?: Koa.Context | null) =>
+    public readonly unknownError = (opt: Omit<dReport.LogOptions, 'always' | 'attribute' | 'type'>, ctx?: dMvc.Ctx<unknown, Caibird.dp.Obj> | null) =>
         this.log({ ...opt, type: Caibird.eReport.LogType.UnknownError, always: true, attribute: true }, ctx);
 
-    public readonly appError = (opt: Omit<dReport.LogOptions, 'always' | 'attribute' | 'type'>, ctx?: Koa.Context | null) =>
+    public readonly appError = (opt: Omit<dReport.LogOptions, 'always' | 'attribute' | 'type'>, ctx?: dMvc.Ctx<unknown, Caibird.dp.Obj> | null) =>
         this.log({ ...opt, type: Caibird.eReport.LogType.AppError, always: true, attribute: true }, ctx);
 }
 
 //#region 私有成员
 class LogStack extends Error {
-    public readonly name = 'LogStack';
+    public override readonly name = 'LogStack';
 }
 //#endregion
 

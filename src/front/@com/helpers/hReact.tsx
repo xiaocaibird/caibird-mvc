@@ -43,7 +43,7 @@ export abstract class HReact {
                 }
             };
 
-            public render() {
+            public override render() {
                 const { Component, isClassComponent } = this.state;
 
                 return Component ?
@@ -51,7 +51,7 @@ export abstract class HReact {
                     isClassComponent ? <Component ref={this.innerRef} {...this.props as any} /> : <Component {...this.props as any} /> : null;
             }
 
-            public async componentDidMount() {
+            public override async componentDidMount() {
                 this.onAsyncInnerDidMount();
                 if (!With.inner) {
                     const Component = (await importComponent());
@@ -66,7 +66,7 @@ export abstract class HReact {
                 }
             }
 
-            public componentDidUpdate() {
+            public override componentDidUpdate() {
                 this.onAsyncInnerDidMount();
             }
         };
