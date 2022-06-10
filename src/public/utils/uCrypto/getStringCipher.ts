@@ -39,7 +39,7 @@ export const getStringCipher = (key: CipherKey = DEFAULT_KEY, iv: BinaryLike = D
         encryptOutputEncoding = 'hex',
     } = params;
 
-    const innerKey = key === DEFAULT_KEY || typeof key !== 'string' ? key :
+    const innerKey = typeof key !== 'string' || key.length === KEY_LEN ? key :
         strCipher(key, DEFAULT_KEY, iv, algorithm, encryptInputEncoding, encryptOutputEncoding).slice(0, KEY_LEN);
 
     return {
