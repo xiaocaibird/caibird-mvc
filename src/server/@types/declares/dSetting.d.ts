@@ -5,8 +5,7 @@
 export namespace dSetting {
     type CheckType<T extends Caibird.dp.Obj<Caibird.dp.Obj | string | undefined>> = T;
 
-    type GlobalConfig = CheckType<{
-    }>;
+    type GlobalConfig = CheckType<{}>;
 
     type GlobalSecret = CheckType<{
         tracingAnalysisEndpoint?: string,

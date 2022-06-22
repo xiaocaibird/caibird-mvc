@@ -2,11 +2,12 @@
  * @Owners cmZhou
  * @Title server app
  */
+import KoaRouter from '@koa/router';
 import http from 'http';
+import https from 'https';
 import jaegerClient from 'jaeger-client';
 import Koa from 'koa';
 import koaBody from 'koa-body';
-import KoaRouter from 'koa-router';
 import type KoaSend from 'koa-send';
 import koaSession from 'koa-session';
 import koaViews from 'koa-views';
@@ -123,6 +124,17 @@ export default class App<TRules extends Caibird.dp.Obj, TCtxState extends Caibir
             },
         ),
     } as const;
+
+    // 之后放到caibrid中的hService中
+    public readonly defaultHttpConfigs = {
+        timeout: 10000,
+        httpAgent: new http.Agent({
+            keepAlive: true,
+        }),
+        httpsAgent: new https.Agent({
+            keepAlive: true,
+        }),
+    };
 
     public readonly koa = new Koa<dMvc.CtxState<TCtxState>, dMvc.CtxCustom<TCtxState, TCtxCustom>>();
 
@@ -392,7 +404,7 @@ export default class App<TRules extends Caibird.dp.Obj, TCtxState extends Caibir
             try {
                 !(disableAllDefaultErrorHandler || disableDefaultUnhandledRejectionHandler) && reportHelper.appError({
                     key: 'process_unhandledRejection',
-                    error: reason ?? undefined,
+                    error: (reason as Caibird.dp.Obj) ?? undefined,
                 });
 
                 unhandledRejection?.(reason, promise, this);
@@ -692,7 +704,10 @@ export default class App<TRules extends Caibird.dp.Obj, TCtxState extends Caibir
     }
 
     public readonly start = async (startOpt: StartOpt<TRules, TCtxState, TCtxCustom>) => {
-        const { host, port, appKeys, onPreInit, onPostInit, onEnd } = this.options;
+        const { host, port, appKeys, onPreInit, onPostInit, onEnd, clearCtxTimeout } = this.options;
+
+        clearCtxTimeout != null && contextHelper.setClearTimeout(clearCtxTimeout);
+
         this.koa.keys = appKeys;
         this.listenError();
         onPreInit && await onPreInit(this);
@@ -737,6 +752,8 @@ type Options<TRules extends Caibird.dp.Obj, TCtxState extends Caibird.dp.Obj, TC
         opt?: Parameters<typeof koaViews>[1],
     },
     sessionOptions?: koaSession.opts | false,
+
+    clearCtxTimeout?: number,
 
     onPreUseKoaBody?(koa: dMvc.Koa<TCtxState, TCtxCustom>, app: App<TRules, TCtxState, TCtxCustom, TControllerDefaultConfig>): Caibird.dp.PromiseOrSelf<void>,
     onPreUseMvc?(koa: dMvc.Koa<TCtxState, TCtxCustom>, app: App<TRules, TCtxState, TCtxCustom, TControllerDefaultConfig>): Caibird.dp.PromiseOrSelf<void>,

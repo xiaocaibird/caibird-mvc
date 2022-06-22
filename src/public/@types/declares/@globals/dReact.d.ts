@@ -4,9 +4,8 @@
  */
 declare namespace Caibird.dReact {
     type State = never;
-    type Props = { children?: React.ReactNode };
+    type Props = dp.Obj;
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     type GetProps<TComponent> =
         TComponent extends React.Component<infer P> ? P :
         TComponent extends React.ComponentType<infer P> ? P :
@@ -14,6 +13,5 @@ declare namespace Caibird.dReact {
         TComponent extends React.MemoExoticComponent<React.FunctionComponent<infer P>> ? P : never;
 
     type GetState<TComponent extends React.Component | React.ComponentClass> =
-        // eslint-disable-next-line @typescript-eslint/ban-types
         TComponent extends React.Component<{}, infer S> ? S : TComponent extends React.ComponentClass<{}, infer S> ? S : never;
 }

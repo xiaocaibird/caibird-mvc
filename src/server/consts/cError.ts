@@ -16,7 +16,7 @@ namespace _cError {
             super(uObject.check(info) ? info.msg : info.toString());
         }
 
-        public readonly name: string = 'BaseError';
+        public override readonly name: string = 'BaseError';
     }
 
     export class ParameterJson extends Base {
@@ -27,7 +27,7 @@ namespace _cError {
             super({ code: Caibird.eFetch.JsonErrorCode.ParameterError, msg }, logOptions);
         }
 
-        public readonly name = 'ParameterJsonError';
+        public override readonly name = 'ParameterJsonError';
     }
 
     export class Json extends Base {
@@ -38,7 +38,7 @@ namespace _cError {
             super({ code: Caibird.eFetch.JsonErrorCode.CommonFail, ...(uObject.check(info) ? info : { msg: info }) }, logOptions);
         }
 
-        public readonly name: string = 'JsonError';
+        public override readonly name: string = 'JsonError';
     }
 
     export class TimeoutJson extends Json {
@@ -49,7 +49,7 @@ namespace _cError {
             super({ code: Caibird.eFetch.JsonErrorCode.Timeout, msg }, logOptions);
         }
 
-        public readonly name = 'TimeoutJsonError';
+        public override readonly name = 'TimeoutJsonError';
     }
 
     export class TopJson extends Json {
@@ -60,7 +60,7 @@ namespace _cError {
             super(info, { type: Caibird.eReport.LogType.TopError, always: true, attribute: true, ...logOptions });
         }
 
-        public readonly name = 'TopJsonError';
+        public override readonly name = 'TopJsonError';
     }
 
     export class Status extends Base {
@@ -76,7 +76,7 @@ namespace _cError {
             });
         }
 
-        public readonly name = 'StatusError';
+        public override readonly name = 'StatusError';
     }
 
     export class Redis extends Base {
@@ -87,7 +87,7 @@ namespace _cError {
             super({ code: Caibird.eFetch.JsonErrorCode.RedisError, msg }, logOptions);
         }
 
-        public readonly name = 'ReidsError';
+        public override readonly name = 'ReidsError';
     }
 }
 
