@@ -8,6 +8,7 @@ import babel from 'gulp-babel';
 import gulpRename from 'gulp-rename';
 import sourcemaps from 'gulp-sourcemaps';
 import stripComments from 'gulp-strip-comments';
+import gulpChanged from 'gulp-changed-in-place';
 import through from 'through2';
 import { v4 } from 'uuid';
 
@@ -185,6 +186,7 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
                     } else {
                         if (path.endsWith('.js')) {
                             gulp.src([path])
+                                .pipe(gulpChanged())
                                 .pipe(sourcemapsInit())
                                 .pipe(babel(babelrc))
                                 .pipe(gulpRename({ dirname: '' }))
@@ -192,11 +194,13 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
                                 .pipe(gulp.dest(destCallback));
                         } else if (path.replace(/\\/g, '/').endsWith('front/taro/project.config.json')) {
                             gulp.src([path])
+                                .pipe(gulpChanged())
                                 .pipe(stripComments())
                                 .pipe(gulpRename({ dirname: '' }))
                                 .pipe(gulp.dest(destCallback));
                         } else {
                             gulp.src([path])
+                                .pipe(gulpChanged())
                                 .pipe(gulpRename({ dirname: '' }))
                                 .pipe(gulp.dest(destCallback));
                         }
