@@ -178,7 +178,7 @@ class ProjectAuto {
         const projectName = this.getProjectName();
 
         if (this.hasGulpProjectNames.includes(projectName)) {
-            const result = exec(`rimraf .local/dist/rubbish && gulp watch --gulpfile .tsc/src/${projectName}/build/gulp/gulpfile.js --cwd ./`);
+            const result = exec(`gulp watch --gulpfile .tsc/src/${projectName}/build/gulp/gulpfile.js --cwd ./`);
             process.exit(result.code);
         } else {
             printf(`Error: the project 【${projectName}】 no has gulpfile`, ColorsEnum.RED);
