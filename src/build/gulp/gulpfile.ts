@@ -164,13 +164,15 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
                         return toPath.slice(0, lastIdx);
                     };
 
+                    const changed = () => type === 'add' ? through.obj() : changedInPlace();
+
                     if (type === 'delete') {
                         console.log(`[watch ${type}]:`, `delete ${toPath}`);
                         fs.existsSync(toPath) && fs.unlinkSync(toPath);
                     } else {
                         if (path.endsWith('.js')) {
                             gulp.src([path])
-                                .pipe(changedInPlace())
+                                .pipe(changed())
                                 .pipe(sourcemapsInit())
                                 .pipe(babel(babelrc))
                                 .pipe(gulpRename({ dirname: '' }))
@@ -178,13 +180,13 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
                                 .pipe(gulp.dest(destCallback));
                         } else if (path.replace(/\\/g, '/').endsWith('front/taro/project.config.json')) {
                             gulp.src([path])
-                                .pipe(changedInPlace())
+                                .pipe(changed())
                                 .pipe(stripComments())
                                 .pipe(gulpRename({ dirname: '' }))
                                 .pipe(gulp.dest(destCallback));
                         } else {
                             gulp.src([path])
-                                .pipe(changedInPlace())
+                                .pipe(changed())
                                 .pipe(gulpRename({ dirname: '' }))
                                 .pipe(gulp.dest(destCallback));
                         }
