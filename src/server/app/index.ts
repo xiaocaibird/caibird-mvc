@@ -2,12 +2,12 @@
  * @Owners cmZhou
  * @Title server app
  */
+import KoaRouter from '@koa/router';
 import http from 'http';
 import https from 'https';
 import jaegerClient from 'jaeger-client';
 import Koa from 'koa';
 import koaBody from 'koa-body';
-import KoaRouter from 'koa-router';
 import type KoaSend from 'koa-send';
 import koaSession from 'koa-session';
 import koaViews from 'koa-views';

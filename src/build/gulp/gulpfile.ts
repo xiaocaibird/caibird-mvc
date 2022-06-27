@@ -5,6 +5,7 @@
 import fs from 'fs';
 import gulp from 'gulp';
 import babel from 'gulp-babel';
+import changedInPlace from 'gulp-changed-in-place';
 import gulpRename from 'gulp-rename';
 import sourcemaps from 'gulp-sourcemaps';
 import stripComments from 'gulp-strip-comments';
@@ -128,8 +129,6 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
 
     gulp.task('watch', async () => {
         if (ini.isLocalTest) {
-            let isDone = false;
-
             let hasTaro = false;
             projectList.forEach(projectName => {
                 if (fs.existsSync(`${rootDir}src/${projectName}/front/taro/project.config.json`)) {
@@ -142,9 +141,6 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
                 ...(hasTaro ? projectList.map(projectName => `${rootDir}src/${projectName === '@scenes' ? `${projectName}/*` : projectName}/front/taro/**`) : []),
             ], done => {
                 done();
-                setTimeout(() => {
-                    isDone = true;
-                }, Caibird.eDate.MsCount.TenSec * 2);
             });
 
             const func = (type: 'add' | 'change' | 'delete') => (path: string) => {
@@ -163,28 +159,20 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
 
                     const lastIdx = toPath.lastIndexOf('/');
 
-                    const destCallback: Parameters<typeof gulp['dest']>[0] = file => {
-                        let isSame = false;
-                        try {
-                            const reg = /\n\/\/# sourceMappingURL=data:application\/json;charset=utf8;base64,.*\n$/;
-                            if (file.contents?.toString().replace(reg, '') === fs.readFileSync(toPath).toString().replace(reg, '')) {
-                                isSame = true;
-                            }
-                        } catch { }
-                        if (isSame) {
-                            isDone && console.log(`[no change after dist]: ${toPath}`);
-                            return './.local/dist/rubbish';
-                        }
-
+                    const destCallback: Parameters<typeof gulp['dest']>[0] = () => {
                         console.log(`[watch ${type}]:`, `${path} => ${toPath}`);
                         return toPath.slice(0, lastIdx);
                     };
 
+                    const changed = () => type === 'add' ? through.obj() : changedInPlace();
+
                     if (type === 'delete') {
-                        fs.unlinkSync(toPath);
+                        console.log(`[watch ${type}]:`, `delete ${toPath}`);
+                        fs.existsSync(toPath) && fs.unlinkSync(toPath);
                     } else {
                         if (path.endsWith('.js')) {
                             gulp.src([path])
+                                .pipe(changed())
                                 .pipe(sourcemapsInit())
                                 .pipe(babel(babelrc))
                                 .pipe(gulpRename({ dirname: '' }))
@@ -192,11 +180,13 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
                                 .pipe(gulp.dest(destCallback));
                         } else if (path.replace(/\\/g, '/').endsWith('front/taro/project.config.json')) {
                             gulp.src([path])
+                                .pipe(changed())
                                 .pipe(stripComments())
                                 .pipe(gulpRename({ dirname: '' }))
                                 .pipe(gulp.dest(destCallback));
                         } else {
                             gulp.src([path])
+                                .pipe(changed())
                                 .pipe(gulpRename({ dirname: '' }))
                                 .pipe(gulp.dest(destCallback));
                         }
@@ -208,7 +198,7 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
 
             watcher.on('change', func('change'));
             watcher.on('add', func('add'));
-            // watcher.on('unlink', func('delete'));
+            watcher.on('unlink', func('delete'));
             watcher.on('error', err => console.log('watch error', err));
         }
         return Promise.resolve();
