@@ -3,6 +3,6 @@
  * @Title gulp-changed-in-place.d
  */
 declare module 'gulp-changed-in-place' {
-    const changedInPlace: () => NodeJS.ReadWriteStream;
+    const changedInPlace: (opt?: { firstPass?: boolean }) => NodeJS.ReadWriteStream;
     export default changedInPlace;
 }

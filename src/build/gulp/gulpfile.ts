@@ -164,7 +164,7 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
                         return toPath.slice(0, lastIdx);
                     };
 
-                    const changed = () => type === 'add' ? through.obj() : changedInPlace();
+                    const changed = (opt?: Parameters<typeof changedInPlace>[0]) => type === 'add' ? through.obj() : changedInPlace(opt);
 
                     if (type === 'delete') {
                         console.log(`[watch ${type}]:`, `delete ${toPath}`);
@@ -180,13 +180,13 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
                                 .pipe(gulp.dest(destCallback));
                         } else if (path.replace(/\\/g, '/').endsWith('front/taro/project.config.json')) {
                             gulp.src([path])
-                                .pipe(changed())
+                                .pipe(changed({ firstPass: true }))
                                 .pipe(stripComments())
                                 .pipe(gulpRename({ dirname: '' }))
                                 .pipe(gulp.dest(destCallback));
                         } else {
                             gulp.src([path])
-                                .pipe(changed())
+                                .pipe(changed({ firstPass: true }))
                                 .pipe(gulpRename({ dirname: '' }))
                                 .pipe(gulp.dest(destCallback));
                         }
@@ -196,6 +196,7 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
                 }
             };
 
+            watcher.on('ready', () => console.log('gulp:watch 初始化成功，文件监听中...'));
             watcher.on('change', func('change'));
             watcher.on('add', func('add'));
             watcher.on('unlink', func('delete'));
