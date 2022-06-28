@@ -139,9 +139,7 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
             const watcher = gulp.watch([
                 `${rootDir}.tsc/**/*.js`,
                 ...(hasTaro ? projectList.map(projectName => `${rootDir}src/${projectName === '@scenes' ? `${projectName}/*` : projectName}/front/taro/**`) : []),
-            ], done => {
-                done();
-            });
+            ]);
 
             const func = (type: 'add' | 'change' | 'delete') => (path: string) => {
                 try {
@@ -196,7 +194,6 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
                 }
             };
 
-            watcher.on('ready', () => console.log('gulp:watch 初始化成功，文件监听中...'));
             watcher.on('change', func('change'));
             watcher.on('add', func('add'));
             watcher.on('unlink', func('delete'));
