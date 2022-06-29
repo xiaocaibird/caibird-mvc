@@ -252,7 +252,7 @@ class ProjectAuto {
 
         const result = exec(
             `kill-port ${startConfig.port} &&
-            concurrently -n "${allowServer ? 'node,' : ''}${allowWebpack ? 'webpack,' : ''}gulp,tsc" -c "${allowServer ? 'cyan.bold,' : ''}${allowWebpack ? 'yellow.bold,' : ''}green.bold,magenta.bold"
+            concurrently --restart-tries 10 -n "${allowServer ? 'node,' : ''}${allowWebpack ? 'webpack,' : ''}gulp,tsc" -c "${allowServer ? 'cyan.bold,' : ''}${allowWebpack ? 'yellow.bold,' : ''}green.bold,magenta.bold"
             ${allowServer ? `"cross-env NODE_ENV=${nodeEnvValues.DEVELOPMENT} node app"` : ''}
             ${allowWebpack ? `"npm run webpack-dev-server ${projectName}"` : ''}
             "${gulpCommandPrefix} npm run gulp:watch ${projectName}"
@@ -285,7 +285,7 @@ class ProjectAuto {
             if (this.taroProjectNames.includes(projectName)) {
                 const result = exec(
                     `${useTsCache ? '' : 'rimraf .tsc && '}cross-env _CAIBIRD_PROJECT_VERSION=${projectVersion} npm run dist ${projectName} ${envValues.local} &&
-                          concurrently -p "【{name}】" -n "WATCH,TARO" "cross-env _CAIBIRD_PROJECT_VERSION=${projectVersion} npm run start-watch ${projectName}" "npm run start-taro ${projectName} ${process.argv[4]}"`,
+                          concurrently --restart-tries 10 -p "【{name}】" -n "WATCH,TARO" "cross-env _CAIBIRD_PROJECT_VERSION=${projectVersion} npm run start-watch ${projectName}" "npm run start-taro ${projectName} ${process.argv[4]}"`,
                 );
                 process.exit(result.code);
             } else {
