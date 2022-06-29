@@ -157,7 +157,18 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
 
                     const lastIdx = toPath.lastIndexOf('/');
 
-                    const destCallback: Parameters<typeof gulp['dest']>[0] = () => {
+                    const destCallback: Parameters<typeof gulp['dest']>[0] = _file => {
+                        // let isSame = false;
+                        // try {
+                        //     const reg = /\n\/\/# sourceMappingURL=data:application\/json;charset=utf8;base64,.*\n$/;
+                        //     if (file.contents?.toString().replace(reg, '') === fs.readFileSync(toPath).toString().replace(reg, '')) {
+                        //         isSame = true;
+                        //     }
+                        // } catch { }
+                        // if (!isSame) {
+                        //     console.log(`[watch ${type}]:`, `${path} => ${toPath}`);
+                        // }
+
                         console.log(`[watch ${type}]:`, `${path} => ${toPath}`);
                         return toPath.slice(0, lastIdx);
                     };
@@ -170,7 +181,7 @@ export default (babelOptions: Omit<BabelOptions, 'projectVersion'>) => {
                     } else {
                         if (path.endsWith('.js')) {
                             gulp.src([path])
-                                .pipe(changed())
+                                .pipe(changed({ firstPass: true }))
                                 .pipe(sourcemapsInit())
                                 .pipe(babel(babelrc))
                                 .pipe(gulpRename({ dirname: '' }))

@@ -274,11 +274,13 @@ class ProjectAuto {
 
         let useTsCache = false;
 
-        if (lastProject && lastProject !== projectName) {
-            printf(`[warn] 上次启动的工程为【${lastProject}】，本次为【${projectName}】。将清除ts编译缓存!!!`, ColorsEnum.YELLOW);
-        } else if (lastProject === projectName) {
-            useTsCache = true;
-            printf(`[info] 上次和这次启动的工程都为【${projectName}】，将使用ts编译缓存!!!`);
+        if (fs.existsSync(path.join(process.cwd(), '.tsc'))) {
+            if (lastProject && lastProject !== projectName) {
+                printf(`[warn] 上次启动的工程为【${lastProject}】，本次为【${projectName}】。将清除ts编译缓存(.tsc目录)!!!`, ColorsEnum.YELLOW);
+            } else if (lastProject === projectName) {
+                useTsCache = true;
+                printf(`[info] 上次和这次启动的工程都为【${projectName}】，将使用ts编译缓存。如工程启动有问题，请自行删除.tsc目录!!!`, ColorsEnum.YELLOW);
+            }
         }
 
         if (this.allowStartProjectNames.includes(projectName)) {
