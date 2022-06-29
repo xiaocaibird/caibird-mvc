@@ -114,7 +114,7 @@
         "emitDeclarationOnly": false, //仅输出.d.ts文件。
         //"generateCpuProfile": "profile.cpuprofile", //指定路径下生成CPU配置文件。
         "importsNotUsedAsValues": "error", //当导入了没使用的值或仅使用类型且没申明type时会如何处理
-        "incremental": false, // 使用buildinfo记录上次编译信息，并优化编译速度。
+        "incremental": true, // 使用buildinfo记录上次编译信息，并优化编译速度。
         "inlineSourceMap": true, //将输出的map文件合并到代码文件中。
         "inlineSources": false, //将代码信息输出到sourcemaps信息中，要求设置了--inlineSourceMap或 --sourceMap属性。
         "listFilesOnly": false, //仅打印参与构建的文件名

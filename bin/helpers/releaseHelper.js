@@ -160,7 +160,6 @@ module.exports = async opt => {
         const result1 = exec(`${isTagMode ? '' : `git merge ${baseBranch} ${otherBranch} -m 合并生成${tag} &&`}
           git cherry-pick ${baseCommitId} &&
           npm i &&
-          rimraf .eslint/${projectName}-cache &&
           npm run build ${projectName} ${env}`);
 
         if (!(result1.code === 0 || result1.code === 128 || result1.code === 127)) {

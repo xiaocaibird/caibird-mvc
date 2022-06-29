@@ -1,17 +1,18 @@
 {
   "name": "caibird",
-  "version": "3.1.3",
+  "version": "3.2.0",
   "private": false,
   "scripts": {
-    "preinstall": "git config core.ignorecase false & rimraf .eslint/cache &",
+    "preinstall": "git config core.ignorecase false & rimraf .eslint & rimraf .tsc &",
     "init-project": "npm i rimraf -g && rimraf node_modules && npm i && husky install && node bin/initProject",
     "update-package": "rimraf node_modules package-lock.json && npm i shelljs@latest --save-dev && node bin/updatePackage",
     "eslint": "eslint --cache --cache-location \"./.eslint/cache\" -f codeframe --ext .ts,.tsx,.js,.jsx ./",
-    "eslint-no-cache": "rimraf .eslint/cache && npm run eslint",
+    "eslint-no-cache": "rimraf .eslint && npm run eslint",
     "eslint-fix": "eslint --cache --cache-location \"./.eslint/cache\" -f codeframe --ext .ts,.tsx,.js,.jsx ./ --fix",
-    "tsc": "rimraf .tsc && tsc -v && tsc -p src/tsconfig.json",
+    "tsc": "tsc -v && tsc -p src/tsconfig.json",
+    "tsc-no-cache": "rimraf .tsc && npm run tsc",
     "check-tsc": "npm run eslint && npm run tsc",
-    "check-tsc-no-cache": "npm run eslint-no-cache && npm run tsc"
+    "check-tsc-no-cache": "npm run eslint-no-cache && npm run tsc-no-cache"
   },
   "author": "cmZhou",
   "description": "",

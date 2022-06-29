@@ -2,6 +2,7 @@
  * @Owners cmZhou
  * @Title 项目自动化构建助手
  */
+const fs = require('fs');
 const path = require('path');
 const { v4 } = require('uuid');
 
@@ -43,6 +44,10 @@ class ProjectAuto {
         this.scene = {
             ...projectsConfig.scene,
         };
+
+        this.localInfoDir = path.join(process.cwd(), '.local');
+        this.startInfoPath = path.join(this.localInfoDir, 'startInfo.json');
+        this.startConfigPath = path.join(this.localInfoDir, 'startConfig');
     }
 
     getUnionProjectNames = pName => this.projectsConfig[pName] && this.projectsConfig[pName].unionProjectNames || [];
@@ -75,9 +80,7 @@ class ProjectAuto {
         const runEnv = this.getRunEnv();
 
         try {
-            startConfig = require(
-                path.relative(__dirname,
-                    path.join(process.cwd(), '/.local/startConfig')));
+            startConfig = require(path.relative(__dirname, this.startConfigPath));
 
             startConfig = startConfig ?? {};
         } catch { }
@@ -95,13 +98,33 @@ class ProjectAuto {
         };
     };
 
+    getStartInfo = () => {
+        try {
+            return JSON.parse(fs.readFileSync(this.startInfoPath, 'utf-8'));
+        } catch (e) {
+            return {};
+        }
+    };
+
+    setStartInfo = newStartInfo => {
+        const startInfo = this.getStartInfo();
+        if (!fs.existsSync(this.localInfoDir)) {
+            fs.mkdirSync(this.localInfoDir);
+        }
+        fs.writeFileSync(this.startInfoPath, JSON.stringify({
+            ...startInfo,
+            ...newStartInfo,
+        }, null, 2), 'utf-8');
+    };
+
     build = () => {
         const projectName = this.getProjectName();
         const env = this.getEnv();
         const allowWebpack = this.hasWebpackProjectNames.includes(projectName);
         const isTaro = this.taroProjectNames.includes(projectName);
 
-        const result = exec(`npm run dist ${projectName} ${env}
+        const result = exec(`rimraf .eslint/${projectName}-cache && rimraf .tsc &&
+                              npm run dist ${projectName} ${env}
                             ${allowWebpack ? `&& npm run webpack ${projectName}` : ''}
                             ${isTaro ? `&& npm run build-taro ${projectName}` : ''}`);
         process.exit(result.code);
@@ -142,6 +165,7 @@ class ProjectAuto {
         const runEnv = this.getRunEnv();
         const startConfig = this.getStartConfig();
 
+        // TODO 这里是否可以去掉删除 assets/bundle
         const result = exec(`rimraf assets/bundle &&
                              npm run check-tsc ${projectName} &&
                              cross-env _CAIBIRD_RUN_ENV=${runEnv} _CAIBIRD_HOST=${startConfig.host} _CAIBIRD_PORT=${startConfig.port} npm run gulp:dist ${projectName}`);
@@ -242,15 +266,30 @@ class ProjectAuto {
 
         const projectVersion = v4().replace(/-/g, '');
 
+        const { lastProject } = this.getStartInfo();
+
+        this.setStartInfo({
+            lastProject: projectName,
+        });
+
+        let useTsCache = false;
+
+        if (lastProject && lastProject !== projectName) {
+            printf(`[warn] 上次启动的工程为【${lastProject}】，本次为【${projectName}】。将清除ts编译缓存!!!`, ColorsEnum.YELLOW);
+        } else if (lastProject === projectName) {
+            useTsCache = true;
+            printf(`[info] 上次和这次启动的工程都为【${projectName}】，将使用ts编译缓存!!!`);
+        }
+
         if (this.allowStartProjectNames.includes(projectName)) {
             if (this.taroProjectNames.includes(projectName)) {
                 const result = exec(
-                    `cross-env _CAIBIRD_PROJECT_VERSION=${projectVersion} npm run dist ${projectName} ${envValues.local} &&
-                         concurrently -p "【{name}】" -n "WATCH,TARO" "cross-env _CAIBIRD_PROJECT_VERSION=${projectVersion} npm run start-watch ${projectName}" "npm run start-taro ${projectName} ${process.argv[4]}"`,
+                    `${useTsCache ? '' : 'rimraf .tsc && '}cross-env _CAIBIRD_PROJECT_VERSION=${projectVersion} npm run dist ${projectName} ${envValues.local} &&
+                          concurrently -p "【{name}】" -n "WATCH,TARO" "cross-env _CAIBIRD_PROJECT_VERSION=${projectVersion} npm run start-watch ${projectName}" "npm run start-taro ${projectName} ${process.argv[4]}"`,
                 );
                 process.exit(result.code);
             } else {
-                const result = exec(`cross-env _CAIBIRD_PROJECT_VERSION=${projectVersion} npm run dist ${projectName} ${envValues.local} && cross-env _CAIBIRD_PROJECT_VERSION=${projectVersion} npm run start-watch ${projectName}`);
+                const result = exec(`${useTsCache ? '' : 'rimraf .tsc && '}cross-env _CAIBIRD_PROJECT_VERSION=${projectVersion} npm run dist ${projectName} ${envValues.local} && cross-env _CAIBIRD_PROJECT_VERSION=${projectVersion} npm run start-watch ${projectName}`);
                 process.exit(result.code);
             }
         } else {
@@ -262,7 +301,7 @@ class ProjectAuto {
     tsc = () => {
         const projectName = this.getProjectName();
 
-        const result = exec(`rimraf .tsc && tsc -v && tsc -p src/${projectName}/tsconfig.json`);
+        const result = exec(`tsc -v && tsc -p src/${projectName}/tsconfig.json`);
         process.exit(result.code);
     };
 
