@@ -32,8 +32,16 @@ export default class App {
             return;
         }
 
+        if (!opt.rootDom) {
+            throw new Error('React Root Dom 不能为空！');
+        }
+
         preRender && await preRender(this);
-        (await import('react-dom')).render(opt.rootComponent, opt.rootDom);
+
+        const reactDom = await import('react-dom/client');
+        const root = reactDom.createRoot(opt.rootDom);
+        root.render(opt.rootComponent);
+
         postRender && await postRender(this);
     };
 }

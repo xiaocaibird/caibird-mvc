@@ -262,7 +262,7 @@ export default (webpackOptions: WebpackOptions, webpackConfig: webpack.Configura
                 }),
             ],
             alias: isLocalTest ? {
-                'react-dom': '@hot-loader/react-dom',
+                // 'react-dom': '@hot-loader/react-dom',
             } : {},
         },
         devtool: !isProduction ? 'cheap-module-source-map' : false,
