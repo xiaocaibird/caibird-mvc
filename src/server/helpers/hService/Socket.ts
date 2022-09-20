@@ -111,13 +111,13 @@ export default class Socket {
 
         try {
             this.socket.end();
-        } catch (e) {
+        } catch (e: unknown) {
             console.error('socket end fail!');
             console.error(e);
         }
         try {
             this.socket.destroy();
-        } catch (e) {
+        } catch (e: unknown) {
             console.error('socket destroy fail!');
             console.error(e);
         }
@@ -132,14 +132,14 @@ export default class Socket {
         if ((data[2] & FLAG_EVENT) === 0) {
             decode(data, (err, result) => {
                 if (err) {
-                    this.requestReject && this.requestReject(err);
+                    this.requestReject?.(err);
                 } else {
-                    this.requestResolve && this.requestResolve(result);
+                    this.requestResolve?.(result);
                 }
                 this.clearRequestInfo();
             });
         } else {
-            this.requestResolve && this.requestResolve('heart beat success');
+            this.requestResolve?.('heart beat success');
             this.clearRequestInfo();
         }
     };
@@ -166,7 +166,7 @@ export default class Socket {
     private readonly onError = (err: Error) => {
         // TODO 某些 Error 可以不用destroy
         this.destroy();
-        this.requestReject && this.requestReject(err);
+        this.requestReject?.(err);
         console.error(err);
     };
 
@@ -176,14 +176,14 @@ export default class Socket {
         } catch { }
     };
 
-    private readonly createRequestPromise = (buffer: Buffer) => new Promise((resolve, reject) => {
+    private readonly createRequestPromise = async (buffer: Buffer) => new Promise((resolve, reject) => {
         this.requestResolve = resolve;
         this.requestReject = reject;
         this.socket.write(buffer);
         setTimeout(() => { reject(this.getError('socket requestPromise timeout')); }, this.timeout);
     });
 
-    public readonly request = <THeartBeat extends boolean | undefined = undefined>(opt: (
+    public readonly request = async <THeartBeat extends boolean | undefined = undefined>(opt: (
         THeartBeat extends true ? Caibird.dp.Obj : RequestOpt
         // eslint-disable-next-line no-async-promise-executor
     ) & { isHeartBeat?: THeartBeat }) => new Promise(async (resolve, reject) => {
@@ -251,7 +251,7 @@ export default class Socket {
 
             resolve(rsp);
             step = ESocketStep.Success;
-        } catch (e) {
+        } catch (e: unknown) {
             reject(e);
             step = ESocketStep.Fail;
         } finally {

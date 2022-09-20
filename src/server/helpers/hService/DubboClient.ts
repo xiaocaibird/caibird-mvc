@@ -210,7 +210,7 @@ export default class DubboClient {
                             };
                         }
                     });
-                } catch (e) {
+                } catch (e: unknown) {
                     reject(e);
                     onError();
                 }
@@ -218,7 +218,7 @@ export default class DubboClient {
 
             try {
                 await p;
-            } catch (e) {
+            } catch (e: unknown) {
                 console.error(`${serviceFullName} subscribe fail!`);
                 console.error(e);
             }

@@ -215,7 +215,7 @@ export abstract class HService<THttpApis extends Caibird.dp.Obj<Caibird.dp.Obj<C
 
                 return rsp;
             }
-        } catch (e) {
+        } catch (e: unknown) {
             throw e;
         }
 

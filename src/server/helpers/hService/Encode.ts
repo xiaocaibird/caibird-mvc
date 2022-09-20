@@ -63,7 +63,7 @@ export default class Encode {
             body.write(-1); // for dubbox 2.8.X
         }
         body.write(this.argsType(args));
-        if (args && args.length) {
+        if (args?.length) {
             for (let i = 0, len = args.length; i < len; i++) {
                 body.write(args[i]);
             }
@@ -73,7 +73,7 @@ export default class Encode {
     };
 
     private readonly argsType = (args?: ArgItem[]) => {
-        if (!(args && args.length)) {
+        if (!(args?.length)) {
             return '';
         }
 
@@ -96,7 +96,7 @@ export default class Encode {
                 // eslint-disable-next-line no-bitwise
                 parameterTypes += ~type.indexOf('.')
                     ? `[L${type.slice(1).replace(/\./gi, '/')};`
-                    : '[' + typeRef[type.slice(1) as keyof typeof typeRef];
+                    : `[${typeRef[type.slice(1) as keyof typeof typeRef]}`;
             } else {
                 parameterTypes +=
                     // eslint-disable-next-line no-bitwise

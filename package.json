@@ -72,6 +72,7 @@
     "eslint-plugin-react": "^7.30.0",
     "eslint-plugin-unicorn": "^42.0.0",
     "find": "^0.3.0",
+    "form-data": "^4.0.0",
     "gulp": "^4.0.2",
     "gulp-babel": "^8.0.0",
     "gulp-changed-in-place": "^2.3.0",

@@ -27,7 +27,8 @@ const HEAP_HEADER_LENGTH = 16;
 const decode = (heap: Buffer, cb: (err: Error | null, data?: unknown) => void) => {
     const result = new DecoderV2(heap.slice(HEAP_HEADER_LENGTH, heap.length));
     if (heap[3] !== Response.OK) {
-        return cb(new Error(result.readString()));
+        cb(new Error(result.readString()));
+        return;
     }
     try {
         const flag = result.readInt();
